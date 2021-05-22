@@ -1,10 +1,72 @@
+\documentclass[bfivepaper,twosided,justified,nobib]{tufte-book}
+
+\hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
+
+%%
+% Book metadata
+\title{How I Learned to \\ Worry Productively about AI: \\  \\ Robot Apocalypses \\ Averted}
+\author{Jordan Boyd-Graber}
+\publisher{University of Maryland}
+
+%%
+% If they're installed, use Bergamo and Chantilly from www.fontsite.com.
+% They're clones of Bembo and Gill Sans, respectively.
+%\IfFileExists{bergamo.sty}{\usepackage[osf]{bergamo}}{}% Bembo
+%\IfFileExists{chantill.sty}{\usepackage{chantill}}{}% Gill Sans
+
+%\usepackage{microtype}
+
+\usepackage{booktabs}
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{figures/}}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+
+%%
+% Prints a trailing space in a smart way.
+\usepackage{xspace}
+
+\newif\ifcomment\commentfalse
+%\input{style/preamble}
+
+% Generates the index
+\usepackage{makeidx}
+\usepackage{natbib}
+\setcitestyle{authoryear}
+
+\makeindex
+\newcommand{\blankpage}{\newpage\hbox{}\thispagestyle{empty}\newpage}
+\begin{document}
+
+% Front matter
+
+
+\input{chapters/00-frontmatter}
+
+% \tableofcontents
+
+
+\clearpage
+
+\part{Question Answering Past}
+
 Epic Questions
+- Sphynx
+- Gestumblindi: the art of making a riddle is prized, and it is the
+Gods who are best at the task
 
 Questions as the Foundation of Civilization
+- Wu Zetian
+- Pendelton act
+
+
+\part{Question Answering Present}
 
 The Turing Test [NLP]
-
-Science Fiction QA
 
 Watson on Jeopardy!: The Greatest Sham of the 21st Century 
  - How to make questions harder (Adversarial)
@@ -21,4 +83,27 @@ Learning from Trivia Nerds
 
 How to Write a Good Question
 
+\part{Question Answering Future}
+
+Science Fiction QA
+- Voigt-Kampff
+- Kirk outsmarting computers
+
+AI is not what you should be afraid of
+
 Computer Game Shows of the Future
+
+
+
+
+
+
+\backmatter
+
+\bibliography{bib/jbg}
+\bibliographystyle{plainnat}
+
+
+\printindex
+
+\end{document}
