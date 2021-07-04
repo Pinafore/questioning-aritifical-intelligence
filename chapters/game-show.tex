@@ -1,0 +1,22 @@
+
+Taking a cue from the trivia community, I present an alternative
+for \abr{mrqa}.
+Blind test sets are created for a specific time; all systems are submitted simultaneously.
+Then, all questions and answers are revealed.
+System authors can protest correctness rulings on questions, directly
+addressing the issues above.
+After agreement is reached,
+quantitative metrics are computed for comparison purposes---despite their inherent limitations they at least can be
+trusted.
+Adopting this for \abr{mrqa} would require creating a new, smaller test
+set every year.
+However, this would gradually refine the annotations and process.
+
+This suggestion is not novel: \citet{voorhees-00} accept automatic
+evaluations ``for experiments internal to an organization where the
+benefits of a reusable test collection are most significant (\emph{and
+  the limitations are likely to be understood})''~(our emphasis) but
+that ``satisfactory techniques for [automatically] evaluating new
+runs'' have not been found yet.  We are not aware of any change on
+this front---if anything, we seem to have become more insensitive as a
+community to just how limited our current evaluations are.
