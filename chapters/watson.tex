@@ -15,7 +15,7 @@ more.
 
 I was very sceptical.
 %
-By the time that Watson campe to fruition, I had moved to the
+By the time that Watson came to fruition, I had moved to the
 University of Maryland.
 %
 Then, my scepticism turned to jealousy.
@@ -65,15 +65,15 @@ and skip ahead.
 
 \jeopardy{} is a gameshow created by Merv Griffin in 19XX.
 %
-It's big gimmick is that the player responses are given in the form of
+Its big gimmick is that the player responses are given in the form of
 a question.
 %
 For example, the clue ``The CAPTCHA test against spam \& robot programs
 is called the `reverse' test named for this British code breaker''
 would have response \answer{Who is Alan Turing}.
 %
-Nevertheless, we'll still sometimes call responses answers to be consistent with
-the other chapters.
+Nevertheless, we'll still sometimes call responses answers to be
+consistent with the other chapters.
 %
 The clues are arranged in a grid: columns represent categories and
 rows represent difficulty, with the more difficult questions being
@@ -81,9 +81,11 @@ worth more.
 
 There are three players who stand side by side behind podiums.
 %
-When a clue is read, any of the three players can ``buzz in'' to say that they want to give a response.
+When a clue is read, any of the three players can ``buzz in'' to say
+that they want to give a response.
 %
-If they give the correct response, they then have ``control of the board'' and can select the next clue.
+If they give the correct response, they then have ``control of the
+board'' and can select the next clue.
 
 One advantage of controlling the board is that some questions are
 called ``Daily Doubles'' which allow the player to potentially double
@@ -108,7 +110,7 @@ So what makes up ``normal'' questions?
 Every game of \jeopardy{} has questions that range in difficulty.
 %
 Because it's a television show, many questions are easy enough that
-the average viewer at home can get.
+the average viewer at home can get them.
 %
 Moreover, the humans on the stage with Watson are not normal contestants.
 %
@@ -116,19 +118,29 @@ Ken Jennings is certifiably the best \jeopardy{} player of all time,
 and Brad Rutter isn't bad himself.
 
 The average ``normal'' \jeopardy{} contestant, including not so great
-players like yours truly, know a majority of the clues.
+players like yours truly, know a large majority of the clues.
 %
 For top players like Brad and Ken, they know---with a handful of
-exceptions---know \emph{all} the clues.
+exceptions--\emph{all} the clues.
 %
+In a one-on-one fight with normal clues, Ken and Brad would be
+fighting every clue: it would come down to who could buzz first.
 
-
+This isn't fun to play.
+%
+Nor is it fun to watch.
+%
+This is why \jeopardyp{}'s tournament of champions is played on much more difficult clues.
+%
+Nonetheless, this is the battlefield where \jeopardy{} won.
 
 \section{John Henry vs. the Buzzing Machine}
 
-Not all trivia games with buzzers have this property, however.
-For example, take \jeopardy{}, the subject of Watson's \textit{tour de force}~\cite{ferruci-10}.
-While \jeopardy{} also uses signaling devices, these only work \emph{once the question has been read in its entirety}; Ken Jennings, one of the top \jeopardy{} players (and also a \qb{}er) explains it on a \textit{Planet Money} interview~\cite{malone-19}:
+Unlike \qb{} (Chapter~\ref{ch:qb}), while \jeopardy{} also uses
+signaling devices, these only work \emph{once the question has been
+read in its entirety}; Ken Jennings, one of the top \jeopardy{}
+players (and also a \qb{}er) explains it on a \textit{Planet Money}
+interview~\cite{malone-19}:
 \begin{quote}
 {\bf Jennings:} The buzzer is
     not live until Alex finishes reading the question. And if you buzz
@@ -139,10 +151,119 @@ While \jeopardy{} also uses signaling devices, these only work \emph{once the qu
 {\bf Malone:} \abr{ok}. To some degree, \jeopardy{} is kind of a video game, and a \emph{crappy video game where it's, like, light goes on, press button}---that's it. \\
 {\bf Jennings:} (Laughter) Yeah. \\
 \end{quote}
-\jeopardy{}'s buzzers are a gimmick to ensure good television; however, \qb{} buzzers discriminate knowledge (Section~\ref{sec:discriminative}).
-Similarly, while \triviaqa{}~\cite{joshi-17} is written by knowledgeable writers, the questions are not pyramidal.
+\jeopardy{}'s buzzers are a gimmick to ensure good television; however, \qb{} buzzers discriminate knowledge.
+
+So how does this interact with Watson?
+%
+Watson receives all of the clues electronically and likewise gets an electronic signal to know when it is safe to buzz in.
+%
+In contrast, humans have to either guess when it is safe to buzz or wait for a light to light up.
+
+\jeopardy{} gurus explicitly advise new players not to wait for the light---your puny human reflexes are too slow.
+%
+Indeed, one of Ken Jenning's strengths was his uncanny ability to
+internalize the cadence of Alex's voice and when a technitian would
+activate the buzzer.
+%
+In contrast, Watson is literally an electromechanical buzzing machine
+that could get first crack at every question it wants.\footnote{In
+practice, this is not always true.  Because Watson computed its
+responses in real time, it could not come up with a response in time
+for particularly short questions.}
+
+Moreover, what makes for a ``normal'' difficulty question for a human
+does not always apply to a computer.
+%
+
+
+When I appeared on \jeopardyp{}, my final \jeopardy{} was:
+%
+\question{After this woman's death, her daughter wrote, ``As far as we in the family are concerned, the alphabet now ends at Y''}
+%
+All of us got the question right; it just so happened that \jeopardy{}
+used a very similar clue that aired as we were recording:
+%
+\question{``G'' is for grand master as well as this woman who received the 2009 Grand Master Award.}
+%
+The correct response is of course \answer{Sue Grafton}.
+%
+For poorly read contestant like myself, only studying previous clues
+allowed us to get the answer right.
+%
+I've never read a Grafton book, I know she writes mystery books and
+has titles of the form \textit{``A'' is for Alibi} (and that's the
+only title I can think without looking at Wikipedia).
+
+For Watson, this is ``memorization'' is trivial: a single letter
+implies that the answer is \underline{Grafton}.
+%
+But just like you should not think that I'm smart for getting lucky to
+have seen a reused clue, you should not praise Watson for finding
+near-repeat questions.
+%
+And it's not just trivia games: Google's dataset of questions have
+many identical questions ().
+%
+Moreover, Watson can also store the entirety of Wikipedia, easily
+looking up capitals, authors, etc.
+
+Where systems like Watson struggle are on computation, matching novels
+and movies to plots, combining multiple clues, lateral thinking, and
+wordplay.
+%
+And this is not just a matter of degree: computers struggle with all
+such questions.
+%
+While a computer is theoretically good at math, the kinds of programs
+that answer trivia questions struggle answering match questions with
+numbers in the double digits.
+
+This is why the goal of \abr{ai} is \emph{general} artificial
+intelligence (Chapter~\ref{ch:turing}): while we can build specialized
+systems for \jeopardy{} questions or math questions, unlike a
+reasonably smart human, a single program can't ``do it all''.
+%
+Unlike for human contestants, the ``difficulty'' of \jeopardy{}
+questions for a computer has no relationship to the nominal value.
+
+And this is not a criticism of \jeopardy{} authors: how should they
+know how a computer thinks?
+%
+Working with a brilliant undergraduate, Eric Wallace, we built an
+interface to show professional trivia writers what a computer is
+thinking so that they could appropriately calibrate trivia questions.
+
+As authors type a question, they see the information the computer is
+using to respond:
+%
+what Wikipedia articles it's using,
+%
+what previous clues it's looking at,
+%
+and what words in the clue it's using.
+%
+When professional trivia writers have access to this information, they can
+avoid repeating themselves,
+%
+``Oh, thanks friendly popup, I didn't realize we just asked about
+Grafton like that\dots I still want to ask about her, but let's mix
+things up.''
+%
+We talk about what happens when you set up a fair competition between
+humans and computers on these types of questions in
+Chapter~\ref{ch:leaderboard}.
+
+Let's review Watson's appearance on \jeopardyp{}:
+\begin{enumerate*}
+        \item all questions are of ``normal'' difficulty;
+        \item thus the two human contestants know nearly all of the clues; but
+        \item Watson can win the buzzer race whenever it wants.
+\end{enumerate*}
+If Watson wins such a match, does that mean that it is superior to
+these supurb humans?
 
 \section{Two Guys, One Computer}
+
 
 
 \section{Written, not Spoken}
