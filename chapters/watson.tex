@@ -61,15 +61,68 @@ that.
 However, if you've calculated a Coryat score before, you can go ahead
 and skip ahead.
 
+\section{What \jeopardy{} is and How it Works}
+
+\jeopardy{} is a gameshow created by Merv Griffin in 19XX.
+%
+It's big gimmick is that the player responses are given in the form of
+a question.
+%
+For example, the clue ``The CAPTCHA test against spam \& robot programs
+is called the `reverse' test named for this British code breaker''
+would have response \answer{Who is Alan Turing}.
+%
+Nevertheless, we'll still sometimes call responses answers to be consistent with
+the other chapters.
+%
+The clues are arranged in a grid: columns represent categories and
+rows represent difficulty, with the more difficult questions being
+worth more.
+
+There are three players who stand side by side behind podiums.
+%
+When a clue is read, any of the three players can ``buzz in'' to say that they want to give a response.
+%
+If they give the correct response, they then have ``control of the board'' and can select the next clue.
+
+One advantage of controlling the board is that some questions are
+called ``Daily Doubles'' which allow the player to potentially double
+their score: a player can wager any part of their score, and if they
+get it right they get that ammount added to their score (but a wrong
+response will subtract it from their score).
+
 \section{The Pool of Questions}
 
-Part of the agreement between \jeopardy{} and \abr{ibm} was that the competition would take place on normal, written questions.
+Part of the agreement between \jeopardy{} and \abr{ibm} was that the
+competition would take place on normal, written questions.
 %
-In the media coverage of the competition, this focused on avoiding video and picture daily doubles (fairly reasonable, but we'll discuss this more in a bit).
+In the media coverage of the competition, this focused on avoiding
+video and picture daily doubles (fairly reasonable, but we'll discuss
+this more in a bit).
+%
+However, this causes two problems: the questions are too easy and do
+not necessarily challenge computers.
+
+So what makes up ``normal'' questions?
+%
+Every game of \jeopardy{} has questions that range in difficulty.
+%
+Because it's a television show, many questions are easy enough that
+the average viewer at home can get.
+%
+Moreover, the humans on the stage with Watson are not normal contestants.
+%
+Ken Jennings is certifiably the best \jeopardy{} player of all time,
+and Brad Rutter isn't bad himself.
+
+The average ``normal'' \jeopardy{} contestant, including not so great
+players like yours truly, know a majority of the clues.
+%
+For top players like Brad and Ken, they know---with a handful of
+exceptions---know \emph{all} the clues.
 %
 
 
-\section{Written, not Spoken}
 
 \section{John Henry vs. the Buzzing Machine}
 
@@ -91,5 +144,7 @@ Similarly, while \triviaqa{}~\cite{joshi-17} is written by knowledgeable writers
 
 \section{Two Guys, One Computer}
 
+
+\section{Written, not Spoken}
 
 \section{}
