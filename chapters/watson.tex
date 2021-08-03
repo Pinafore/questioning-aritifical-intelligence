@@ -6,8 +6,8 @@ Because I had a foot in both the \abr{ai} and trivia communities, I
 heard two different stories.
 %
 I heard rumors of a amazon work in parsing and semantic role labeling
-happening from researchers who ventured north to Nassau county in New York (I was doing
-my PhD at Princeton).
+happening from researchers who ventured north to Nassau county in New
+York (I was doing my PhD at Princeton).
 %
 From the trivia community, I heard of some people who were being paid
 by \abr{ibm} to play trivia games but that they couldn't say anything
@@ -37,7 +37,9 @@ strictly necessary but still impressive.
 
 \section{This Game is Rigged, I Tell Ya!}
 
-These successes have been well documented (not least by \abr{ibm} itself, who rightly celebrated the great achievements); however, things were not perfect\dots the game was rigged.  
+These successes have been well documented (not least by \abr{ibm}
+itself, who rightly celebrated the great achievements); however,
+things were not perfect\dots the game was rigged.
 %
 It's useful to go over the lifecycle of an entire question: how it was
 written, how it's communicated, how players answer, and how the score
@@ -132,9 +134,11 @@ This isn't fun to play.
 %
 Nor is it fun to watch.
 %
-This is why \jeopardyp{}'s tournament of champions is played on much more difficult clues.
+This is why \jeopardyp{}'s tournament of champions is played on much
+more difficult clues.
 %
-Nonetheless, this is the battlefield where Watson won: ``normal'' questions that didn't challenge the human players.
+Nonetheless, this is the battlefield where Watson won: ``normal''
+questions that didn't challenge the human players.
 %
 Instead, it all came down to the buzzer.
 
@@ -142,8 +146,9 @@ Instead, it all came down to the buzzer.
 
 Unlike \qb{} (Chapter~\ref{ch:qb}), while \jeopardy{} also uses
 signaling devices, these only work \emph{once the question has been
-read in its entirety}; Ken Jennings, one of the top \jeopardy{}
-players (and also a former \qb{} player while he was a student at \abr{byu}) explains it on a \textit{Planet Money}
+  read in its entirety}; Ken Jennings, one of the top \jeopardy{}
+players (and also a former \qb{} player while he was a student at
+\abr{byu}) explains it on a \textit{Planet Money}
 interview~\cite{malone-19}:
 \begin{quote}
 {\bf Jennings:} The buzzer is
@@ -182,7 +187,8 @@ Let's first talk about what makes a clue easier for a computer and what makes a 
 
 When I appeared on \jeopardyp{}, my final \jeopardy{} was:
 %
-\question{After this woman's death, her daughter wrote, ``As far as we in the family are concerned, the alphabet now ends at Y''}
+\question{After this woman's death, her daughter wrote, ``As far as we
+  in the family are concerned, the alphabet now ends at Y''}
 %
 All of us got the question right; it just so happened that \jeopardy{}
 used a very similar clue that aired as we were recording:
@@ -211,9 +217,12 @@ many identical questions ().
 Moreover, Watson can also store the entirety of Wikipedia, easily
 looking up capitals, authors, etc.
 
-Indeed, when a computer can find \emph{an exact quote} (as was in my final \jeopardy{} clue), the question becomes even easier.
+Indeed, when a computer can find \emph{an exact quote} (as was in my
+final \jeopardy{} clue), the question becomes even easier.
 %
-Then the computer just needs to find the appropriate article that contains the quote and then just find whatever entity is mostly likely to be a \jeopardyp{} answer.
+Then the computer just needs to find the appropriate article that
+contains the quote and then just find whatever entity is mostly likely
+to be a \jeopardyp{} answer.
 
 Where systems like Watson struggle are on computation, matching novels
 and movies to plots, combining multiple clues, lateral thinking, and
@@ -257,32 +266,51 @@ avoid repeating themselves,
 Grafton like that\dots I still want to ask about her, but let's mix
 things up.''
 
-My favorite example of how professional trivia writers used this information to trip up computers was this clue:
+My favorite example of how professional trivia writers used this
+information to trip up computers was this clue:
 \begin{quote}
-  The main character of a story by this author opens Crime and Punishment to a random page, but finds it to be a copy of The Brothers Karamazov, and equates himself with Monsieur Bovary.
+  The main character of a story by this author opens Crime and
+  Punishment to a random page, but finds it to be a copy of The
+  Brothers Karamazov, and equates himself with Monsieur Bovary.
 \end{quote}
 %
-Now this is a hard clue (worthly of a competition between Ken and Brad), and you may not know the answer; there's no shame in that.
+Now this is a hard clue (worthly of a competition between Ken and
+Brad), and you may not know the answer; there's no shame in that.
 
-But if you're relatively well-read, you probably know that the answer is {\bf not} Fyodor Dostoevsky, the author of \textit{Crime and Punishment}.
+But if you're relatively well-read, you probably know that the answer
+is {\bf not} Fyodor Dostoevsky, the author of \textit{Crime and
+  Punishment}.
 %
 How do you know that?  
 %
-First, Dostoyevski isn't really a self-referential author, so he wouldn't write about his own novels\dots also, \textit{The Brothers Karamazov} was is last major work, so in what story could this happen?
+First, Dostoyevski isn't really a self-referential author, so he
+wouldn't write about his own novels\dots also, \textit{The Brothers
+  Karamazov} was is last major work, so in what story could this
+happen?
 %
-But while a computer technically ``knows'' all of this information, it isn't going to use this to answer the question.
+But while a computer technically ``knows'' all of this information, it
+isn't going to use this to answer the question.
 
-Instead, it sees the phrase ``this author opens Crime and Punishment'' and can see that a dozen other questions have used this exact phrase, it thus buzzes in confidently that the answer is \answer{Fyodor Dostoevsky}.
+Instead, it sees the phrase ``this author opens Crime and Punishment''
+and can see that a dozen other questions have used this exact phrase,
+it thus buzzes in confidently that the answer is \answer{Fyodor
+  Dostoevsky}.
 %
-Indeed, you don't need to be a Dostoevsky expert to stay away from that\dots you just need to understand a little linguistics.
+Indeed, you don't need to be a Dostoevsky expert to stay away from
+that\dots you just need to understand a little linguistics.
 %
-The verb ``opens'' has the subject ``the main character'' \emph{not} ``this author''.
+The verb ``opens'' has the subject ``the main character'' \emph{not}
+``this author''.
 %
 However, the computer greedily focuses on what it's seen before.
 
-Again, this is not a criticism of the \jeopardy{} writers nor of the \abr{ibm} folks who set up the competition.
+Again, this is not a criticism of the \jeopardy{} writers nor of the
+\abr{ibm} folks who set up the competition.
 %
-These nuances are only obvious after the fact (and some of my early human--computer competitions had similar shortcomings), but I hope that it can help shape our future understanding of machine intelligence.  
+These nuances are only obvious after the fact (and some of my early
+human--computer competitions had similar shortcomings), but I hope
+that it can help shape our future understanding of machine
+intelligence.
 %
 We will talk about what happens when you set up a fair competition between
 humans and computers on these types of questions in
@@ -290,53 +318,142 @@ Chapter~\ref{ch:leaderboard}.
 
 \subsection{Two Nice Guys, One Computer with no Shame}
 
-Given the ``too easy'' questions and the buzzer, what does this actually mean for gameplay?  
+Given the ``too easy'' questions and the buzzer, what does this
+actually mean for gameplay?
 %
-A question comes in, and Watson has the choice of answering it or not: it can win every race to the buzzer if it wants.
+A question comes in, and Watson has the choice of answering it or not:
+it can win every race to the buzzer if it wants.
 %
-Then, of the things it cannot answer, Ken and Brad fight over the scraps.
+Then, of the things it cannot answer, Ken and Brad fight over the
+scraps.
 %
-Thus, for a computer to win this competition, it needs only to be able to answer a third of the questions correctly.
+Thus, for a computer to win this competition, it needs only to be able
+to answer a third of the questions correctly.
 
-Now, the \jeopardy{} nerds reading the book (I love you all), will point out that this isn't true, because the clues are not weighted equally: some are worth more than others.
+Now, the \jeopardy{} nerds reading the book (I love you all), will
+point out that this isn't true, because the clues are not weighted
+equally: some are worth more than others.
 %
-However, as we discussed above, what's difficult for a computer isn't always difficult for a human (and \textit{vice versa}), so it really is a random third of the questions.
+However, as we discussed above, what's difficult for a computer isn't
+always difficult for a human (and \textit{vice versa}), so it really
+is a random third of the questions.
 %
-While a good human player might be weak on the buzzer and be confident that if they know more they'll win the harder clues, this isn't true for a human facing off against Watson.
+While a good human player might be weak on the buzzer and be confident
+that if they know more they'll win the harder clues, this isn't true
+for a human facing off against Watson.
 
-Moreover, the computer has no shame: it uses a strategy called the ``Forrest Bounce'' (more infamously associated with James Holzhauer and Arthur Chu).
+Moreover, the computer has no shame: it uses a strategy called the
+``Forrest Bounce'' (more infamously associated with James Holzhauer
+and Arthur Chu).
 %
-Rather than going through the categories top to bottom (easy to hard), Watson goes through the clues somewhat randomly, searching for Daily Doubles and trying to optimize its score.
+Rather than going through the categories top to bottom (easy to hard),
+Watson goes through the clues somewhat randomly, searching for Daily
+Doubles and trying to optimize its score.
 %
 Again, there's nothing wrong with this---it's the optimal strategy!
 %
-But if it's the ``right'' way to play the game, why doesn't every human do it?
+But if it's the ``right'' way to play the game, why doesn't every
+human do it?
 
 That's because humans want to follow social norms.
 %
-The producers of the show (hi, Maggie and Corinna!) tell you up and down that you shouldn't play the game like that, and you don't want to make them unhappy with you\dots they can make your life miserable.
+The producers of the show (hi, Maggie and Corinna!) tell you up and
+down that you shouldn't play the game like that, and you don't want to
+make them unhappy with you\dots they can make your life miserable.
 %
-I remember watching \jeopardy{} with my grandmother and when someone hunted for the Daily Double, she would always say ``who does he think he is'' (and it was always a he).
+I remember watching \jeopardy{} with my grandmother and when someone
+hunted for the Daily Double, she would always say ``who does he think
+he is'' (and it was always a he).
 %
 Alex Trebek also wasn't a fan:
 %
 \begin{quote}
-When the show's writers construct categories they do it so that there's a flow in terms of difficulty, and if you jump to the bottom of the category you may get a clue that would be easier to understand if you'd begun at the top of the category and saw how the clues worked. I like there to be order on the show, but as the impartial host I accept disorder.
+  When the show's writers construct categories they do it so that
+  there's a flow in terms of difficulty, and if you jump to the bottom
+  of the category you may get a clue that would be easier to
+  understand if you'd begun at the top of the category and saw how the
+  clues worked. I like there to be order on the show, but as the
+  impartial host I accept disorder.
 \end{quote}
 %
 And nobody, nobody, wants to make Alex unhappy.
 
-Ken would sometimes do a little hunding for the Daily Double against a particularly formiddable opponent, but he would normally be well-behavied so as not to upset the powers that be.
+Ken would sometimes do a little hunding for the Daily Double against a
+particularly formiddable opponent, but he would normally be
+well-behavied so as not to upset the powers that be.
 %
-Watson, however, was a soulless machine; the novelty was such that nobody faulted it for its strategy.
+Watson, however, was a soulless machine; the novelty was such that
+nobody faulted it for its strategy.
 %
-If anyone is to blame, it's probably Gary Tessauro; adding his strategy for playing the board increased Watson's win percentage considerably.
+If anyone is to blame, it's probably Gary Tessauro; adding his
+strategy for playing the board increased Watson's win percentage
+considerably.
 %
-Put him in a room with the \jeopardy{} producers and that code would be commented out in no time.
+Put him in a room with the \jeopardy{} producers and that code would
+be deleted in no time.
 
 \subsection{Written, not Spoken}
 
-The 
+The ``weakness'' of Watson that got the most attention at the time was
+that it didn't listen to speech.
+%
+Again, I think this was a fine decision: a deaf player could do
+perfectly well on \jeopardy{} (if they have good eyesight\dots I
+wish they also put the clues up on the big screen behind Alex
+instead of just on the too small game board).
+
+In this case, I don't even think this was unfair to the humans.
+%
+If anything, it's unfair to Watson (for reasons that should be clear
+in a second).
+%
+For this specific human--computer matchup, I don't think it is
+important (and perhaps it got more attention at the time to distract from the
+other issues I've already talked about).
+
+For a human, the speech and the text are redundant, but this reveals a
+weakness of Watson: it could not do nearly as well if it only had
+sound.
+%
+While humans in context can tell the difference between ``Kilkenny'' (a town in
+Ireland) and ``kill Kenny'' (the punchline of a \textit{South Park}
+joke), this is a place that computers still struggle (as anyone using
+their phone for dictation knows too well).
+%
+I'll talk more about how to make human--computer question answering
+more fun with audio in Chapter~\ref{ch:game-show}; but it's worth
+reflecting on all of the richness that gets lost when Watson ``plays''
+\jeopardyp{}.
+
+Computers must represent the text that they process as numbers.
+%
+For Watson, the clue ``There were once two cats from this Irish town
+each thought that was one cat too many'' gets transformed into a
+vector.
+%
+That vector is used as input to a search engine that turns up evidence
+that can answer the question (similar questions, Wikipedia pages).
+%
+That Watson can answer many questions like this is amazing.
+
+But it does not come close to what humans can do when they listen to
+the same question (and not just read it from a screen).
+% 
+Such a person gathers additional
+information: Alex uses an Irish accent, emphasizes ``too many'' to
+clue the player that the answer rhymes with it, and brings ``too'' and
+``many'' together to make sound a little bit more like Kilkenny.
+%
+There is a famous quote in artificial intelligence that ``you can't
+cram a sentence into a vector'' (with colorful profanity in its first
+telling).
+
+And while computers can answer these questions from just a vector,
+humans are doing more.
+%
+That Watson could still win without these clues shows that \jeopardy{}
+is deep and rich enough to match the test of intelligence that Turing
+dreamed of in the Turing Test (Chapter~\ref{ch:turing}).
 
 \section{The Legacy of Watson}
 
@@ -345,6 +462,28 @@ Let's review Watson's appearance on \jeopardyp{}:
         \item all questions are of ``normal'' difficulty;
         \item thus the two human contestants know nearly all of the clues; but
         \item Watson can win the buzzer race whenever it wants.
+        \item Watson did not have to listen to the clues.
 \end{enumerate*}
 If Watson wins such a match, does that mean that it is superior to
 these supurb humans?
+
+I hope that you are reluctant to answer ``yes'' (not just
+because \jeopardy{} has trained you to respond to answers with
+questions).
+%
+Perhaps I've planted a seed of doubt: \emph{no, we cannot yet conclude
+  computer superiority} from this experiment.
+%
+While many might want to believe that Watson is the end of
+human--computer question answering competitions, it's only the
+beginning.
+%
+Watson was
+just the beginning of the story, a story that we'll cover in the next
+few chapters.
+
+While \jeopardy{} and quiz bowl are the domain of trivia nerds, what
+happens when computer scientists set the stage to decide whether
+humans or computers are smarter?
+%
+Do humands stand a chance on that battlefield?

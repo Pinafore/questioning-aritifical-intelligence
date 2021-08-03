@@ -41,6 +41,10 @@
 \usepackage{natbib}
 \setcitestyle{authoryear}
 
+\newcommand{\chapterfile}[2]{\chapter{#2}
+  \label{ch:#1}
+  \input{chapters/#1}}
+
 \makeindex
 \newcommand{\blankpage}{\newpage\hbox{}\thispagestyle{empty}\newpage}
 \begin{document}
@@ -55,47 +59,54 @@
 
 \clearpage
 
-\part{Question Answering Past}
+% \part{Question Answering Past}
 
-Epic Questions
-- Sphynx
-- Gestumblindi: the art of making a riddle is prized, and it is the
-Gods who are best at the task
+% Epic Questions
+% - Sphynx
+% - Gestumblindi: the art of making a riddle is prized, and it is the
+% Gods who are best at the task
 
-Questions as the Foundation of Civilization
-- Wu Zetian
-- Pendelton act
+% Questions as the Foundation of Civilization
+% - Wu Zetian
+% - Pendelton act
 
 
-\part{Question Answering Present}
+%\part{Question Answering Present}
 
-The Turing Test [NLP]
+\chapterfile{turing}{The Game Show Pitch that Defined Artificial Intelligence}
 
-Watson on Jeopardy!: The Greatest Sham of the 21st Century 
- - How to make questions harder (Adversarial)
+\chapterfile{qb}{The Gold Standard of Trivia}
 
-QA Datasets [NLP]
+\chapter{Watson on \jeopardyp{}: The Greatest Sham of the 21st
+  Century}
+\input{chapters/watson}
+%  - How to make questions harder (Adversarial)
 
-How computers answer questions [NLP]
+% QA Datasets [NLP]
 
-What Leaderboards have Done to Research [NLP]
+% How computers answer questions [NLP]
 
-Cranfield vs. Manchester
+\chapterfile{leaderboard}{What Leaderboards have Done to \abr{ai} Research}
 
-Learning from Trivia Nerds
+% What Leaderboards have Done to Research [NLP]
 
-How to Write a Good Question
+% Cranfield vs. Manchester
 
-\part{Question Answering Future}
+% Learning from Trivia Nerds
 
-Science Fiction QA
-- Voigt-Kampff
-- Kirk outsmarting computers
+% How to Write a Good Question
 
-AI is not what you should be afraid of
+% \part{Question Answering Future}
 
-Computer Game Shows of the Future
+% Science Fiction QA
+% - Voigt-Kampff
+% - Kirk outsmarting computers
 
+% AI is not what you should be afraid of
+
+%Computer Game Shows of the Future
+
+\chapterfile{game-show}{Computer Game Shows of the Future}
 
 
 

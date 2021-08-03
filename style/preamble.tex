@@ -30,7 +30,6 @@
 
 % Below should be safe
 \usepackage{framed}
-\usepackage{mdwlist}
 \usepackage{siunitx}
 \usepackage{latexsym}
 \usepackage{colortbl}
@@ -39,6 +38,7 @@
 \usepackage{booktabs}
 \usepackage{fnpct}
 \usepackage{amsfonts}
+\usepackage{mdwlist}
 \usepackage[T1]{fontenc}
 \usepackage{bold-extra}
 \usepackage{amsmath}
@@ -79,6 +79,8 @@
 \newcommand{\feat}[1]{{\small \texttt{#1}}}
 \newcommand{\act}[1]{{\small \texttt{#1}}}
 \newcommand{\ngram}[0]{$n$-gram}
+\newcommand{\answer}[1]{\uline{#1}}
+\newcommand{\question}[1]{#1}
 \newcommand{\topic}[1]{\underline{#1}}
 \newcommand{\gem}[1]{\mbox{\textsc{gem}}}
 \newcommand{\abr}[1]{\textsc{#1}}
@@ -192,7 +194,6 @@
 \newcommand{\smalltt}[1]{ {\tt \small #1 }}
 \newcommand{\smallurl}[1]{ \begin{tiny}\url{#1}\end{tiny}}
 %\newcommand{\smallurl}[1]{ \begin{tiny} HIDDEN \end{tiny}}
-\newenvironment{compactenum}{ \begin{enumerate*} \small }{ \end{enumerate*} }
 
 \definecolor{lightblue}{HTML}{3cc7ea}
 \definecolor{CUgold}{HTML}{CFB87C}
@@ -227,6 +228,7 @@
 \newcommand{\elmo}{\textsc{elm}{\small o}}
 \newcommand{\fone}{$F_1$}
 \newcommand{\jeopardy}{\textit{Jeopardy!\ }}
+\newcommand{\jeopardyp}{\textit{Jeopardy!}}
 
 \newcommand{\glove}{\abr{gl}{\small o}\abr{ve}}
 \newcommand{\openie}{\abr{o}{\small pen}\abr{ie}}
