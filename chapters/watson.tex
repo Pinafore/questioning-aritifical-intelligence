@@ -5,7 +5,7 @@ I remember when I first heard rumblings of Watson.
 Because I had a foot in both the \abr{ai} and trivia communities, I
 heard two different stories.
 %
-I heard rumors of a amazon work in parsing and semantic role labeling
+I heard rumors of amazing work in parsing and semantic role labeling
 happening from researchers who ventured north to Nassau county in New
 York (I was doing my PhD at Princeton).
 %
@@ -30,7 +30,7 @@ Let me be clear that the technical triumphs are indisputable (and, in
 my opinion, under-appreciated).
 %
 From the work on wagering to synthesizing multiple information
-sources, Watson was from top to bottom a top-notch well-oiled machine.
+sources, Watson~\citep{ferruci-10} was from top to bottom a top-notch well-oiled machine.
 %
 And it computed all of this in real time---something that wasn't
 strictly necessary but still impressive.
@@ -42,8 +42,8 @@ itself, who rightly celebrated the great achievements); however,
 things were not perfect\dots the game was rigged.
 %
 It's useful to go over the lifecycle of an entire question: how it was
-written, how it's communicated, how players answer, and how the score
-is tabulated.
+written, how it's communicated, how players answer, and how the game
+unfolds afterward.
 %
 At every stage, there's a slight benefit to the computer, which taken
 together makes this an unfair competition.
@@ -54,7 +54,7 @@ want to have fair comparisons of human vs. computer intelligence.
 More importantly, I want to have my turn having my question answering
 robots face off against trivia whizzes (Chapter~\ref{ch:game-show}),
 and I can't do that if everybody thinks that Watson's spin
-on \jeopardy{} settled the question (and it hasn't).
+on \jeopardy{} settled the issue (and it hasn't).
 
 % Cite / read this:
 % https://dominoweb.draco.res.ibm.com/reports/rc25356.pdf
@@ -67,17 +67,20 @@ and skip ahead.
 
 \subsection{What \jeopardy{} is and How it Works}
 
-\jeopardy{} is a gameshow created by Merv Griffin in 19XX.
+\jeopardy{} is a gameshow created by Merv Griffin that debuted in 1967~\citep{griffin-03}.
 %
 Its big gimmick is that the player responses are given in the form of
 a question.
 %
-For example, the clue ``The CAPTCHA test against spam \& robot programs
-is called the `reverse' test named for this British code breaker''
+For example, the clue
+\question{
+  The CAPTCHA test against spam \& robot programs
+  is called the `reverse' test named for this British code breaker
+}
 would have response \answer{Who is Alan Turing}.
 %
-Nevertheless, we'll still sometimes call responses answers to be
-consistent with the other chapters.
+% Nevertheless, we'll still sometimes call responses answers to be
+% consistent with the other chapters.
 %
 The clues are arranged in a grid: columns represent categories and
 rows represent difficulty, with the more difficult questions being
@@ -99,6 +102,8 @@ response will subtract it from their score).
 
 \subsection{The Pool of Questions}
 
+\jbgcomment{Citation needed}
+
 Part of the agreement between \jeopardy{} and \abr{ibm} was that the
 competition would take place on normal, written questions.
 %
@@ -118,8 +123,9 @@ the average viewer at home can get them.
 %
 Moreover, the humans on the stage with Watson are not normal contestants.
 %
-Ken Jennings is certifiably the greatest of all time (\abr{goat}) \jeopardy{} player,
-and Brad Rutter isn't bad himself.
+Ken Jennings is certifiably the greatest of all
+time~\citep[\abr{goat}]{low-20} \jeopardy{} player, and Brad Rutter
+isn't bad himself.
 
 The average ``normal'' \jeopardy{} contestant, including not so great
 players like yours truly, know a large majority of the clues.
@@ -128,14 +134,14 @@ For top players like Brad and Ken, they know---with a handful of
 exceptions--\emph{all} the clues.
 %
 In a one-on-one fight with normal clues, Ken and Brad would be
-fighting every clue: it would come down to who could buzz first.
+fighting over every clue: it would come down to who could buzz first.
 
 This isn't fun to play.
 %
 Nor is it fun to watch.
 %
 This is why \jeopardyp{}'s tournament of champions is played on much
-more difficult clues.
+more difficult clues~\citep{harris-06}.
 %
 Nonetheless, this is the battlefield where Watson won: ``normal''
 questions that didn't challenge the human players.
@@ -146,10 +152,9 @@ Instead, it all came down to the buzzer.
 
 Unlike \qb{} (Chapter~\ref{ch:qb}), while \jeopardy{} also uses
 signaling devices, these only work \emph{once the question has been
-  read in its entirety}; Ken Jennings, one of the top \jeopardy{}
-players (and also a former \qb{} player while he was a student at
-\abr{byu}) explains it on a \textit{Planet Money}
-interview~\cite{malone-19}:
+  read in its entirety}; Ken Jennings (also a former \qb{} player while he was a student at
+\abr{byu}) himself explains it on a \textit{Planet Money}
+interview~\citep{malone-19}:
 \begin{quote}
 {\bf Jennings:} The buzzer is
     not live until Alex finishes reading the question. And if you buzz
@@ -166,13 +171,16 @@ So how does this interact with Watson?
 %
 Watson receives all of the clues electronically and likewise gets an electronic signal to know when it is safe to buzz in.
 %
-In contrast, humans have to either guess when it is safe to buzz or wait for a light to light up.
+In contrast, humans have to either guess when it is safe to buzz or
+wait for a light to turn on.
+
+\jbgcomment{citation needed for gurus}
 
 \jeopardy{} gurus explicitly advise new players not to wait for the light---your puny human reflexes are too slow.
 %
 Indeed, one of Ken Jenning's strengths was his uncanny ability to
 internalize the cadence of Alex's voice and when a technitian would
-activate the buzzer.
+activate the buzzer~\citep{jennings-06}.
 %
 In contrast, Watson is literally an electromechanical buzzing machine
 that could get first crack at every question it wants.\footnote{In
@@ -183,11 +191,13 @@ for particularly short questions.}
 Moreover, what makes for a ``normal'' difficulty question for a human
 does not always apply to a computer.
 %
-Let's first talk about what makes a clue easier for a computer and what makes a clue harder for a computer.
+Let's first talk about what makes a clue easier for a computer and
+then we'll talk about what makes a clue harder for a computer.
+
+\paragraph{Easy for a Computer.}
 
 When I appeared on \jeopardyp{}, my final \jeopardy{} was:
-%
-\question{After this woman's death, her daughter wrote, ``As far as we
+\question{ After this woman's death, her daughter wrote, ``As far as we
   in the family are concerned, the alphabet now ends at Y''}
 %
 All of us got the question right; it just so happened that \jeopardy{}
@@ -200,7 +210,7 @@ The correct response is of course \answer{Sue Grafton}.
 For poorly read contestant like myself, only studying previous clues
 allowed us to get the answer right.
 %
-I've never read a Grafton book, I know she writes mystery books and
+I've never read a Grafton book, but I know she writes mystery books and
 has titles of the form \textit{``A'' is for Alibi} (and that's the
 only title I can think without looking at Wikipedia).
 
@@ -211,8 +221,9 @@ But just like you should not think that I'm smart for getting lucky to
 have seen a reused clue, you should not praise Watson for finding
 near-repeat questions.
 %
-And it's not just trivia games: Google's dataset of questions have
-many identical questions ().
+And it's not just trivia games: Google's dataset of questions (which
+we'll talk about in more detail in Chapter~\ref{ch:modern-qa}) have
+many identical questions~\citep{lewis-21}.
 %
 Moreover, Watson can also store the entirety of Wikipedia, easily
 looking up capitals, authors, etc.
@@ -226,14 +237,14 @@ to be a \jeopardyp{} answer.
 
 Where systems like Watson struggle are on computation, matching novels
 and movies to plots, combining multiple clues, lateral thinking, and
-wordplay.
+wordplay~\citep{kaushik-18}.
 %
-And this is not just a matter of degree: computers struggle with all
-such questions.
+And this is not just a matter of degree: computers struggle with \emph{all}
+such questions, even if they're in the top row of \jeopardyp{}.
 %
 While a computer is theoretically good at math, the kinds of programs
 that answer trivia questions struggle answering match questions with
-numbers in the double digits.
+numbers in the double digits~\citep{wallace-19:numbers}.
 
 This is why the goal of \abr{ai} is \emph{general} artificial
 intelligence (Chapter~\ref{ch:turing}): while we can build specialized
@@ -248,7 +259,8 @@ know how a computer thinks?
 %
 Working with a brilliant undergraduate, Eric Wallace, we built an
 interface to show professional trivia writers what a computer is
-thinking so that they could appropriately calibrate trivia questions.
+thinking so that those writers could appropriately calibrate trivia
+questions \emph{for a computer}~\citep{wallace-19}.
 
 As authors type a question, they see the information the computer is
 using to respond:
@@ -268,11 +280,11 @@ things up.''
 
 My favorite example of how professional trivia writers used this
 information to trip up computers was this clue:
-\begin{quote}
+\question{
   The main character of a story by this author opens Crime and
   Punishment to a random page, but finds it to be a copy of The
   Brothers Karamazov, and equates himself with Monsieur Bovary.
-\end{quote}
+}
 %
 Now this is a hard clue (worthly of a competition between Ken and
 Brad), and you may not know the answer; there's no shame in that.
@@ -292,7 +304,7 @@ But while a computer technically ``knows'' all of this information, it
 isn't going to use this to answer the question.
 
 Instead, it sees the phrase ``this author opens Crime and Punishment''
-and can see that a dozen other questions have used this exact phrase,
+and can pull up a dozen other questions have used this exact phrase,
 it thus buzzes in confidently that the answer is \answer{Fyodor
   Dostoevsky}.
 %
@@ -343,8 +355,8 @@ that if they know more they'll win the harder clues, this isn't true
 for a human facing off against Watson.
 
 Moreover, the computer has no shame: it uses a strategy called the
-``Forrest Bounce'' (more infamously associated with James Holzhauer
-and Arthur Chu).
+``Forrest Bounce''~\citep[more infamously associated with James Holzhauer
+and Arthur Chu]{rogak-20}.
 %
 Rather than going through the categories top to bottom (easy to hard),
 Watson goes through the clues somewhat randomly, searching for Daily
@@ -365,7 +377,10 @@ I remember watching \jeopardy{} with my grandmother and when someone
 hunted for the Daily Double, she would always say ``who does he think
 he is'' (and it was always a he).
 %
-Alex Trebek also wasn't a fan:
+Alex Trebek also wasn't a
+fan~\citep{marchese-18}:\footnote{\citet{rogak-20} quotes a saltier
+  take Trebek offered to Howard Stern: ``It only works, dickweed, if
+  you know the correct response to everything that's up there.''}
 %
 \begin{quote}
   When the show's writers construct categories they do it so that
@@ -382,15 +397,17 @@ Ken would sometimes do a little hunding for the Daily Double against a
 particularly formiddable opponent, but he would normally be
 well-behavied so as not to upset the powers that be.
 %
-Watson, however, was a soulless machine; the novelty was such that
+Watson, however, was a soulless machine; and having a machine on the
+stage was no exciting that
 nobody faulted it for its strategy.
 %
-If anyone is to blame, it's probably Gary Tessauro; adding his
+If anyone is to blame, it's probably Gary Tesauro; adding his
 strategy for playing the board increased Watson's win percentage
-considerably.
+considerably~\citep{tesauro-13}.
 %
-Put him in a room with the \jeopardy{} producers and that code would
-be deleted in no time.
+But if you put him in a room with the withering stares of \jeopardy{}
+producers (or worse, Alex Trebek) and that code would be deleted in no
+time.
 
 \subsection{Written, not Spoken}
 
@@ -413,7 +430,7 @@ other issues I've already talked about).
 
 For a human, the speech and the text are redundant, but this reveals a
 weakness of Watson: it could not do nearly as well if it only had
-sound.
+sound~\citep{Peskov-19}.
 %
 While humans in context can tell the difference between ``Kilkenny'' (a town in
 Ireland) and ``kill Kenny'' (the punchline of a \textit{South Park}
@@ -427,14 +444,16 @@ reflecting on all of the richness that gets lost when Watson ``plays''
 
 Computers must represent the text that they process as numbers.
 %
-For Watson, the clue ``There were once two cats from this Irish town
-each thought that was one cat too many'' gets transformed into a
+For Watson, the clue \question{There were once two cats from this Irish town
+each thought that was one cat too many} gets transformed into a
 vector.
 %
 That vector is used as input to a search engine that turns up evidence
 that can answer the question (similar questions, Wikipedia pages).
 %
 That Watson can answer many questions like this is amazing.
+
+\jbgcomment{Connect to DPR, DAN, TF-IDF, etc. (Perhaps in later chapter)}
 
 But it does not come close to what humans can do when they listen to
 the same question (and not just read it from a screen).
@@ -452,7 +471,7 @@ And while computers can answer these questions from just a vector,
 humans are doing more.
 %
 That Watson could still win without these clues shows that \jeopardy{}
-is deep and rich enough to match the test of intelligence that Turing
+is not deep enough to match the test of intelligence that Turing
 dreamed of in the Turing Test (Chapter~\ref{ch:turing}).
 
 \section{The Legacy of Watson}
@@ -478,12 +497,11 @@ While many might want to believe that Watson is the end of
 human--computer question answering competitions, it's only the
 beginning.
 %
-Watson was
-just the beginning of the story, a story that we'll cover in the next
-few chapters.
+Watson was just the beginning of the story, a story that unfolds
+further in the next few chapters.
 
 While \jeopardy{} and quiz bowl are the domain of trivia nerds, what
 happens when computer scientists set the stage to decide whether
 humans or computers are smarter?
 %
-Do humands stand a chance on that battlefield?
+Do humands stand a chance on \emph{that} battlefield?

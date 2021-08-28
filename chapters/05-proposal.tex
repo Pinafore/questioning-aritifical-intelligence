@@ -1,4 +1,6 @@
 
+\clearpage
+
 \paragraph{Proposed Title and Subtitle} \vspace{3cm}
 
 {\bf Questioning Artificial Intelligence}: What the Differences between how
@@ -36,7 +38,7 @@ A trivia subculture has grown around answering all manner of questions.
 What is new is that computers are now getting into the game of answering
 questions.
 %
-From \abr{ibm} Watson on \jeopardy{} to Siri in every home, the ability of
+From \abr{ibm} Watson on \jeopardy{} to Siri and Alexa in every home, the ability of
 computers to answer is a common yardstick of how smart computers are.
 
 This book is not a book about how to build \abr{ai} systems or how use natural
@@ -48,7 +50,7 @@ Nor is it an insider's guide to the world of high-stakes educational testing,
 trivia games, or licensing exams.
 
 Unlike those books, the goal of this book is to draw \emph{connections}
-between these two worlds of human and computer question answering.
+between the two worlds of human and computer question answering.
 %
 The length of time computers have been answering questions well is shorter
 than the tenure of beloved game show hosts.
@@ -65,10 +67,15 @@ make sure the competition is fair.
 Moreover, writing and asking questions is an art that has been refined over
 decades.
 
-But the artificial intelligence community has not done this because of a
-decision made at a British university fifty years ago.
+Part of the story I want to tell is how we got here.
 %
-As a consequence, we are stuck with the crappy answers from our smartphone.
+And why little things like the decisions made at a British university
+fifty years ago have locked the artificial intelligence community into
+a particular way of evaluating whether a computer is smart.
+%
+These historical decisions have shaped the systems that we have today;
+as a consequence, we are stuck with the crappy answers from our
+smartphone.
 
 But it didn't have to be this way!
 %
@@ -76,17 +83,22 @@ The very definition of computing and artificial intelligence was based a
 thought experiment that is closer to how computers and humans should interact
 with each other.
 %
-However, that definition was too fanciful to really be implemented in the lab.
+However, that definition was too fanciful to really be implemented in
+the lab.
+%
+I'll argue that we could do something closer to Alan Turing's vision,
+and you can judge whether it's (still) too fanciful.
 
-After reviewing the history of question answering of both humans and
-computers, this book argues for rethinking how we ask questions and evaluates
-answers.
+But I'll save my proposal for restructuring question answering
+research after a thorough review of the history of question answering
+(by both humans and computers).
 %
-This is not just a narrow question for those building question answering.
+This is not just a narrow question for those building question
+answering systems.
 %
-I'll argue that it will define the future of human--computer interaction and
+I think that the way we interact with our smartphones and computers
+will define the future of human--computer interaction and
 thus the shape of the modern, \abr{ai}-infused economy.
-
 
 \paragraph{Proposed Chapter Outline}
 
@@ -96,19 +108,23 @@ Proposed table of contentents follows.
         \item Question Answering Past
 
         \begin{enumerate*}
-                \item {\bf Epic Questions}: Questions have been with us for
+                \item {\bf Epic Questions}: Riddles and trivia have been with us for
                 millenia.  One reason is that they're entertaining.  But it's
                 more than that: the ability to ask and answer questions is
                 close to godliness.  Through the lens of the Riddle of the
                 Sphynx and Gestumblindi, this chapter examines what makes a
                 good question in the eyes of the Gods.
 
-                \item {\bf The Foundation of Civilization}: Civil service
-                exams broke the corruption and randomness of patronage and
-                familial bonds.  By examining the reforms of Wu Zetian and the
-                Pendelton Act, this chapter examines how information and
-                competence---measured by questions asked in an exam---created
-                meritocracy and social mobility.
+              \item {\bf How Exams Saved Civilization}: Civil service
+                exams broke the corruption and randomness of patronage
+                and familial bonds.  By examining the reforms of Wu
+                Zetian and the Pendelton Act, this chapter examines
+                how information and competence---measured by questions
+                asked in an exam---created meritocracy and social
+                mobility.  The legacy of these exams built an
+                understanding of what it means to write a ``fair'' and
+                ``useful'' question, which has unfortunately been
+                forgotten by \abr{ai} researchers.
 
         \end{enumerate*}
 
@@ -116,16 +132,18 @@ Proposed table of contentents follows.
 
         \begin{enumerate*}
 
-        \item {\bf The Turing Test}: Alan Turing's eponymous Turing Test is
-        the most durable (but contentious) definition of what it means for a
-        computer to be intelligent.  This chapter reviews how Alan Turing's
-        postwar thought experiment shaped the development of artificial
-        intelligence.
+        \item {\bf The Turing Test: A Game Show Pitch that Defined Artificial Intelligence}: Alan Turing's eponymous Turing
+          Test is the most durable (but contentious) definition of
+          what it means for a computer to be intelligent.  This
+          chapter reviews how Alan Turing's postwar thought experiment
+          of humans asking computers questions shaped the development
+          of artificial intelligence.
 
-        \item {\bf Trivia Snobs}: Just as Alan Turing's wartime exploits
-        shaped \abr{ai}, this chapter charts the course of how a Canadian
-        soldier created a revolution in how humans play trivia games (but
-        these insights are ignored by the computer community).
+        \item {\bf The Creation of Trivia's Gold Standard}: Just as
+          Alan Turing's wartime exploits shaped \abr{ai}, this chapter
+          charts the course of how a Canadian soldier created a
+          revolution in how humans play trivia games (but these
+          insights are ignored by the computer community).
 
         \item {\bf What Makes a Good Question}:\footnote{Published as a
         position piece at the Association of Computational Linguistics 2020.}
@@ -134,14 +152,15 @@ Proposed table of contentents follows.
         and fair---and how these best practices grew out of decades of
         refinement.
 
-        \item {\bf IBM Watson on \jeopardyp{}: Simultaneously a \textit{tour de
-        force} and a sham}: The most memorable computer to answer questions
-        caused the public to think that question answering had been
-        ``solved'', but that's not true.  This chapter breaks down why despite
-        the hype and victory Watson's victory doesn't tell us that much about
-        how well computers can answer questions.
+      \item {\bf Watson on Jeopardy!: Unquestioned Answers from IBM's
+          tour de force}: The most memorable computer to answer
+        questions caused the public to think that question answering
+        had been ``solved'', but that's not true.  This chapter breaks
+        down why despite the hype and victory Watson's victory doesn't
+        tell us that much about how well computers can answer
+        questions.
 
-        \item {\bf Question Answering Datasets and Methods}:
+        \item {\bf How Google, Alexa, and Siri Answer Questions Today}:
         This chapter reviews how computers answer questions: learning from
         example datasets and then recreate those examples from those datasets.
         This chapter critically examines how computers answer questions and
@@ -154,7 +173,8 @@ Proposed table of contentents follows.
         systems.  This legacy, a shift from Alan Turing, still defines
         question answering today.
 
-        \item {\bf Leaderboards and Tournaments}: Computers compete on
+        \item {\bf What Leaderboards have Done to AI Research (and how
+          trivia can save it)}: Computers compete on
         leaderboards, while humans compete at tournaments.  The latter has
         been optimized over decades to efficiently select the best human
         competitor, while leaderboards have not taken advantage of the tips
@@ -182,7 +202,7 @@ Proposed table of contentents follows.
         together two of the themes of the book: computers answering questions
         and game shows.  How could we use the gimick of the game show format
         to shape \abr{ai} into what would best serve society and help inform the
-        public about the true state of \abr{ai} research.
+        public about the true state of \abr{ai} research?
 
         \end{enumerate*}
 
@@ -210,9 +230,9 @@ With David Mimno and Yuening Hu, he wrote \emph{Applications of Topic Models}.
 In addition to his academic research, Boyd-Graber is also active in the trivia
 community: he founded the University of Colorado Quiz Bowl team, revived the
 Princeton Graduate College Pub Quiz, coaches the national champion University
-of Maryland Academic Quiz Team, and has lost on \jeopardyp{}: his
+of Maryland Academic Quiz Team, and has lost on \jeopardyp{} (his
 students are particularly fond of mocking his poor performance on the
-video game category.
+video game category).
 
 \paragraph{Book Audience}
 
@@ -239,7 +259,7 @@ answering systems.
 
 Estimated book contents:
 \begin{itemize}
-  \item 250 Double-spaced pages
+  \item 150 Single-spaced pages
   \item Two dozen diagrams / illustrations
   \item Draft to reviewers August 31, 2021, revisions/edits until
     January 31, 2021
@@ -248,6 +268,6 @@ Estimated book contents:
 Two chapters were submitted to conferences as position papers (one
 accepted, one under review).  If accepted, the chapters will be
 substantially revised to flow well with and complement other
-chapters.  The following sample chapter is an adaptation of the 2020 \abr{acl}
-paper, substantially rewritten in a more conversational style for a
-book audience.
+chapters.
+
+Sample chapter to follow.

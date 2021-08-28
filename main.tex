@@ -8,7 +8,7 @@
 \author{Jordan Boyd-Graber}
 \publisher{University of Maryland}
 
-\newif\ifcomment\commenttrue
+\newif\ifcomment\commentfalse
 \input{style/preamble}
 
 %%
@@ -47,14 +47,24 @@
 
 \makeindex
 \newcommand{\blankpage}{\newpage\hbox{}\thispagestyle{empty}\newpage}
+
+
 \begin{document}
+\setcounter{secnumdepth}{0}
+
+
+
+
+
 
 % Front matter
 
+\input{chapters/00-frontmatter}
 \input{chapters/05-proposal}
-% \input{chapters/00-frontmatter}
+
 
 % \tableofcontents
+
 
 
 \clearpage
@@ -73,13 +83,14 @@
 
 %\part{Question Answering Present}
 
-\chapterfile{turing}{The Game Show Pitch that Defined Artificial Intelligence}
+\chapterfile{turing}{The Turing Test: A Game Show Pitch that Defined Artificial Intelligence}
 
 \chapterfile{qb}{The Gold Standard of Trivia}
 
-\chapter{Watson on \jeopardyp{}: The Greatest Sham of the 21st
-  Century}
-\input{chapters/watson}
+\chapterfile{watson}{Watson on Jeopardy!: \\ Unquestioned Answers from
+\abr{ibm}'s tour de force}
+
+\chapterfile{modern-qa}{How Google, Alexa, and Siri Answer Questions Today}
 %  - How to make questions harder (Adversarial)
 
 % QA Datasets [NLP]
