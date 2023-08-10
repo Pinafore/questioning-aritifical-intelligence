@@ -35,6 +35,160 @@ sources, Watson~\citep{ferruci-10} was from top to bottom a top-notch well-oiled
 And it computed all of this in real time---something that wasn't
 strictly necessary but still impressive.
 
+After talking a little about how Watson works, I'll get into how
+Watsons victory left me feeling unconvinced about the primacy of
+computers' ability to answer questions.
+
+\section{How Watson Works}
+
+While ``neural'' question answering (which we'll discuss in the next
+chapter) is the big thing these days, Watson came of age in the
+\emph{statistical} age.
+%
+To understand some of how Watson works, its helpful to review some of
+the work that came before Watson that helped inspire it.
+
+Preceeding the statistical age of \abr{qa} was the \emph{rule-based}
+age: systems that were impressive on individual questions about
+baseball or geology but that faltered as soon as it saw a question
+that was unexpected in terms of the domain, they'd fail miserably.
+
+One of the guiding principles of the statistical age was ``the
+unreasonable effectiveness of big data'', and this required scaling 
+approaches to web-scale data.
+%
+The first things that people tried was scaling up the ``good,
+old-fashioned'' approaches that defined the rule-based systems.
+%
+Probably the most prominent system in this category is Start from Boris Katz at MIT.  This system first launched in 1993.  This like many of the systems in this era, take an approach that’s somewhat similar to to the old-fashioned AI approaches: parse the query with a  and look it up in a knowledge base.  And since this was in the age of the semantic web, this was in the form of RDF files.  
+
+But this is more a change in scale rather than in form from LUNAR and
+BASEBALL\dots but still an amazing achievement to deal with the
+messiness of Internet text.  And its ability to \emph{search} the
+Internet to find answers is clearly a huge influence on later
+techniques that we’ll see like Watson today and Dense Passage
+Retrieval later (Chapter~\ref{ch:nq}).
+
+A more transformative approach was the \abr{qasm} approach from Radev
+at al.  It used the concepts from machine learning to find answers
+given a query.  In the information theory interpretation of machine
+translation, you imagine that all of the utterances in a target
+language is a corruption of English.  Now this is pretty complicated
+for machine translation, but this is a little bit like what happened
+with how the the game show \jeopardy{} came to be.
+
+In Chapter~\ref{ch:dynabench}, we'll talk about the cheating scandal
+around the American game show \textit{21}, where Charles van Doren got
+the answers in advance.
+%
+Part of the mythology of Jeopardy! is that Merv Griffen said, why
+don’t we just give them the answers!
+%
+So you have clues like “During
+WWII this computer scientist \& code breaker converted his money into
+silver \& buried it; he never found his buried treasure”.  The correct
+response, which is phrased as a question, is “Who is Alan Turing?”
+%
+In other words, the central conceit of Jeopardy! is that it converts questions into answers (and then the contestants need to give a response to that answer in the form of a question).
+
+What \abr{qasm} is doing is doing the reverse: it has a model that
+tries to turn questions into the search string that could find the
+answer to the question.
+%
+There are a number of transformations that it applies: swapping words, deleting words, ignoring words (e.g., if you have Cleveland, Ohio and ignore Ohio, you’ll find more things about US president Grover Cleveland), etc.
+
+In the end, you have a model that creates specialized queries from the
+original question.
+%
+Later on, when we talk about dense passage
+retrieval, those systems are doing something similar, except they’re
+generating the query in a continuous vector space.
+%
+Doing it with real
+words like QASM is more interpretable: a human could understand what’s
+going on, while a vector query is inscrutable it seems to work better.
+
+Okay, enough delay.  Let’s talk about \jeopardy{} and how Watson
+answers \jeopardy{} clues.  First, Jeopardy! doesn’t have one kind of
+clue.  There are many different types.  Let’s start with rhyme time:
+from the name of the category, you know that both words in the
+response have to rhyme with each other.
+%
+This is in essence a
+constrained search: ``tramp stamp'' you could find with a single search,
+but other times you need to do two searches and try to find the thing
+that rhymes.
+
+In other cases, the constraint is that the correct answer starts with a particular letter.  
+
+The category that I feared the most was anagrams: where you need to rearrange the letters in the clue to get to the answer.  This is actually easier for a computer than a human!
+
+Each of these can have different approaches that can generate guesses that might be the correct answer.  And you might think that this is all encoded in the category.  Not so!  
+
+And for “normal” clues, this looks a lot like the reformulations that we saw in QASM: 400th anniversary of 1898 gets rewritten to 27th May 1498, India gets transformed into Kappad, and then you can find something with the correct response: Vasco de Gama.
+
+So the first phase of the Watson pipeline is to—in parallel—generate all sorts of guesses based on different interpretations of the question.  Some try to solve anagrams, others look for rhymes, others run an IR query like the Start system we talked about before, others are doing transformations like the QASM approach we talked about before.  
+
+And sometimes the approaches need to take a recursive approach, combining different subsystems to get to the right answer.
+
+From this you have dozens of possible guesses.  How do you know which—if any—to select?  This all gets fed into a logistic regression problem.  This can take into account how consistent the evidence matches the clue, how popular the response is, and it can even take into account things like Jeopardy!’s love of puns.
+
+In my homework code, I call this component the buzzer.  And this is the same function that the logistic regression function plays here.  If the logistic regression is confident enough, Watson buzzes in to answer.
+
+\section{How Does Watson Know when to Buzz?}
+
+If you’re watching this video, I’m assuming you know both about logistic regression and a little bit about IBM’s Watson that played the US game show Jeopardy!  If you want to know more, I have some suggestions for videos linked into the description.
+
+The most interesting part of what Watson did to answer questions was to estimate its confidence: how likely is guess a to clue c going to be correct.  It gathered a bunch of individual clues together to figure this out.  
+
+But how did Watson actually put this information together?  It used a tool called logistic regression.  The goal of this approach is to take all of the information about a possible guess and output a probability of how likely it thought the guess would be correct.  The higer the score, the more it trusted the guess.
+
+There are many little pieces that could go into thinking that a guess is good or not.  These pieces of evidences are called features.  While features aren’t always active, when they are, they provide evidence of whether a guess is good.  For example, you could have a feature (and Watson probably did) for when a category has a quote in it.
+
+In a computer programming language, this could simply be an if statement: if ASCII character 34 is in this string, return 1.  But just knowing that there’s a quote in the category does’t tell you which clues to favor.  You would need to make the the feature more specific.
+
+Let’s go to a question that I got while I was on Jeopardy!  And this shows that these aren’t just a category-specific phenomenon: .  However, this can also apply to individual clues as well.  In a quite normal category about geography, this clue came up:
+
+"G.I." hope you know that 0 degrees latitude \& 180 degrees longitude is just east of this group, part of Kiribati
+
+Notice that “G.I.” is in quotation marks.  This is a signal, that the correct response will start with G.I., in this case the correct response is “Gilbert Islands”.   Named of course for Johnny Gilbert, “the voice of Jeopardy!”.  Actually not, it’s far more confusing than that: it was named by a German admiral—Adam Johann von Krusenstern—who led the first Russian circumnavigation of the globe.  Krusenstern recognized that the British Captain Thomas Gilbert had described each of the islands individually and applied the the name to the group of islands.
+
+So perhaps we need to have multiple features to capture whether our answer is consistent with this clue.  To be clear, we don’t know exactly what features Watson used, but it could look something like this.  You might have one feature to indicate that there is a quotation mark in the clue.  You could have another feature to show that the quote matches the candidate guess.  Perhaps you have another feature that indicates whether the feature matches a multiword guess.
+
+But these are just answering yes or no questions … how does the system know how to balance these different features to come to a final decision?  At this point, you need to look at the cases where the system has generated a lot of guesses and seen which of them are correct or not.  From this, you can learn that when a letter is in quotes and it matches, that’s a good sign.  These are called feature weights and for the binary features that we’ve talked about, they’re either on or off.
+
+But not all of the features need to be binary.  Another very good feature might be how well the guess matches the clue (e.g., cosine similarity between representations).  So a way to generalize both the binary features and continuous features is to take the dot product of a vector representing all of the features and all of the weights to compute a score for the guess.  The higher the score, the better the guess and the more likely the system will answer.
+
+This is not a one and done process.  If you're building a system like
+this, you should look at things the system is still getting wrong and
+add a new feature to correct the issue.  This is the same process that
+Watson used to build their statistical system.  Maybe the system got
+confused when somebody has a quote from literature and you need to
+make sure that doesn’t get counted or add a new feature to handle that
+case.  It’s very rare to get the features right the first time around.
+
+The statistical approach has some advantages over the neural approach
+we'll see in the next chapter: it is easy to understand why a system
+is doing what it is.  And it's easy to fix problems as they pop up.
+
+\section{Learning as You Go}
+
+Something that is particularly unique to Jeopardy! and not to the
+other QA settings we’ve looked at is that the category is a huge
+constraint on what the correct responses are.  A large part of the
+Jeopardy! buzzer is figuring out the “lexical answer type”.  Part of
+this is is looking at clues in the question, things like “this
+country” or “this game” tell you what kind of entity the response
+would be.  And this is sometimes at odds with the category, as shown
+here.
+
+
+And part of what made Watson a good Jeopardy! Player is that it would learn as it explored the category.  After getting a couple of months wrong, Watson can learn that all of the answers should be a month.
+
+One thing that made Watson particularly impressive was that it not just computed raw accuracy but also compared against human performance.  
+
+This chart showed how Watson progressed in different iterations of the system, inching up to the cloud of Jeopardy! champions.  Ken Jennings is in red there, still clearly dominating even the final version of Watson.
+
 \section{This Game is Rigged, I Tell Ya!}
 
 These successes have been well documented (not least by \abr{ibm}
@@ -70,7 +224,7 @@ and skip ahead.
 \jeopardy{} is a gameshow created by Merv Griffin that debuted in 1967~\citep{griffin-03}.
 %
 Its big gimmick is that the player responses are given in the form of
-a question.
+a question in reaction to infamous cheating scandals.
 %
 For example, the clue
 \question{
@@ -188,6 +342,13 @@ practice, this is not always true.  Because Watson computed its
 responses in real time, it could not come up with a response in time
 for particularly short questions.}
 
+Unfortunately, despite subjecting everyone within earshot to these
+rants, the computer science community thinks that the question is
+settled: computers are better than humans at answering questions.
+%
+This is despite Ken basically saying that it did, indeed, come down to
+the buzzer.
+
 Moreover, what makes for a ``normal'' difficulty question for a human
 does not always apply to a computer.
 %
@@ -222,7 +383,7 @@ have seen a reused clue, you should not praise Watson for finding
 near-repeat questions.
 %
 And it's not just trivia games: Google's dataset of questions (which
-we'll talk about in more detail in Chapter~\ref{ch:modern-qa}) have
+we'll talk about in more detail the next chapter) have
 many identical questions~\citep{lewis-21}.
 %
 Moreover, Watson can also store the entirety of Wikipedia, easily
@@ -253,80 +414,10 @@ reasonably smart human, a single program can't ``do it all''.
 %
 Unlike for human contestants, the ``difficulty'' of \jeopardy{}
 questions for a computer has no relationship to the nominal value.
+%
+We talk about how Facebook/Meta dealt with this problem in
+Chapter~\ref{ch:dynabench}: tell the authors what's hard for a computer.
 
-And this is not a criticism of \jeopardy{} authors: how should they
-know how a computer thinks?
-%
-Working with a brilliant undergraduate, Eric Wallace, we built an
-interface to show professional trivia writers what a computer is
-thinking so that those writers could appropriately calibrate trivia
-questions \emph{for a computer}~\citep{wallace-19}.
-
-As authors type a question, they see the information the computer is
-using to respond:
-%
-what Wikipedia articles it's using,
-%
-what previous clues it's looking at,
-%
-and what words in the clue it's using.
-%
-When professional trivia writers have access to this information, they can
-avoid repeating themselves,
-%
-``Oh, thanks friendly popup, I didn't realize we just asked about
-Grafton like that\dots I still want to ask about her, but let's mix
-things up.''
-
-My favorite example of how professional trivia writers used this
-information to trip up computers was this clue:
-\question{
-  The main character of a story by this author opens Crime and
-  Punishment to a random page, but finds it to be a copy of The
-  Brothers Karamazov, and equates himself with Monsieur Bovary.
-}
-%
-Now this is a hard clue (worthly of a competition between Ken and
-Brad), and you may not know the answer; there's no shame in that.
-
-But if you're relatively well-read, you probably know that the answer
-is {\bf not} Fyodor Dostoevsky, the author of \textit{Crime and
-  Punishment}.
-%
-How do you know that?  
-%
-First, Dostoyevski isn't really a self-referential author, so he
-wouldn't write about his own novels\dots also, \textit{The Brothers
-  Karamazov} was is last major work, so in what story could this
-happen?
-%
-But while a computer technically ``knows'' all of this information, it
-isn't going to use this to answer the question.
-
-Instead, it sees the phrase ``this author opens Crime and Punishment''
-and can pull up a dozen other questions have used this exact phrase,
-it thus buzzes in confidently that the answer is \answer{Fyodor
-  Dostoevsky}.
-%
-Indeed, you don't need to be a Dostoevsky expert to stay away from
-that\dots you just need to understand a little linguistics.
-%
-The verb ``opens'' has the subject ``the main character'' \emph{not}
-``this author''.
-%
-However, the computer greedily focuses on what it's seen before.
-
-Again, this is not a criticism of the \jeopardy{} writers nor of the
-\abr{ibm} folks who set up the competition.
-%
-These nuances are only obvious after the fact (and some of my early
-human--computer competitions had similar shortcomings), but I hope
-that it can help shape our future understanding of machine
-intelligence.
-%
-We will talk about what happens when you set up a fair competition between
-humans and computers on these types of questions in
-Chapter~\ref{ch:leaderboard}.
 
 \subsection{Two Nice Guys, One Computer with no Shame}
 
@@ -409,79 +500,17 @@ But if you put him in a room with the withering stares of \jeopardy{}
 producers (or worse, Alex Trebek) and that code would be deleted in no
 time.
 
-\subsection{Written, not Spoken}
-
-The ``weakness'' of Watson that got the most attention at the time was
-that it didn't listen to speech.
-%
-Again, I think this was a fine decision: a deaf player could do
-perfectly well on \jeopardy{} (if they have good eyesight\dots I
-wish they also put the clues up on the big screen behind Alex
-instead of just on the too small game board).
-
-In this case, I don't even think this was unfair to the humans.
-%
-If anything, it's unfair to Watson (for reasons that should be clear
-in a second).
-%
-For this specific human--computer matchup, I don't think it is
-important (and perhaps it got more attention at the time to distract from the
-other issues I've already talked about).
-
-For a human, the speech and the text are redundant, but this reveals a
-weakness of Watson: it could not do nearly as well if it only had
-sound~\citep{Peskov-19}.
-%
-While humans in context can tell the difference between ``Kilkenny'' (a town in
-Ireland) and ``kill Kenny'' (the punchline of a \textit{South Park}
-joke), this is a place that computers still struggle (as anyone using
-their phone for dictation knows too well).
-%
-I'll talk more about how to make human--computer question answering
-more fun with audio in Chapter~\ref{ch:game-show}; but it's worth
-reflecting on all of the richness that gets lost when Watson ``plays''
-\jeopardyp{}.
-
-Computers must represent the text that they process as numbers.
-%
-For Watson, the clue \question{There were once two cats from this Irish town
-each thought that was one cat too many} gets transformed into a
-vector.
-%
-That vector is used as input to a search engine that turns up evidence
-that can answer the question (similar questions, Wikipedia pages).
-%
-That Watson can answer many questions like this is amazing.
-
-\jbgcomment{Connect to DPR, DAN, TF-IDF, etc. (Perhaps in later chapter)}
-
-But it does not come close to what humans can do when they listen to
-the same question (and not just read it from a screen).
-% 
-Such a person gathers additional
-information: Alex uses an Irish accent, emphasizes ``too many'' to
-clue the player that the answer rhymes with it, and brings ``too'' and
-``many'' together to make sound a little bit more like Kilkenny.
-%
-There is a famous quote in artificial intelligence that ``you can't
-cram a sentence into a vector'' (with colorful profanity in its first
-telling).
-
-And while computers can answer these questions from just a vector,
-humans are doing more.
-%
-That Watson could still win without these clues shows that \jeopardy{}
-is not deep enough to match the test of intelligence that Turing
-dreamed of in the Turing Test (Chapter~\ref{ch:turing}).
+% TODO(jbg): Cut substantially
 
 \section{The Legacy of Watson}
+
+% TODO (jbg): Add good stuff --- Tesauro, LAT, retriever--reader pipeline
 
 Let's review Watson's appearance on \jeopardyp{}:
 \begin{enumerate*}
         \item all questions are of ``normal'' difficulty;
         \item thus the two human contestants know nearly all of the clues; but
         \item Watson can win the buzzer race whenever it wants.
-        \item Watson did not have to listen to the clues.
 \end{enumerate*}
 If Watson wins such a match, does that mean that it is superior to
 these supurb humans?

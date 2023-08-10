@@ -1,0 +1,77 @@
+
+
+% TODO(jbg): Cut, move to dynabench chapter
+
+And this is not a criticism of \jeopardy{} authors: how should they
+know how a computer thinks?
+%
+Working with a brilliant undergraduate, Eric Wallace, we built an
+interface to show professional trivia writers what a computer is
+thinking so that those writers could appropriately calibrate trivia
+questions \emph{for a computer}~\citep{wallace-19}.
+
+As authors type a question, they see the information the computer is
+using to respond:
+%
+what Wikipedia articles it's using,
+%
+what previous clues it's looking at,
+%
+and what words in the clue it's using.
+%
+When professional trivia writers have access to this information, they can
+avoid repeating themselves,
+%
+``Oh, thanks friendly popup, I didn't realize we just asked about
+Grafton like that\dots I still want to ask about her, but let's mix
+things up.''
+
+My favorite example of how professional trivia writers used this
+information to trip up computers was this clue:
+\question{
+  The main character of a story by this author opens Crime and
+  Punishment to a random page, but finds it to be a copy of The
+  Brothers Karamazov, and equates himself with Monsieur Bovary.
+}
+%
+Now this is a hard clue (worthly of a competition between Ken and
+Brad), and you may not know the answer; there's no shame in that.
+
+But if you're relatively well-read, you probably know that the answer
+is {\bf not} Fyodor Dostoevsky, the author of \textit{Crime and
+  Punishment}.
+%
+How do you know that?  
+%
+First, Dostoyevski isn't really a self-referential author, so he
+wouldn't write about his own novels\dots also, \textit{The Brothers
+  Karamazov} was is last major work, so in what story could this
+happen?
+%
+But while a computer technically ``knows'' all of this information, it
+isn't going to use this to answer the question.
+
+Instead, it sees the phrase ``this author opens Crime and Punishment''
+and can pull up a dozen other questions have used this exact phrase,
+it thus buzzes in confidently that the answer is \answer{Fyodor
+  Dostoevsky}.
+%
+Indeed, you don't need to be a Dostoevsky expert to stay away from
+that\dots you just need to understand a little linguistics.
+%
+The verb ``opens'' has the subject ``the main character'' \emph{not}
+``this author''.
+%
+However, the computer greedily focuses on what it's seen before.
+
+Again, this is not a criticism of the \jeopardy{} writers nor of the
+\abr{ibm} folks who set up the competition.
+%
+These nuances are only obvious after the fact (and some of my early
+human--computer competitions had similar shortcomings), but I hope
+that it can help shape our future understanding of machine
+intelligence.
+%
+We will talk about what happens when you set up a fair competition between
+humans and computers on these types of questions in
+Chapter~\ref{ch:leaderboard}.

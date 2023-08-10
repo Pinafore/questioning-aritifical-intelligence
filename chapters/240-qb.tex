@@ -1,0 +1,409 @@
+
+The \qa{} community is obsessed with evaluation.
+Schools, companies, and newspapers hail new \abr{sota}s and topping
+leaderboards, giving rise to troubling claims~\citep{lipton-19} that an
+``\abr{ai} model tops humans''~\citep{najberg-18} because it `won'
+some leaderboard, putting ``millions of jobs at
+risk''~\citep{cuthbertson-18}.
+But what is a leaderboard? 
+A leaderboard is a statistic about \qa{} accuracy that induces a ranking over participants.
+
+Newsflash: this is the same as a trivia tournament. The trivia community has been doing this for decades~\citep{jennings-06}; 
+Section~\ref{sec:tournament} details this
+overlap between the qualities of a first-class \abr{qa} dataset (and
+its requisite leaderboard).
+The experts running these tournaments are imperfect, but they've learned from their past mistakes (see Appendix~\ref{sec:history} for a brief historical perspective) and created a community that reliably identifies those best at question answering.
+Beyond the format of the \emph{competition}, trivia norms ensure individual questions are clear, unambiguous,
+and reward knowledge (Section~\ref{sec:craft}).
+
+We are not saying that academic \abr{qa} should surrender to trivia questions or the community---far from it!
+The trivia community does not understand the real world information seeking needs of users or what questions challenge computers.
+However, they have well-tested protocols to declare that someone is better at answering questions than another.
+This collection of tradecraft and principles can nonetheless help the \abr{qa} community.
+
+Beyond these general concepts that \abr{qa} can learn from,
+Section~\ref{sec:qb} reviews how the ``gold standard'' of trivia
+formats, \qb{} can improve traditional \abr{qa}.
+We then briefly discuss how research that uses fun, fair, and good
+trivia questions can benefit from the expertise, pedantry, and passion
+of the trivia community (Section~\ref{sec:call}).
+
+
+Last year, I wrote a position paper about the AI researchers who make question answering systems can learn from trivia nerds.  Given the time constraints of the conference and the need to be more “academic”, I couldn’t say everything I wanted to.  So I’ll try not to be too repetitive in this video.  What I would like to do is talk more about how the trivia community learned hard lessons and how the question answering community is still learning those lessons.  I’m hoping by going into a little more detail about how the trivia community made mistakes … might prod computer scientists to see how they might be relevant to how we’re training and evaluating computer question answering systems.
+
+Even if you don’t care about question answering specifically, I think this will help get ideas across about how to do effective evaluation in machine learning.
+Okay, so what are hard won lessons of the trivia community that the geniuses working on AI have yet to master?  1.  Don’t cheat.  2.  Reward knowledge 3. Write good questions.  While that may seem simple, it took a while for humans to figure these things out for trivia competitions, and the artificial intelligence community is still figuring it out.
+
+GI Bill Footage from CBS This Morning:
+https://www.youtube.com/watch?v=fgtvMceoimU
+
+As veterans returned home from World War II, there was a huge thirst for new forms of entertainment.  The Manhattan project and the space race showed the importance of knowledge and expertise, and the GI Bill turned open the taps of knowledge to an information-thirsty populace.  These trends were naturally reflected in popular entertainment, as new quiz shows like Twenty One sprang up.
+
+https://youtu.be/JRKxNpwqBac?t=1154
+
+What’s the matter with 21?  It was rigged, as Herb sandbagged to let his opponent win as documented in the 1994 movie Quiz Show!  
+
+https://youtu.be/bj-m3Ddmn0E?t=83
+
+The handsome Charles van Doren was able to peek at the answers and did pretty well!
+
+Now, the obvious version of cheating is something that we don’t often see in AI research.  But there are subtler ways that systems after a manner cheat.  Let’s think about this very abstractly.  Let’s say that when you are asked some questions, you get to absorb some information that you can use next time.
+
+Now, in the 21 cheating scandal, the process allegedly went something like this: 
+Let’s try practicing these questions!
+Sure …
+Ooh, you got two wrong, here are the correct answers
+You could then compute the total length of the correct answers and that’s how much information “leaked” from the test set.  That’s a lot!  
+
+Now, let’s compare that with a more “reasonable” system that resembles what you actually see for a lot of question answering datasets.  You can submit a system that answers questions (usually as a docker container to make sure it doesn’t phone home), and then you get back a score with how well you did.  There’s no problem here, right?  You don’t know what the answer is, right?
+
+Well, don’t forget that computers have infinite patience … think about it like cracking a password.  You could try all possible answers for position 1, all possible answers for position 2, etc.  But computers can crack more cleverly … you have a set of answers and have some confidence on each guess.  Take your lowest confidence answer, switch the answer.  
+If the score goes up, the guess went from wrong to right.  
+If the score goes down, the guess went from right to wrong.
+If the score stays the same, the guess stayed wrong … keep hunting.
+But in this example, the score went up, so we know that that answer was actually correct.  Nobody explicitly told us the answer was Uluru, but the effect is the same.  If you do it this way, there are thousands of possibilities to try, not millions.  And this is clearly in the realm of possibility for computers: even if you can’t probe every answer, you can still crank up your score quite a bit (and don’t forget that outcomes are correlated!).
+
+Now, I don’t think people would actually do this (or at least admit to it), but there are many black box neural network optimization toolkits that adjust the many parameters of a neural model (often on dev data).  And implicitly, even on test data, you get higher numbers for some models than others … and that’s a signal.  People try out many different models and just use the highest score as the legitimate representative of a system or a technique.
+
+Jesse Dodge has done some great work on how to more fairly report experimental results without cheating: essentially, you need to have a budget for how many comparisons you make.  And then you need to apply the same budget to every system fairly.
+
+And this is why I think the human model for comparing question answering ability (i.e., a trivia tournament) is the model we should follow: you only get to run on the test data. 
+
+And, yeah, maybe the reason is that we can’t wipe human memories.  But I think it’s more realistic, even for computers: you only have a single chance to make a first impression on a user.  And this is why the model is also what happens for DARPA evaluations.
+
+Now, bad stuff happens in this style of evaluation.  We had a particularly embarrassing outing in 2016 when we lost … very badly against some smart humans.  Despite having done much better the year before. 
+
+Us losing (badly) to top quiz bowlers:
+https://www.youtube.com/watch?v=c2kGD1EdfFw
+
+Ugh, that still hurts. But that’s not an argument against these style of evaluations.  You should lower your embarrassment threshold and do evaluations more frequently.
+
+And this is why I use surprise questions for my courses to see how well systems react to novel data.
+
+But it’s not just the sanctity of the test set.  Let’s move on to how you ask questions.
+
+Regular viewers of this channel will know that I am an advocate of the Quizbowl model of asking questions.  But let’s dig into its evolution a little bit more.  
+
+The mythology of Quizbowl says that it was a USO diversion created by Canadian Don Reid as a way of entertaining allied troops in Europe.  However, in my reading it seems that a lot of the core ideas were introduced by host Allen Ludden once it became a radio program.  
+
+But the key idea is that the questions can be interrupted, meaning that part of the skill is correctly balancing your own uncertainty.  Every word is an opportunity for either team to show that it knows more than the other team.  I have videos arguing for why this is the right and proper way to evaluate who knows more about a topic, so I will keep this brief.  
+
+In that 2020 paper I mentioned before, Ben Boerschinger and I argued that you want question answering datasets to be maximally discriminative. 
+
+See the paper for the equations!  But the moral of the story is that the Quizbowl format popularized by College Bowl created the right format for reliably determining who knows the most about a topic.  Every question is discriminative.  In other words, rewarding knowledge rather than buzzer speed or luck (you can see my other videos for why, for instance Jeopardy isn’t a good test of human vs. computer intelligence).
+
+But the format is a necessary but not sufficient condition: you also need to have good quality questions.  
+
+Let’s now turn to the final lesson from the trivia community: writing good questions.  During the early nineties, three heroes created the Academic Competition Federation.  As a point of Terrapin pride, John and Ramesh were Maryland students.  Together, with Carol Guthrie, they created an organization dedicated to creating questions that fully take advantage of the beauty and elegance of the Quizbowl format.
+
+So what innovations did they introduce?  First, avoiding ambiguity: 
+
+So what does a good question look like?  First, you don’t want to have ambiguous questions.  For example, if you ask the question “What’s the capital of Georgia”, you answer beautiful Tblisi but the official answer is Atlanta, then you’re going to be upset! 
+
+Sewon Min recently had a great paper highlighting this problem in modern question answering datasets in 2020, but this was a big part of the diatribes Carol was making in the early nineties.
+
+Part of ACF's style was to make sure that what they’re asking is obvious as a reaction to some of the excesses of ambiguous or misleading college bowl questions.  There are many dimensions of this.  For example, making sure that you don’t just ask “when was the Battle of Hastings” you say things like “in what year” or “day and month required”.  This is a problem in datasets like SQuAD and Natural Questions where it’s not always clear what’s required to answer the question: annotators just highlight whatever is convenient.
+
+So why is this a problem?  Machine learning algorithms have an objective function that they’re trying to optimize.  If they give a correct answer, they should be rewarded so that they can repeat the process on the next question.  If you get the question, “What is the capital of Georgia” and you’re ruled incorrect when you say “Atlanta” (after learning the opposite lesson from the previous training example), you are going to be upset.  And this is true whether you’re a human or a machine learning algorithm.
+
+Similarly, you need to accept all of the possible answers to a question.  Again, we see the same pattern as before: research papers are only now recapitulating the lessons learned by the trivia community 40 years ago.  A great undergrad I’m working with showed that this can make machine learning question answering systems more robust.  If you only accept “Timothy Donald Cook” as the correct answer for “Who is the CEO of Apple”, then that makes “Tim Cook” as wrong as “Tim Apple”.  Again, this confuses algorithms that are trying to learn how to answer these questions.  And even if you just care about climbing the leaderboards, we recently had a paper explaining how to squeeze out a few more points by paying attention to that.
+
+https://slate.com/culture/2019/04/jeopardy-quiz-bowl-connection-ken-jennings.html
+
+Another organization that should be mentioned in the promulgation of good Quizbowl is National Academic Quiz Tournaments, founded by R. Hentzel.  Not only have they created a system of good, discriminative high-quality tournaments for middle school and high school students in North America, they have also served as the employer of people like Ken Jennings and Larissa Kelly (and full disclosure, me too in the early aughts) and have made Quizbowl more professional.  Here’s Ken Jenning’s extolling the virtues of Quizbowl in a NAQT promotional video.
+
+There are many ways that this is relevant: things have different names because of language, history, pen names, nicknames, convenience, mathematical equivalence, or domain-specific rules.  The new professional organizations have created systematic evaluations that, because the goal is to reward knowledge, also are the kinds of rules for judging the correctness of machine answers.  Even if a user might prefer to get their answers in Fahrenheit, the computer should know that they’re the same thing!
+
+But these organizations are not just question writing organizations.  Their goal is to create efficient systems for as quickly as possible determining out of 256 teams at a convention center which knows the most.  In addition to the Quizbowl format, the selection of appropriately difficult questions asked at the right time to the right teams makes this possible.
+
+Here, I don’t even have a “perfect” recent paper to flash on the screen to show that, yeah, computer science knows that it’s a problem 40 years to late.  We’ve been working on using item response theory and adversarial interfaces, but there’s still quite a ways to go.  
+
+Let’s take how computer comparisons lag behind those for humans.  While there are monthly competitions to see which human can best answer questions, computers are reusing stale data from 2018 to see who’s best.  And those questions are written by random people on the internet: either crowdworkers or clueless people looking for answers in a search engine.  In contrast, domain experts are writing questions lovingly edited by people like Ken Jennings and Larissa Kelly when people go to NAQT or ACF competitions.  
+
+And while things like Dynabench are trying to create adversarial datasets (or our own TrickMe interface), these datasets are tiny compared to the tens of thousands of questions written every year for human trivia competitions.  I, of course, think that this is a possibility for synergies between the two communities.
+
+Computers can help find patterns and reduce drudgery: make human trivia more exciting and efficient.  And the trivia experts, with their depth of knowledge, can help computers understand more of the world.  Likewise, the best practices of the hard won victories of the last seventy years of trivia can help machine learning researchers avoid the same mistakes.
+
+And, most importantly, I think it can be fun for everybody, especially us researchers.
+ 
+\section{The Craft of Question Writing}
+\label{sec:craft}
+
+Trivia enthusiasts agree that questions need to be well written (despite other disagreements).
+Asking ``good questions'' requires sophisticated pragmatic reasoning~\citep{hawkins-15}, and pedagogy explicitly acknowledges the complexity of writing effective questions for assessing student performance~\citep[focusing on multiple choice questions]{Haladyna-04}. 
+
+\abr{qa} datasets, however, are often collected from the wild or written by untrained
+crowdworkers.
+Crowdworkers lack experience in 
+crafting questions and may introduce idiosyncrasies that shortcut machine learning~\citep{geva-19}.  
+Similarly, data collected from the wild
+such as Natural Questions~\citep{kwiatkowski-19} or AmazonQA~\citep{gupta-19} by design have vast variations in quality.
+In the previous section, we focused on how datasets as a whole should be structured.
+Now, we focus on how specific \emph{questions} should be structured to make the dataset as valuable as possible.
+
+
+\subsection{Avoiding ambiguity and assumptions}
+\label{sec:ambiguity}
+
+Ambiguity in questions not only frustrates answerers who resolve the ambiguity `incorrectly'.
+Ambiguity also frustrates the goal of using questions to assess knowledge.
+Thus, the \abr{us} Department of Transportation explicitly bans ambiguous questions from exams for flight instructors~\citep{dot-08}; and the trivia community has likewise developed rules and norms that prevent ambiguity.
+While this is true in many contexts, examples are rife in format called \qb{}~\citep{boyd-graber-12}, whose very long questions\footnote{Like \jeopardy{}, they are not syntactically questions but still are designed to elicit knowledge-based responses; for consistency, we still call them questions.} showcase trivia writers' tactics.
+For example, \qb{} author Zhu Ying (writing for the 2005 \abr{parfait} tournament) asks participants to identify a fictional character while warning against possible confusion [emphasis added]:
+\begin{quote}
+ He's {\bf not Sherlock Holmes}, but his address is 221B. He's {\bf not the Janitor on Scrubs}, but his father is played by R. Lee Ermy. [\dots] For ten points, name this misanthropic, crippled, Vicodin-dependent central character of a FOX medical drama. \\
+{\bf ANSWER:} Gregory \underline{House}, MD
+\end{quote}
+
+In contrast, \qa{} datasets often contain ambiguous and
+under-specified questions.
+While this sometimes reflects real world complexities such as actual
+under-specified or ill-formed search
+queries~\citep{faruqui-18,kwiatkowski-19}, ignoring this ambiguity is
+problematic.
+As a concrete example, Natural Questions~\citep{kwiatkowski-19} answers ``what year did the us hockey team win the Olympics'' with \underline{1960} and \underline{1980}, ignoring the \abr{us} women's team, which won in 1998 and 2018, and further assuming the query is about \emph{ice} rather than \emph{field} hockey (also an Olympic event).
+Natural Questions associates a page about the United States men's national ice hockey team, arbitrarily removing the ambiguity \textit{post hoc}.
+However, this does not resolve the ambiguity, which persists in the original question: information retrieval arbitrarily provides one of many interpretations.
+True to their name, Natural Questions are often under-specified when users ask a question online.
+
+The problem is neither that such questions exist nor that machine
+reading \abr{qa} considers questions given an associated context.
+The problem is that tasks do not explicitly acknowledge the original
+ambiguity and gloss over the implicit assumptions in the data.
+This introduces potential noise and bias (i.e., giving a bonus to systems that make
+the same assumptions as the dataset) in leaderboard rankings. 
+At best, these will become part of
+the measurement error of datasets (no dataset is perfect). 
+At worst, they will recapitulate the biases that went into the creation of the datasets.
+Then, the community will implicitly equate the biases with correctness: you get high scores if you 
+adopt this set of assumptions.
+These enter into real-world systems, further perpetuating the bias.
+Playtesting can reveal these issues (Section~\ref{sec:fun}), as implicit assumptions 
+can rob a player of correctly answered questions.
+If you wanted to answer \underline{2014} to ``when did Michigan last win the championship''---when the Michigan State Spartans won the Women's Cross Country championship---and you cannot because you chose the wrong school, the wrong sport, and the wrong gender,
+you would complain as a player; researchers instead discover latent assumptions that creep into the data.\footnote{Where to draw the line is a matter of judgment; computers---which lack common sense---might find questions ambiguous where humans would not.}
+
+It is worth emphasizing that this is not a purely hypothetical problem. For example, Open Domain Retrieval Question Answering~\citep{lee-19} deliberately avoids providing a reference context for the question in its framing but, in re-purposing data such as Natural Questions, opaquely relies on it for the gold answers.
+
+\subsection{Avoiding superficial evaluations}
+
+A related issue is that, in the words of \citet{voorhees-00}, ``there is no such
+thing as a question with an obvious answer''.
+As a consequence, trivia question authors 
+delineate acceptable and unacceptable answers.
+
+For example, in writing for the trivia tournament Harvard Fall XI, Robert Chu uses a mental model of an answerer to explicitly delineate the range of acceptable correct answers:
+\begin{quote}
+     In Newtonian gravity, this quantity satisfies Poisson's equation. [\dots] For a dipole, this quantity is given by negative the dipole moment dotted with the electric field. [\dots] For 10 points, name this form of energy contrasted with kinetic.\\
+    {\bf ANSWER:} \underline{potential energy} \textit{(prompt on energy; accept specific types like electrical potential energy or gravitational potential energy; do not accept or prompt on just ``potential'')}
+\end{quote}
+
+Likewise, the style guides for writing questions stipulate that you
+must give the answer type clearly and early on.
+These mentions specify whether you want a book, a collection, a movement, etc.  
+It also signals the level of specificity requested.  
+For example, a question about a date must state ``day and month required'' (\underline{September 11}, ``month and year required'' (\underline{April 1968}), or ``day, month, and year required'' (\underline{September 1, 1939}).
+This is true for other answers as well: city and team, party and
+country, or more generally ``two answers required''.
+Despite these conventions, no pre-defined set of answers is perfect,
+and every worthwhile trivia competition has a process for adjudicating
+answers.
+
+In high school and college national competitions and game shows,
+if low-level staff cannot resolve the issue by throwing out a single
+question or accepting minor variations (\underline{America} instead of
+\underline{\abr{usa}}), the low-level staff contacts the tournament
+director.
+The tournament director, who has a deeper knowledge of rules and questions, often decide the issue.
+If not, the protest goes
+through an adjudication process designed to minimize
+bias:\footnote{\smallurl{https://www.naqt.com/rules/\#protest}}
+write the summary of the dispute,
+get all parties to agree to the summary,
+and then hand the decision off to mutually agreed experts from the tournament's phone tree.
+The substance of the disagreement is communicated (without identities), and the experts apply the rules and decide.
+
+Consider what happened 
+when a particularly inept \jeopardy{} contestant\footnote{\smallurl{http://www.j-archive.com/showgame.php?game_id=6112}} did not answer \underline{laproscope} to ``Your surgeon could choose to take a look inside you with this type of fiber-optic instrument''.
+Since the van Doren scandal~\citep{freedman-97}, every television trivia contestant has an advocate assigned from an
+auditing company.
+In this case, the advocate initiated a process that went to a panel of judges who then
+ruled that \underline{endoscope} (a more general term) was also correct.
+
+The need for a similar process seems to have been well-recognized
+in the earliest days of \qa{} system bake-offs such as \abr{trec-qa}, and \citet{voorhees-08} notes that
+\begin{quote}
+    [d]ifferent \abr{qa} runs very seldom return exactly the same [answer], and it is quite difficult to determine automatically whether the difference [\dots] is significant.
+\end{quote} 
+In stark contrast to this, \qa{} datasets typically only provide a single string or, if one is lucky,
+several strings.  
+A correct answer means \emph{exactly} matching these strings or at least
+having a high token overlap \fone{}, and failure to agree with the
+pre-recorded admissible answers will put you at an uncontestable
+disadvantage on the leaderboard (Section~\ref{subsection:measuring-what-you-care-about}).  
+
+To illustrate how current evaluations fall short of meaningful
+discrimination, we qualitatively analyze two near-\sota{} systems on
+\squad{} V1.1: the original \xlnet{}~\citep{yang-19} and a subsequent
+iteration called \xlnet{}-123.\footnote{We could not find a paper
+  describing \xlnet{}-123, the submission is by
+  \url{http://tia.today}.}
+
+Despite \xlnet{}-123's margin of almost four absolute \fone{} ($94$ vs
+$98$) on development data, a manual inspection of a sample of 100 of
+\xlnet{}-123's wins indicate that around two-thirds are `spurious':
+$56\%$ are likely to be considered not only equally good but
+essentially identical; $7\%$ are cases where the answer set omits a
+correct alternative; and $5\%$ of cases are `bad'
+questions.\footnote{Examples in
+  Appendix~\ref{sec:qualitative-analysis}.}
+
+Our goal is not to dwell on the exact proportions, to minimize the achievements of these strong systems, or to minimize the usefulness of quantitative evaluations.
+We merely want to raise the limitation of \emph{blind automation} for distinguishing between
+systems on a leaderboard. 
+
+Taking our cue from the trivia community, we present an alternative
+for \abr{mrqa}.
+Blind test sets are created for a specific time; all systems are submitted simultaneously.
+Then, all questions and answers are revealed.
+System authors can protest correctness rulings on questions, directly
+addressing the issues above. 
+After agreement is reached,
+quantitative metrics are computed for comparison purposes---despite their inherent limitations they at least can be
+trusted.
+Adopting this for \abr{mrqa} would require creating a new, smaller test
+set every year.
+However, this would gradually refine the annotations and process.
+
+This suggestion is not novel: \citet{voorhees-00} accept automatic
+evaluations ``for experiments internal to an organization where the
+benefits of a reusable test collection are most significant (\emph{and
+  the limitations are likely to be understood})''~(our emphasis) but
+that ``satisfactory techniques for [automatically] evaluating new
+runs'' have not been found yet.  We are not aware of any change on
+this front---if anything, we seem to have become more insensitive as a
+community to just how limited our current evaluations are.
+
+\subsection{Focus on the bubble}
+
+While every question should be perfect, time and resources are limited.  
+Thus, authors and editors of tournaments ``focus on the bubble'', where the ``bubble'' are the questions most likely to discriminate between top teams at the tournament.
+These questions are thoroughly playtested, vetted, and edited.
+Only after these questions have been perfected will the other questions undergo the same level of polish.
+
+For computers, the same logic applies.  
+Authors should ensure that these discriminative questions are correct, free of ambiguity, and unimpeachable.
+However, as far as we can tell, the authors of \qa{} datasets do not give any special attention to these questions.
+
+Unlike a human trivia tournament, however---with finite patience of the participants---this does not mean that you should necessarily remove all of the easy or hard questions from your dataset.
+This could inadvertently lead to systems unable to answer simple questions like ``who is buried in Grant's tomb?''~\cite[Chapter 7]{dwan-00}.
+Instead, focus more resources on the bubble.
+
+
+
+\section{Why \qb{} is the Gold Standard}
+\label{sec:qb}
+
+We now focus our thus far wide-ranging \abr{qa} discussion to a specific format: \qb{}, which has many of the desirable properties outlined above.
+We have no delusion that mainstream \abr{qa} will universally adopt this format (indeed, a monoculture would be bad).
+However, given the community's emphasis on fair evaluation, computer \abr{qa} can borrow \emph{aspects} from the gold standard of human \abr{qa}.
+
+We have shown example of \qb{} questions, but we have not explained how the format works; see \citet{DBLP:journals/corr/abs-1904-04792} for more.
+You might be scared off by how long the questions are.
+However, in real \qb{} trivia tournaments, they are not finished because the questions are \emph{interruptible}.
+
+\paragraph{Interruptible}
+
+A moderator reads a question.
+Once someone knows the answer, they use a signaling device to ``\emph{buzz in}''.
+If the player who buzzed is right, they get points.
+Otherwise, they lose points and the question continues for the other team.  
+
+Not all trivia games with buzzers have this property, however.
+For example, take \jeopardy{}, the subject of Watson's \textit{tour de force}~\citep{ferruci-10}.  
+While \jeopardy{} also uses signaling devices, these only work \emph{once the question has been read in its entirety}; Ken Jennings, one of the top \jeopardy{} players (and also a \qb{}er) explains it on a \textit{Planet Money} interview~\citep{malone-19}: \clearpage
+\begin{quote}
+{\bf Jennings:} The buzzer is
+    not live until Alex finishes reading the question. And if you buzz
+    in before your buzzer goes live, \emph{you actually lock yourself out
+    for a fraction of a second}. So the big mistake on the show is
+    people who are all adrenalized and are buzzing too quickly, too
+    eagerly. \\
+{\bf Malone:} \abr{ok}. To some degree, \jeopardy{} is kind of a video game, and a \emph{crappy video game where it's, like, light goes on, press button}---that's it. \\
+{\bf Jennings:} (Laughter) Yeah. \\
+\end{quote}
+\jeopardy{}'s buzzers are a gimmick to ensure good television; however, \qb{} buzzers discriminate knowledge (Section~\ref{sec:discriminative}).
+Similarly, while \triviaqa{}~\citep{joshi-17} is written by knowledgeable writers, the questions are not pyramidal.
+
+\paragraph{Pyramidal}
+\label{sec:pyramidality}
+
+Recall that effective datasets discriminate the best
+from the rest---the higher the proportion of effective
+questions~$\rho$, the better.
+\qb{}'s~$\rho$ is nearly 1.0 because discrimination happens
+\emph{within} a question: after every word, an answerer must decide
+if they know enough to answer.
+\qb{} questions are arranged so that questions are maximally \emph{pyramidal}: questions begin with hard clues---ones that require deep understanding---to more accessible clues that are well known.
+
+
+\paragraph{Well-Edited}
+
+\qb{} questions are created in phases.
+First, the \emph{author} selects the answer and assembles (pyramidal) clues.
+A \emph{subject editor} then removes ambiguity, adjusts acceptable answers, and tweaks clues to optimize discrimination.
+Finally, a \emph{packetizer} ensures the overall set is diverse, has uniform difficulty, and is without repeats.
+
+\paragraph{Unnatural}
+\label{sec:unnatural}
+
+Trivia questions are fake: the asker already knows the answer.  
+But they're no more fake than a course's final exam, which---like leaderboards---are designed to test knowledge.
+
+Experts know when questions are ambiguous (Section~\ref{sec:ambiguity}); while ``what play has a character whose father is dead'' could be \textit{Hamlet}, \textit{Antigone}, or \textit{Proof}, a good writer's knowledge avoids the ambiguity.
+When authors omit these cues, the question is derided as a ``hose''~\citep{2013-eltinge}, which robs the tournament of fun (Section~\ref{sec:fun}).
+
+One of the benefits of contrived formats is a focus on specific phenomena. 
+\citet{dua-19} exclude questions an existing \abr{mrqa} system could answer to focus on challenging quantitative reasoning.
+One of the trivia experts consulted in \citet{wallace-19} crafted a question that tripped up neural \abr{qa} by embedding the phrase ``this author opens Crime and Punishment'' into a question; the top system confidently answers \underline{Fyodor Dostoyevski}.
+However, that phrase was in a longer question ``The narrator in \textit{Cogwheels} by this author opens \textit{Crime and Punishment} to find it has become \textit{The Brothers Karamazov}''. 
+Again, this shows the inventiveness and linguistic dexterity of the trivia community.
+
+A counterargument is that real-life questions---e.g., on Yahoo!
+Questions~\citep{szpektor-13}, Quora~\citep{iyer-17} or web
+search~\citep{kwiatkowski-19}---ignore the craft of question writing.
+Real humans react to unclear questions with confusion or divergent
+answers, explicitly answering with how they interpreted the original
+question (``I assume you meant\dots'').
+
+Given real world applications will have to deal with the inherent noise and ambiguity of unclear questions, our systems must cope with it. 
+However, addressing the real world cannot happen by glossing over its complexity.
+
+
+
+
+\paragraph{Complicated} 
+
+\qb{} is more complex than other datasets.  
+Unlike other datasets where you just need to decide \emph{what} to
+answer, in \qb{} you also need to choose \emph{when} to answer the
+question.\footnote{This complex methodology can be an advantage.  The
+  underlying mechanisms of systems that can play \qb{} (e.g.,
+  reinforcement learning) share properties with other tasks, such as
+  simultaneous
+  translation~\citep{grissom:he:boyd-graber:morgan-2014,ma-etal-2019-stacl},
+  human incremental processing~\citep{levy-08,levy-11}, and opponent
+  modeling~\citep{he-16}.}
+While this improves the dataset's discrimination, it can hurt
+popularity because you cannot copy/paste code from other \abr{qa}
+tasks.
+The cumbersome pyramidal structure complicates\footnote{But does not
+  necessarily preclude, as the Illinois High School
+  Scholastic Bowl Coaches Association shows:
+\begin{quote}
+    This is the smallest counting number which is the radius of a sphere whose volume is an integer multiple of $\pi$. It is also the number of distinct real solutions to the equation $x^7-19x^5=0$. This number also gives the ratio between the volumes of a cylinder and a cone with the same heights and radii. Give this number equal to the log base four of sixty-four.
+\end{quote}} some questions (e.g.,
+what is log base four of sixty-four).
+
+
+

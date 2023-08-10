@@ -1,0 +1,43 @@
+
+
+
+
+
+
+Often, when I talk about search engines and how to build them, these ubiquitous portals to the Internet—whether you’re using Bing, Yahoo!, Baidu, or Ask Jeeves—seem like a fundamental law of science.  But it wasn’t always like that: there was a time before search engines, and although there’s a certain charm to card catalogs, that’s not a way to find information.
+
+My goal in this video is to tell the story of the Cranfield paradigm and how it made the twentieth century Internet possible.  Most of this is drawn from the article “The Evolution of Cranfield” by Ellen Voorhees, which I encourage you to read something with more detail, more references, and fewer errors.
+
+The story begins in 1967 with Cyril Cleverdon at Cranfield University in England: which has an airport right on campus.  Pretty cool!  Here at the University of Maryland we have to walk a whole fifteen minutes to get to the oldest continuously operated airport in the world.
+
+Cyril Cleverdon was in charge of their library there.  And he was big into computers.  He wanted to see if he could measure how good an index was.  
+
+Wait a second.  When I say “index”, what do you think of?
+
+If you're over 35 and went to a public school, you might think of this sort of thing in the back of a book.  But if you’re younger and a computer scientist, you probably think of an index as a lookup table of every darn word possible.
+
+The reason you think that is because of the Cranfield experiments.  His claim, which was quite controversial at the time, was that you could look up documents based on the words in the document.  You didn’t need laboriously curated indices you could use a machine, an engine if you will, to search through them.
+
+The academic community at the time was skeptical.  There’s no way these newfangled search engines could be better than a trained librarian armed with a card catalog!
+
+Before we analyze this, just a reminder of how a search engine query is evaluated.  Again, this is old hat now but was revolutionary at the time.  To evaluate a system’s ability to search a dataset, you take some queries from users and then find the truly relevant documents to that query.  Then, given a system’s results, you compute the precision—out of all of the documents they returned how many were right—and recall—out of all possible right documents how many did they find.
+
+Let’s pause for a moment to recognize how revolutionary this was.  Once you found the relevant documents, you can evaluate *any* system.  Before, you had to run an expensive user experiment every time you tweaked your system: did that output look good?  How about this one.  With a reusable test collection, you could turn the crank on your retrieval system without pesky humans getting in the way.  Just check whether the red box finds the relevant documents!
+
+But not everybody was convinced.  The Cranfield paradigm is making a lot of assumptions here: 
+first, if a document is relevant, it’s equally relevant: everything is equally relevant: showing you my explanation of topic modeling is as good as a video from Siraj Raval’s
+The users’ information needs are static; the answer to the question “who is the president of the united states” never changes, after all
+The next assumption is that all users are the same: when I ask the question “why is the sky blue”, I should get the same answer as my six year old daughter
+Finally, the Cranfield paradigm that somebody, somehow can find the right answer from thousands or millions of documents.
+
+Despite all those flaws, the assumptions—on average—mostly hold.  That’s why we’re still talking about the Cranfield paradigm fifty years later.  And there were some big additions to the Cranfield paradigm.  Most prominent was the use of better document representations and creating larger test collections, which was spearheaded by Karen Spärk Jones a little bit west of Cranfield at Cambridge.  These took the theoretical insights of the original Cranfield experiments and made them into something that could actually work.  Again, this was revolutionary: as a result the British Computing Society named their annual award for researchers in this area after Karen Spärk Jones.
+
+But for the Cranfield paradigm to really shape how we get answers from the internet, we need to leave central England and meet new player: NIST.  The American National Institute for Standards and Technology.  
+
+While the story of the birth of the Cranfield paradigm is an innovative insight with Cyril Cleverdon combined with the vision of Karen Spärk Jones, the story of NIST’s development of these test collections is one of slow, methodological iteration.  Building up decades of expertise and slowly building up bigger and better test collections, updating them each year so that by the time Google’s PageRank came around, there’s no question about how to tell whether a search engine is good enough.
+
+Just fire up the latest test collection from the TREC conference, compute your precision and recall, and call it a day.
+
+And this approach toward evaluation is with us in everything we do.  Test collections are how we evaluate virtual assistants, question answering systems, and just about every aspect of the modern Internet.  And it’s not always for the best.  The ubiquity of these reusable test collections leads to overfitting.  TREC puts out new datasets every year or so, but that’s not fast enough for machine learning in the 21st century!  And while the focus on real user data is good, the data you collect is biased by who is using technology (mostly rich people from Western countries) and how they’ve been trained to ask questions through decades of living with Cranfield-paradigm systems.  And unlike people who work on, say, human-computer interaction, those building QA systems often don’t actually put their system in front of real users.  And I don’t think that’s what Cyril Cleverdon would have wanted.  His goal, as a librarian, was to help users.  And yes, reusable test collections help you do that—and they’ve spawned multibillion dollar companies around the world—but at the end of the day you still need to check whether real users are actually finding the information they need.
+
+\jbgcomment{Forward point to leaderboard chapter}

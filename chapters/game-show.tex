@@ -20,3 +20,71 @@ that ``satisfactory techniques for [automatically] evaluating new
 runs'' have not been found yet.  We are not aware of any change on
 this front---if anything, we seem to have become more insensitive as a
 community to just how limited our current evaluations are.
+
+
+
+
+\subsection{Written, not Spoken}
+
+The ``weakness'' of Watson that got the most attention at the time was
+that it didn't listen to speech.
+%
+Again, I think this was a fine decision: a deaf player could do
+perfectly well on \jeopardy{} (if they have good eyesight\dots I
+wish they also put the clues up on the big screen behind Alex
+instead of just on the too small game board).
+
+In this case, I don't even think this was unfair to the humans.
+%
+If anything, it's unfair to Watson (for reasons that should be clear
+in a second).
+%
+For this specific human--computer matchup, I don't think it is
+important (and perhaps it got more attention at the time to distract from the
+other issues I've already talked about).
+
+For a human, the speech and the text are redundant, but this reveals a
+weakness of Watson: it could not do nearly as well if it only had
+sound~\citep{Peskov-19}.
+%
+While humans in context can tell the difference between ``Kilkenny'' (a town in
+Ireland) and ``kill Kenny'' (the punchline of a \textit{South Park}
+joke), this is a place that computers still struggle (as anyone using
+their phone for dictation knows too well).
+%
+I'll talk more about how to make human--computer question answering
+more fun with audio in Chapter~\ref{ch:game-show}; but it's worth
+reflecting on all of the richness that gets lost when Watson ``plays''
+\jeopardyp{}.
+
+Computers must represent the text that they process as numbers.
+%
+For Watson, the clue \question{There were once two cats from this Irish town
+each thought that was one cat too many} gets transformed into a
+vector.
+%
+That vector is used as input to a search engine that turns up evidence
+that can answer the question (similar questions, Wikipedia pages).
+%
+That Watson can answer many questions like this is amazing.
+
+\jbgcomment{Connect to DPR, DAN, TF-IDF, etc. (Perhaps in later chapter)}
+
+But it does not come close to what humans can do when they listen to
+the same question (and not just read it from a screen).
+% 
+Such a person gathers additional
+information: Alex uses an Irish accent, emphasizes ``too many'' to
+clue the player that the answer rhymes with it, and brings ``too'' and
+``many'' together to make sound a little bit more like Kilkenny.
+%
+There is a famous quote in artificial intelligence that ``you can't
+cram a sentence into a vector'' (with colorful profanity in its first
+telling).
+
+And while computers can answer these questions from just a vector,
+humans are doing more.
+%
+That Watson could still win without these clues shows that \jeopardy{}
+is not deep enough to match the test of intelligence that Turing
+dreamed of in the Turing Test (Chapter~\ref{ch:turing}).

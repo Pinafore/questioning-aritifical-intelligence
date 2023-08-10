@@ -8,7 +8,8 @@
 \author{Jordan Boyd-Graber}
 \publisher{University of Maryland}
 
-\newif\ifcomment\commentfalse
+\newif\ifcomment\commenttrue
+\newif\ifproposal\proposalfalse
 \input{style/preamble}
 
 %%
@@ -38,16 +39,33 @@
 
 % Generates the index
 \usepackage{makeidx}
+\usepackage{tikz}
 \usepackage{natbib}
 \setcitestyle{authoryear}
 
-\newcommand{\chapterfile}[2]{\chapter{#2}
+\newcommand{\proposalpart}[1]{
+  \ifproposal
+  \subsection{#1}
+  \else
+  \part{#1}
+  \fi
+}
+
+\newcommand{\chapterfile}[3]{
+  \ifproposal
+  \paragraph{#3}
+  \input{chapter/blurb/#2}
+  \else
+  \chapter{#3}
   \label{ch:#1}
-  \input{chapters/#1}}
+  \input{chapters/#1-#2}
+  \fi}
 
 \makeindex
 \newcommand{\blankpage}{\newpage\hbox{}\thispagestyle{empty}\newpage}
 
+
+\graphicspath{{figures/datsets}{figures/leaderboard}}
 
 \begin{document}
 \setcounter{secnumdepth}{0}
@@ -59,49 +77,74 @@
 
 % Front matter
 
-\input{chapters/00-frontmatter}
+\input{chapters/000-frontmatter}
+
+\ifproposal
 \input{chapters/05-proposal}
+\fi
 
 
-% \tableofcontents
+\ifproposal
+
+\else
+
+\tableofcontents
 
 
 
 \clearpage
 
-% \part{Question Answering Past}
+
+\proposalpart{Question Answering Past}
+
+
+\chapterfile{110}{epic}{The Mythic Roots of Question Answering}
+
+\chapterfile{120}{civilization}{How Question Answering Saved Civilization}
 
 % Epic Questions
 % - Sphynx
-% - Gestumblindi: the art of making a riddle is prized, and it is the
-% Gods who are best at the task
+
 
 % Questions as the Foundation of Civilization
 % - Wu Zetian
 % - Pendelton act
 
 
-<<<<<<< HEAD
-%\part{Question Answering Present}
+\chapterfile{130}{turing}{The Turing Test: A Game Show Pitch that
+  Defined Artificial Intelligence}
 
-\chapterfile{turing}{The Turing Test: A Game Show Pitch that Defined Artificial Intelligence}
+\chapterfile{140}{ir}{The Cranfield Paradigm: How a University with an Airstrip made Google Possible}
 
-\chapterfile{qb}{The Gold Standard of Trivia}
-=======
->>>>>>> 433962a (removing outline)
+\proposalpart{Question Answering Present}
 
-\chapterfile{watson}{Watson on Jeopardy!: \\ Unquestioned Answers from
-\abr{ibm}'s tour de force}
 
-<<<<<<< HEAD
-\chapterfile{modern-qa}{How Google, Alexa, and Siri Answer Questions Today}
+
+\chapterfile{240}{qb}{The Gold Standard of Trivia}
+\fi
+
+\chapterfile{250}{watson}{Watson on Jeopardy!: \\ Unquestioned Answers from \abr{ibm}'s tour de force}
+
+% \chapterfile{modern-qa}{How Google, Alexa, and Siri Answer Questions Today}
 %  - How to make questions harder (Adversarial)
+  \ifproposal
 
-% QA Datasets [NLP]
+  \else
+  
+\chapterfile{260}{datasets_found}{Found \abr{qa} Data}
+\chapterfile{261}{datasets_natural}{Natural Questions and their Discontents}
+\chapterfile{262}{datasets_constructed}{Build Your Own Dataset}
+
+\chapterfile{270}{methods_kb}{Machine Reading}
+\chapterfile{271}{methods_mr}{Machine Reading}
+\chapterfile{272}{methods_deep_retrieval}{Machine Reading}
+\chapterfile{273}{methods_generation}{Machine Reading}
+
+\chapterfile{280}{leaderboards}{Siri takes the SAT}
 
 % How computers answer questions [NLP]
 
-\chapterfile{leaderboard}{What Leaderboards have Done to \abr{ai} Research}
+% \chapterfile{leaderboard}{What Leaderboards have Done to \abr{ai} Research}
 
 % What Leaderboards have Done to Research [NLP]
 
@@ -111,7 +154,7 @@
 
 % How to Write a Good Question
 
-% \part{Question Answering Future}
+% \proposalpart{Question Answering Future}
 
 % Science Fiction QA
 % - Voigt-Kampff
@@ -121,12 +164,11 @@
 
 %Computer Game Shows of the Future
 
-\chapterfile{game-show}{Computer Game Shows of the Future}
-=======
-\part{Question Answering Future}
+% \chapterfile{game-show}{Computer Game Shows of the Future}
 
->>>>>>> 433962a (removing outline)
+% \proposalpart{Question Answering Future}
 
+\fi
 
 
 
