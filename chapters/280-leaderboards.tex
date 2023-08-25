@@ -1,76 +1,87 @@
-In a previous video, I talked about how questions created modern civilization: the use of exams to select civil servants.  Compared to the alternative that preceded them, I think these tests were an unmitigated good.  
+In a previous video, I talked about how questions created modern civilization:
+the use of exams to select civil servants.  Compared to the alternative that
+preceded them, I think these tests were an unmitigated good.
 
-Today, we’re talking about something where the verdict of history is less clear-cut: standardized tests and the psychometric analysis that is applied on top of them.  When standardized tests were introduced, the ideal was that these tests could make admissions more scientific and less random or connected to family ties.  
+Today, we’re talking about something where the verdict of history is less
+clear-cut: standardized tests and the psychometric analysis that is applied on
+top of them.  When standardized tests were introduced, the ideal was that
+these tests could make admissions more scientific and less random or connected
+to family ties.
 
-At the end of the 19th century, a couple of universities banded together to create the “College Board” to administer tests to see who could get into universities like Harvard, Yale, and Princeton.  Do well on the test, and you get in!
+At the end of the 19th century, a couple of universities banded together to
+create the ``College Board'' to administer tests to see who could get into
+universities like Harvard, Yale, and Princeton.  Do well on the test, and you
+get in!
 
-We’ll talk about the math in the next video, but for now I want to focus on the promise and the big picture of standarized testing and how it relates to the leaderboards that have taken over machine learning.
+We’ll talk about the math in the next video, but for now I want to focus on
+the promise and the big picture of standarized testing and how it relates to
+the leaderboards that have taken over machine learning.
 
-Let’s talk about what the College Board and later Educational Testing Service promises: anybody can sign up for a test whenever they want, and it gives a number that pops out that accurately describes how smart they are.  Let’s call that number theta to stand for the skill of a student.
+Let’s talk about what the College Board and later Educational Testing Service
+promises: anybody can sign up for a test whenever they want, and it gives a
+number that pops out that accurately describes how smart they are.  Let’s call
+that number theta to stand for the skill of a student.
 
-So can you just report accuracy?  Would that be a good way of getting theta?  No!  The test in January might not be the same as the test in July.  So the mathematical challenge is how to create that estimate theta so that it’s consistent against different tests and to select questions from the pool of possible questions so that you can reliably generate that number theta.  And that’s where the “standardized” in standardized tests comes from.  
+So can you just report accuracy?  Would that be a good way of getting theta?
+No!  The test in January might not be the same as the test in July.  So the
+mathematical challenge is how to create that estimate theta so that it’s
+consistent against different tests and to select questions from the pool of
+possible questions so that you can reliably generate that number theta.  And
+that’s where the ``standardized'' in standardized tests comes from.
 
-The process has changed over the years … at first you had to give everybody the same test at each offering of the test, but now they do adaptive testing to do a better job of estimating theta for a specific test-taker.  But the two big problems remain the same: making theta standardized and describing in general what kind of questions they should be asking.
+The process has changed over the years\dots at first you had to give everybody
+the same test at each offering of the test, but now they do adaptive testing
+to do a better job of estimating theta for a specific test-taker.  But the two
+big problems remain the same: making theta standardized and describing in
+general what kind of questions they should be asking.
 
 \jbgcomment{Need to also connect to leaderboards}
 
-So why am I, a machine learning researcher, talking about this?  Is it because I want to talk about how Harvard added admissions essays to standardized tests because they were concerned that too many jews were getting it?  Or because the federal government deemed UCLA’s admissions policies racist because not enough qualified Asians were getting in?  Or how there’s now a backlash against standardized tests because African Americans systematically have lower scores than other groups?  Nope!  As animated as I get about these topics, these are decidedly out of scope of this video.
+So why am I, a machine learning researcher, talking about this?  Is it because
+I want to talk about how Harvard added admissions essays to standardized tests
+because they were concerned that too many Jews were getting in?  Or because
+the federal government deemed UCLA’s admissions policies racist because not
+enough qualified Asians were getting in?  Or how there’s now a backlash
+against standardized tests because African Americans systematically have lower
+scores than other groups?  Nope!  As animated as I get about these topics,
+these are decidedly out of scope of this video.
 
-But I mention them because they’re definitely real problems, and causes a lot of people to hate standardized tests.  But it’s not a problem with the *math* behind standardized tests.  It’s a problem with the people who write the questions and what happens when the results come out.  And QA systems aren’t immune from these problems either, as I talk about elsewhere.  But the math is sound.
+But I mention them because they’re definitely real problems, and causes a lot
+of people to hate standardized tests.  But it’s not a problem with the *math*
+behind standardized tests.  It’s a problem with the people who write the
+questions and what happens when the results come out.  And QA systems aren’t
+immune from these problems either, as I talk about elsewhere.  But the math is
+sound.
 
-Hopefully it reminds you of a leaderboard: systems come in, you need to give them a score.  But the machine learning community has a distinct advantage here.  You can wipe the memory of a computer system, so you can give it the same test over and over again.  But as I argued before in my plea for an embrace of the Manchester paradigm from trivia shows, this isn’t always the case: there’s still some information that gets leaked.
-
-
-So we’ll get into the math in the next video.  And it's not just for creating leader boards in machine learning and natural language processing.  Very similar models are used for rating players in chess and other games and for predicting how politicians will vote on particular bills.  
-
-
-
-Leaderboards are widely used in \nlp{} and push the field forward.
-While leaderboards are a straightforward ranking of \nlp{} models, this simplicity can mask nuances in evaluation \itms{} (examples) and \subjs{} (\nlp{} models).
-Rather than replace leaderboards, we advocate a re-imagining so that they better highlight if and where progress is made.
-Building on educational testing, we create a Bayesian leaderboard model where latent \subj{} skill and latent \itm{} difficulty predict correct responses.
-Using this model, we analyze the ranking reliability of leaderboards.
-Afterwards, we show the model can guide what to annotate, identify annotation errors, detect overfitting, and identify informative examples.
-We conclude with recommendations for future benchmark tasks.
+Hopefully it reminds you of a leaderboard: systems come in, you need to give
+them a score.  But the machine learning community has a distinct advantage
+here.  You can wipe the memory of a computer system, so you can give it the
+same test over and over again.  But as I argued before in my plea for an
+embrace of the Manchester paradigm from trivia shows, this isn’t always the
+case: there’s still some information that gets leaked.
 
 
-If you’ve ever applied to a university, you’ve probably had to take a standardized test.  As we talked about in our previous video, the “standardized” in standardized test means that the score you get makes sense no matter when you took the test.  So how does the math work that lets that happen?  
-
-The big idea is that we want to model the probability of a person j getting question i right.  We’re going to treat this as a logistic regression.  As with every logistic regression, you pass some number through a sigmoid function to generate a probability.  The number that you pass in this function—like a feature in a logistic regression—helps explain your data. And in the case the data are a big matrix of who got what questions right and who got what questions wrong.
-
-In the lingo of IRT, the questions are the “items”, the agents answering the questions are the “subjects” and then whether they got a question right or not is the “response”.  So now hopefully you see what it’s called item response theory.  The goal is to predict each of these binary responses as if it were a logistic regression.
-
-So like all logistic regression, the prediction comes out of a sigmoid function that you hopefully remember.  So what goes *in* to that sigmoid function?  We’ll add more parameters soon, but let’s start with the first two: difficulty and skill.  
-
-But the people (or systems, when we get to computers) have different skills.  Let’s assume that we have two people trying to answer the questions: Ken—who’s quite good—and Burt—who’s not quite as sharp.  The higher the skill number (theta), the more likely they are to answer questions correctly.
-
-On the same scale as the subjects’ skill is the difficulty of the questions.  We’ll call this beta.  The higher the difficulty the question, the more skill you need to answer it.
-
-So how do these two numbers feed into a sigmoid function?  You take the difference between the difficult and the skill.  When the skill minus the difficulty is high, the higher the probability of the subject answering it correctly.  If the skill matches the difficulty, then the subject has a 50-50 chance of answering correctly.
-
-Okay, so let’s make this a little more complicated and add two additional terms: discriminability and feasibility.  
-
-Discriminability is how well the question distinguishes better subjects from worse ones.  It’s multiplied by the difference between the skill and the difficulty.  Mathematically, this changes the slope of the response curve.  
-
-Here’s a picture of that for a question with zero difficulty.  As the skill (x-axis goes up), the more likely the subject is to answer the question.  The bigger the discriminability, the steeper the curve.  Here it is for 0.5 and here it is for 2.0.
-
-This would never happen in practice, but let’s imagine you could create a test set where every question had perfect discrimination.  Then the response curve won’t be a curve, it’ll be a step function.  So let’s say you have a question with difficulty 0.2 and perfect discrimination.  Anybody with skill greater than 0.2 will get it right 100% of the time.  
-
-But if you can do it once, you can do it again.  Let’s create several perfect discriminators with a nice grid of difficulty.  So now, when a person comes in, they’ll answer every question correct until their skill is surpassed by the question.  First question they get wrong means they can leave the test and go home early.
-
-Again, this fantasy is impossible, but you can imagine why folks want these sorts of questions on a standardized test.  There’s more information about a subject’s skill for each question.
-
-Let’s now see what feasibility does.  Feasibility is relevant to NLP since infeasible questions suggest an annotation error. Let’s go back to our favorite “bad” question: what is the capital of Georgia?  If this sort of question can have the answer “Atlanta” or “Tblisi” with equal probability, then nobody, no matter how smart they are, can get this right with more than 0.5 probability.  
-
-Mathematically, see how the feasibility parameter works is more straightforward.  It’s just a linear scaling, that brings down the maximum value the probability can take on.  The normal logistic curve is on top, lambda=1, but it gets squished down as lambda gets smaller and smaller.  If lambda=½, then no matter how smart you are, it’s basically a coin flip whether you can answer the question.
-
-That’s basically it to IRT!  There are a couple of details that are important to mention, but I won’t go into right now.  The first is that you should absolutely question whether it makes sense to think about skill as a scalar.  Perhaps for narrow QA tasks where all of the questions are very similar.  But for any real test you're going to need a multi-dimensional representation of skill and difficulty. Perhaps Burt knows more about potent potables than Ken.  Ken might know more about literature than he does about sports. This could be captured in a vector … this should remind you of word vectors and topic models.  The same ideas apply.
-
-The other detail is how to fit the parameters. Again, the same kind of inference techniques that we use for topic models, logistic regression, and word vectors can be applied here. Given a set of responses, maximize the log probability of reproducing your training data: these item responses. To do things like hypothesis testing, you need to go an extra step and add gaussian priors over the difficulty and skill to make them random variables with a posterior distribution so that you can then ask questions about its distribution.
-
+So we’ll get into the math soon.  But it's not just for creating leader boards
+in machine learning and natural language processing.  Very similar models are
+used for rating players in chess and other games and for predicting how
+politicians will vote on particular bills.
 
 \section{Leaderboards are Shiny}
 \label{ch:isicle:intro}
+
+
+Leaderboards are widely used in \nlp{} and push the field forward.  While
+leaderboards are a straightforward ranking of \nlp{} models, this simplicity
+can mask nuances in evaluation \itms{} (examples) and \subjs{} (\nlp{}
+models).  Rather than replace leaderboards, we advocate a re-imagining so that
+they better highlight if and where progress is made.  Building on educational
+testing, we create a Bayesian leaderboard model where latent \subj{} skill and
+latent \itm{} difficulty predict correct responses.  Using this model, we
+analyze the ranking reliability of leaderboards.  Afterwards, we show the
+model can guide what to annotate, identify annotation errors, detect
+overfitting, and identify informative examples.  We conclude with
+recommendations for future benchmark tasks.
+
 
 Leaderboard evaluations---for better or worse---are the
 \textit{de facto} standard for measuring progress in question
@@ -107,41 +118,59 @@ Difficulty and Ability Discriminating (\name{}) leaderboards that
 explicitly model both task and submissions \emph{jointly}, rather than
 either in isolation.
 % \footnote{Source code, data, and visualizations at \projecturl{}.}
-\name{}'s underlying model is based on Item Response
-Theory~\citep[\abr{irt}, reviewed in \S\ref{ch:isicle:lead}]{lord1968test,baker2001irt}, a widely used~\citep{van2016assess} alternative in educational testing to
-simple
+\name{}'s underlying model is based on Item Response Theory~\citep[\abr{irt},
+reviewed in \S\ref{ch:isicle:lead}]{lord1968test,baker2001irt}, a widely
+used~\citep{van2016assess} alternative in educational testing to simple
 summary statistics~\citep{edgeworth1888exams}.
 
-\name{} can explicitly identify the \emph{difficulty} and \emph{\discability{}} of \itms{} (Figure~\ref{fig:irt-dist}),\footnote{
-  Example and feasibility distribution in Appendix~\ref{ch:isicle:apx:examples}.
-  Interactive visualization linked from \href{https://irt.pedro.ai}{http://irt.pedro.ai}.
-} which in turn can lead to a more nuanced ranking of models, identifying poor \itms{}, and better understanding of a dataset and task.
-Throughout the paper, we use the question answering (\qa{}) benchmark \squad{}~2.0~\citep{rajpurkar2018know}.
-For example, \name{} can identify questions that are challenging to models and questions that are wrong (incorrectly annotated).
-In addition to better understanding datasets, it is also helpful for
-efficiently selecting evaluation items to annotate.
-We conclude with recommendations for future leaderboards (\S\ref{ch:isicle:conc}) and discuss where \irt{} in \nlp{} can go next (\S\ref{ch:isicle:future}).
-\section{A Generative Story for Leaderboards}
-\label{ch:isicle:lead}
+\name{} can explicitly identify the \emph{difficulty} and
+  \emph{\discability{}} of \itms{} (Figure~\ref{fig:irt-dist}),\footnote{
+  Example and feasibility distribution in
+  Appendix~\ref{ch:isicle:apx:examples}.  Interactive visualization linked
+  from \href{https://irt.pedro.ai}{http://irt.pedro.ai}.  } which in turn can
+  lead to a more nuanced ranking of models, identifying poor \itms{}, and
+  better understanding of a dataset and task.  Throughout the paper, we use
+  the question answering (\qa{}) benchmark
+  \squad{}~2.0~\citep{rajpurkar2018know}.  For example, \name{} can identify
+  questions that are challenging to models and questions that are wrong
+  (incorrectly annotated).  In addition to better understanding datasets, it
+  is also helpful for efficiently selecting evaluation items to annotate.  We
+  conclude with recommendations for future leaderboards
+  (\S\ref{ch:isicle:conc}) and discuss where \irt{} in \nlp{} can go next
+  (\S\ref{ch:isicle:future}).
 
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=.97\columnwidth, trim=0.5cm 0.3cm 2.6cm .4cm]{figures/leaderboard/leaderboard}
-  \caption{
-    A \name{} leaderboard uses \irt{} to jointly infer \itm{} \diff{} $\beta_i$, \discability{} $\gamma_i$, feasibility~$\lambda_i$, and \subj{} skill $\theta_j$.
-    These predict the likelihood $p_{ij}(r_{ij}=1)$ of a correct response $r_{ij}$.
-  }
-  \label{fig:story}
-\end{figure}
+\subsection{How the SAT can Help Leaderboards}
 
-Leaderboards are a product of the metrics, evaluation data, and
-\subj{}s (machine or human) who answer \itms{}
-(Figure~\ref{fig:story}).
+If you’ve ever applied to a university, you’ve probably had to take a
+standardized test.  As we talked above, the ``standardized'' in standardized
+test means that the score you get makes sense no matter when you took the
+test.  So how does the math work that lets that happen?
+
+The big idea is that we want to model the probability of a person $j$ getting
+question $i$ right.  We’re going to treat this as a logistic regression.  As
+with every logistic regression, you pass some number through a sigmoid
+function to generate a probability.  The number that you pass in this
+function—like a feature in a logistic regression—helps explain your data. And
+in the case the data are a big matrix of who got what questions right and who
+got what questions wrong.
+
+In the lingo of \abr{irt}, the questions are the ``items'', the agents answering
+the questions are the ``subjects'' and then whether they got a question right or
+not is the ``response''.  So now hopefully you see what it’s called item
+response theory.  The goal is to predict each of these binary responses as if
+it were a logistic regression.
+
+So like all logistic regression, the prediction comes out of a sigmoid
+function that you hopefully remember.  So what goes *in* to that sigmoid
+function?  We’ll add more parameters soon, but let’s start with the first two:
+difficulty and skill.
+
 For concreteness, let's assume that we have a question-answering task and two \subj{}s: \smart{},
 who is good at trivia, and \dumb{}, who is not.
 In the simplest \irt{} models, each \subj{}~$j$ has a random
 variable~$\theta_j$ corresponding to their skill: \smart{}'s is big,
-\dumb{}'s is small.
+\dumb{}'s is small.  The higher the skill number
+(theta), the more likely they are to answer questions correctly.
 
 But you cannot know that until you start asking them questions of
 varying \iemph{difficulty}~$\beta_i$.
@@ -151,27 +180,54 @@ tomb'').
 The bigger the margin between a \subj{}'s skill~$\theta_j$ and an \itm{}'s
 difficulty~$\beta_i$, $\theta_j-\beta_i$, the more likely that \subj{}~$j$
 responds correctly~$p_{i,j}(r_{i,j}=1)$.
-This is the simplest \abr{irt} model, which we call {\bf \pl{1}}.
-
-Generally, given $n$ test items $\mathcal{X}=(X_1,\ldots,X_n)$
-and $m$ \subj{}s
-$\mathcal{S}=(S_1,\ldots,S_m)$, where each \subj{} answers every
-item, we want to estimate \subj{} skills and \itm{} difficulties.
-To discover the random variables that best explain the data, we
-turn to probabilistic inference~\cite{pearl-88}.
 
 
-Two additional random variables further improve \name{}:
-\discability{} $\gamma_i$ and feasibility $\lambda_i$.
-We first consider \discability{} and the margin between a
-question's difficulty~$\beta_i$ and a \subj{}'s skill~$\theta_j$.
+So how do these two numbers feed into a sigmoid function?  You take the
+difference between the difficult and the skill.  When the skill minus the
+difficulty is high, the higher the probability of the subject answering it
+correctly.  If the skill matches the difficulty, then the subject has a 50-50
+chance of answering correctly.
+
+Okay, so let’s make this a little more complicated and add two additional
+terms: discriminability and feasibility: \discability{} $\gamma_i$ and
+feasibility $\lambda_i$.
+
+\paragraph{Discrimination}
+
+Discriminability is how well the question distinguishes better subjects from
+worse ones.  It’s multiplied by the difference between the skill and the
+difficulty.  Mathematically, this changes the slope of the response curve.
+%
 A discriminative question is challenging but can still be answered
 correctly by a strong \subj{}.
 If \smart{}'s ability is higher than most \itms{}' difficulty
 ($\theta_j-\beta_i$ is large), \itm{} discriminability multiplies this
-gap by $\gamma_i$ in a model called {\bf \pl{2}}.
+gap by $\gamma_i$.
 Questions with low $\gamma_i$ are low quality: they have annotation
 error or do not make sense.
+
+Here’s a picture of that for a question with zero difficulty.  As the skill
+(x-axis goes up), the more likely the subject is to answer the question.  The
+bigger the discriminability, the steeper the curve.  Here it is for 0.5 and
+here it is for 2.0.
+
+This would never happen in practice, but let’s imagine you could create a test
+set where every question had perfect discrimination.  Then the response curve
+won’t be a curve, it’ll be a step function.  So let’s say you have a question
+with difficulty 0.2 and perfect discrimination.  Anybody with skill greater
+than 0.2 will get it right 100\% of the time.
+
+But if you can do it once, you can do it again.  Let’s create several perfect
+discriminators with a nice grid of difficulty.  So now, when a person comes
+in, they’ll answer every question correct until their skill is surpassed by
+the question.  First question they get wrong means they can leave the test and
+go home early.
+
+Again, this fantasy is impossible, but you can imagine why folks want these
+sorts of questions on a standardized test.  There’s more information about a
+subject’s skill for each question.
+
+\paragraph{Feasibility}
 
 Another way of capturing poor quality questions is the
 feasibility~$\lambda_i$.
@@ -184,6 +240,46 @@ In the model {\bf \pl{3}}, if a large fraction of \subj{}s all get an
 capped at $\lambda_i$.
 In \nlp{} terms, $1-\lambda_i$ corresponds to the prevalence of annotation
 errors that lead to unsolvable \itm{}s.
+
+
+Let’s now see what feasibility does.  Feasibility is relevant to NLP since
+infeasible questions suggest an annotation error. Let’s go back to our
+favorite ``bad'' question: what is the capital of Georgia?  If this sort of
+question can have the answer ``Atlanta'' or ``Tblisi'' with equal probability,
+then nobody, no matter how smart they are, can get this right with more than
+0.5 probability.
+
+Mathematically, see how the feasibility parameter works is more
+straightforward.  It’s just a linear scaling, that brings down the maximum
+value the probability can take on.  The normal logistic curve is on top,
+lambda=1, but it gets squished down as lambda gets smaller and smaller.  If
+lambda=½, then no matter how smart you are, it’s basically a coin flip whether
+you can answer the question.
+
+\section{A Generative Story for Leaderboards}
+\label{ch:isicle:lead}
+
+\begin{figure}[t]
+  \centering
+  % \includegraphics[width=.97\columnwidth, trim=0.5cm 0.3cm 2.6cm .4cm]{figures/leaderboard/leaderboard}
+  \caption{
+    A \name{} leaderboard uses \irt{} to jointly infer \itm{} \diff{} $\beta_i$, \discability{} $\gamma_i$, feasibility~$\lambda_i$, and \subj{} skill $\theta_j$.
+    These predict the likelihood $p_{ij}(r_{ij}=1)$ of a correct response $r_{ij}$.
+  }
+  \label{fig:story}
+\end{figure}
+
+Leaderboards are a product of the metrics, evaluation data, and
+\subj{}s (machine or human) who answer \itms{}
+(Figure~\ref{fig:story}).
+
+
+Generally, given $n$ test items $\mathcal{X}=(X_1,\ldots,X_n)$
+and $m$ \subj{}s
+$\mathcal{S}=(S_1,\ldots,S_m)$, where each \subj{} answers every
+item, we want to estimate \subj{} skills and \itm{} difficulties.
+To discover the random variables that best explain the data, we
+turn to probabilistic inference~\cite{pearl-88}.
 
 
 Having introduced all of the constituent elements of the model, we can
@@ -650,7 +746,7 @@ In our proposed model listing, while there would be a default ranking, our visua
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=.25\columnwidth]{figures/leaderboard/end_error_compare}
+%    \includegraphics[width=.25\columnwidth]{figures/leaderboard/end_error_compare}
     \caption{
         A proof-of-concept visualization that compares two models---a \bert{} and \ir{} retrieval system---by visualizing which examples model agree or disagree on.
         We propose extending this to incorporate more than two models.

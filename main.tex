@@ -1,4 +1,4 @@
-\documentclass[bfivepaper,twosided,justified,nobib]{tufte-book}
+\documentclass[bfivepaper,twosided,justified,nobib]{style/tufte-book}
 
 \hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
 
@@ -54,10 +54,13 @@
 \newcommand{\chapterfile}[3]{
   \ifproposal
   \paragraph{#3}
-  \input{chapter/blurb/#2}
+  \input{chapters/blurbs/#2}
   \else
   \chapter{#3}
   \label{ch:#1}
+  \begin{quote}
+    \input{chapters/blurbs/#2}
+  \end{quote}
   \input{chapters/#1-#2}
   \fi}
 
@@ -78,6 +81,9 @@
 % Front matter
 
 \input{chapters/000-frontmatter}
+
+
+\chapterfile{010}{introduction}{Introduction: The Unanswered Question}
 
 \ifproposal
 \input{chapters/05-proposal}
@@ -120,7 +126,7 @@
 
 \proposalpart{Question Answering Present}
 
-
+\chapterfile{200}{formats}{The Computers' Ways of Asking}
 
 \chapterfile{240}{qb}{The Manchester Paradigm: The Art of Asking the
   Perfect Question}
@@ -162,9 +168,9 @@
 
 \proposalpart{Question Answering Future}
 
-\chapterfile{310}{sci_fi}{Question Answering in Science Fiction}
+\chapterfile{300}{datasets_adversarial}{Human--Machine Collaboration}
 
-\chapterfile{320}{datasets_adversarial}{Human--Machine Collaboration}
+\chapterfile{310}{sci_fi}{Question Answering in Science Fiction}
 
 \chapterfile{330}{fear_of_a_bot_planet}{What AI Dystopias You Should
   be Afraid of}
@@ -177,7 +183,7 @@
 
 %Computer Game Shows of the Future
 
-% \chapterfile{game-show}{Computer Game Shows of the Future}
+\chapterfile{340}{game_show}{Computer Game Shows of the Future}
 
 % \proposalpart{Question Answering Future}
 

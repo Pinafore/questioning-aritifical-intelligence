@@ -1,0 +1,334 @@
+
+
+Conversational QA
+The goal of having intelligent computers is a part of both the foundation of artificial intelligence in the form of the Turing Test and science fiction.
+
+But you don’t interact with these computers through a command line or a search prompt.  You talk to the computer!  And the computer remembers what you say, it has situational context to understand, resolve ambiguities, and place your questions in context.  
+This doesn’t look a lot like the existing question answering settings that we’ve discussed before.  To answer questions in a conversation, we’ll need new datasets, new evaluations, and new models.
+
+Let’s start with the datasets.  I mentioned some of these very briefly in the datasets video, but now we can linger a little bit longer on these conversational QA datasets.  There are others, but I wanted to talk about: QBLink, CoCa, Quack, and CANARD.  
+
+Now you might think that conversational QA might mean that you might get a respite from my Quizbowl fixation, but not so fast!  The trivia community is also a source of found data for conversation-like questions.  With my former students, we created a dataset of questions these questions start with a sentence to set the context and then you have to answer three (usually) questions within that context.  
+
+Other than the Manchester-style questions and answers, there’s nothing special like pyramidality that makes them “optimal”.  I just hink they’re neat.
+
+For example, you have a leadin that gives the context.  “Only twenty­ one million units in this system will ever be created. Name this digital payment system whose transactions are recorded on a “block chain”. Now, notice that you cannot answer this question *just* from the literal question … it depends on the context.  There are plenty of cryptocurrencies (more every day), but the 21 million number is unique to Bitchoin.
+
+Then we move on to the next question: it was invented by this person, who, according to a dubious Newsweek cover story, is a 64­ year ­old Japanese­American man who lives in California.  Now, you could probably answer this just from the clue here, but it helps to know that “it” here is Bitcoin.  Otherwise you have to do a multihop to figure out that this is Bitcoin and it was invented by someone who purported to be Satoshi Nakamoto.
+
+Finally, the final question is much easier if you know that Bitcoin is involved.
+
+Let’s move on to the next dataset, QuAC (Question Answering in Context) which appeared at the same time as our dataset and is noticeable for introducing emojis in paper titles.  Two of my former students—He He and Mohit—worked on this Cranfield paradigm dataset, where two crowdworkers play the role of a teacher and a student.  The teacher gets to see a Wikipedia page but the student does not.  They have a conversation and the student tries to figure out as much as possible about that topic.  
+
+And just like the QB link dataset, you need to do things like resolve coreference, know the topic of the questions, etc.
+
+And again, one of the big plusses is that the answers are all anchored in the Wikipedia page (in this case Daffy Duck), so there’s gold evidence that useful for machine reading techniques.  But the challenge is that you also need to embed the context somehow!
+
+One approach would be to just transform the conversational, context-specific questions into “normal” that look more like NQ or SQuAD, so we had crowdworkers rewrite the questions into forms that don’t require the context.  We called this dataset Canard, short for Context Abstraction: Necessary Additional Rewritten Discourse, where Canard is of course the French word for “duck”.
+
+And by conditioning on the entire context, you can indeed create questions that don’t need additional context, but it’s not as good as the human rewrites.
+
+The final dataset I’d like to talk about is CoQA, which looks a lot like QuAC—it came out a year after QuAC.  But rather than anchoring on a Wikipedia page, it is anchored on a short vignette, here it’s an 80th birthday party.  Like in QuAC there’s a student and a teacher and the student asks questions of the teacher.  But unlike QuAC there are also rationales that explain why a question has a particular answer.
+
+One thing that you’ll notice about these datasets is that they’re not really a true conversation.  It’s kind of one sided.  And part of that is the tricky problem of evaluation.  You need datasets to train models … but to train a model you need a loss function.  To have a loss function you need to know if an answer is correct.  
+
+In some cases, the evaluation can look a lot like our evaluations for “normal” question answering.  You just need to give an entity.  Then you can use the same metrics that we saw for, say, machine reading question answering: entity equivalence, exact match, span F1, etc.  That’s what you can do for the datasets that we’ve talked about thus far.
+
+But is a conversation just spouting the entities?  No, of course not.  You can’t just have a conversation just through cultural references.  
+
+As we’ll talk about in the long-form question answering segment, evaluating longer answers is really hard.  
+
+So are there ways that you can make the problem easier within a conversational context?  Research in dialog systems typically divide the task into two phases: figure out a dialog act that fits in the context of the conversation, and then given the correct dialog act, you then need to generate the raw text that actually goes to the user. 
+
+So what’s a dialog act?  There are many ways to define dialog acts, here’s one example of an ontology of dialog acts created from real-world conversations by a team from Colorado and SRI.  
+
+You need to be able to answer a question with yes or no, ask those questions, ask “wh” questions like “When was your last training session”.  And because conversations aren’t just information exchange sessions, sometimes you need to agree, give an opinion, or just let the partner know you’re listening.  
+
+It’s sometimes lonely just talking into the void with nobody responding to you … what dialog act does a comment correspond to?
+
+This was adapted by researchers from Virginia Tech to make it more detailed.  Sometimes you need to give an answer with an explanation, sometimes you need to answer with a followup clarification question, or say that you don’t know.
+
+So now, to do an evaluation, you can make sure that your system can reconstruct the dialog acts given the context.  This turns it into a classification task: does your predicted dialog act match the ground truth?  This is much easier than actually evaluating long, rambling answers, which as we’ll talk about with generation is actually very difficult.
+
+But even so, this is not without complexity.  These datasets have the interactions between two people where presumably everything went according to plan.  But what happens if during evaluation if you select a dialog act that’s different from the reference interaction?
+
+The thing with conversational question answering is that mistakes are not the end of an interaction.  Ideally, a conversational system should recover from it!  Let’s take a look at this reference conversation where the user asks the system what the capital of Georgia is. The system should give an answer, and the user can give a followup question.
+
+But what happens if the system gets the question wrong?  For example with a wrong interpretation of which Georgia the user is talking about.  Well, if the system gives that answer, the user can react in all sorts of ways!  Perhaps they realize they cared about Georgia the country all along (this is probably the most likely outcome if, say, your “users” came from mechanical Turk and they’re pretending to ask questions), perhaps they correct the system, or perhaps they want more information: why did you say “Tblisi”?
+
+In any event, we need to know how bad it is that the system said Tblisi.  And we can’t really do that without testing the system on real users.  Maybe it isn’t great that we said Tblisi, but it’s better than saying that the capital of Georgia is “Peachtree” or “Washington”.  But again, we don’t know that this is a “near miss” because, again, it’s not in the reference.
+
+And it can go in the other direction too!  Let’s say that the way we generated the reference data was quite a bit worse than what an “optimal” conversation partner could do.  Let’s say that your system does something better than the reference.  Perhaps it asks which Georgia you mean.  That’s even better!
+
+Just because you do the conversation a little differently than the reference, doesn’t mean that it’s wrong.  
+
+So the challenge is to define an evaluation that measures how useful an interaction is, not the answers of individual turns.  I suspect that this will need to take the form of human-centered evaluation.  You need to have people interact with a real system and get them to evaluate how well it works.
+
+And we’ll see something like that in our next video, where we’ll talk about another way of moving beyond single, short answers: what happens if the answers themselves are pretty darn long?
+
+Long Form QA
+
+
+As usual, let’s start with how complex questions are answered in the real world.  Let’s start with Apu Nahasapeemapetilon’s answer to “What was the cause of the US civil war?”
+
+Examiner : All right, here's your last question. What was the cause of the Civil War?
+Apu : Actually, there were numerous causes. Aside from the obvious schism between the abolitionists and the anti-abolitionists, there were economic factors, both domestic and inter...
+Examiner : Wait, wait... just say slavery.
+Apu : Slavery it is, sir.
+
+
+Like the examiner, it’s often easier to go for the shorter answer … it’s easier to score, anway.   There are many ways to answer “What was the cause of the American Civil War”.  Everything that Apu said was correct, and there are many ways to phrase what he said.  Detecting all the things that are semantically equivalent to that is itself a NLP-complete problem.  To understand how, despite that difficulty, we’re trying to build systems that can answer long complicated questions, we’ll go through two datasets that can help computers answer hard questions and we’ll see what makes them both hard to answer and hard to tell when the answer is right.
+
+Let’s first begin with Complex Answer Retrieval, often called “CAR” for short.  This is a dataset from TREC and Laura Dietz at the University of New Hampshire.  If you haven’t seen our previous video about Like many of the other question answering datasets we’ve talked about, the source information comes from Wikipedia.  
+
+They start with questions like “How do you make Candy” or “Is chocolate healthy” and run a search over all of Wikipedia.  Like with traditional relevance judgements, annotators then mark whether the passages retrieved are a good answer for these questions.  NIST annotators mark whether a passage *must* be included in the answerset, *can* be included, is on topic (but not a good answer) or just irrelevant. 
+
+Now, getting annotators to agree on this isn’t trivial: if you look at the kappa statistics, it’s between 0.5 and 0.7.  You can then run the standard precision / recall statistics for an IR engine.  So is it the case that long form QA isn’t actually that hard?
+
+No, it’s still that hard!  This can only work if Wikipedia has the perfect answer for every question already written down.  But although Wikipedia is pretty big, it’s not *that* big.  
+
+Another dataset that tries to address the “long answer” problem is the ELI5 dataset.  This is built from a subreddit where people pose questions and people try to answer them using simple language.  What I like about Reddit is that there are clear rules about what questions are allowed, how they can be answered, and then people vote on which of the answers is best.
+
+Despite these beautiful rules and style guidelines, the questions aren’t as beautiful as the best examples of the Manchester paradigm, which are carefully edited and polished until perfection.  However, they’re much better than the grabbag of the worst of the Cranfield paradigm, since there are clear rules: you can’t ask questions that are actually simple, the questions can’t be subjective, and the questions must be about the “real world”.
+
+So now we have examples of questions and good answers.  But we can’t just test whether the two strings are equal or not … so how do you know if the output of a system is good or not?
+
+This is actually very similar to the problem faced in machine translation: you want translations to be as close to a reference translation as possible.  So they developed a metric call BLEU, or Bilingual Evaluation Understudy that counts up how many words overlap between a reference translation and system outputs.
+
+It’s called an “understudy” because it’s meant to mirror the adequacy and fluency judgements of human annotators.  
+
+But we’re not talking about machine translation today, but you can use a very similar idea for comparing two pieces of English text.  So BLEU in French means “blue”; the other metric we’ll be talking about is ROUGE, which means “red” in French, and stands for “Recall-Oriented Understudy for Gisting Evaluation”.  Unlike BLEU, which tries to get the translation exactly right—in other words getting precision and recall high—ROUGE focuses on recall.  
+
+Let’s see how it works.   Like BLEU, ROUGE looks for a certain number of n-grams.  Let’s start with bigrams for simplicity.  Let’s say you want to compare these two sentences.  First, you gather up all of the bigrams.  One of the four matches, so this means that it would have a ROUGE-2 of ¼.  
+
+But ROUGE-N requires choosing what N should be.  A more popular variant is to use the “longest common subsequence” or LCS.  Finding the longest common subsequence is a popular example problem when you’re first learning dynamic programming … while writing a program to compute it can be a little tricky, for short sentences you can fairly easy eyeball: what is the longest sequence of words that is in *both* sequences.  For these two sentences, that would be “parents annoy the children”.  
+
+Given that LCS, we can then compute the precision and recall and then we get the ROUGE-L measure.  One nice thing about this is that it’s upper bounded by the unigram overlap between the two strings.
+
+We spent a lot of time talking about ROUGE-L … does that mean that this is the right way to compute whether a long answer is a good one or not?  Compare the generated answer to the reference ELI5 answer?  A recent paper from my former student Mohit shows that … uhh maybe not!
+
+ELI5, like a lot of other Cranfield QA datasets, have a lot of overlap between the training and test set (this is less of a problem in the Manchester paradigm, as the authors explicitly avoid repetition).  Thus, the system doesn’t always learn to generalize … it can memorize instead.
+
+I’m not going to talk about their system much—it’s a good one, check out the paper linked in the description—but like you might do for the CAR task, it also has a retrieval component.  But it doesn’t really matter what you retrieve!  Getting random retrievals can add in some specific words that can up your ROUGE-L score.
+
+And it also seems that you can game the system with really stupid baselines that *shouldn’t* get a good score and end up … doing quite well.  For example, just copying the answer over and over again or copy/pasting a random training answer sometimes beat the gold answer.
+
+So this makes it hard to prove that your snazzy new algorithm is actually good.  So what’s the answer?  I think that question answering always will depend on human evaluations, but while automatic factoid question answering evaluations are often “good enough”, I don’t think—as I record this in early 2022—we can confidently say that we have a “good enough” automatic evaluation with long for question answering.
+
+So that means that you really need to do a human evaluation.  There’s nothing wrong with that!  Again, I wish that this were more common for question answering.  But for our modern data-hungry algorithms and our fast-paced research culture, projects don’t always have the luxury to do evaluation right … with the finicky, expensive human evaluations of these very long answers.
+
+So what’s the right way to quickly evaluate QA systems that output more than a couple of words?  Well, I have the answer right here … unfortunately it’s this video is too small to contain it.
+Answering questions about images
+
+
+Mostly we’ve been talking about computers that can talk to you and answer questions about text.  But is that the extent of our ambitions?  Take a look at this clip from Kubrick’s 2001:
+
+Hal 9000: Have you be doing some more work?
+Dave Bowman: A few sketches?
+Hal: May I see them?
+Dave Bowman: Sure.
+Hal 9000: That’s a very nice rendering, Dave.
+
+And even beyond the fanciful dreams of future AI, there are people today who could really use help answering questions about images.  For example, the VizWiz project from Jeff Bigham connected blind users with a QA system over images.  Here’s Tom Dekker, who is blind, showing off VizWiz.
+
+Tom Dekker: So now we have VizWiz, which I’ll open.
+Phone: Use the camera button to take a new photo.
+Tom Dekker: I’m going to get positioned above these things so they’re nicely viewable.
+Phone: Start and Stop Recording a Question
+Tom Dekker: What color are these two socks?  And what color is the one that’s folded in half?
+
+As you’ll see compared to the other datasets that people are training QA systems on, we’re nowhere near the ability to answer these questions.  The VizWiz project is what’s called a “Wizard of Oz System”: it’s a human pretending to be a machine.
+
+Oscar Zoroaster Phadrig Isaac Norman Henkle: Pay no attention to that man behind the curtain.  The great and powerful Oz has spoken!
+
+And these workers are hired on Amazon Mechanical Turk, named after another human pretending to be a machine.
+
+Tom Dekker: It took about a minute and a half.  Now let’s see …
+Phone: Folded sock is black.  The other one is half white, half gray, divided down the middle.  –Webworker
+Phone: New answers available.
+
+And there are other cases where it’s not a question of ability but of volume: you might be responsibility for watching lots of camera feeds and a visual QA system could quickly narrow down things that are interesting from huge quantities of data.  For example, I could look at my doorbell footage and ask … when did my newspaper come today or who took my Amazon package?
+
+So let’s take a step back from those fanciful ambitions and take a look at the “real” datasets that are out there for multimodal question answering.  The most prominent is “VQA” or visual question answering, which has become nearly synonymous with this girl wearing a banana mustache.  This dataset set up the paradigm of looking at a picture and answering the question.
+
+The crowdworkers who wrote the questions in the Manchester paradigm (since they knew the answers) were instructed to write questions that a human could answer but that a robot could not.  While it has the flavor of an adversarial setting, there wasn’t a specific adversary … the workers had to have their own mental model.
+
+However, just like many of the datasets we’ve looked at, there were many shortcuts that the models could take: if the question asked “is there a” the answer was almost certainly yes, and if there was a sport involved, it was usually about tennis.
+
+So to correct these issues, VQA 2.0 paired two pictures together so that the answer to the same question is different in each of the pictures.  So for instance here the man or the woman is wearing glasses.  This makes it so that the dataset is intrinsically balanced and the model can’t just win through a text only baseline.
+
+So can models answer these questions?  The accuracy has been climbing by 14 points over the last four years … getting near 80\% accuracy.  So what models are behind these impressive numbers?
+
+Like with text, transformers with Muppet names like Oscar, BERT, and Ernie are to blame.  But how do transformers deal with *visual* input?  Thus far, we’ve only been talking about words and word embeddings.  Just like you need to split a sentence into word pieces, the first step is to break an image into pieces to correspond to objects.  
+
+Now, I don’t know how this works and even if I did, it would be out of scope for this course, so I won’t talk about how all these fancy boxes come about.  But once you have these boxes, you can then embed these boxes through a linear or non-linear transformation of the constituent pixels which—unlike words—are already continuous vectors.  Just like words have an embedding based on the word’s type and the token’s position, the visual word embedding also is a function of the pixels and its location.
+
+So then you can get a combined visual and text representation of an image, caption or image, question pair.  And because a transformer isn’t as tied to the strict linear order of a sentence thanks to its attention map, it doesn’t really matter in what order you plop down the objects. 
+
+Okay, so how do you pretrain transformers with visual and text input?  First, you can do masked word prediction, just like you did with text-based BERT.  But if you can do that for words, why not also do it for objects?  Finally, just like we did next sentence prediction for text representations, we can match images with their captions.  
+
+So the models (after you get past object recognition) look a lot like our text-only models.  I think you’d agree that visual question answering can be quite a bit harder … so why are the accuracies so much higher than for text-based QA?
+
+That’s because all of the questions in VQA are multiple choice!  It basically boils down to selecting which of four answers is correct.  And it’s not just VQA, other visual datasets are all multiple choice.  
+
+And while other datasets are implicitly multiple choice—if you ask SQuAD when something happened, it’s essentially multiple choice among all the things that look like dates—it’s not as clear-cut as here.  And datasets like Quizbowl are a multiple choice task over tens of thousands of entities.  
+
+So why is QA over images always multiple choice?  Because we have a hard time agreeing on what the answer should be!  We saw this problem for long-form QA and even for factoid QA you need to be sure to have all of the relevant names for an item.  Because we don’t have text to ground the answer (again, which makes text-based QA more like multiple choice), even for everyday items you need to figure out what name to give something. 
+
+So, for example, take the question what is Mr. Burns wearing in the picture?  What should you call these?  Mules?  Houseshoes?  I personally think that some of these are better than others, but arguably all of these should be accepted.  And Mr. Burns seems to prefer “Slippers”.  And this isn’t just a problem in English: here’s a map for what slippers are called in the German-speaking world.  Naming things from a picture is hard, describing what a thing is doing is even harder, and harder still is describing *interactions*.  What is Mr. Burns doing to his slippers?  Dancing? Bouncing? Flaunting? Tapping?  Given all of that flexibility, evaluating whether an answer is correct is just generally hard, as we’ve seen many times before.
+
+And images aren’t static … often we care about answering questions about moving pictures.  I.e., movies or TV.  There have also been datasets about these questions as well.  Just like VQA, these are multiple choice … But does that mean you need to watch the movie to answer the questions?  Not necessarily … movies also have closed captions/subtitles,audio descriptions, and scripts.  Just in case you’re not familiar with these, let’s talk about them and discuss what they can and cannot answer.
+Captions are the text that appear at the bottom of the screen and are available for people who are hard of hearing or who just want to be able to also read what the person is saying.  They’re not always purfect, but they usually get the point acroos.  It’s a lot of work to do it manually!  [But a good place to hide jokes!]
+
+While captions were first intended to make movies more accessible for the deaf, audio descriptions are created for the blind … for example here’s a clip from Frozen.  They explain what’s going on in the movie beyond the dialog.  While humans typically get this through audio, they are written down at some point and so these can be provided to the computer as text as well.
+
+Finally, most movies and TV shows come from a text called a script.  These contain not just the dialog, which get turned into caption but additional information like where a scene takes place and the instructions to the actors about what actions they need to take.  While not as verbose as the descriptions, it nonetheless provides a way of interpreting the raw audiovisual representation of a movie.
+
+Here are two datasets—MovieQA and TVQA—that have questions (multiple choice, of course) based on movies.  And just like how you can insert both visual and text information into BERT, you can feed in recognized objects, the captions (called subtitles in this figure) into BERT.
+
+So all of this looks a lot like how you do machine reading questions given a context … but the other kind of question answering we saw was “open domain” question answering using systems like DPR?  
+
+Yes!  And just like for DPR where we had an encoder for the context and an encoder for the evidence, we can do the same thing for images and text: try to learn encoders such that the encoding of the image description and the encoding of the image are as close together as possible.  As I record this in 2022, there are two big models that are doing this: CLIP from OpenAI and ALIGN from Google.  They both have fairly similar architectures.
+
+Then you can do things like find good captions for an image automatically or given a search string, find appropriate images for it.
+
+As I wrap up, I hope that you’ve noticed the pattern here: the tools that we created to help people with visual or hearing impairments end up not just being a good idea for everyone, but they’re also one of the key tools that we’re using to build up computers’ ability to understand the interaction between text and images.  So the moral of the story is that if you want to support AI, support accessibility!  And maybe we’ll have AIs that can sort everybody’s socks and answer questions about it afterward.  The future can’t come fast enough!
+
+This is just a single lecture from a course.
+
+YouTube likes to show you these videos out of order, but if you go to the course web page linked below, you can see the lectures in the right order and you can get resources like homeworks or suggested reading.
+
+You can also visit QANTA dot org
+if you want to learn about our systems for creating computers that can answer questions.
+
+Where QANTA stands for “question answering is not a trivial activity”.
+
+If you want to help the channel provide a big gradient to the algorithm by liking and subscribing.
+
+
+How Punters Cheating with AI has Made Pub Quizzes' Audio Rounds Better
+
+If you went to a pub quiz at the turn of the century, one staple that you’d *always* see was music identification: the pub master plays a song and you’re supposed to identify it.  But that’s far less common these days.  A big reason is that—as far as AI is concerned—it’s mostly a solved problem … apps like Shazam and YouTube content ID can do this with extremely high accuracy even in a noisy bar.  And thus it has become really easy to cheat in a pub quiz.  It’s also why, even though this video is about answer questions about music, I’m not going to put any popular music in this video. 
+
+Bleeding Gums Murphy was never popular.
+
+
+So how do trivia competitions ask questions about music now?  In the same way that YouTube videos speed up or distort music to get around content ID, pub quizzes have increasingly adopted using transformations of songs to ask questions.  Identify the song given only a single instrument from the track or identify the song from the bluegrass cover.
+
+In the same way that these questions reward deeper knowledge, there has also been a movement to reward real music knowledge:  
+
+This symphony’s second movement … features a rising horn call of a C major arpeggio followed an A-flat sixteenth pickup to a G. 
+
+[orchestral music with a French horn solo]
+
+
+And this is just asked using text … you need to know that an arpeggio is a chord played in sequence, you need to know what a French horn sounds like, and you need to know what a C vs. an A-flat sounds like.  Mapping this to an underlying musical score is hard … there’s no beautiful music track that I added in with my L337 editing skills.  But of course, as is de rigueur in the Manchester paradigm, afterward the pyramidal sequence of clues ends with the much easier clue:
+For 10 points, identify this symphony sometimes called the “Song of the Night”, which numerically precedes its composer’s “Symphony of a Thousand.”
+Remember that the Manchester paradigm that we talked about before structures questions to go from difficult clues to easy clues, which rewards knowledge and better discriminates between teams.
+
+But I want to emphasize the virtuous cycle here:
+Pub quiz hosts were writing lazy questions that essentially amounted to playing an iTunes playlist in a crowded bar
+Deep convolutional neural networks allowed lazy pub quiz participants to to cheat on those questions
+Out of outrange and to restore equity, pub quiz hosts started writing better questions
+
+The next step—which hasn’t happened yet—is for AI systems to start using that training data to build systems that have to think a little bit harder to identify the songs.
+
+So that’s what has happened for audio questions … let’s now turn to questions about images in the Manchester paradigm.  Similarly, pyramidal questions about visual art describe less well-known details:
+
+A sword stuck in its holder and the head of a corpse are seen near bushes on the lower left.
+
+A rabbit runs to take cover from the central object in this work, which approaches the viewer.
+
+If you know the painting well, then you’ll be able to answer the question.  If not, since it’s a pyramidal question, in the rest of the question you’ll get the rest of the clues.    
+
+FTP, name this painting depicting the seacliffs of Crete and the pair of legs belonging to a drowning youth, by Pieter Brueghel the Elder.  And you can’t just run your favorite computer vision system to figure out the title here … ships in the harbor? Ploughman on the hill?  No, the title of this picture is “Landscape with the Fall of Icarus”.  And there’s nothing in this picture that actually looks like Icarus here … ah, there he is.  His legs anyway. 
+
+Or going back to our alleged rabbit … 
+
+FTP, name this 1844 landscape depicting a train crossing a bridge, a depiction of "the Great Western Railway" by J.M.W. Turner.
+
+If you know the answer to this question, put it as a comment down below.  
+
+And this isn’t just about visual salience.  The most well-known aspect of Bronzino’s Venus, Cupid, Folly, and Time isn’t obvious but is better known than the rest of the painting because of Terry Gilliam’s use of it in Monty Python.
+
+So this is how textual clues are rendered.  And in the Manchester paradigm, you present the clues in pyramidal order, going from difficult to easy.  But these are textual clues.  And yeah, perhaps you have to look at a painting or listen to a piece of music to answer it (and I think it would be fun to use visual or auditory information to better answer these questions … project idea).  But the question is still text … can you ask pyramidal questions when the question itself is multimedia?  The answer, I think, is yes, but before I go into that, I first need to explain why for the skeptics in the back.
+
+The Manchester paradigm for question answering tries to make questions that are difficult to answer so that it rewards knowledge, understanding, and robustness.  Just like Shazaam isn’t impressive if it only works with clear, undistorted input … that it works in such an adversarial environment like a crowded bar is pretty awesome!  If we want robust question answering and true artificial intelligence, computers need to be able to “make do” with less and employ the same reasoning and recall ability that humans are able to do.
+
+So let’s see how the Manchester paradigm does that!  One way is to have the normal presentation of material but to severely limit the quantity.  For example, on the game show “Name that Tune”, contestants bid each other down to see who can name the tune with the fewest notes.
+
+Let’s see that in action … 
+
+Wash: I can name that tune in four notes
+Sandy: Wash, I can name that tune in three notes
+Wash: Sandy, name that tune
+Jim Lange: Alright, Sandy you get a chance to name that tune.  Here’s your clue once again.  Introduced as a title tune of a 30s Broadway musical, this tune later appeared in the film Young Frankenstein and was revived in 1984.  Listen carefully, here are your three notes …
+[Three notes play]
+Jim Lange: Sandy?
+Sandy: Farmer in the Dell?
+[Sad Buzzer]
+
+The answer of course, is … 
+
+Gene Wilder as Frederick FrankenSTEEN: If you’re blue and you don’t know where to go to, why don’t you go to where fashion sits …
+Peter Boyle as the Monster: Ich han mis Portmone verloore!
+
+
+did you get it?
+
+Oh, that wasn’t very clear, let’s try that again … 
+
+Taco: Putin’ on the Ritz
+
+that’s right, Puttin’ on the Ritz.
+
+But this shows another way that this can be pyramidal … go through performances from the lesser known, unintelligible warbling of Peter Boyle to the intelligible but niche performance of Taco to the canonical performance of Fred Astaire.  
+
+This is similar to how we structured the human vs. computer comparison at the Efficient QA competition.  Give systems a shot at hard examples with little evidence, provide more and more evidence until you see where the first system gets it right.  Creating pyramidal examples with n views is much easier than creating n examples of varying levels of difficulty.
+
+For example, we could create a visual version of the Landscape with the Fall of Icarus question by only revealing part of the image … going in reverse order of salience, just like the text of the question did: the hills in the background, the sword and skull, the farmer, and then finally the harbor with the two tiny legs.  
+
+Alternatively, you could pixelate the image, decreasing the pixelation until it can be identified.  Again, if you know what this painting is, leave a comment down below.
+
+But wait, Jordan, I hear you say.  This just  corresponds to different layers or different pools in a convolutional net.  This won’t make it that much harder for a computer to understand an image.  
+
+That’s true!  And until there is a Shazzam equivalent that’s as good and as popular for images, we’re probably going to have to wait for the kind of innovation we’ve seen for audio questions.  But some of this is happening.  For example, I’ve seen things like “identify the movie or TV show from the Muppet-ized version”.  So you can’t just identify raw pixel patterns, they need to understand what part of the image is a Muppet and which is a part of the underlying media property.  
+
+And if we want a computer to be able to do that, we need to repeat this cycle, probably multiple times.  But not just for images, but for all of the kinds of questions that we want a computer to answer.  
+
+But one part of this process is AI helping humans cheat!  Are you condoning cheating?  No, of course not.  Because what this is really doing is helping the smart, clever people who create these questions be more creative.  But we as AI researchers can make it easier for that adversarial authoring process to happen.  Easier both for the authors, who end up with a better output with less effort and easier for the AI systems that need to train on data to get the most challenging data that requires actually *understanding* the underlying information.
+
+And that is what makes this sort of research so fun.  Just as a pub quiz should reward knowledge and add excitement of competition, we can use that same creative energy to make our algorithms less brittle and more robust.  
+
+What makes it hard to answer spoken questions?  
+When we talked about Watson (link in the description), one of my minor criticisms was that it didn’t listen to questions.  Now we’re going to talk about why that’s a scientific issue and what makes this problem difficult.
+
+Now, if you’ve just been watching the error rate for automatic speech recognition (ASR for short), the numbers are really impressive.  And Microsoft has claimed that these results are superhuman!  But these headline numbers are typically given as a word error rate, or more precisely a token error rate.  And it’s true that the word error rate is average is lower than human numbers, that’s hiding something.  The most common word in English is the … so just getting that right doesn’t mean that much.
+
+Indeed, the most frequent words in English appear *a lot*.  This is called a Zipfian distribution, where the probability of a word is inversely proportional to its frequency rank.  So getting these highly frequent words right is easy and counts for a lot of the word error rate.  
+
+But are these the words that matter for question answering?  No!  Named entities are the things that matter, and they’re much less common.  Let’s take a look at question answering data.  Every dot here is an error, and when the original word is very common … there aren’t many speech recognition errors.
+
+Let’s look at where the error actually are: when the original word is “Gupta” (e.g., the empire of Chandragupta), “Clarendon” (as in Henry II’s council that restricted ecclesiastical power in England) or “Kermit” (proud UMD alum), these either are unknown to the ASR system, as in the case with our green friend here, they get recognized as more common words.  “Clarendon” becomes the allergy medication “claritin” and “gupta” becomes “group”.  
+
+Plus, they often come from foreign languages and are easily confused or mispronounced.  This is also a problem of the Cranfield vs. Manchester paradigm: while Alex Trebek is unlikely to mispronounce anything (he has watchdogs to rerecord anything that sounds off), a clueless user might indeed mispronounce “Where was Mao Zedong born?”
+
+So what can you do to better answer spoken questions?  First, you can ignore words from the recognized text that aren’t confident: if there’s enough redundancy in the question, you might still be able to get it right.  Or you can look at the different options for recognized words; in other words, look at the “lattice” of the different options.  If the top guess isn’t right, maybe you’ll find it under the old one.
+
+Finally, you can also look for words that “sound” similar to words that you’re looking for.  So perhaps the original question had “Dumas” and the system detected “Dummy”, you might be able to pull up the correct author because it shares the syllable “Dum”.  But this requires different algorithms: you need to be able to search by syllable rather than by just words.
+
+And you need datasets to do this.  One cheap way is to use text to speech (i.e., have a computer do the speaking) and then try to recognize this.  This is strictly easier than the real world: there’s no background noise, the pronunciations are always consistent, and there’s only one speaker.
+
+We did this first for the Manchester paradigm, and then a group from CMU did it for the Cranfield paradigm.  As far as I know, there’s no dataset of *real* speech even though there are tons of podcasts and youtube videos of people reading and answering questions.  And because the question are all written down, you could line then up.  But to the best of my knowledge, nobody has done that: project idea!
+
+And if you have diverse speakers, you could contend with the disparities in ASR: much of the training data come from white men, so when tested on other groups, accuracy drops.
+
+And then you could also get to some of the other challenges in parsing questions: for instance, this dataset from Google tackles the disfluencies or corrections that often come up in Cranfield paradigm questions.
+
+Anvil yesterday sets and quest ions, reignite improv broth arable Tuesday quest ions and to wreck a nice beach.  And maybe get better captions on YouTube, as long as people are good about uploading good data.
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End:
