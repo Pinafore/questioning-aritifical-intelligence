@@ -1,4 +1,99 @@
 
+We begin the ``modern'' age of computer question answering and the rise of
+\abr{ai} with \watson{}: an \abr{ibm}-built \abr{ai} that could play the
+American game show \jeopardyf{}
+
+It's been over a decade since \watson{} appeared on \abr{tv}, but it was
+revolutionary.  This chapter will talk about how it changed my life, how it
+changed the way the public thought about \abr{ai}, and how its technology
+paved the way for ``modern'' \abr{ai} as exemplified by \mm{}s like \abr{gpt}.
+
+But this isn't a love letter to \watson{}.  For all the fame and glory it won, the
+\watson{} story isn't without problems.  Indeed, this chapter will make the
+argument that the game was subtly rigged in a way that set back research on
+\abr{ai}.
+
+\section{Why \abr{ibm} Chose \jeopardy{} for a Grand Challenge}
+
+\watson{} is part of a long history of ``grand challenge'' projects meant to
+symbolize progress on \abr{ai}.
+%
+\abr{ibm} (International Business Machines) is a New York-based technology
+company that for much of the twentieth century was synonymous with computing.
+
+\subsection{Grand Challenges}
+\label{sec:grand-challenge}
+
+It had previously wowed the world by creating ``Deep Blue'', a chess-playing
+computer that defeated Gary Kasparov in XXXX, widely considered the best chess
+player of the time.
+%
+
+Other \abr{ai} grand challenges include those issued by funding agencies like
+the United States' Defense Advance Projecects Research Administration
+(\abr{darpa}) to build autonomous cars that can drive at least XXXX.
+%
+Google/DeepMind had a similar ambition when they created AlphaGo, which like
+DeepBlue defeated XXXX, widely considered the best Go player of the time.
+
+The goal of these projects is not just to advance technology but to create a
+big enouch splash that people change how they think about technology.
+
+It's hard to imagine an alternate world where these grand challenges did not
+happen, but I don't think it's exaggeration to say that these grand challenges
+did indeed change the world.  
+%
+After his defeat, Gary Kasparov took a ``if you can't beat them, join them''
+approach and then began arguing for Centaur Chess: humans and computers
+playing chess together (this works for question answering too, as we discuss
+in Chapter~\ref{chapter:centaur}).
+%
+Likewise, XXXX began radically changing his Go style after his defeat,
+incorporating computer-like play into his play style.
+%
+And two decades after \abr{darpa}'s autonomous grand challenge, we now have
+self-driving cars on the street in several \abr{us} cities.
+
+So what made \abr{ibm} pick \jeopardy{} for its grand challenge?
+
+
+\subsection{What \jeopardy{} is and How it Works}
+
+\jeopardy{} is a gameshow created by Merv Griffin that debuted in 1967~\citep{griffin-03}.
+%
+Its big gimmick is that the player responses are given in the form of
+a question in reaction to infamous human cheating scandals (we discuss how
+computers ``cheat'' in Chapter~\ref{chapter:leaderboards}).
+%
+For example, the clue
+\question{
+  The CAPTCHA test against spam \& robot programs
+  is called the `reverse' test named for this British code breaker
+}
+would have response \answer{Who is Alan Turing}.
+%
+% Nevertheless, we'll still sometimes call responses answers to be
+% consistent with the other chapters.
+%
+The clues are arranged in a grid: columns represent categories and
+rows represent difficulty, with the more difficult questions being
+worth more.
+
+There are three players who stand side by side behind podiums.
+%
+When a clue is read, any of the three players can ``buzz in'' to say
+that they want to give a response.
+%
+If they give the correct response, they then have ``control of the
+board'' and can select the next clue.
+
+One advantage of controlling the board is that some questions are
+called ``Daily Doubles'' which allow the player to potentially double
+their score: a player can wager any part of their score, and if they
+get it right they get that ammount added to their score (but a wrong
+response will subtract it from their score).
+
+\subsection{How \watson{} changed my life}
 
 I remember when I first heard rumblings of Watson.
 %
@@ -6,8 +101,8 @@ Because I had a foot in both the \abr{ai} and trivia communities, I
 heard two different stories.
 %
 I heard rumors of amazing work in parsing and semantic role labeling
-happening from researchers who ventured north to Nassau county in New
-York (I was doing my PhD at Princeton).
+happening from researchers who ventured north to Westchester county in New
+York (I was doing my PhD in New Jersey).
 %
 From the trivia community, I heard of some people who were being paid
 by \abr{ibm} to play trivia games but that they couldn't say anything
@@ -15,7 +110,7 @@ more.
 
 I was very sceptical.
 %
-By the time that Watson came to fruition, I had moved to the
+By the time that \watson{} came to fruition, I had moved to the
 University of Maryland.
 %
 Then, my scepticism turned to jealousy.
@@ -23,30 +118,29 @@ Then, my scepticism turned to jealousy.
 I watched, along with the rest of the world, one of the greatest
 achievements of \abr{ai} unfold in front of me.
 %
-What was I doing wasting my time working on topic models if this was
+What was I doing wasting my time working on language models if this was
 also legitimate research?
 
 Let me be clear that the technical triumphs are indisputable (and, in
 my opinion, under-appreciated).
 %
-From the work on wagering to synthesizing multiple information
-sources, Watson~\citep{ferruci-10} was from top to bottom a top-notch well-oiled machine.
+From the work on wagering to synthesizing multiple information sources,
+Watson~\citep{ferruci-10} was from top to bottom a top-notch well-oiled
+machine.
 %
 And it computed all of this in real time---something that wasn't
 strictly necessary but still impressive.
 
-After talking a little about how Watson works, I'll get into how
-Watsons victory left me feeling unconvinced about the primacy of
-computers' ability to answer questions.
-
 \section{How Watson Works}
 
-While ``neural'' question answering (which we'll discuss in the next
+While ``neural'' question answering (which we'll discuss in future
 chapter) is the big thing these days, Watson came of age in the
 \emph{statistical} age.
 %
 To understand some of how Watson works, its helpful to review some of
 the work that came before Watson that helped inspire it.
+
+\subsection{Rule-based Question Answering}
 
 Preceeding the statistical age of \abr{qa} was the \emph{rule-based}
 age: systems that were impressive on individual questions about
@@ -60,7 +154,14 @@ approaches to web-scale data.
 The first things that people tried was scaling up the ``good,
 old-fashioned'' approaches that defined the rule-based systems.
 %
-Probably the most prominent system in this category is Start from Boris Katz at MIT.  This system first launched in 1993.  This like many of the systems in this era, take an approach that’s somewhat similar to to the old-fashioned AI approaches: parse the query with a  and look it up in a knowledge base.  And since this was in the age of the semantic web, this was in the form of RDF files.  
+Probably the most prominent system in this category is Start from Boris Katz
+at MIT.  This system first launched in 1993.  This like many of the systems in
+this era, take an approach that’s somewhat similar to to the old-fashioned AI
+approaches: parse the query with a and look it up in a knowledge base.  And
+since this was in the age of the semantic web, this was in the form of RDF
+files.
+
+\jbgcomment{Give an example of answering this kind of question}
 
 But this is more a change in scale rather than in form from LUNAR and
 BASEBALL\dots but still an amazing achievement to deal with the
@@ -69,33 +170,53 @@ Internet to find answers is clearly a huge influence on later
 techniques that we’ll see like Watson today and Dense Passage
 Retrieval later (Chapter~\ref{ch:nq}).
 
-A more transformative approach was the \abr{qasm} approach from Radev
-at al.  It used the concepts from machine learning to find answers
-given a query.  In the information theory interpretation of machine
-translation, you imagine that all of the utterances in a target
-language is a corruption of English.  Now this is pretty complicated
-for machine translation, but this is a little bit like what happened
-with how the the game show \jeopardy{} came to be.
+\subsection{Transforming Questions to find the Answer}
+
+\jbgcomment{Add citation, expand acronym}
+
+In the next chapters about neural language models, we will discuss how new
+models \emph{transform} questions into numbers (vectors) to find or generate
+the answer.
+%
+But before we get there, it is useful to talk about how we can transform
+questions into text that can better find the answer.
+%
+We begin with the \abr{qasm} approach from Dragomir Radev et al.
+
+One way of thinking about question answering is that it's a translation
+problem: questions are asked in one language but the answers are found in
+another language.
+%
+\abr{qasm}'s approach is to explicitly ``undo'' the process to find the
+correct response given an input clue.
 
 In Chapter~\ref{ch:dynabench}, we'll talk about the cheating scandal
 around the American game show \textit{21}, where Charles van Doren got
 the answers in advance.
 %
-Part of the mythology of Jeopardy! is that Merv Griffen said, why
+Part of the mythology of \jeopardy{} is that Merv Griffen said, why
 don’t we just give them the answers!
 %
-So you have clues like “During
-WWII this computer scientist \& code breaker converted his money into
-silver \& buried it; he never found his buried treasure”.  The correct
-response, which is phrased as a question, is “Who is Alan Turing?”
+So you have clues like \question{During WWII this computer scientist \& code
+  breaker converted his money into silver \& buried it; he never found his
+  buried treasure.}
 %
-In other words, the central conceit of Jeopardy! is that it converts questions into answers (and then the contestants need to give a response to that answer in the form of a question).
+The correct response, which is phrased as a question, is
+``Who is Alan Turing?''
+%
+In other words, the central conceit of Jeopardy! is that it converts questions
+into answers (and then the contestants need to give a response to that answer
+in the form of a question).
 
 What \abr{qasm} is doing is doing the reverse: it has a model that
 tries to turn questions into the search string that could find the
 answer to the question.
 %
-There are a number of transformations that it applies: swapping words, deleting words, ignoring words (e.g., if you have Cleveland, Ohio and ignore Ohio, you’ll find more things about US president Grover Cleveland), etc.
+\abr{qasm} can apply plenty of transformations: swapping words,
+deleting words, ignoring words (e.g., if you have Cleveland, Ohio and ignore
+Ohio, you’ll find more things about US president Grover Cleveland), etc.
+
+\jbgcomment{Turn this into a real example}
 
 In the end, you have a model that creates specialized queries from the
 original question.
@@ -104,9 +225,45 @@ Later on, when we talk about dense passage
 retrieval, those systems are doing something similar, except they’re
 generating the query in a continuous vector space.
 %
-Doing it with real
-words like QASM is more interpretable: a human could understand what’s
-going on, while a vector query is inscrutable it seems to work better.
+Doing it with real words like QASM is more interpretable: a human could
+understand what’s going on, while a vector query is inscrutable it seems to
+work better.
+
+But how does this allow \watson{} to answer questions?
+%
+When a question comes in, \watson{} searches over previous \jeopardy{}
+questions, Wikipedia, articles, and a select subset of the Internet to find
+evidence that can answer the question.
+
+Let's break this into two phases: {\bf guessing} and {\bf buzzing}.
+%
+A guess is its best guess of what the answer could be: literally one of
+thousands of possible answers.
+%
+A buzz is a binary decision of whether to trust whether this particular guess
+is correct or not.
+
+Let's begin with an easy case: let's say you get a clue that's nearly
+identical to an existing clue:
+\question{Walk like a duck}
+Has appeared four times as a clue on \jeopardy{}: 1987, 1996, 2001, and 2010.
+%
+In categories like \category{six-letter words} and \category{``WA''}.
+%
+The guess process looks to see if it has ever seen this exactly clue before,
+it has, so it produces the guess \answer{waddle}.
+
+The buzzer needs to decide if it should trust this guess.
+%
+It has a number that it associates with seeing the exact clue before; let's
+arbitrarily say that it's 3.0.  It then compares that score with its threshold
+on when to buzz.  Again, let's arbitrarily say that the threshold is 1.0.  3.0
+is larger than 1.0, so it buzzes in with that guess (We'll talk more about how to set these numbers not-so-arbitrarily in
+Section~\ref{sec:logistic-regression}).
+
+
+
+
 
 Okay, enough delay.  Let’s talk about \jeopardy{} and how Watson
 answers \jeopardy{} clues.  First, Jeopardy! doesn’t have one kind of
@@ -123,7 +280,9 @@ In other cases, the constraint is that the correct answer starts with a particul
 
 The category that I feared the most was anagrams: where you need to rearrange the letters in the clue to get to the answer.  This is actually easier for a computer than a human!
 
-Each of these can have different approaches that can generate guesses that might be the correct answer.  And you might think that this is all encoded in the category.  Not so!  
+Each of these can have different approaches that can generate guesses that
+might be the correct answer.  And you might think that this is all encoded in
+the category.  Not so!
 
 And for “normal” clues, this looks a lot like the reformulations that we saw in QASM: 400th anniversary of 1898 gets rewritten to 27th May 1498, India gets transformed into Kappad, and then you can find something with the correct response: Vasco de Gama.
 
@@ -219,40 +378,6 @@ that.
 However, if you've calculated a Coryat score before, you can go ahead
 and skip ahead.
 
-\subsection{What \jeopardy{} is and How it Works}
-
-\jeopardy{} is a gameshow created by Merv Griffin that debuted in 1967~\citep{griffin-03}.
-%
-Its big gimmick is that the player responses are given in the form of
-a question in reaction to infamous cheating scandals.
-%
-For example, the clue
-\question{
-  The CAPTCHA test against spam \& robot programs
-  is called the `reverse' test named for this British code breaker
-}
-would have response \answer{Who is Alan Turing}.
-%
-% Nevertheless, we'll still sometimes call responses answers to be
-% consistent with the other chapters.
-%
-The clues are arranged in a grid: columns represent categories and
-rows represent difficulty, with the more difficult questions being
-worth more.
-
-There are three players who stand side by side behind podiums.
-%
-When a clue is read, any of the three players can ``buzz in'' to say
-that they want to give a response.
-%
-If they give the correct response, they then have ``control of the
-board'' and can select the next clue.
-
-One advantage of controlling the board is that some questions are
-called ``Daily Doubles'' which allow the player to potentially double
-their score: a player can wager any part of their score, and if they
-get it right they get that ammount added to their score (but a wrong
-response will subtract it from their score).
 
 \subsection{The Pool of Questions}
 
