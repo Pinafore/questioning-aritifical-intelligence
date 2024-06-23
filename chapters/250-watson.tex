@@ -210,7 +210,8 @@ in the form of a question).
 
 What \abr{qasm} is doing is doing the reverse: it has a model that
 tries to turn questions into the search string that could find the
-answer to the question.
+answer to the question (we'll see modern versions of this when we talk about
+multihop question answering in Chapter~\ref{chapter:multihop}).
 %
 \abr{qasm} can apply plenty of transformations: swapping words,
 deleting words, ignoring words (e.g., if you have Cleveland, Ohio and ignore
@@ -223,7 +224,7 @@ original question.
 %
 Later on, when we talk about dense passage
 retrieval, those systems are doing something similar, except they’re
-generating the query in a continuous vector space.
+generating the query in a continuous vector space (Chapter~\ref{sec:methods-deep-retrieval}).
 %
 Doing it with real words like QASM is more interpretable: a human could
 understand what’s going on, while a vector query is inscrutable it seems to
@@ -261,20 +262,111 @@ on when to buzz.  Again, let's arbitrarily say that the threshold is 1.0.  3.0
 is larger than 1.0, so it buzzes in with that guess (We'll talk more about how to set these numbers not-so-arbitrarily in
 Section~\ref{sec:logistic-regression}).
 
-
-
-
-
-Okay, enough delay.  Let’s talk about \jeopardy{} and how Watson
-answers \jeopardy{} clues.  First, Jeopardy! doesn’t have one kind of
-clue.  There are many different types.  Let’s start with rhyme time:
-from the name of the category, you know that both words in the
-response have to rhyme with each other.
+But \jeopardy{} doesn’t have one kind of clue.  There are many different types
+of question, and sometimes you get a clue from the category about what kind of
+question you will need to answer.  Let’s start with ``potent potable rhyme
+time'': from the name of the category, you know that both words in the
+response have to rhyme with each other and that it will have something to do
+with alchohol.
+%
+So, to answer the clue:
+\question{Rice wine for the guy who rides a racehorse},
+%
+you are essentially doing a constrained search: you can find individual pieces
+that fit the clues (e.g., rewriting synonyms to discover things like makkoli,
+brem, tapai, etc. for ``rice wine'' and ``cowboy'' and ``knight'' for people
+who ride a horse).
+%
+So your guesser would generate lots of different possibilities, but from past
+experience your buzzer would give a very low score to anything that didn't
+have two words.
+%
+For example, if the category is ``rhyme time'' but there's only one word in
+the answer, the score goes down by 5.0, which balances out even if the buzzer
+likes \answer{sake} by itself as a response.
 %
 This is in essence a
-constrained search: ``tramp stamp'' you could find with a single search,
-but other times you need to do two searches and try to find the thing
-that rhymes.
+constrained search: you search for individual components that fit with the
+clue until you get two things that match the clue and then rhyme with each
+other.
+
+Now how does the buzzer know to use this information?
+%
+There are many little pieces that could go into thinking that a guess is good
+or not.  These pieces of evidences are called features.
+%
+While features aren’t
+always active, when they are, they provide evidence of whether a guess is
+good.
+%
+For example, you could have a feature (and Watson probably did) for
+when a category has a ``quote'' in it: this means that the text inside the
+quote should appear in the answer.
+%
+E.g., if you have a category \texttt{``Ten''-letter words}, then the clue
+\question{Patrick Roy and Hope Solo played this position}
+would have many possible answers that might score highly if you didn't take
+the category into account: e.g., \answer{goalie}.
+%
+But the category has two pieces of information: that the answer should be ten
+letters long: \answer{goalie} fails that but \answer{goalkeeper} does.
+%
+However, the additional quoted part of the category tells the buzzer that it
+should give a low score to any guess that doesn't have ``ten'' in it.
+
+In a computer programming language, this could simply be an if statement: if
+ASCII character 34 is in this string, return 1.  But just knowing that there’s
+a quote in the category does’t tell you which clues to favor.  You would need
+to make the the feature more specific.
+
+Let’s go to a question that I got while I was on Jeopardy!  And this shows
+that these aren’t just a category-specific phenomenon\dots this
+also apply to individual clues as well.  In a quite normal category about
+geography, this clue came up:
+\question{``G.I.'' hope you know that 0 degrees latitude \& 180 degrees longitude is just east of this group, part of Kiribati}
+Notice that ``G.I.'' is in quotation marks.  This is a signal that the correct response will start with G.I., in this case the correct response is ``Gilbert\footnote{Named of course for Johnny Gilbert, ``the voice of \jeopardy{}''.  Actually not, it’s far more confusing than that: it was named by a German admiral---Adam Johann von Krusenstern---who led the first Russian circumnavigation of the globe.  Krusenstern recognized that the British Captain Thomas Gilbert had described each of the islands individually and applied the the name to the group of islands.}
+Islands''.
+%
+So perhaps we need to have multiple features to capture whether our answer is
+consistent with this clue.
+%
+To be clear, we don’t know exactly what features Watson used, but it could
+look something like this:
+\begin{itemize*}
+  \item You might have one feature to indicate that there is a quotation mark
+    in the clue.
+    \item You could have another feature to show that the quote matches the
+      candidate guess.
+      \item Perhaps you have another feature that indicates whether the
+        feature matches a multiword guess.
+\end{itemize*}
+
+What made \watson{} such a \textit{tour de force} is that humans had to come
+up with each of these features.
+%
+This is not a one and done process.  If you're building a system like
+this, you should look at things the system is still getting wrong and
+add a new feature to correct the issue.  This is the same process that
+Watson used to build their statistical system.  Maybe the system got
+confused when somebody has a quote from literature and you need to
+make sure that doesn’t get counted or add a new feature to handle that
+case.  It’s very rare to get the features right the first time around.
+
+And while we presented binary---yes or no features--- questions … how does the
+system know how to balance these different features to come to a final
+decision?  At this point
+
+We had previously sidestepped 
+
+, you need to look at the cases where the system has generated a lot of guesses and seen which of them are correct or not.  From this, you can learn that when a letter is in quotes and it matches, that’s a good sign.  These are called feature weights and for the binary features that we’ve talked about, they’re either on or off.
+
+But not all of the features need to be binary.  Another very good feature might be how well the guess matches the clue (e.g., cosine similarity between representations).  So a way to generalize both the binary features and continuous features is to take the dot product of a vector representing all of the features and all of the weights to compute a score for the guess.  The higher the score, the better the guess and the more likely the system will answer.
+
+
+The statistical approach has some advantages over the neural approach
+we'll see in the next chapter: it is easy to understand why a system
+is doing what it is.  And it's easy to fix problems as they pop up.
+
 
 In other cases, the constraint is that the correct answer starts with a particular letter.  
 
@@ -290,6 +382,8 @@ So the first phase of the Watson pipeline is to—in parallel—generate all sor
 
 And sometimes the approaches need to take a recursive approach, combining different subsystems to get to the right answer.
 
+\subsection{Logistic Regression and Gradient Descent}
+
 From this you have dozens of possible guesses.  How do you know which—if any—to select?  This all gets fed into a logistic regression problem.  This can take into account how consistent the evidence matches the clue, how popular the response is, and it can even take into account things like Jeopardy!’s love of puns.
 
 In my homework code, I call this component the buzzer.  And this is the same function that the logistic regression function plays here.  If the logistic regression is confident enough, Watson buzzes in to answer.
@@ -301,34 +395,6 @@ If you’re watching this video, I’m assuming you know both about logistic reg
 The most interesting part of what Watson did to answer questions was to estimate its confidence: how likely is guess a to clue c going to be correct.  It gathered a bunch of individual clues together to figure this out.  
 
 But how did Watson actually put this information together?  It used a tool called logistic regression.  The goal of this approach is to take all of the information about a possible guess and output a probability of how likely it thought the guess would be correct.  The higer the score, the more it trusted the guess.
-
-There are many little pieces that could go into thinking that a guess is good or not.  These pieces of evidences are called features.  While features aren’t always active, when they are, they provide evidence of whether a guess is good.  For example, you could have a feature (and Watson probably did) for when a category has a quote in it.
-
-In a computer programming language, this could simply be an if statement: if ASCII character 34 is in this string, return 1.  But just knowing that there’s a quote in the category does’t tell you which clues to favor.  You would need to make the the feature more specific.
-
-Let’s go to a question that I got while I was on Jeopardy!  And this shows that these aren’t just a category-specific phenomenon: .  However, this can also apply to individual clues as well.  In a quite normal category about geography, this clue came up:
-
-"G.I." hope you know that 0 degrees latitude \& 180 degrees longitude is just east of this group, part of Kiribati
-
-Notice that “G.I.” is in quotation marks.  This is a signal, that the correct response will start with G.I., in this case the correct response is “Gilbert Islands”.   Named of course for Johnny Gilbert, “the voice of Jeopardy!”.  Actually not, it’s far more confusing than that: it was named by a German admiral—Adam Johann von Krusenstern—who led the first Russian circumnavigation of the globe.  Krusenstern recognized that the British Captain Thomas Gilbert had described each of the islands individually and applied the the name to the group of islands.
-
-So perhaps we need to have multiple features to capture whether our answer is consistent with this clue.  To be clear, we don’t know exactly what features Watson used, but it could look something like this.  You might have one feature to indicate that there is a quotation mark in the clue.  You could have another feature to show that the quote matches the candidate guess.  Perhaps you have another feature that indicates whether the feature matches a multiword guess.
-
-But these are just answering yes or no questions … how does the system know how to balance these different features to come to a final decision?  At this point, you need to look at the cases where the system has generated a lot of guesses and seen which of them are correct or not.  From this, you can learn that when a letter is in quotes and it matches, that’s a good sign.  These are called feature weights and for the binary features that we’ve talked about, they’re either on or off.
-
-But not all of the features need to be binary.  Another very good feature might be how well the guess matches the clue (e.g., cosine similarity between representations).  So a way to generalize both the binary features and continuous features is to take the dot product of a vector representing all of the features and all of the weights to compute a score for the guess.  The higher the score, the better the guess and the more likely the system will answer.
-
-This is not a one and done process.  If you're building a system like
-this, you should look at things the system is still getting wrong and
-add a new feature to correct the issue.  This is the same process that
-Watson used to build their statistical system.  Maybe the system got
-confused when somebody has a quote from literature and you need to
-make sure that doesn’t get counted or add a new feature to handle that
-case.  It’s very rare to get the features right the first time around.
-
-The statistical approach has some advantages over the neural approach
-we'll see in the next chapter: it is easy to understand why a system
-is doing what it is.  And it's easy to fix problems as they pop up.
 
 \section{Learning as You Go}
 
