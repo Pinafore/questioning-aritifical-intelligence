@@ -352,15 +352,6 @@ confused when somebody has a quote from literature and you need to
 make sure that doesn’t get counted or add a new feature to handle that
 case.  It’s very rare to get the features right the first time around.
 
-And while we presented binary---yes or no features--- questions … how does the
-system know how to balance these different features to come to a final
-decision?  At this point
-
-We had previously sidestepped 
-
-, you need to look at the cases where the system has generated a lot of guesses and seen which of them are correct or not.  From this, you can learn that when a letter is in quotes and it matches, that’s a good sign.  These are called feature weights and for the binary features that we’ve talked about, they’re either on or off.
-
-But not all of the features need to be binary.  Another very good feature might be how well the guess matches the clue (e.g., cosine similarity between representations).  So a way to generalize both the binary features and continuous features is to take the dot product of a vector representing all of the features and all of the weights to compute a score for the guess.  The higher the score, the better the guess and the more likely the system will answer.
 
 
 The statistical approach has some advantages over the neural approach
@@ -378,15 +369,96 @@ the category.  Not so!
 
 And for “normal” clues, this looks a lot like the reformulations that we saw in QASM: 400th anniversary of 1898 gets rewritten to 27th May 1498, India gets transformed into Kappad, and then you can find something with the correct response: Vasco de Gama.
 
-So the first phase of the Watson pipeline is to—in parallel—generate all sorts of guesses based on different interpretations of the question.  Some try to solve anagrams, others look for rhymes, others run an IR query like the Start system we talked about before, others are doing transformations like the QASM approach we talked about before.  
+So the first phase of the Watson pipeline is to---in parallel---generate all
+sorts of guesses based on different interpretations of the question.  Some try
+to solve anagrams, others look for rhymes, others run an IR query like the
+Start system we talked about before, others are doing transformations like the
+QASM approach we talked about before.
 
-And sometimes the approaches need to take a recursive approach, combining different subsystems to get to the right answer.
+And sometimes the approaches need to take a recursive approach, combining
+different subsystems to get to the right answer.
 
 \subsection{Logistic Regression and Gradient Descent}
 
-From this you have dozens of possible guesses.  How do you know which—if any—to select?  This all gets fed into a logistic regression problem.  This can take into account how consistent the evidence matches the clue, how popular the response is, and it can even take into account things like Jeopardy!’s love of puns.
+From this you have dozens of possible guesses.  How do you know which---if
+any—to select?  This all gets fed into a logistic regression problem.  This
+can take into account how consistent the evidence matches the clue, how
+popular the response is, and it can even take into account things like
+Jeopardy!’s love of puns.
 
-In my homework code, I call this component the buzzer.  And this is the same function that the logistic regression function plays here.  If the logistic regression is confident enough, Watson buzzes in to answer.
+In the examples above, we assumed that we knew what the weights were for each
+of our features.
+%
+For the moment, let's continue that assumption\dots but we'll try to improve
+them so that we get more buzzes right and fewer wrong.
+%
+So what does it mean to get more buzzes right?  First, we need to define a
+little terminology: we need to consider the correct examples $\mathcal{X}_c$
+and all the wrong examples $\mathcal{X}_w$.
+%
+We want all of the correct examples to have scores more than the threshold and
+all of the incorrect examples to have scores less than the threshold.
+%
+Let's call the threshold~$b$, and then we need to sum up all of the non-zero
+features of an example to compute the score of an example $i$:
+\begin{equation}
+  \mbox{score}({\bm x}_i) = \sum_{j} w_j x_{i,j}.
+  \label{eq:lr-dot}
+\end{equation}
+In other words, we take every feature, multiply it by the weight associated
+with it (e.g., $x_{i,j}$ might be does this clue have a category with a quote
+in it).
+%
+We write this as a multiplication and not as just adding the feature weights
+directly because sometimes our features won't be binary.
+%
+And this should look familliar: it looks a lot like the dot product that we
+first saw in the chapter on information retrieval
+(Chapter~\ref{chapter:cranfield}), where we compute the \emph{similarity} of
+two examples by multiplying the \tfidf{} scores of two documents' words.
+
+And this is a good segue to \emph{why} we write this as a dot product rather
+than as a sum of all of the relevant feature weights.
+%
+If all of the features of an example $x_{i,j}$ are binary, then you take the
+non-zero elements and add up the weights (since one times the weight just
+gives you the feature weights).
+%
+But another very good feature might be how well the guess matches the clue
+(e.g., dot product between \tfidf{} scores).
+%
+So a way to generalize both the binary features and continuous features is to
+take the dot product of a vector representing all of the features and all of
+the weights to compute a score for the guess.
+%
+The higher the score, the better the guess and the more likely the system will
+answer.
+
+But this doesn't answer the question of how we can learn what the weights
+should be.
+%
+We need to look at the cases where the system has generated a lot of guesses
+and seen which of them are correct or not.
+%
+From this, you can learn that when
+a letter is in quotes and it matches, that’s a good sign for getting a guess right.
+%
+More concretely we want the score (Equation~\ref{eq:lr-dot}) to be high for
+right guesses and low for wrong ones, and if it's not, we need to adjust the
+scores by changing the weights ${\bm w}$.
+
+For this, we are going to need an \emph{objective function}: a mathematical
+expression that tells us how far we are from our goal.
+%
+In this case our objective (goal) is to make the probability of getting a
+guess from our weights match which guesses in our dataset were actually right.
+%
+So this means that we're going to turn our weights into a probability~$\pi_i$:
+%
+\begin{equation}
+  \pi_i = p(\mbox{buzz} \g {\bm x}) \equiv \frac{1}{1+\exp{-\left(\sum_{j} w_j
+        x_{i,j} + b \right)}}.
+\end{equation}
 
 \section{How Does Watson Know when to Buzz?}
 
