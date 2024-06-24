@@ -379,6 +379,7 @@ And sometimes the approaches need to take a recursive approach, combining
 different subsystems to get to the right answer.
 
 \subsection{Logistic Regression and Gradient Descent}
+\label{sec:logistic-regression}
 
 From this you have dozens of possible guesses.  How do you know which---if
 any—to select?  This all gets fed into a logistic regression problem.  This
@@ -394,7 +395,7 @@ them so that we get more buzzes right and fewer wrong.
 %
 So what does it mean to get more buzzes right?  First, we need to define a
 little terminology: we need to consider the correct examples $\mathcal{X}_c$
-and all the wrong examples $\mathcal{X}_w$.
+and all the wrong examples $\mathcal{X}_f$.
 %
 We want all of the correct examples to have scores more than the threshold and
 all of the incorrect examples to have scores less than the threshold.
@@ -450,8 +451,8 @@ scores by changing the weights ${\bm w}$.
 For this, we are going to need an \emph{objective function}: a mathematical
 expression that tells us how far we are from our goal.
 %
-In this case our objective (goal) is to make the probability of getting a
-guess from our weights match which guesses in our dataset were actually right.
+In this case our objective is to make the probability saying we should
+buzz---computed from our weights---for incorrect buzzes be as low as possible.
 %
 So this means that we're going to turn our weights into a probability~$\pi_i$:
 %
@@ -459,14 +460,55 @@ So this means that we're going to turn our weights into a probability~$\pi_i$:
   \pi_i = p(\mbox{buzz} \g {\bm x}) \equiv \frac{1}{1+\exp{-\left(\sum_{j} w_j
         x_{i,j} + b \right)}}.
 \end{equation}
+%
+Since we only want to buzz when we're right, then we want $\pi_i$ to be
+small whenever the buzz is wrong and small when the buzz is wrong.
+%
+Alternatively, we could also say we want $1-\pi_i$ to be big when the buzz is
+wrong, since this means that $\pi_i$ is as close to zero.
+%
+Because we care about all examples, you would normally multiply the
+probability of joint events together, but this leads to a very small number
+(since probabilities are less than one), so for mathematical convenience we
+take the log:
+\begin{equation}
+  \mathcal{L}' \equiv = \explain{How right are we}{\sum_{i \in \mathcal{X}_c}
+    \log{\pi_i}} + \explain{How wrong are we}{\sum_{i \in
+    \mathcal{X}_f} \log{1 - \pi_i}}.
+\end{equation}
+So this overall expression tells us how good of a job our features are doing
+in telling us when to buzz.
 
-\section{How Does Watson Know when to Buzz?}
+Later in the book, this is sometimes called a \emph{loss function}, so to be
+consistent with that, we will think about how to \emph{minimize our mistakes},
+so what we will do now (somewhat confusingly) is to minimize the negative of
+$\mathcal{L}'$, which we will call $\mathcal{L}$:
+\begin{equation}
+  \mathcal{L} \equiv = -\sum_{i \in \mathcal{X}_c}
+    \log{\pi_i}} - \sum_{i \in
+    \mathcal{X}_f} \log{1 - \pi_i}.
+\end{equation}
 
-If you’re watching this video, I’m assuming you know both about logistic regression and a little bit about IBM’s Watson that played the US game show Jeopardy!  If you want to know more, I have some suggestions for videos linked into the description.
+One missing piece of the explanation is how to turn our weights into
+probabilities.
+%
+For that, we are going to use the logistic function.
+%
+This is a function that can take any real number as an input and turn it into
+a probability between zero and one.
+%
+When the input is zero, it provides a probability is 0.5, and when the input
+goes to positive infinity, the probability approaches one; likewise, when the
+input goes to negative infinity, the probability approaches zero.
+%
+For convenience, we will call this function $\sigma(x)$, because some people
+call this the sigmoid function.
 
-The most interesting part of what Watson did to answer questions was to estimate its confidence: how likely is guess a to clue c going to be correct.  It gathered a bunch of individual clues together to figure this out.  
-
-But how did Watson actually put this information together?  It used a tool called logistic regression.  The goal of this approach is to take all of the information about a possible guess and output a probability of how likely it thought the guess would be correct.  The higer the score, the more it trusted the guess.
+Because we want to buzz when the weights pass the threshold, we will write the
+probability of an example as
+\begin{equation}
+  \pi_i \equiv \sigma \left( \sum_j w_{j} x_{i,j} - b \right)
+\end{equation}
 
 \section{Learning as You Go}
 
