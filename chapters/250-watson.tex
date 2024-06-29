@@ -393,6 +393,10 @@ of our features.
 For the moment, let's continue that assumption\dots but we'll try to improve
 them so that we get more buzzes right and fewer wrong.
 %
+This will require a bit of math, so if you just want to jump ahead to the big
+picture (e.g., if you already know what \abr{sgd} for logistic regression
+looks like), go ahead to Section~\ref{sec:watson:updates}.
+
 So what does it mean to get more buzzes right?  First, we need to define a
 little terminology: we need to consider the correct examples $\mathcal{X}_c$
 and all the wrong examples $\mathcal{X}_f$.
@@ -448,47 +452,6 @@ More concretely we want the score (Equation~\ref{eq:lr-dot}) to be high for
 right guesses and low for wrong ones, and if it's not, we need to adjust the
 scores by changing the weights ${\bm w}$.
 
-For this, we are going to need an \emph{objective function}: a mathematical
-expression that tells us how far we are from our goal.
-%
-In this case our objective is to make the probability saying we should
-buzz---computed from our weights---for incorrect buzzes be as low as possible.
-%
-So this means that we're going to turn our weights into a probability~$\pi_i$:
-%
-\begin{equation}
-  \pi_i = p(\mbox{buzz} \g {\bm x}) \equiv \frac{1}{1+\exp{-\left(\sum_{j} w_j
-        x_{i,j} + b \right)}}.
-\end{equation}
-%
-Since we only want to buzz when we're right, then we want $\pi_i$ to be
-small whenever the buzz is wrong and small when the buzz is wrong.
-%
-Alternatively, we could also say we want $1-\pi_i$ to be big when the buzz is
-wrong, since this means that $\pi_i$ is as close to zero.
-%
-Because we care about all examples, you would normally multiply the
-probability of joint events together, but this leads to a very small number
-(since probabilities are less than one), so for mathematical convenience we
-take the log:
-\begin{equation}
-  \mathcal{L}' \equiv = \explain{How right are we}{\sum_{i \in \mathcal{X}_c}
-    \log{\pi_i}} + \explain{How wrong are we}{\sum_{i \in
-    \mathcal{X}_f} \log{1 - \pi_i}}.
-\end{equation}
-So this overall expression tells us how good of a job our features are doing
-in telling us when to buzz.
-
-Later in the book, this is sometimes called a \emph{loss function}, so to be
-consistent with that, we will think about how to \emph{minimize our mistakes},
-so what we will do now (somewhat confusingly) is to minimize the negative of
-$\mathcal{L}'$, which we will call $\mathcal{L}$:
-\begin{equation}
-  \mathcal{L} \equiv = -\sum_{i \in \mathcal{X}_c}
-    \log{\pi_i}} - \sum_{i \in
-    \mathcal{X}_f} \log{1 - \pi_i}.
-\end{equation}
-
 One missing piece of the explanation is how to turn our weights into
 probabilities.
 %
@@ -504,25 +467,225 @@ input goes to negative infinity, the probability approaches zero.
 For convenience, we will call this function $\sigma(x)$, because some people
 call this the sigmoid function.
 
-Because we want to buzz when the weights pass the threshold, we will write the
-probability of an example as
-\begin{equation}
-  \pi_i \equiv \sigma \left( \sum_j w_{j} x_{i,j} - b \right)
-\end{equation}
+\begin{figure}
+  \includegraphics[width=0.5\linewidth]{figures/plots/sigmoid}}
+\caption{This transformation is
+  called the sigmoid function because the way it transforms all inputs into
+  values makes it look like an ``S'' shape, with 0 outputs to the left,
+  increasing in the middle (an input of 0 right at the threshold gives an
+  output of 0.5) and 1 outputs to the right.}
+\label{fig:watson:sigmoid}
+\end{figure}
 
-\section{Learning as You Go}
+For this, we are going to need an \emph{objective function}: a mathematical
+expression that tells us how far we are from our goal.
+%
+In this case our objective is to make the probability saying we should
+buzz---computed from our weights---for incorrect buzzes be as low as possible.
+%
+So this means that we're going to transform our weights into a
+probability~$\pi_i$ between zero and one that gets big when the weights pass the threshold:
+%
+\begin{equation}
+  \pi_i = \sigma \left( \sum_j w_{j} x_{i,j} - b \right) \equiv p(\mbox{buzz} \g {\bm x}) \equiv \frac{1}{1+\exp{-\left(\sum_{j} w_j
+        x_{i,j} + b \right)}}.
+  \label{eq:watson:pi}
+\end{equation}
+%
+Since we only want to buzz when we're right, then we want $\pi_i$ to be small
+(close to zero) whenever the buzz is wrong and big when the buzz is right
+(close to one).
+%
+Alternatively, we could also say we want $1-\pi_i$ to be big when the buzz is
+wrong, since this means that $\pi_i$ is as close to zero.
+%
+This alternate formulation is actually what we want since we will want to
+optimize a single function going in the same direction.
+%
+Because we care about all examples, you would normally multiply the
+probability of joint events together, but this leads to a very small number
+(since probabilities are less than one), so for mathematical convenience we
+take the log:
+\begin{equation}
+  \mathcal{L}' \equiv = \explain{How right are we}{\sum_{i \in \mathcal{X}_c}
+    \log{\pi_i}} + \explain{How wrong are we}{\sum_{i \in
+      \mathcal{X}_f} \log{1 - \pi_i}}.
+  \label{eq:watson:logprob}
+\end{equation}
+So this overall expression (the log probability) tells us how good of a job
+our features are doing in telling us when to buzz.
+
+Later in the book, objective functions like this will be called a \emph{loss
+  function}, so to be consistent with that, we will think about how to
+\emph{minimize our mistakes}, so what we will do now (somewhat confusingly) is
+to minimize the negative of $\mathcal{L}'$, which we will call $\mathcal{L}$:
+\begin{equation}
+  \mathcal{L} \equiv = -\sum_{i \in \mathcal{X}_c}
+    \log{\pi_i}} - \sum_{i \in
+    \mathcal{X}_f} \log{1 - \pi_i}.
+  \label{eq:watson:loss}
+\end{equation}
+Just to recap: Equation~\ref{eq:watson:pi} is the probability of the model
+saying we should buzz on example~$i$, Equation~\ref{eq:watson:logprob}
+combines all of those together to see how close we are to being right, and
+then Equation~\ref{eq:watson:loss} flips it around so that the large it is,
+the wronger we are\dots we want to minimize that expression.
+
+If you remember high school calculus, this is an optimization problem: you can
+compute the derivative (gradient, actually) of each of each of the variables
+you have control over---the feature weights {\bm w}---and then adjust those
+weights to decrease the loss function represented by $\mathcal{L}$
+(Equation~\ref{eq:watson:loss}).
+%
+When you did this in high school calculus, you could probably solve the
+equation for when the derivative was zero, set the variable to make the
+derivative zero, and then you're done.
+%
+But that's not possible here, so we need to take little adjustments to ${\bm
+  w}$ to push $\mathcal{L}$ down again and again.
+
+An intuitive way of thinking about this is that the shape of $\mathcal{L}$
+represents a hill.
+%
+Where you stand on the hill is represented by how you've set ${\bm w}$: each
+dimension represents one dimension of this vector.\footnote{The threshold $b$
+  is also an additional dimension you need to optimize, but we'll gloss over
+  this for now\dots you can always fudge it be imagining it an additional
+  dimension of {\bm w} that's always active for every example.}
+%
+In two dimensions, one dimension is how far north--south you are and one
+dimension is how far east--west you are: and you're trying to get to the
+lowest valley you can.
+%
+The catch is that you can't really see what the whole landscape looks like;
+it's so foggy you can only see right around where you are.
+%
+The intuition in this case is to walk ``downhill'', and this is exactly what
+the gradient of $\mathcal{L}$ gives you.
+
+Now the problem is that computing $\mathcal{L}$ over your entire dataset is
+hard: you have to go over every single question in the \jeopardy{} training
+set to compute its contribution to the gradient.
+%
+The way that I like to think about it is that each example is a person you can
+ask ``how do I go downhill''.
+%
+While you could ask lots of different people, if you ask literally everyone,
+that's probably going to be overkill.
+%
+You can probably get a good sense of the direction by just asking a handful of
+example of which way you should go.
+
+In the lingo, the sample of examples that you ask for the direction is the
+\emph{minibatch}, and this overall process of asking a few (or even one)
+example for a direction is called \emph{stochastic gradient descent} as
+invented by Leon\footnote{Fun fact: Leon was a researcher at \texttt{nec} next
+  to Princeton when I defended my dissertation, and he came to my defense\dots
+  I assume for the free food rather than for the content.} Bouttou~\citep{}.
+
+Given that the math for the derivation is everywhere, I will skip it here (you
+can take a look at Chapter XXXX of Speech and Language Processing by Jurafsky
+and Martin, which I often use in my classes and thus have adopted their
+notation), but it is so intuitive that if you look at it, it just ``feels
+right''.
+%
+For a minibatch of size one, if you ask it which way you should go, it tells
+you to update your weights ${\bm w}$ to be:
+\begin{equation}
+  {\bm w}^{\mbox{new}} = {\bm w}.
+  \label{eq:watson:update}
+\end{equation}
+In other words, if you got this example right, you slightly increase all of
+the feature weights that caused you to get it right.
+%
+If you got it wrong, you slightly decrease all of the feature weights that
+caused you to get it wrong.
+
+\jbgcomment{need to add a category}
+
+For example, let's say that you have a clue
+\question{XXXX}
+that Watson famously got wrong as a final \jeopardy{} when it answered the
+famous American city \answer{Toronto}.
+%
+So in this case our buzzer input\footnote{In reality, the calculus for Final
+  \jeopardy{} is a little different because it makes sense to provide some
+  answer no matter what, you don't really buzz in.  However, you still want
+  the best answer to have the highest probability, so we can still work
+  through this example.  And indeed, given the debugging output \watson{}
+  showed it didn't seem very confident in its wrong output, so it probably
+  wouldn't have ``buzzed in'' during normal play (but again, it's strategic to
+  put something down), which suggests that everything was working as intended.
+  The bigger complication is how to figure out what to wager going into the
+  final given your opponents and the category, which we talk about at a
+  cursory level in Section~\ref{sec:watson:wagers}.} is whether we should buzz
+on this clue with the response \answer{Toronto}, for which we get a $\pi_i$.
+%
+For the sake of concreteness, let's say $\pi_i$ is 0.4\dots it's not high, but it
+\emph{should} be zero because Midway and O'Hare airports are actually in
+the great city of \answer{Chicago}.
+%
+Now this is too high, so something went wrong with our features.
+%
+Let's see what features were on and what their current weights
+in Table~\ref{table:watson:features}.\footnote{Lest there be any doubt, I am making up these weights and
+  features for a simple example\dots \watson{} had many more and better
+  features.  And you normally don't have feature weights with such round numbers.}
+
+\begin{tabular}
+  \toprule
+  Feature & Weight & $x_i$ \\
+  \midrule
+  \abr{ir} Score & 2 & 0.1 \\
+  \underline{Toronto} compatability with Category & 1 & 0.2 \\
+  Knowledge Base (\# Airports in Toronto) & 0.1 & 2 \\
+  Previous responses (\answer{Toronto}) & 0.005 & 40 \\
+  \midrule
+  Bias & -0.1  &  \\
+  \bottomrule
+\end{tabular}
+
+Next things to write:
+- What pi is and why
+- What the new weight is
+
+Write somewhere:
+- Things backprop cannot do (e.g., which features you have, how they're
+computed ... e.g., might have interpreted US = American = continent), how it relates to feature representation
+
+\subsection{Learning as You Go}
+\label{sec:watson:updates}
 
 Something that is particularly unique to Jeopardy! and not to the
 other QA settings we’ve looked at is that the category is a huge
-constraint on what the correct responses are.  A large part of the
-Jeopardy! buzzer is figuring out the “lexical answer type”.  Part of
-this is is looking at clues in the question, things like “this
-country” or “this game” tell you what kind of entity the response
-would be.  And this is sometimes at odds with the category, as shown
-here.
+constraint on what the correct responses are.
+%
+A large part of the
+Jeopardy! buzzer is figuring out the ``lexical answer type'': what kind of
+thing can the answer be.
+%
+Part of
+this is is looking at clues in the clue.
+%
+This chapter has used a lot of example clues like ``this woman'' (Sue
+Grafton), ``this code breaker'' (Turing), ``this position'' (goaltender), or
+``this group'' (Gilbert Islands).
+%
+These are hints about what kind of response is being sought.
+%
+And lest you think this is an artifice of the skilled writers of \jeopardy{},
+this also appears in more ``natural'' questions like those people ask Google
+(Chapter~\ref{chapter:nq}).
 
-
-And part of what made Watson a good Jeopardy! Player is that it would learn as it explored the category.  After getting a couple of months wrong, Watson can learn that all of the answers should be a month.
+And part of what made Watson a good \jeopardy{} Player is that it would learn
+as it explored the category.
+%
+After getting a couple of months wrong, Watson
+can learn that all of the answers should be a month.
+%
+And this can be encoded as a binary feature: all of the previous answers in the
+current category have been a $X$ (Month, President, City, etc.) and so is the
+current guess.
 
 One thing that made Watson particularly impressive was that it not just computed raw accuracy but also compared against human performance.  
 
