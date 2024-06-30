@@ -595,11 +595,14 @@ you to update your weights ${\bm w}$ to be:
   {\bm w}^{\mbox{new}} = {\bm w}.
   \label{eq:watson:update}
 \end{equation}
-In other words, if you got this example right, you slightly increase all of
+In other words, if you got this example right, you slightly---how much
+is controlled by the step size parameter~$\lambda$---increase all of
 the feature weights that caused you to get it right.
 %
 If you got it wrong, you slightly decrease all of the feature weights that
 caused you to get it wrong.
+
+
 
 \jbgcomment{need to add a category}
 
@@ -630,7 +633,8 @@ Now this is too high, so something went wrong with our features.
 Let's see what features were on and what their current weights
 in Table~\ref{table:watson:features}.\footnote{Lest there be any doubt, I am making up these weights and
   features for a simple example\dots \watson{} had many more and better
-  features.  And you normally don't have feature weights with such round numbers.}
+  features.  And you normally don't have feature weights with such
+  round numbers, but it makes the example cleaner.}
 
 \begin{tabular}
   \toprule
@@ -645,6 +649,23 @@ in Table~\ref{table:watson:features}.\footnote{Lest there be any doubt, I am mak
   \bottomrule
 \end{tabular}
 
+There are lots of other features that we're not seeing
+because they're zero, e.g., the feature that checks to see if there's
+a quotation mark in the category doesn't see one, so it's zero and we
+can safely ignore it along with every other feature that didn't fire.
+%
+And this makes sense: the features that aren't on for this feature had
+nothing to do with the mistake, so they shouldn't be punished or
+rewarded.
+
+From Equation~\ref{eq:watson:update}, the error is 0.4---$\pi_i$
+should have been zero, but it was 0.4---and if we assume\footnote{In
+  practice, this would be a really bad step size---it's way too
+  large---but we'll go with this because it makes the math easier.} that our step
+size is 1.0.
+%
+
+
 Next things to write:
 - What pi is and why
 - What the new weight is
@@ -653,8 +674,18 @@ Write somewhere:
 - Things backprop cannot do (e.g., which features you have, how they're
 computed ... e.g., might have interpreted US = American = continent), how it relates to feature representation
 
-\subsection{Learning as You Go}
-\label{sec:watson:updates}
+
+
+
+\subsection{Feature Engineering}
+\label{sec:watson:feature-engineering}
+
+However, these updates can only update the features that you have.
+%
+When you're starting out building a system like this, you usually
+don't have very many features.
+%
+But 
 
 Something that is particularly unique to Jeopardy! and not to the
 other QA settings we’ve looked at is that the category is a huge
