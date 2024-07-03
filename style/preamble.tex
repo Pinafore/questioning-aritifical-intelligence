@@ -79,8 +79,11 @@
 \newcommand{\feat}[1]{{\small \texttt{#1}}}
 \newcommand{\act}[1]{{\small \texttt{#1}}}
 \newcommand{\ngram}[0]{$n$-gram}
+\newcommand{\watson}{\textit{Watson}}
 \newcommand{\answer}[1]{\uline{#1}}
 \newcommand{\question}[1]{\begin{quote}\colorbox{blue}{\textcolor{white}{\parbox{0.9\linewidth}{#1}}}\end{quote}}
+\newcommand{\catquestion}[2]{\begin{quote}\colorbox{blue}{\textcolor{white}{\parbox{0.9\linewidth}{\textsc{#1}}}}\\
+    \colorbox{blue}{\textcolor{white}{\parbox{0.9\linewidth}{#2}}}\end{quote}}
 \newcommand{\topic}[1]{\underline{#1}}
 \newcommand{\gem}[1]{\mbox{\textsc{gem}}}
 \newcommand{\abr}[1]{\textsc{#1}}
@@ -229,8 +232,14 @@
 \newcommand{\elmo}{\textsc{elm}{\small o}}
 \newcommand{\fone}{$F_1$}
 
+% \jeopardyf{} is for end of sentence uses
+
+\newcommand{\category}[1]{\textbf{#1}}
+\newcommand{\tfidf}{\abr{tf}-\abr{idf}}
+
 \newcommand{\jeopardy}{\textit{Jeopardy!\@}}
-\newcommand{\jeopardyp}{\textit{Jeopardy!}}
+\newcommand{\jeopardyf}{\textit{Jeopardy!}}
+\newcommand{\mm}{\abr{llm}}
 
 \newcommand{\glove}{\abr{gl}{\small o}\abr{ve}}
 \newcommand{\openie}{\abr{o}{\small pen}\abr{ie}}

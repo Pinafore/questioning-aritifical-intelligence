@@ -236,6 +236,8 @@ When a question comes in, \watson{} searches over previous \jeopardy{}
 questions, Wikipedia, articles, and a select subset of the Internet to find
 evidence that can answer the question.
 
+\subsection{Buzzing is important for Humans and Computers}
+
 Let's break this into two phases: {\bf guessing} and {\bf buzzing}.
 %
 A guess is its best guess of what the answer could be: literally one of
@@ -289,6 +291,9 @@ This is in essence a
 constrained search: you search for individual components that fit with the
 clue until you get two things that match the clue and then rhyme with each
 other.
+
+\subsection{Using Features}
+\label{sec:watson:features}
 
 Now how does the buzzer know to use this information?
 %
@@ -468,7 +473,7 @@ For convenience, we will call this function $\sigma(x)$, because some people
 call this the sigmoid function.
 
 \begin{figure}
-  \includegraphics[width=0.5\linewidth]{figures/plots/sigmoid}}
+  \includegraphics[width=0.5\linewidth]{figures/plots/sigmoid}
 \caption{This transformation is
   called the sigmoid function because the way it transforms all inputs into
   values makes it look like an ``S'' shape, with 0 outputs to the left,
@@ -521,7 +526,7 @@ Later in the book, objective functions like this will be called a \emph{loss
 to minimize the negative of $\mathcal{L}'$, which we will call $\mathcal{L}$:
 \begin{equation}
   \mathcal{L} \equiv = -\sum_{i \in \mathcal{X}_c}
-    \log{\pi_i}} - \sum_{i \in
+    \log{\pi_i} - \sum_{i \in
     \mathcal{X}_f} \log{1 - \pi_i}.
   \label{eq:watson:loss}
 \end{equation}
@@ -533,7 +538,7 @@ the wronger we are\dots we want to minimize that expression.
 
 If you remember high school calculus, this is an optimization problem: you can
 compute the derivative (gradient, actually) of each of each of the variables
-you have control over---the feature weights {\bm w}---and then adjust those
+you have control over---the feature weights ${\bm w}$---and then adjust those
 weights to decrease the loss function represented by $\mathcal{L}$
 (Equation~\ref{eq:watson:loss}).
 %
@@ -551,7 +556,7 @@ Where you stand on the hill is represented by how you've set ${\bm w}$: each
 dimension represents one dimension of this vector.\footnote{The threshold $b$
   is also an additional dimension you need to optimize, but we'll gloss over
   this for now\dots you can always fudge it be imagining it an additional
-  dimension of {\bm w} that's always active for every example.}
+  dimension of ${\bm w}$ that's always active for every example.}
 %
 In two dimensions, one dimension is how far north--south you are and one
 dimension is how far east--west you are: and you're trying to get to the
@@ -590,24 +595,53 @@ notation), but it is so intuitive that if you look at it, it just ``feels
 right''.
 %
 For a minibatch of size one, if you ask it which way you should go, it tells
-you to update your weights ${\bm w}$ to be:
+you to update\footnote{Because we're doing stochastic \emph{descent}, we
+  subtract the gradient from the current weight\dots if we were trying to make
+  the objective function as large as possible, we'd add it to the current
+  weights.} your weight $w_i$ to be:
 \begin{equation}
-  {\bm w}^{\mbox{new}} = {\bm w}.
+w_j^{(new)} = w_j^{(old)} + \lambda \frac{\delta \mathcal{L}}{{w_j}} =
+w_j^{(old)} - \lambda \explain{error}{(\pi_i - y_i)} x_{i,j}.
   \label{eq:watson:update}
 \end{equation}
-In other words, if you got this example right, you slightly---how much
-is controlled by the step size parameter~$\lambda$---increase all of
-the feature weights that caused you to get it right.
+The most important part of the equation is the error: how far off your
+prediction for example~$j$ is.
 %
-If you got it wrong, you slightly decrease all of the feature weights that
+Remember that the true outcome~$y_i$ is binary (either you should have
+buzzed---$y_i=1.0$---or you shouldn't have---$y_i=0.0$), but that the
+prediction~$\pi_i$ is a probability and thus ranges between 0.0 and 1.0.
+%
+The more right you are---the closer you are to $y_i$---the less the weights
+change.
+%
+In other words, if you got this example exactly right, nothing changes at all.
+%
+But the bigger your error is, the more you change.
+%
+Exactly how much is controlled by the step size
+parameter~$\lambda$, and the direction of the change depends on the sign of
+the error.
+%
+If the error was positive, your prediction was too low, so you should increase all of the feature weights that caused you to
+say you should have buzzed when you didn't.
+%
+If the error was negative, your prediction was too high, and so you slightly decrease all of the feature weights that
 caused you to get it wrong.
 
+The other input to the update is how much of this feature the example has:
+$x_{i,j}$.
+%
+To make sure your gradients don't get too big or too small, in practice we often
+standardize the feature weights so that they have mean zero and unit variance.
+%
+However, because this chapter is trying explain how these things work (and
+we'll work through an example next), we won't do that to make the math more
+straightforward.
 
-
-\jbgcomment{need to add a category}
-
-For example, let's say that you have a clue
-\question{XXXX}
+So let's see how this would work in a more real-world example.
+%
+Let's say that you have a clue
+\catquestion{US Cities}{Its largest airport is named for a WWII hero. Its second largest, for a WWII battle.}
 that Watson famously got wrong as a final \jeopardy{} when it answered the
 famous American city \answer{Toronto}.
 %
@@ -618,11 +652,12 @@ So in this case our buzzer input\footnote{In reality, the calculus for Final
   through this example.  And indeed, given the debugging output \watson{}
   showed it didn't seem very confident in its wrong output, so it probably
   wouldn't have ``buzzed in'' during normal play (but again, it's strategic to
-  put something down), which suggests that everything was working as intended.
-  The bigger complication is how to figure out what to wager going into the
-  final given your opponents and the category, which we talk about at a
-  cursory level in Section~\ref{sec:watson:wagers}.} is whether we should buzz
-on this clue with the response \answer{Toronto}, for which we get a $\pi_i$.
+  put \emph{something} down for final \jeopardy{} no matter what), which
+  suggests that everything was working as intended.  The bigger complication
+  is how to figure out what to wager going into the final given your opponents
+  and the category, which we talk about at a cursory level in
+  Section~\ref{sec:watson:wagers}.} is whether we should buzz on this clue
+with the response \answer{Toronto}, for which we get a $\pi_i$.
 %
 For the sake of concreteness, let's say $\pi_i$ is 0.4\dots it's not high, but it
 \emph{should} be zero because Midway and O'Hare airports are actually in
@@ -630,24 +665,40 @@ the great city of \answer{Chicago}.
 %
 Now this is too high, so something went wrong with our features.
 %
-Let's see what features were on and what their current weights
-in Table~\ref{table:watson:features}.\footnote{Lest there be any doubt, I am making up these weights and
-  features for a simple example\dots \watson{} had many more and better
-  features.  And you normally don't have feature weights with such
-  round numbers, but it makes the example cleaner.}
+Let's see what features were on and what their current weights in
+Table~\ref{table:watson:features}.\footnote{Lest there be any doubt, I am
+  making up these weights and features for a simple example\dots \watson{} had
+  many more and better features.  Most unbelievably, the first four features
+  are non-zero for this example and the rest are zero.  Finally, you normally
+  don't have feature weights with such round numbers, but it makes the example
+  cleaner.}
 
-\begin{tabular}
+\begin{tabular}{ccc}
   \toprule
-  Feature & Weight & $x_i$ \\
+  Feature & Weight~$w_i$ & $x_i$ \\
   \midrule
   \abr{ir} Score & 2 & 0.1 \\
   \underline{Toronto} compatability with Category & 1 & 0.2 \\
   Knowledge Base (\# Airports in Toronto) & 0.1 & 2 \\
   Previous responses (\answer{Toronto}) & 0.005 & 40 \\
   \midrule
-  Bias & -0.1  &  \\
+  Bias & -0.8  &  \\
   \bottomrule
 \end{tabular}
+
+These are reasonable features: the \abr{ir} score encodes how similar this is
+to questions that you've seen before;
+%
+the category feature encodes whether the answer is compatable with the
+category ``\abr{us} cities'' (and while you imagine that it isn't great, you
+could imagine substituting ``American'' for ``\abr{us}'', which would make
+\answer{Toronto} a lot more plausible);
+%
+the knowledge base feature checks to see how many airports are in Toronto;
+%
+and the final feature checks to see if \answer{Toronto} has been an answer
+before (you might imagine that more frequent answers in the past will appear
+again).
 
 There are lots of other features that we're not seeing
 because they're zero, e.g., the feature that checks to see if there's
@@ -658,42 +709,111 @@ And this makes sense: the features that aren't on for this feature had
 nothing to do with the mistake, so they shouldn't be punished or
 rewarded.
 
-From Equation~\ref{eq:watson:update}, the error is 0.4---$\pi_i$
-should have been zero, but it was 0.4---and if we assume\footnote{In
-  practice, this would be a really bad step size---it's way too
-  large---but we'll go with this because it makes the math easier.} that our step
-size is 1.0.
+First, lets see how these features translate into a probability:
+\begin{equation}
+  \pi_i = \sigma \left( 1\cdot 0.2+0.1\cdot 2+ 0.005 \cdot 40 - 0.8 \right) =
+  \sigma \left( 0.2 + 0.2 + 0.2 - 0.8 \right) = \sigma \left( -0.2 \right) = 0.45
+\end{equation}
+
+From Equation~\ref{eq:watson:update}, the error is 0.45---$\pi_i$ should have
+been zero, but it was 0.45---and if we assume\footnote{In practice, this would
+  be a really bad step size---it's way too large, you're likely to jump over
+  the valley in the objective function you're looking for---but we'll go with
+  this because it makes the math easier.} that our step size is 1.0,
 %
-
-
-Next things to write:
-- What pi is and why
-- What the new weight is
-
-Write somewhere:
-- Things backprop cannot do (e.g., which features you have, how they're
-computed ... e.g., might have interpreted US = American = continent), how it relates to feature representation
-
-
-
+we can now write the overall update
+\begin{equation}
+  {\bm w}^{(new)} = {\bm w}^{(old)} - \lambda \nabla_{{\bm w}, b} \mathcal{L} = 
+  \begin{array}{c}
+    2 \\
+1  \\
+0.1  \\
+  0.005  \\
+  -0.8 \\
+\end{array} - \lambda  \begin{array}{c}
+\frac{\mathcal{L}}{w_1}  \\
+\frac{\mathcal{L}}{w_2}  \\
+  \frac{\mathcal{L}}{w_3}  \\
+  \frac{\mathcal{L}}{w_4}  \\  
+\frac{\mathcal{L}}{b}  \\  
+\end{array}
+= \begin{array}{c}
+  2\\
+1  \\
+0.1  \\
+  0.005  \\
+  -0.8 \\
+\end{array} - 1.0  \begin{array}{c}
+  0.45 \cdot 0.1
+0.45 \cdot 0.2  \\
+0.45 \cdot 2 \\
+  0.45 \cdot 40 \\
+  0.45 \cdot 1
+\end{array} = \begin{array}{c}
+  1.955 \\
+0.91  \\
+-0.8  \\
+  -17.995  \\
+  -1.25 \\
+\end{array}.
+\label{eq:watson:update-ex}
+\end{equation}
+This shows the dangers of having unbalanced feature weights and too large step
+sizes.  This change is overall too big; you want to be taking little steps on
+your objective function, not taking huge leaps---you might jump over the
+``right answer'' in front of you and not fix the real problem in this example:
+that \answer{Toronto} is inconsistent with the category ``\abr{us} cities''.
 
 \subsection{Feature Engineering}
 \label{sec:watson:feature-engineering}
 
 However, these updates can only update the features that you have.
 %
+They cannot add new features nor can they fix problems intrinsic in the
+features.
+%
 When you're starting out building a system like this, you usually
 don't have very many features.
 %
-But 
+But as you go through the process of testing your initial system, you'll see
+lots things that your system gets wrong but \emph{shouldn't}: your system has
+all of the evidence it needs to do what it needs, but cannot actually get
+there.
 
-Something that is particularly unique to Jeopardy! and not to the
-other QA settings we’ve looked at is that the category is a huge
+Let's focus on the \answer{Toronto} question a little bit more.
+%
+We already talked about how the feature itself might need some debugging
+(e.g., making sure that ``\abr{us}'' doesn't expand to cover all of the
+American continent), but how could we add additional features that could
+handle this kind of phenomena better?
+
+In a 2010 Tournament of Champions game, there was a category with the first clue:
+%
+\catquestion{Celebrations of the Month}{D-Day anniversary and Magna Carta day}
+%
+When the category was revealed, the host Alex Trebek said ``you have to name
+the month'', but \watson{} didn't get that hint.
+%
+In a presentation from \abr{ibm}, they showed that Watson got that question
+wrong (Figure~\ref{fig:watson:bad-month}).
+
+\begin{figure}
+  \includegraphics[width=0.8\linewidth]{figures/external/ibm watson feature}
+  \caption{Slide from \abr{ibm} \watson{} on how a feature to predict the
+    answer type as it works it way through a category's column can improve its
+    ability to buzz in correctly.  (Figure Credit: \abr{ibm})}
+\end{figure}
+
+
+Something that is particularly unique to \jeopardy{} and not to the
+other QA settings we’ve looked at is that the category (they text that appears
+atop the column a clue appears in) is a huge
 constraint on what the correct responses are.
 %
 A large part of the
 Jeopardy! buzzer is figuring out the ``lexical answer type'': what kind of
-thing can the answer be.
+thing can the answer be and only buzzing in on the things that are consistent
+with that type.
 %
 Part of
 this is is looking at clues in the clue.
@@ -714,18 +834,35 @@ as it explored the category.
 After getting a couple of months wrong, Watson
 can learn that all of the answers should be a month.
 %
-And this can be encoded as a binary feature: all of the previous answers in the
-current category have been a $X$ (Month, President, City, etc.) and so is the
-current guess.
+While we don't know for sure how this was implemented in detail, we can
+imagine that there is a feature that suggests whether the clue is consistent
+with an answer type of ``day'' or ``month'' (e.g., this clue is consistent
+with a ``month'' as an answer, and \answer{June} is a month).
+%
+And information from the current column could also be included in this, either
+directly in the computation of the feature or directly encoding something like
+``given the guess \answer{April}, how many of the previous responses in the
+category are consistent with that type''.
 
-One thing that made Watson particularly impressive was that it not just computed raw accuracy but also compared against human performance.  
-
-This chart showed how Watson progressed in different iterations of the system, inching up to the cloud of Jeopardy! champions.  Ken Jennings is in red there, still clearly dominating even the final version of Watson.
+One thing that made \watson{} particularly groundbreaking was that it not just
+computed raw accuracy but also compared against human performance.
+%
+This chart showed how Watson progressed in different iterations of the system,
+inching up to the cloud of \jeopardy{} champions.  Ken Jennings is in red there,
+still clearly dominating even the final version of Watson.
+%
+This comparison is even more important today (Chapter~\ref{chapter:irt}) as people claim that \abr{ai}s
+have super-human, but the lessons of \watson{} can
+help inform how we we can judge whether these judgements are fair and
+reasonable.
+%
+So was the \watson{} match ``the real deal''?
 
 \section{This Game is Rigged, I Tell Ya!}
 
-These successes have been well documented (not least by \abr{ibm}
-itself, who rightly celebrated the great achievements); however,
+The nominal success of \watson{} has been well documented (not least by \abr{ibm}
+itself, who rightly celebrated the great technical achievements and the great
+show they put on); however,
 things were not perfect\dots the game was rigged.
 %
 It's useful to go over the lifecycle of an entire question: how it was
@@ -750,7 +887,7 @@ But first, in case you don't know how \jeopardy{} works, we'll review
 that.
 %
 However, if you've calculated a Coryat score before, you can go ahead
-and skip ahead.
+and skip ahead to Section~\ref{sec:watson:human-buzzing}.
 
 
 \subsection{The Pool of Questions}
@@ -762,7 +899,7 @@ competition would take place on normal, written questions.
 %
 In the media coverage of the competition, this focused on avoiding
 video and picture daily doubles (fairly reasonable, but we'll discuss
-this more in a bit).
+how multimedia questions might be more fun in Chapter~\ref{chapter:multimodal}).
 %
 However, this causes two problems: the questions are too easy and do
 not necessarily challenge computers.
@@ -786,15 +923,25 @@ players like yours truly, know a large majority of the clues.
 For top players like Brad and Ken, they know---with a handful of
 exceptions--\emph{all} the clues.
 %
-In a one-on-one fight with normal clues, Ken and Brad would be
-fighting over every clue: it would come down to who could buzz first.
+In a one-on-one fight with normal clues, Ken and Brad would be fighting over
+every clue: it would come down to who could buzz first.
 
 This isn't fun to play.
 %
 Nor is it fun to watch.
 %
-This is why \jeopardyp{}'s tournament of champions is played on much
-more difficult clues~\citep{harris-06}.
+This is why \jeopardy{}'s tournament of champions is played on much
+more difficult\footnote{And it the difficulty doesn't just ratchet in one
+  direction, all ``special''
+  matches use designated questions: ``Celebrity \jeopardy{}'' are easier (as mocked by
+  categories like ``States that end with Hampshire'' or clues like ``You wear
+  these on your face to help you see better''), and ``College \jeopardy{}''
+  isn't necessarily easier but does have more college football and popular
+  music.  All of these feature questions written with care to be tuned to abilities of the
+  expected players.  \abr{ibm} did not want the computer to be targeted, lest
+  the questions be adversarial against the computer.
+  Chapter~\ref{chapter:adversarial} discusses what this would look like if we
+  specifically \emph{wanted} that to happen.} clues~\citep{harris-06}.
 %
 Nonetheless, this is the battlefield where Watson won: ``normal''
 questions that didn't challenge the human players.
@@ -802,6 +949,7 @@ questions that didn't challenge the human players.
 Instead, it all came down to the buzzer.
 
 \subsection{John Henry vs. the Buzzing Machine}
+\label{sec:watson:human-buzzing}
 
 Unlike \qb{} (Chapter~\ref{ch:qb}), while \jeopardy{} also uses
 signaling devices, these only work \emph{once the question has been
@@ -818,11 +966,15 @@ interview~\citep{malone-19}:
 {\bf Malone:} \abr{ok}. To some degree, \jeopardy{} is kind of a video game, and a \emph{crappy video game where it's, like, light goes on, press button}---that's it. \\
 {\bf Jennings:} (Laughter) Yeah. \\
 \end{quote}
-\jeopardy{}'s buzzers are a gimmick to ensure good television; however, \qb{} buzzers discriminate knowledge.
+\jeopardy{}'s buzzers are a gimmick to ensure good television; however, \qb{}
+buzzers discriminate knowledge.
 
 So how does this interact with Watson?
 %
-Watson receives all of the clues electronically and likewise gets an electronic signal to know when it is safe to buzz in.
+Watson receives all of the clues electronically and likewise gets an
+electronic signal to know when it is safe to buzz in, then computes a
+probability of being right and buzzes in if it's above that threshold
+(Section~\ref{sec:watson:logistic}).
 %
 In contrast, humans have to either guess when it is safe to buzz or
 wait for a light to turn on.
@@ -856,7 +1008,7 @@ then we'll talk about what makes a clue harder for a computer.
 
 \paragraph{Easy for a Computer.}
 
-When I appeared on \jeopardyp{}, my final \jeopardy{} was:
+When I appeared on \jeopardy{}, my final \jeopardy{} was:
 \question{ After this woman's death, her daughter wrote, ``As far as we
   in the family are concerned, the alphabet now ends at Y''}
 %
@@ -882,8 +1034,8 @@ have seen a reused clue, you should not praise Watson for finding
 near-repeat questions.
 %
 And it's not just trivia games: Google's dataset of questions (which
-we'll talk about in more detail the next chapter) have
-many identical questions~\citep{lewis-21}.
+we'll talk about in more Chapter~\ref{chapter:nq}) have
+many identical questions~\citep{lewis-21}, which makes it an imperfect yardstick.
 %
 Moreover, Watson can also store the entirety of Wikipedia, easily
 looking up capitals, authors, etc.
@@ -893,14 +1045,14 @@ final \jeopardy{} clue), the question becomes even easier.
 %
 Then the computer just needs to find the appropriate article that
 contains the quote and then just find whatever entity is mostly likely
-to be a \jeopardyp{} answer.
+to be a \jeopardy{} answer.
 
 Where systems like Watson struggle are on computation, matching novels
 and movies to plots, combining multiple clues, lateral thinking, and
 wordplay~\citep{kaushik-18}.
 %
 And this is not just a matter of degree: computers struggle with \emph{all}
-such questions, even if they're in the top row of \jeopardyp{}.
+such questions, even if they're in the top row of \jeopardyf{}
 %
 While a computer is theoretically good at math, the kinds of programs
 that answer trivia questions struggle answering match questions with
@@ -908,17 +1060,17 @@ numbers in the double digits~\citep{wallace-19:numbers}.
 
 This is why the goal of \abr{ai} is \emph{general} artificial
 intelligence (Chapter~\ref{ch:turing}): while we can build specialized
-systems for \jeopardy{} questions or math questions, unlike a
+systems for \jeopardy{} clues or math problems, unlike a
 reasonably smart human, a single program can't ``do it all''.
 %
 Unlike for human contestants, the ``difficulty'' of \jeopardy{}
 questions for a computer has no relationship to the nominal value.
 %
 We talk about how Facebook/Meta dealt with this problem in
-Chapter~\ref{ch:dynabench}: tell the authors what's hard for a computer.
+Chapter~\ref{ch:adversarial}: tell the authors what's hard for a computer.
 
-
-\subsection{Two Nice Guys, One Computer with no Shame}
+\section{Two Nice Guys, One Computer with no Shame}
+\label{sec:watson:strategy}
 
 Given the ``too easy'' questions and the buzzer, what does this
 actually mean for gameplay?
@@ -942,7 +1094,7 @@ is a random third of the questions.
 %
 While a good human player might be weak on the buzzer and be confident
 that if they know more they'll win the harder clues, this isn't true
-for a human facing off against Watson.
+for a human facing off against \watson{}.
 
 Moreover, the computer has no shame: it uses a strategy called the
 ``Forrest Bounce''~\citep[more infamously associated with James Holzhauer
@@ -959,7 +1111,7 @@ human do it?
 
 That's because humans want to follow social norms.
 %
-The producers of the show (hi, Maggie and Corinna!) tell you up and
+The producers of the show tell you up and
 down that you shouldn't play the game like that, and you don't want to
 make them unhappy with you\dots they can make your life miserable.
 %
@@ -987,7 +1139,7 @@ Ken would sometimes do a little hunding for the Daily Double against a
 particularly formiddable opponent, but he would normally be
 well-behavied so as not to upset the powers that be.
 %
-Watson, however, was a soulless machine; and having a machine on the
+\watson{}, however, was a soulless machine; and having a machine on the
 stage was no exciting that
 nobody faulted it for its strategy.
 %
@@ -1005,7 +1157,7 @@ time.
 
 % TODO (jbg): Add good stuff --- Tesauro, LAT, retriever--reader pipeline
 
-Let's review Watson's appearance on \jeopardyp{}:
+Let's review Watson's appearance on \jeopardy{}:
 \begin{enumerate*}
         \item all questions are of ``normal'' difficulty;
         \item thus the two human contestants know nearly all of the clues; but
@@ -1021,12 +1173,20 @@ questions).
 Perhaps I've planted a seed of doubt: \emph{no, we cannot yet conclude
   computer superiority} from this experiment.
 %
-While many might want to believe that Watson is the end of
-human--computer question answering competitions, it's only the
-beginning.
+And this is not the end of the story for judging whether computers are
+superhuman in their intelligence.
 %
-Watson was just the beginning of the story, a story that unfolds
-further in the next few chapters.
+Since then, we've seen claims that computers are smoking lawyers in taking the
+\abr{lsat} or is better than radiologists in reading X-rays.
+%
+\watson{} was just the beginning of the story, as since then we've seen both a
+tremendous improvement in the technologies that drive \abr{ai} (we review
+these advances in Chapter~\ref{chapter:language-models}) and a greater
+interest in measuring how smart these models are.
+%
+\watson{} was just the beginning of the story, in both respects.
+
+\jbgcomment{Need a better transition}
 
 While \jeopardy{} and quiz bowl are the domain of trivia nerds, what
 happens when computer scientists set the stage to decide whether
