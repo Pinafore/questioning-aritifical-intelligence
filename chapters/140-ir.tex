@@ -1,5 +1,5 @@
 
-
+\label{chapter:cranfield}
 
 
 
@@ -32,12 +32,346 @@ Finally, the Cranfield paradigm that somebody, somehow can find the right answer
 
 Despite all those flaws, the assumptions—on average—mostly hold.  That’s why we’re still talking about the Cranfield paradigm fifty years later.  And there were some big additions to the Cranfield paradigm.  Most prominent was the use of better document representations and creating larger test collections, which was spearheaded by Karen Spärk Jones a little bit west of Cranfield at Cambridge.  These took the theoretical insights of the original Cranfield experiments and made them into something that could actually work.  Again, this was revolutionary: as a result the British Computing Society named their annual award for researchers in this area after Karen Spärk Jones.
 
-But for the Cranfield paradigm to really shape how we get answers from the internet, we need to leave central England and meet new player: NIST.  The American National Institute for Standards and Technology.  
+\section{Old-Fashioned \abr{ai}}
 
-While the story of the birth of the Cranfield paradigm is an innovative insight with Cyril Cleverdon combined with the vision of Karen Spärk Jones, the story of NIST’s development of these test collections is one of slow, methodological iteration.  Building up decades of expertise and slowly building up bigger and better test collections, updating them each year so that by the time Google’s PageRank came around, there’s no question about how to tell whether a search engine is good enough.
+Given the Cranfield paradigm, we now have a setup for creating \abr{qa}
+system.
+%
+Build a collection of questions and see how well you can answer them.
+%
+And this defined how computers answered questions in the mid twentieth century.
+
+The history of question answering begins with
+answering questions about the American sport
+of baseball.
+%
+Since one of my big interests is comparing human vs. computer ability, it's
+worth comparing it to the state of the art in human question
+answering in the mid-twentieth century~\cite{sedman-11}:
+\begin{quote}
+Abbott: Goofy, huh? Now let's see. We have on the bags - we have Who's on first,
+What's on second, I Don't Know's on third.
+Costello: That's what I wanna find out.
+Abbott: I say Who's on first, What's on second, I Don't Know's on third -
+Costello: You know the fellows' names?
+Abbott: Certainly!
+Costello: Well then who's on first?
+Abbott: Yes!
+Costello: I mean the fellow's name!
+Abbott: Who!
+Costello: The guy on first!
+Abbott: Who!
+Costello: The first baseman!
+Abbott: Who!
+Costello: The guy playing first!
+Abbott: Who is on first!
+Costello: Now whaddya askin' me for?
+Abbott: I'm telling you Who is on first. \citep[pages 1002--1004]{light-16}
+\end{quote}
+
+That’s going to be tough to beat.
+Let’s take a look at the BASEBALL system
+from MIT.
+%
+Despite the odd phrasing, the BASEBALL system
+of Green et al. is essentially a natural language
+interface to an existing database.
+
+It does this by taking each word in the question,
+trying to match it to a field in its database.
+%
+The the challenge then is to figure out what
+the question is looking for, which is usually
+%
+found in the question word (this is quite a bit simpler than the lexical
+answer type analysis of the Watson system
+(Chapter~\ref{sec:watson:feature-engineering}), where you need to figure out
+things like ``This Argentenian Author'' could be Borges, Cortazar, or Puig).
+
+But if you know a database language like SQL,
+you recognize that this is essentially a bunch
+of SELECTs and WHEREs.
+%
+This isn’t even taxing the full breadth
+of SQL.
+%
+To go the next step, we turn to a system called
+LUNAR.
+
+Which, as you might guess, was about the moon.
+%
+It could answer much more complicated questions,
+such as those that require averages or averages
+%
+filtered by some criterion.
+%
+It can do this by converting the questions
+into a rich, recursive grammar.
+%
+But first, it needs to analyze the grammatical
+structure of the input question.
+
+For example, the question “what is the average
+modal plagioclase concentration for lunar
+%
+samples that contain rubidium?” is analyzed
+with the following parts of speech.
+%
+Notice that it’s important to detect things
+like relative clauses, which restrict the
+%
+level of analysis.
+
+\jbgcomment{Need a figure for this}
+
+After that syntactic analysis, it then gets
+turned into a logical form that can be executed
+%
+against its database.
+
+In 2022, it’s probably not worth going into
+that.
+
+Our databases don’t look like this anymore.
+%
+One thing that I found interesting in rereading
+this in the perspective of the 21st century,
+%
+is that it also has something that looks like
+an IR component, although it’s explicitly
+%
+looking for documents tagged with a particular
+topic, unlike doing something like tf-idf
+%
+retrieval.
+
+The last old school QA system I wanted to
+talk about is probably the most famous of
+%
+them all: SHRLDU.
+%
+SHRDLU was described in the thesis of Terry
+Winograd\dots remember that name, we’ll be
+%
+seeing it again!
+
+Unlike the LUNAR and BASEBALL which are exactly
+what they say on the tin, I need to explain
+%
+the name a little bit more.
+%
+This isn’t going to be easy.
+
+First, since you’re reading a book printed in the twenty-first century,
+you probably don’t know what a linotype
+system is.
+%
+It was the “missing link” between moveable
+type presses (where you had to move the letters
+in by hand) and sending output from a computer
+keyboard to a “real” printer.
+
+The most amzing part of this system is that
+it had a keyboard: when you hit a key, it
+would jam some metal together to create a
+beautiful printing piece called a slug.
+
+But one key the machine didn’t have was
+a backspace button: you can’t undo melting
+metal together.
+
+So if you screwed something up, you needed
+some way to signal don’t use this slug.
+%
+So the operator would button mash.
+%
+The first two columns of buttons, spell out
+ETAOIN SHRDLU: a phrase that represents when
+%
+technology goes wrong\dots a warning that human
+intervention is needed to prevent garbage
+%
+in, garbage out: you don’t want your readers
+to see this, after all.
+%
+Thus, that became a title of a short story
+by the author Fredric Brown.
+%
+That story is about a Linotype machine—the
+pinnacle of technology at the time—that
+became self-aware because it understood all
+of the information being fed into it (Figure~\ref{ir:linotype}).
+
+\begin{figure}[!ht]
+    \subfloat[Linotype Machine\label{fig:subfig-1:dummy}]{%
+      \includegraphics[width=0.45\textwidth]{figures/external/wikipedia commons Linotype_Simplex_1895}
+    }
+    \hfill
+    \subfloat[First sub-figure\label{subfig-2:dummy}]{%
+      \includegraphics[width=0.45\textwidth]{figures/external/public_domain_etaoin_shrdlu}
+    }
+    \caption{The origin of the name ``\abr{shrdlu}'': the most frequent
+    letters on a linotype machine (left, a precursor to computerized word
+    processors) which then became the title of a short story (right) of a
+    machine that ingested the information it printed and became intelligent.}
+    \label{fig:ir:linotype}
+  \end{figure}
+
+
+This machine becomes voracious, demanding
+more and more input until the protagonist
+%
+of the story selectively feeds it Buddhist
+philosophy and it achieves Nirvana.
+%
+Despite its funny name, SHRDLU remains the
+OG question answering system.
+
+The basic idea is that Instead of just answering
+questions about a static world, you could
+move objects around in this 3D world.
+%
+This is a later rendering of it … back in
+the early 70s computer graphics aren’t as
+advanced as they are today.
+
+\jbgcomment{Add SHRDLU screenshot}
+
+Wow, how far we’ve come.
+%
+And if the system couldn’t tell what object
+you’re asking about (e.g., it’s ambiguous),
+%
+it asks a follow-up question to clarify which
+one you meant.
+%
+I’m not going to go through the components
+of SHRDLU, but it is fairly similar to LUNAR:
+%
+you parse sentences into a logical form.
+%
+The big difference is that the knowledge base
+isn’t static: it changes as the user interacts
+%
+with the block world.
+
+So there’s this part of the diagram that’s
+unique to SHRDLU.
+%
+But I’m not going to talk about the details
+of the implementation that much.
+%
+Why not?
+
+Because you’ve probably noticed that these
+systems are talking about narrower and narrower
+%
+domains.
+%
+They can just answer questions about baseball
+games (not even baseball players), rocks from
+%
+the moon (not rocks generally, that’s too
+much), and even SHRDLU goes further to build
+%
+its own world and only answering questions
+about that.
+
+And that goes back to the origin of the name
+SHRDLU: taking text and making it into a reality
+%
+rather than understanding the world as it
+is.
+%
+And the world as it is has ambiguity.
+
+Let’s go back to the “Who’s on first
+bit” that I started this video with.
+%
+So let me explain\footnote{At the risk of explaining the joke to much, there
+are additional aspects that showcase the difficulties
+in question answering.  
+Pragmatics can be misinterpreted: ``I don't know'' can be a statement of fact
+rather than saying that you \emph{lack} knowledge.  And grammar can be
+critical in deciphering clues: ``I want to throw the guy at first base, so I
+pick up the ball and throw it to Who'' makes it clear that ``who'' is a name,
+while ``throw it to whom'' makes it clear that this is an interogative in the
+objective case.} the Abbot and Costello routine:
+there is a baseball player that has the name
+%
+``Who''.
+
+Costello cannot figure out that “who”
+is not an interrogative pronoun and never
+%
+interprets it as a proper noun.
+%
+Now, usually, that’s the right way to do
+it.
+%
+But natural language is funny and ambiguous
+sometimes.
+
+And that’s the big difference between modern
+QA systems and these older systems.
+%
+They’re small and brittle: when they work,
+they work really well.
+%
+But they don’t work that often.
+
+They’re not going to be able to handle random
+questions from people on the Internet.
+%
+But that’s not to say that logic, semantic
+parsing, and knowledge bases have no place
+%
+in 21st century question answering systems:
+rather than taking a string of text and giving
+%
+a single answer, there are probabilistic interpretations
+that provide a distribution over interpretations,
+%
+and then you train approaches using the Cranfield
+paradigm to make sure that, yes, on average
+%
+it can answer the typical user’s questions.
+
+\section{Leading up to Google}
+
+And that's exactly the long-lasting legacy of the Cranfield paradigm shaped
+ how we get answers from the internet.
+ %
+ For that, we need to leave central England and meet new player: NIST.  The
+ American National Institute for Standards and Technology.
+
+While the story of the birth of the Cranfield paradigm is an innovative
+insight with Cyril Cleverdon combined with the vision of Karen Spärk Jones,
+the story of NIST’s development of these test collections is one of slow,
+methodological iteration.  Building up decades of expertise and slowly
+building up bigger and better test collections, updating them each year so
+that by the time Google’s PageRank came around, there’s no question about how
+to tell whether a search engine is good enough.
 
 Just fire up the latest test collection from the TREC conference, compute your precision and recall, and call it a day.
+%
+And this approach toward evaluation is with us in everything we do.  Test
+collections are how we evaluate virtual assistants, question answering
+systems, and just about every aspect of the modern Internet.  And it’s not
+always for the best.  The ubiquity of these reusable test collections leads to
+overfitting.  TREC puts out new datasets every year or so, but that’s not fast
+enough for machine learning in the 21st century!  And while the focus on real
+user data is good, the data you collect is biased by who is using technology
+(mostly rich people from Western countries) and how they’ve been trained to
+ask questions through decades of living with Cranfield-paradigm systems.  And
+unlike people who work on, say, human-computer interaction, those building QA
+systems often don’t actually put their system in front of real users.  And I
+don’t think that’s what Cyril Cleverdon would have wanted.  His goal, as a
+librarian, was to help users.  And yes, reusable test collections help you do
+that—and they’ve spawned multibillion dollar companies around the world—but at
+the end of the day you still need to check whether real users are actually
+finding the information they need.
 
-And this approach toward evaluation is with us in everything we do.  Test collections are how we evaluate virtual assistants, question answering systems, and just about every aspect of the modern Internet.  And it’s not always for the best.  The ubiquity of these reusable test collections leads to overfitting.  TREC puts out new datasets every year or so, but that’s not fast enough for machine learning in the 21st century!  And while the focus on real user data is good, the data you collect is biased by who is using technology (mostly rich people from Western countries) and how they’ve been trained to ask questions through decades of living with Cranfield-paradigm systems.  And unlike people who work on, say, human-computer interaction, those building QA systems often don’t actually put their system in front of real users.  And I don’t think that’s what Cyril Cleverdon would have wanted.  His goal, as a librarian, was to help users.  And yes, reusable test collections help you do that—and they’ve spawned multibillion dollar companies around the world—but at the end of the day you still need to check whether real users are actually finding the information they need.
+\jbgcomment{Citations for Google paper, examples}
 
 \jbgcomment{Forward point to leaderboard chapter}

@@ -59,7 +59,8 @@ So what made \abr{ibm} pick \jeopardy{} for its grand challenge?
 
 \subsection{What \jeopardy{} is and How it Works}
 
-\jeopardy{} is a gameshow created by Merv Griffin that debuted in 1967~\citep{griffin-03}.
+\jeopardy{} is a gameshow created by Merv Griffin that debuted in
+1967~\citep{griffin-03}.
 %
 Its big gimmick is that the player responses are given in the form of
 a question in reaction to infamous human cheating scandals (we discuss how
@@ -155,20 +156,39 @@ The first things that people tried was scaling up the ``good,
 old-fashioned'' approaches that defined the rule-based systems.
 %
 Probably the most prominent system in this category is Start from Boris Katz
-at MIT.  This system first launched in 1993.  This like many of the systems in
+at \textsc{mit}.  This system first launched in 1993.
+%
+This, like many of the systems in
 this era, take an approach that’s somewhat similar to to the old-fashioned AI
-approaches: parse the query with a and look it up in a knowledge base.  And
-since this was in the age of the semantic web, this was in the form of RDF
-files.
-
-\jbgcomment{Give an example of answering this kind of question}
-
-But this is more a change in scale rather than in form from LUNAR and
-BASEBALL\dots but still an amazing achievement to deal with the
-messiness of Internet text.  And its ability to \emph{search} the
-Internet to find answers is clearly a huge influence on later
-techniques that we’ll see like Watson today and Dense Passage
-Retrieval later (Chapter~\ref{ch:nq}).
+approaches: parse the query with a and look it up in a knowledge base.
+%
+For example, given the question:\footnote{This is an impressive/complicated question
+    because David O. Selznick removed the first director (George Cukor) to
+    replace him with Victor Fleming (the credited director), but Sam Wood had
+    to fill in when Fleming collapsed on set.}
+%
+\question{Who directed \emph{Gone with the Wind}?}
+%
+Becomes the lookup
+\begin{quote}
+  \texttt{(get "imdb-movie" "Gone with the Wind (1939)" "DIRECTOR") =>
+    ("George Cukor" "Victor Fleming" "Sam Wood")}~\citep{katz-02}.
+\end{quote}
+%
+Some of these can be looked up directly in datasets, but \textsc{start}
+further builds on the systems like \textsc{lunar} and \textsc{baseball}
+(Chapter~\ref{chapter:ir}).
+%
+While those systems LUNAR and
+BASEBALL also need to turn the raw text of questions into a structured
+representation, the difference of \textsc{start} is that
+is to deal with the
+messiness of Internet text.
+%
+And its ability to \emph{search} the
+Internet to find answers is clearly a huge influence on the subject of this
+chapter---\watson{}---and later Dense Passage
+Retrieval later (Chapter~\ref{chapter:deep-retrieval}).
 
 \subsection{Transforming Questions to find the Answer}
 
@@ -181,7 +201,7 @@ the answer.
 But before we get there, it is useful to talk about how we can transform
 questions into text that can better find the answer.
 %
-We begin with the \abr{qasm} approach from Dragomir Radev et al.
+We begin with the Question Answering using Statistical Models (\abr{qasm})~\citep{radev-01}.
 
 One way of thinking about question answering is that it's a translation
 problem: questions are asked in one language but the answers are found in
@@ -248,10 +268,10 @@ is correct or not.
 
 Let's begin with an easy case: let's say you get a clue that's nearly
 identical to an existing clue:
-\question{Walk like a duck}
+\catquestion{Double D Words}{Walk like a duck}
 Has appeared four times as a clue on \jeopardy{}: 1987, 1996, 2001, and 2010.
 %
-In categories like \category{six-letter words} and \category{``WA''}.
+In addition to the above category, this clue also appeared under categories like \category{six-letter words} and \category{``WA''}.
 %
 The guess process looks to see if it has ever seen this exactly clue before,
 it has, so it produces the guess \answer{waddle}.

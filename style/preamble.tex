@@ -30,6 +30,7 @@
 
 % Below should be safe
 \usepackage{framed}
+\usepackage{bold-extra}
 \usepackage{siunitx}
 \usepackage{latexsym}
 \usepackage{colortbl}
@@ -81,12 +82,14 @@
 \newcommand{\ngram}[0]{$n$-gram}
 \newcommand{\watson}{\textit{Watson}}
 \newcommand{\answer}[1]{\uline{#1}}
-\newcommand{\question}[1]{\begin{quote}\colorbox{blue}{\textcolor{white}{\parbox{0.9\linewidth}{#1}}}\end{quote}}
-\newcommand{\catquestion}[2]{\begin{quote}\colorbox{blue}{\textcolor{white}{\parbox{0.9\linewidth}{\textsc{#1}}}}\\
-    \colorbox{blue}{\textcolor{white}{\parbox{0.9\linewidth}{#2}}}\end{quote}}
+\newcommand{\question}[1]{\begin{center}\colorbox{blue}{\textcolor{white}{\parbox{0.6\linewidth}{{\sffamily
+            #1}}}}\end{center}}
+\newcommand{\catquestion}[2]{\begin{center}\colorbox{blue}{\textcolor{white}{\parbox{0.6\linewidth}{\centering
+         {\sffamily {\bfseries  {\scshape  #1}}}}}}\\
+    \colorbox{blue}{\textcolor{white}{\parbox{0.6\linewidth}{{\sffamily #2}}}}\end{center}}
 \newcommand{\topic}[1]{\underline{#1}}
 \newcommand{\gem}[1]{\mbox{\textsc{gem}}}
-\newcommand{\abr}[1]{\textsc{#1}}
+\newcommand{\abr}[1]{{\scshape #1}}
 \newcommand{\camelabr}[2]{{\small #1}{\textsc{#2}}}
 \newcommand{\abrcamel}[2]{{\textsc #1}{\small{#2}}}
 \newcommand{\grammar}[1]{{\color{red} #1}}
