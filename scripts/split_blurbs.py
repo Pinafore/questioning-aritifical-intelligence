@@ -9,4 +9,14 @@ if __name__ == "__main__":
 
     for ii in blurbs:
         with open("chapters/blurbs/%s.tex" % ii, 'w') as outfile:
-            outfile.write(blurbs[ii])
+            if isinstance(blurbs[ii], list):
+                text, subsections = blurbs[ii]
+            else:
+                text = blurbs[ii]
+                subsections = []
+                
+            outfile.write(text)
+
+            for ii in subsections:
+                label, section_name = ii
+                outfile.write("\\invisiblesection{%s}{%s}\n" % (section_name, label))

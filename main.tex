@@ -9,7 +9,7 @@
 \publisher{University of Maryland}
 
 \newif\ifcomment\commenttrue
-\newif\ifproposal\proposalfalse
+\newif\ifproposal\proposaltrue
 \input{style/preamble}
 
 %%
@@ -35,7 +35,7 @@
 % Prints a trailing space in a smart way.
 \usepackage{xspace}
 
-\newif\ifcomment\commentfalse
+\newif\ifcomment\commenttrue
 %\input{style/preamble}
 
 % Generates the index
@@ -76,7 +76,13 @@
 \begin{document}
 \setcounter{secnumdepth}{0}
 
+\ifproposal
 
+\else
+
+\tableofcontents
+
+\fi
 
 
 
@@ -89,15 +95,13 @@
 \chapterfile{010}{introduction}{Introduction: The Unanswered Question}
 
 \ifproposal
-\input{chapters/05-proposal}
+\input{chapters/005-proposal}
 \fi
 
 
 \ifproposal
 
 \else
-
-\tableofcontents
 
 
 

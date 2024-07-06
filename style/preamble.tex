@@ -77,6 +77,20 @@
             {\@cite@ofmt{\csname b@\@citeb\endcsname}}}}{#1}}
 \makeatother
 
+\newcommand{\invisiblesection}[2]{%
+  \phantomsection%
+  \stepcounter{section}%
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+  \label{#2}
+}
+
+\newcommand{\invisiblechapter}[2]{%
+  \phantomchapter%
+  \stepcounter{chapter}%
+  \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
+  \label{#2}
+  }
+
 \newcommand{\feat}[1]{{\small \texttt{#1}}}
 \newcommand{\act}[1]{{\small \texttt{#1}}}
 \newcommand{\ngram}[0]{$n$-gram}
