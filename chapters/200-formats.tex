@@ -1,6 +1,134 @@
+\label{chapter:formats}
 
 
-Conversational QA
+\section{Multihop QA}
+\label{sec:formats:multihop}
+
+Thus far, we’ve talked about models that can take a question, find some evidence, and extract the answer.  That works for things like SQuAD, TriviaQA, and (many) Natural Questions.  
+
+But what about the MultiHop datasets that we talked about before?  How would these sorts of models do a hop?  Just as a refresher (watch the previous video if you want more), in datasets like HotPotQA, you need to answer questions like “Where was Facebook founded” by hopping through evidence documents.  While the approaches we talked about can handle one hop just fine, how would you go about solving these problems when you need to find *multiple* pieces of evidence?
+
+We won’t go as deep into the weeds on these techniques because this is relatively early days; as I record this in 2022, the details are probably going to change dramatically.  But barring surprises, hopefully the broad strokes about the general ideas of how to answer these multihop questions will stay relatively similar.  Nonetheless, I’ll give the titles and authors as we go so that if you’re interested in the papers you can dig in a little bit more.
+
+We talked about that before with so-called “MultiHop” questions.  How do systems actually answer those questions?  As you can imagine, this requires finding multiple pieces of evidence.  Let’s first talk about different strategies for gathering the evidence: you can follow structured links, you can generate real text queries, or you can generate vector-based queries.
+
+Let’s first talk about following structured links.  This is probably the most obvious and is probably the most similar to what you’d do if you as a human typed in a query, found a page, and then clicked on the link that got you a little bit closer to what you thought the answer would be.  Of course, knowing which link to explore takes a little trial and error.  We did something like this in 2020 with a model called DELFT, and this paper from Chen et al. explores different ways of following links: following a link on the Wikipedia page or resolving a coreference chain … which is a lot like the examples that we showed in our last video introducing Multihop (for example, getting the answer to Susanah and the Elders, requires figuring out who “her” is).  Then my former student Chen Zhao followed up our work with a collaboration with Microsoft called TransformerXH.  This seems like the most popular approach.
+
+But sometimes you can’t find a link that easily.  There could be a different strategy that you could use to solve a multihop question.  If you typed into the Wikipedia search bar to get the first query, why not just type a new query?  This is the approach taken by Qi et al with the wonderfully named model “Golded Retriever”.  It learns how to formulate queries *conditioned* on the original query, evidence you got from the first query, to get to the next piece of evidence.  For example here, to solve this question it explicitly creates the query “Armada author” to figure out that it was written by Ernest Cline.
+
+One nice thing this about this is that these approaches are pretty interpretable: knowing what searches and evidence led to the answer lets a user inspect the chain to know if it’s good or not.  This paper from Inoue et al. goes even further by doing abstractive summarization to create sentences that find the minimal information that’s sufficient for answering the question.  So then for the question “Charlie Rowe plays Billy Costa in a film based on what novel?” you get this nice abstracted explainer that says “Charlie Rowe plays Billy Costa in the Golden Compass.  The Golden Compass is a film based on the novel Northern Lights.”  Pretty good!
+
+But do you actually need to put your fingers on the keyboard to get to the evidence?  We saw with DPR that you can actually do better with vector-based queries.  So why create an explicit string when it’s just going to get turned into a vector anyway?  That’s the approach of Xiong et al who just directly optimize these vector queries.
+
+The challenge is that all of these approaches need to be trained somehow.  Like for any machine learning problem, you need training data.  Existing techniques for solving this use the explicit correct hops from datasets like MultiHop.  But could we do this in datasets like quiz bowl were the evidence is not annotated?  
+
+Let’s think this through and see where it breaks down.  You take your original question, turn it into a vector, get some search results, and then from that you generate a new vector query and you get some results.  
+
+The first challenge is how do you know if a piece of evidence is good or not?  This is something that my former student Chan Zhao looked at in an EMNLP paper from 2021.
+
+One clue is that if the answer isn’t in a passage, then it cannot be be right.  And we assume that we do know the answer to the question … we just don’t know how to get there.  This holds true for just about any dataset, so it’s not too crazy an assumption.  But you do need to be able to cope with different forms of the answer.  If the answer is “Tim Cook”, you should be able to accept “Timothy Cook” or “Timothy Donald Cook”.
+
+But then any passage that contains the answer as a substring is a good answer.  “New Jersey” is the answer to both the question “in what state is Rutgers located” and “which state is the home of Fountains of Wayne”, but we only want the string when it answers the appropriate question.  But thanks to datasets like SQuAD, there are existing models for answering questions *given* a passage in the standard machine reading context, so we can get a score for each potential piece of evidence: how well does it answer the question?
+
+This is important so let’s go over this with an example.  Let’s say we want to answer the question “What state does Sang-Wook Cheong work as a materials scientist?”.  We get our second hop query after the first hop says he works at Rutgers.  The second hop needs to tell us the Rutgers is in New Jersey.  We can always say that everything without “New Jersey” isn’t a good piece of evidence.  In addition, anything that has the “New Jersey” but doesn’t actually answer the question isn’t a good piece of evidence: like this thing about Fountains of Wayne, which is also in New Jersey.  And things that answer the question and look like an answer to the question we keep.
+
+This now forms a cycle: start with *some* IR-based QA model, gather some evidence, label it as we just talked about, and retrain a reader, and more importantly a retriever.  Then start the cycle again.  And you can also train a reranker to squeeze out a few more points.
+
+So let’s see if this actually works.  Compared to traditional IR, trained models that use the explicit evidence from HotPotQA for fully supervised training like Transformer XH from MSR can do much better, getting the answer in the top 10 results 90% of the time.  We can get almost the same results without those annotations, suggesting our approach not just works, but it needs strictly less data.
+
+Nonetheless, it’s still well short of the creativity and the depth that motivated, smart humans can.  In other words, it still well short of our goal of automating Dan Russell.  And even within the limited world of HotPotQA, there’s some recent work showing that models are taking shortcuts to get to the answer and not creating complete reasoning chains.
+
+Jiang and Bansal show that there are reasoning shortcuts that models can take.  For example, in this document, if you have the question “What was the father of Kasper Schmeichel voted to be by the IFFHS in 1992”.  First, let’s take a moment to stare at the odd phrasing: you wouldn’t get this in a Manchester paradigm question.  But you can grab the answer just in a single document.  Jiang and Bansal create new documents that force true multihop reasoning: I’d rather create better questions rather than manufacture evidence to make the problem harder.  But nonetheless, it shows the limitations of HotPotQA.
+
+Similarly, Trivedi et al. create a metric called “DiRe” for “Disconnected Reasoning” to measure whether a system gets the wrong answer when you remove relevant evidence.  A good MultiHop dataset should be difficult enough to not allow this sort of cheating.  In other words, this is a metric to show how often the issues that Jiang and Bansal expose show up.
+
+All of these open questions make multihop question answering one of the most exciting areas for QA research at the moment.  Because the answers are still short (mostly factoid), it doesn’t have the same issues that make long form QA evaluation so fiendishly difficult, but the modeling challenges are still real.  And now that there are approaches that get beyond the requirements of gold evidence, we can move beyond datasets with gold evidence labels.
+
+And I think we have a lot to learn from humans here—explicitly incorporating human strategies for solving multihop challenges to synthesize vector queries, following links, or synthesizing raw text queries.
+
+And this can be paired with some of the fancy machine learning tools that we have like reinforcement learning for uncovering the best actions given sparse feedback … could this get us better models from more complicated but more lightly annotated datasets?
+
+And then perhaps we better address the “Joy of Search” problems in a hybrid cooperation between humans and computers: where computers and humans could join hands and hop together.
+
+
+
+Multihop as a Dataset
+
+
+http://searchresearch1.blogspot.com/2021/11/answer-why-is-carquinez-strait-so.html
+
+If you’ve watched our other videos about machine reading question answering, whether it’s Manchester or Cranfield, all of the examples thus far have been a one and done affair: do a search, get some text, extract the answer from that.  But that isn’t always realistic.  As anyone who has gone down a Wikipedia hole knows, sometimes you need several pieces of information to fully answer a question.  
+
+First, what is the human state of the art here?  Research librarians are probably the best searchers when you have a really tricky question you have to answer.  Friend of UMD’s library school Google’s Dan Russel has written a book called “The Joy of Search” that showcases the process for figuring out tricky questions.
+
+He goes through individual questions on his blog, which I encourage you to read: there’s a link to the process here.  I don’t want to go through the whole solution … that’s Dan’s thing, and you should check out his blog post, but I do want to focus on *why* answering “Why is the Carquinez Strait so underdeveloped” is so difficult.  First, the question is a counterfactual about something (development) that *didn’t* happen.  So to answer the question, you first need to find out the old name for this property outlined in red, who owned it in the 19th century, see whom they sold it two in the 20th century, and cross-reference that to zoning decisions that got made at the appropriate county level.
+
+This is not something that computers can currently do.  And I don’t think that we’re going to get anywhere close in the near future.  But I do want to talk today about how we can inch in that direction.
+
+The current term for this sort of QA for computers is called “multihop” QA.  These questions are designed to take multiple steps—or hops—to get to the right answer.  The most prominent dataset for multihop questions is HotPotQA.  Which while not as challenging as the question about Bay Area land use, do require multiple steps to find the answer.  In particular, in theory you need to “hop” from one Wikipedia page to another to find the answer.  In this example, to find the city Facebook launched in, you need to “hop” to the page on Harvard.
+
+The way the HotPotQA dataset was authored was that the authors showed two linked Wikipedia pages and asked crowdworkers to write a question that required information from both pages to answer.  
+
+There’s both an IR problem as well as a machine reading problem.  HopPotQA has two evaluation settings: a “full wiki” setting where you have to find the evidence yourself to answer the question and a “distractor” setting where you are given some evidence and you have to figure out how to extract the correct hop out of that limited set.
+
+Now, Multihop isn’t unique to this dataset.  There are multihop questions in, for example, in my favorite question answering format, Quiz Bowl.  But the great thing about quiz bowl is that if you can’t solve the early multihop clues, then you can get the question at the end with clues that don’t require multihop reasoning.  This makes it, despite its inherent complexity, a more accessible format for long term QA research.
+
+Let’s work through trying to solve them, using Wikipedia paragraphs as our source documents.  And hopefully this will show you how hard the problem is.
+
+
+Okay, the first question is “In a play from this country, the audience is given the option to blow up four policemen by the Maniac.”  Okay, so we can find this search result, which is from the the page about the play “The Accidental Death of an Anarchist”.  But we don’t know who wrote it, so we can’t answer the question.  So let’s find out more about this play.  
+
+Aha, it’s by Dario Fo, and what do you know it tells us right here that he’s Italian.  Oh, but what we’re looking for an exact match answer and our answer key is “Italy”?  If you’re using an evaluation metric like exact match, that means we have to keep going.  So let’s find out more about Dario Fo.  You have to go three paragraphs deep in his Wikipedia page to find the string “Italy”.  We’ll talk more about different ways to solve this problem when we talk about generation.
+
+But let’s take a look at how quiz bowl self-annotates these multihop links.  The same links that we followed in looking up information about Accidental Death of An Anarchist to figure out it was written by Dario Fo to figure out he’s Italian are right here at the end of the question.  And if you can’t do that, you can just look up the nationality of this guy named “Luigi”.
+
+Let’s move on to another question.  This time about this painting.  The question is: “A Lorenzo Lotto painting of this woman includes a cartouche showing her response to an accusation.”  Okay, so let’s see what turns up with a search of Wikipedia.  The first step is to figure out which one of these is correct.  
+
+In the first evidence, you need to know that a signature and a date isn’t a response to an accusation, so that’s out.  Then you need to know that a cartouche on “his” beret is inconsistent with the question’s use of “this woman”, so that just leaves the last last piece of evidence, where you have a woman and dialog in a cartouche.  This is why the distractor setting in HotPotQA can be so tricky!  A search result can turn up a bunch of seemingly relevant material, but you need to pick the right answer out of it somehow.  What makes the distractor setting of HotPotQA more tractable than quiz bowl is that the answer is in there *somewhere* which is not guaranteed in quiz bowl.  Moreover, in quiz bowl the correct pieces of evidence are not annotated.
+
+Okay, now the challenge is to figure out who this “her” is here.  So if you go to the start of this article, you can see that this is Susanna from the Book of Daniel.  So often, this multihop reasoning is essentially coreference resolution either within a document or across documents.
+
+So how can this be across documents?  That’s not how pronouns work!  To sho you what I mean, let’s take a look at a quiz bowl example that does require knowing who entities are across documents.
+
+A mechanic was arrested in one of these two countries for using women's underwear soaked in invisible ink to pass secrets to the other.
+
+We need to figure out what these two countries are.  So let’s do a query.  So we get this pretty unambiguous result.  But we don’t know the answer, which needs to be two countries!  What’s this Mossad thing?  And is Cairo a country?  If it isn’t we need to figure out what country it’s in.
+
+So perhaps you as a human know the answer, but a computer needs to keep hopping.  So let’s get a couple more hops to figure out what countries are being referenced here.  Then we find out that Cairo is the capital of Egypt and that Mossad is the CIA, MI6, BND, what have you equivalent for Israel.  
+
+Let’s again take a look at the giveaway for this quiz bowl question.  It ends with a reference to the “Camp David” accords, which if you look it up on Wikipedia gives you plenty of references to the answers, which are Egypt and Israel.  
+
+I want to now return to the discussion of paradigms of question answering.  If you haven’t seen that video that defines Manchester as knowledge probing questions and Cranfield as knowledge seeking questions, check it out, otherwise this won’t make sense.  But let’s dig in to this question a little bit more.
+
+Multihop question answering is an example of where the Cranfield QA paradigm has failed us!  Existing systems’ inability to answer these questions effectively have trained us not to ask them.  
+
+I recently had this experience.  I was watching the Mandalorian, and in the episode call “The Sheriff” this guy showed up.  I remembered him from some Netflix show, but I couldn’t think of the name.  But did I ask Google to tell me:
+
+“Netflix show with guy who played Sheriff on The Mandalorian actor”
+
+No, of course not!  Decades of using Google have trained me to decompose my information need into atomic queries.  So I first figure out the name of the Sheriff.  Aha, Cobb Vanth.  Then I see who played him: Timothy Oliphant.  Then I ask for that Netflix show starring Timothy Oliphant.  Aha, The Santa Clarita Diet.  That’s what it was.  Hey, don’t judge me.
+
+And that’s the problem with the Cranfield paradigm: because a savvy user knows that they cannot ask these multihop questions, you won’t find as many of these types of questions in, say, natural questions.  
+
+So why don’t people just use Manchester questions like quiz bowl that have plenty of these multihop questions you ask?  And I ask that too!
+
+The problem is that for quiz bowl questions you don’t have the gold annotations of what the gold evidence is to answer the questions.  And that’s the big benefit of HotPotQA: it explicitly gives gold annotations for where to find the hops and the answers. 
+
+But it sits in the liminal space between Manchester and Cranfield.  The questions are synthetic, not representing real needs, but neither do they follow the best practices of the Manchester paradigm to test the ability of humans to do multihop QA.
+
+For human question answering competitions, there are clearer rules about how to write “good” multihop questions: you typically don’t go down the information gradient.  In other words, you don’t hop from more well known entities to lesser known entities.  From what I’ve seen in, say, Natural Questions, this often seems to be the case in Cranfield questions, since questions are likely going to be about the things that are less well known: this was the case in my Mandalorian example, going from Cobb Vanth to Timothy Oliphant to Santa Clarita Diet.  This is often violated in HotPotQA, which offends my sense of question aesthetics … but does it make any difference in training systems?  Who knows!  
+
+Likewise, when you use multihop strategies in pyramidal questions, you should solve the multihop through the judicious use of coreference.  We outlined this process in a 2015 paper that explicitly linked the mentions to the underlying entities but not, alas, to the evidence that solved the knowledge required for the references.  And that, it seems, is what the community really wanted.  That and less complicated questions!
+
+There are other question answering datasets out there, and we’ll talk about them eventually.  But I wanted to start with these “machine reading” datasets because it shows both the promise of these approaches: they can answer tons of exciting questions just from looking at raw text.  And the chasm between human and machine ability.  There is no way a computer can come anywhere close to a semi-skilled human’s ability to answer the “Joy of Search” questions we started this video about.  
+
+So even as we learn about the methods that can provide the answers to these questions, think about what’s preventing computers from identifying when an answer satisfies the question, thinking up really novel approaches to reformulate a question (rather than computer brute force), and ruling out plausible but wrong answers.
+
+So here’s hoping that hopping gets more human.
+
+
+\section{Conversational QA}
+
 The goal of having intelligent computers is a part of both the foundation of artificial intelligence in the form of the Turing Test and science fiction.
 
 But you don’t interact with these computers through a command line or a search prompt.  You talk to the computer!  And the computer remembers what you say, it has situational context to understand, resolve ambiguities, and place your questions in context.  

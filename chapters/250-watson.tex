@@ -46,7 +46,7 @@ did indeed change the world.
 After his defeat, Gary Kasparov took a ``if you can't beat them, join them''
 approach and then began arguing for Centaur Chess: humans and computers
 playing chess together (this works for question answering too, as we discuss
-in Chapter~\ref{chapter:centaur}).
+in Chapter~\ref{sec:adversarial:cooperation}).
 %
 Likewise, the best Go players became more creative and novel moves by 
 incorporating computer-like play into their play style~\cite{shin-23}.
@@ -177,7 +177,7 @@ Becomes the lookup
 %
 Some of these can be looked up directly in datasets, but \textsc{start}
 further builds on the systems like \textsc{lunar} and \textsc{baseball}
-(Chapter~\ref{chapter:ir}).
+(Chapter~\ref{sec:ir:gofai-qa}).
 %
 While those systems LUNAR and
 BASEBALL also need to turn the raw text of questions into a structured
@@ -210,7 +210,7 @@ another language.
 \abr{qasm}'s approach is to explicitly ``undo'' the process to find the
 correct response given an input clue.
 
-In Chapter~\ref{ch:dynabench}, we'll talk about the cheating scandal
+In Chapter~\ref{chapter:leaderboards}, we'll talk about the cheating scandal
 around the American game show \textit{21}, where Charles van Doren got
 the answers in advance.
 %
@@ -244,7 +244,7 @@ original question.
 %
 Later on, when we talk about dense passage
 retrieval, those systems are doing something similar, except they’re
-generating the query in a continuous vector space (Chapter~\ref{sec:methods-deep-retrieval}).
+generating the query in a continuous vector space (Chapter~\ref{chapter:methods:deep-retrieval}).
 %
 Doing it with real words like QASM is more interpretable: a human could
 understand what’s going on, while a vector query is inscrutable it seems to
@@ -420,7 +420,7 @@ them so that we get more buzzes right and fewer wrong.
 %
 This will require a bit of math, so if you just want to jump ahead to the big
 picture (e.g., if you already know what \abr{sgd} for logistic regression
-looks like), go ahead to Section~\ref{sec:watson:updates}.
+looks like), go ahead to Section~\ref{sec:logistic-regression}.
 
 So what does it mean to get more buzzes right?  First, we need to define a
 little terminology: we need to consider the correct examples $\mathcal{X}_c$
@@ -493,8 +493,10 @@ For convenience, we will call this function $\sigma(x)$, because some people
 call this the sigmoid function.
 
 \begin{figure}
-  \includegraphics[width=0.5\linewidth]{figures/plots/sigmoid}
-\caption{This transformation is
+  \begin{center}
+    \includegraphics[width=0.5\linewidth]{figures/plots/sigmoid}
+    \end{center}
+\caption{This function is
   called the sigmoid function because the way it transforms all inputs into
   values makes it look like an ``S'' shape, with 0 outputs to the left,
   increasing in the middle (an input of 0 right at the threshold gives an
@@ -693,6 +695,7 @@ Table~\ref{table:watson:features}.\footnote{Lest there be any doubt, I am
   don't have feature weights with such round numbers, but it makes the example
   cleaner.}
 
+\begin{table}
 \begin{tabular}{ccc}
   \toprule
   Feature & Weight~$w_i$ & $x_i$ \\
@@ -705,6 +708,9 @@ Table~\ref{table:watson:features}.\footnote{Lest there be any doubt, I am
   Bias & -0.8  &  \\
   \bottomrule
 \end{tabular}
+\caption{Imagined features used in logistic regression for a wrong example.}
+\label{table:watson:features}
+\end{table}
 
 These are reasonable features: the \abr{ir} score encodes how similar this is
 to questions that you've seen before;
