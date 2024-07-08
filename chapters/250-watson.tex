@@ -736,10 +736,12 @@ nothing to do with the mistake, so they shouldn't be punished or
 rewarded.
 
 First, lets see how these features translate into a probability:
-\begin{equation}
-  \pi_i = \sigma \left( 1\cdot 0.2+0.1\cdot 2+ 0.005 \cdot 40 - 0.8 \right) =
+\begin{align}
+  \pi_i & = \sigma \left( 1\cdot 0.2+0.1\cdot 2+ 0.005 \cdot 40 - 0.8
+          \right) \\
+  & =
   \sigma \left( 0.2 + 0.2 + 0.2 - 0.8 \right) = \sigma \left( -0.2 \right) = 0.45
-\end{equation}
+\end{align}
 
 From Equation~\ref{eq:watson:update}, the error is 0.45---$\pi_i$ should have
 been zero, but it was 0.45---and if we assume\footnote{In practice, this would
