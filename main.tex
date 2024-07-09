@@ -78,6 +78,12 @@
 
 \ifproposal
 
+  \begin{quote}
+    \input{chapters/blurbs/watson}
+  \end{quote}
+  \input{chapters/250-watson}
+
+  
 \else
 
 \tableofcontents
@@ -141,18 +147,7 @@
 
 \chapterfile{230}{formats}{Formats Beyond Stand-Alone QA}
 
-\fi
-
 \chapterfile{250}{watson}{Watson on Jeopardy!: \\ Unquestioned Answers from \abr{ibm}'s tour de force}
-
-% \chapterfile{modern-qa}{How Google, Alexa, and Siri Answer Questions Today}
-%  - How to make questions harder (Adversarial)
-  \ifproposal
-
-  \else
-  
-
-
 
 \chapterfile{270}{methods_kb}{Answering Questions through Knowledge
   Bases}
@@ -201,9 +196,13 @@ our Questions?}
 
 % \proposalpart{Question Answering Future}
 
+
 \fi
 
+\ifproposal
 
+
+\fi
 
 
 \backmatter
