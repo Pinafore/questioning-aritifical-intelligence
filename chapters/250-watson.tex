@@ -188,7 +188,7 @@ messiness of Internet text.
 And its ability to \emph{search} the
 Internet to find answers is clearly a huge influence on the subject of this
 chapter---\watson{}---and later Dense Passage
-Retrieval later (Chapter~\ref{chapter:deep-retrieval}).
+Retrieval later~(Chapter~\ref{chapter:deep-retrieval}).
 
 \subsection{Transforming Questions to find the Answer}
 I
@@ -229,7 +229,7 @@ in the form of a question).
 What \abr{qasm} is doing is doing the reverse: it has a model that
 tries to turn questions into the search string that could find the
 answer to the question (we'll see modern versions of this when we talk about
-multihop question answering in Chapter~\ref{chapter:multihop}).
+multihop question answering in Chapter~\ref{chapter:formats}).
 %
 \abr{qasm} can apply plenty of transformations: swapping words,
 deleting words, ignoring words (e.g., if you have Cleveland, Ohio and ignore
@@ -280,7 +280,7 @@ It has a number that it associates with seeing the exact clue before; let's
 arbitrarily say that it's 3.0.  It then compares that score with its threshold
 on when to buzz.  Again, let's arbitrarily say that the threshold is 1.0.  3.0
 is larger than 1.0, so it buzzes in with that guess (We'll talk more about how to set these numbers not-so-arbitrarily in
-Section~\ref{sec:logistic-regression}).
+Section~\ref{sec:watson:logistic-regression}).
 
 But \jeopardy{} doesn’t have one kind of clue.  There are many different types
 of question, and sometimes you get a clue from the category about what kind of
@@ -402,7 +402,7 @@ And sometimes the approaches need to take a recursive approach, combining
 different subsystems to get to the right answer.
 
 \subsection{Logistic Regression and Gradient Descent}
-\label{sec:logistic-regression}
+\label{sec:watson:logistic-regression}
 
 From this you have dozens of possible guesses.  How do you know which---if
 any—to select?  This all gets fed into a logistic regression problem.  This
@@ -418,7 +418,7 @@ them so that we get more buzzes right and fewer wrong.
 %
 This will require a bit of math, so if you just want to jump ahead to the big
 picture (e.g., if you already know what \abr{sgd} for logistic regression
-looks like), go ahead to Section~\ref{sec:logistic-regression}.
+looks like), go ahead to Section~\ref{sec:watson:feature-engineering}.
 
 So what does it mean to get more buzzes right?  First, we need to define a
 little terminology: we need to consider the correct examples $\mathcal{X}_c$
@@ -609,7 +609,7 @@ invented by Leon\footnote{Fun fact: Leon was a researcher at \texttt{nec} next
   I assume for the free food rather than for the content.} Bouttou~\citep{}.
 
 Given that the math for the derivation is everywhere, I will skip it here (you
-can take a look at Chapter XXXX of Speech and Language Processing by Jurafsky
+can take a look at Chapter~5 of Speech and Language Processing by Jurafsky
 and Martin, which I often use in my classes and thus have adopted their
 notation), but it is so intuitive that if you look at it, it just ``feels
 right''.
@@ -670,13 +670,10 @@ So in this case our buzzer input\footnote{In reality, the calculus for Final
   answer no matter what, you don't really buzz in.  However, you still want
   the best answer to have the highest probability, so we can still work
   through this example.  And indeed, given the debugging output \watson{}
-  showed it didn't seem very confident in its wrong output, so it probably
-  wouldn't have ``buzzed in'' during normal play (but again, it's strategic to
-  put \emph{something} down for final \jeopardy{} no matter what), which
-  suggests that everything was working as intended.  The bigger complication
-  is how to figure out what to wager going into the final given your opponents
-  and the category, which we talk about at a cursory level in
-  Section~\ref{sec:watson:wagers}.} is whether we should buzz on this clue
+wasn't very confident in its wrong output, so it probably
+  wouldn't have ``buzzed in'' during normal play,
+suggesting that everything was working as intended.  We talk about wagers at a cursory level in
+  Section~\ref{sec:watson:strategy}.} is whether we should buzz on this clue
 with the response \answer{Toronto}, for which we get a $\pi_i$.
 %
 For the sake of concreteness, let's say $\pi_i$ is 0.4\dots it's not high, but it
@@ -686,12 +683,7 @@ the great city of \answer{Chicago}.
 Now this is too high, so something went wrong with our features.
 %
 Let's see what features were on and what their current weights in
-Table~\ref{table:watson:features}.\footnote{Lest there be any doubt, I am
-  making up these weights and features for a simple example\dots \watson{} had
-  many more and better features.  Most unbelievably, the first four features
-  are non-zero for this example and the rest are zero.  Finally, you normally
-  don't have feature weights with such round numbers, but it makes the example
-  cleaner.}
+Table~\ref{table:watson:features}.
 
 \begin{table}
 \begin{tabular}{ccc}
@@ -727,63 +719,71 @@ again).
 There are lots of other features that we're not seeing
 because they're zero, e.g., the feature that checks to see if there's
 a quotation mark in the category doesn't see one, so it's zero and we
-can safely ignore it along with every other feature that didn't fire.
+can safely ignore it along with every other feature that didn't fire.\footnote{Lest there be any doubt, I am
+  making up these weights and features for a simple example\dots \watson{} had
+  many more and better features.  Most unbelievably, the first four features
+  are non-zero for this example and the rest are zero.  Finally, you normally
+  don't have feature weights with such round numbers, but it makes the example
+  cleaner.}
 %
 And this makes sense: the features that aren't on for this feature had
 nothing to do with the mistake, so they shouldn't be punished or
 rewarded.
 
+\newcommand{\watsonvspace}{\vspace{.06cm}}
+
 First, lets see how these features translate into a probability:
 \begin{align}
-  \pi_i & = \sigma \left( 1\cdot 0.2+0.1\cdot 2+ 0.005 \cdot 40 - 0.8
+  \pi_i & = \sigma \left(\explain{\abr{ir}}{2 \cdot 0.1} + \explain{Category}{1\cdot 0.2}+\explain{\abr{kb}}{0.1\cdot 2}+ \explain{Prev}{0.005 \cdot 40} - \explain{bias}{0.8}
           \right) \\
   & =
-  \sigma \left( 0.2 + 0.2 + 0.2 - 0.8 \right) = \sigma \left( -0.2 \right) = 0.45
+  \sigma \left( 0.2 + 0.2 + 0.2 + 0.2 - 0.8 \right) = \sigma \left( 0.0 \right) = 0.5
 \end{align}
 
-From Equation~\ref{eq:watson:update}, the error is 0.45---$\pi_i$ should have
-been zero, but it was 0.45---and if we assume\footnote{In practice, this would
+From Equation~\ref{eq:watson:update}, the error is 0.5---$\pi_i$ should have
+been zero, but it was 0.5---and if we assume that our step size\footnote{In practice, this would
   be a really bad step size---it's way too large, you're likely to jump over
   the valley in the objective function you're looking for---but we'll go with
-  this because it makes the math easier.} that our step size is 1.0,
+  this because it makes the math easier.} is 1.0,
 %
 we can now write the overall update
-\begin{equation}
-  {\bm w}^{(new)} = {\bm w}^{(old)} - \lambda \nabla_{{\bm w}, b} \mathcal{L} = 
-  \begin{array}{c}
+\begin{align}
+  {\bm w}^{(new)} & = {\bm w}^{(old)} - \lambda \nabla_{{\bm w}, b}
+                    \mathcal{L} \\ &  = 
+  \begin{bmatrix}
     2 \\
 1  \\
 0.1  \\
   0.005  \\
   -0.8 \\
-\end{array} - \lambda  \begin{array}{c}
-\frac{\mathcal{L}}{w_1}  \\
-\frac{\mathcal{L}}{w_2}  \\
-  \frac{\mathcal{L}}{w_3}  \\
-  \frac{\mathcal{L}}{w_4}  \\  
-\frac{\mathcal{L}}{b}  \\  
-\end{array}
-= \begin{array}{c}
-  2\\
-1  \\
-0.1  \\
-  0.005  \\
+\end{bmatrix} - \lambda  \begin{bmatrix}
+\D{\mathcal{L}}{w_1}  \\
+\D{\mathcal{L}}{w_2}  \\
+  \D{\mathcal{L}}{w_3}  \\
+  \D{\mathcal{L}}{w_4}  \\  
+\D{\mathcal{L}}{b}  \\  
+\end{bmatrix}
+= \begin{bmatrix}
+  2 \watsonvspace \\
+1 \watsonvspace \\
+0.1 \watsonvspace \\
+  0.005 \watsonvspace \\
   -0.8 \\
-\end{array} - 1.0  \begin{array}{c}
-  0.45 \cdot 0.1
-0.45 \cdot 0.2  \\
-0.45 \cdot 2 \\
-  0.45 \cdot 40 \\
-  0.45 \cdot 1
-\end{array} = \begin{array}{c}
-  1.955 \\
-0.91  \\
--0.8  \\
-  -17.995  \\
-  -1.25 \\
-\end{array}.
+\end{bmatrix} - 1.0  \begin{bmatrix}
+  0.5 \cdot 0.1 \watsonvspace \\
+0.5 \cdot 0.2 \watsonvspace \\
+0.5 \cdot 2 \watsonvspace \\
+  0.5 \cdot 40 \watsonvspace \\
+  0.5 \cdot 1
+\end{bmatrix} = \begin{bmatrix}
+  1.95 \watsonvspace \\
+0.75 \watsonvspace \\
+-0.9 \watsonvspace \\
+  -19.995 \watsonvspace \\
+  -1.3 \nonumber \\
+\end{bmatrix}.
 \label{eq:watson:update-ex}
-\end{equation}
+\end{align}
 This shows the dangers of having unbalanced feature weights and too large step
 sizes.  This change is overall too big; you want to be taking little steps on
 your objective function, not taking huge leaps---you might jump over the
@@ -820,14 +820,17 @@ In a 2010 Tournament of Champions game, there was a category with the first clue
 When the category was revealed, the host Alex Trebek said ``you have to name
 the month'', but \watson{} didn't get that hint.
 %
-In a presentation from \abr{ibm}, they showed that Watson got that question
+In a presentation from \abr{ibm}, they showed that Watson got that clue
 wrong (Figure~\ref{fig:watson:bad-month}).
 
 \begin{figure}
-  \includegraphics[width=0.8\linewidth]{figures/external/ibm_watson_feature}
+  \begin{center}
+    \includegraphics[width=0.8\linewidth]{figures/external/ibm_watson_feature}
+  \end{center}
   \caption{Slide from \abr{ibm} \watson{} on how a feature to predict the
     answer type as it works it way through a category's column can improve its
     ability to buzz in correctly.  (Figure Credit: \abr{ibm})}
+  \label{fig:watson:bad-month}
 \end{figure}
 
 
@@ -877,7 +880,7 @@ This chart showed how Watson progressed in different iterations of the system,
 inching up to the cloud of \jeopardy{} champions.  Ken Jennings is in red there,
 still clearly dominating even the final version of Watson.
 %
-This comparison is even more important today (Chapter~\ref{chapter:irt}) as people claim that \abr{ai}s
+This comparison is even more important today (Chapter~\ref{chapter:leaderboards}) as people claim that \abr{ai}s
 have super-human, but the lessons of \watson{} can
 help inform how we we can judge whether these judgements are fair and
 reasonable.
@@ -902,7 +905,7 @@ This is a problem!  First, it's a problem scientifically because we
 want to have fair comparisons of human vs. computer intelligence.
 %
 More importantly, I want to have my turn having my question answering
-robots face off against trivia whizzes (Chapter~\ref{ch:game-show}),
+robots sit opposite against trivia whizzes (Chapter~\ref{ch:gameshow}),
 and I can't do that if everybody thinks that Watson's spin
 on \jeopardy{} settled the issue (and it hasn't).
 
@@ -925,7 +928,7 @@ competition would take place on normal, written questions.
 %
 In the media coverage of the competition, this focused on avoiding
 video and picture daily doubles (fairly reasonable, but we'll discuss
-how multimedia questions might be more fun in Chapter~\ref{chapter:multimodal}).
+how multimedia questions might be more fun in Chapter~\ref{sec:formats:multimodal}).
 %
 However, this causes two problems: the questions are too easy and do
 not necessarily challenge computers.
@@ -966,7 +969,7 @@ more difficult\footnote{And it the difficulty doesn't just ratchet in one
   music.  All of these feature questions written with care to be tuned to abilities of the
   expected players.  \abr{ibm} did not want the computer to be targeted, lest
   the questions be adversarial against the computer.
-  Chapter~\ref{chapter:adversarial} discusses what this would look like if we
+  Chapter~\ref{ch:adversarial} discusses what this would look like if we
   specifically \emph{wanted} that to happen.} clues~\citep{harris-06}.
 %
 Nonetheless, this is the battlefield where Watson won: ``normal''
@@ -977,7 +980,7 @@ Instead, it all came down to the buzzer.
 \subsection{John Henry vs. the Buzzing Machine}
 \label{sec:watson:human-buzzing}
 
-Unlike \qb{} (Chapter~\ref{ch:qb}), while \jeopardy{} also uses
+Unlike \qb{} (Chapter~\ref{sec:manchester:qb}), while \jeopardy{} also uses
 signaling devices, these only work \emph{once the question has been
   read in its entirety}; Ken Jennings (also a former \qb{} player while he was a student at
 \abr{byu}) himself explains it on a \textit{Planet Money}
@@ -1000,7 +1003,7 @@ So how does this interact with Watson?
 Watson receives all of the clues electronically and likewise gets an
 electronic signal to know when it is safe to buzz in, then computes a
 probability of being right and buzzes in if it's above that threshold
-(Section~\ref{sec:watson:logistic}).
+(Section~\ref{sec:watson:logistic-regression}).
 %
 In contrast, humans have to either guess when it is safe to buzz or
 wait for a light to turn on.
@@ -1097,6 +1100,8 @@ Chapter~\ref{ch:adversarial}: tell the authors what's hard for a computer.
 
 \section{Two Nice Guys, One Computer with no Shame}
 \label{sec:watson:strategy}
+
+\jbgcomment{Talk a little more about wagering}
 
 Given the ``too easy'' questions and the buzzer, what does this
 actually mean for gameplay?
@@ -1207,7 +1212,7 @@ Since then, we've seen claims that computers are smoking lawyers in taking the
 %
 \watson{} was just the beginning of the story, as since then we've seen both a
 tremendous improvement in the technologies that drive \abr{ai} (we review
-these advances in Chapter~\ref{chapter:language-models}) and a greater
+these advances in Chapter~\ref{chapter:methods_generation}) and a greater
 interest in measuring how smart these models are.
 %
 \watson{} was just the beginning of the story, in both respects.
