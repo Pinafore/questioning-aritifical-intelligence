@@ -1,3 +1,56 @@
 
-\label{ch:methods:deep-retrieval}
 
+
+In previous videos, we talked about the general framework for how computers answer a question: you have the question, that goes into an information retrieval system, you get some evidence, and then you run a reader over that to find the answer.
+
+Today we’re going to talk about how we can do that a little bit better with the fancy tools like encoders in the previous lectures … and how these new techniques for doing this unlocks exciting advances in question answering.  Stuff called “Deep Retrieval”: instead of using a traditional information retrieval system, we’ll use deep learning to turn both our queries and our evidence into vectors.
+
+Now, you remember how a traditional IR system works: you get a sparse vector with weights for the individual words.  How those weights are set isn’t important.  It could be tf-idf, BM25, or just raw word counts.  Let’s focus on the dimensionality and what kinds of things can be matched.
+
+First, the dimensionality is in the tens or even hundreds of thousands.  There are many words in English, particularly when you want to have coverage of all of the rare named entities like “the Treaty of Westphalia” or “Uluru” or “Murasaki”.  Even though these vectors are sparse, you pay a price for keeping track of all of these thousands of dimensions.  It’s often not worth it to do exact search over thousands of vocabulary words.  
+
+So there are good algorithms for searching through this, made by Maryland’s own David Mount, but you can’t do it exactly: once the dimensionality gets high enough, you’re doing an approximate search.  
+
+If you can’t do an exact search in high dimensions, then why keep them around?  A seminal paper called “Min-Wise Independent Permutations” said that you shouldn't do this for computations with these big sparse vectors: create new vectors and do your computations on that instead.  If you use hash functions based on some distance function (e.g., cosine similarity) to create these representations, this is called “Locality-sensitive hashing”.  
+
+This idea was created for the search engine Altavista.  Please leave a comment below if you remember Altavista and tell these dang kids to get off our lawn.  I remember that locality-sensitive hashing was a really cool idea that was just becoming popular when I was a grad student (Moses was a professor at Princeton when I was there): you could do faster computations with less memory with these representations.
+
+Now why am I talking about these ancient algorithms from the turn of the century in a lecture about BERT for deep retrieval?  The algorithms that were developed to do comparisons and searches in this lower dimensional space can be repurposed for the representations created by deep learning algorithms, and the idea is the same: create representations specific to your task.
+
+But what I really want to talk about is how these representations can be not just faster but can also be better!  Can we create representations tailor-made for a task like question answering?
+
+The answer is yes, we can do this using the deep learning approaches we’ve talked about before!  But before we talk about how, let’s talk about why you might want to do this.  Now, sometimes tf-idf is going to be just fine.  If you have good tf-idf clues in a question like “What do you need the hall-heroult process for?”, then it’s fairly easy to map that up to the process for smelting aluminum.  But sometimes there are sequences of words that aren’t high tf-idf like “Who said to be or not to be”.  Now, you could add n-gram dimensions but that would explode the dimensionality even more.  
+
+Even worse, sometimes people asking questions, particularly in the Manchester paradigm (that we talked about in a previous video), can be tricky!  If the question is about Luebeck, a city that was part of the Hanseatic league, the question writer might be tricky and say something like “a city on the Trave that was a member of a confederation of Baltic cities” instead of mentioning the Hanseatic league by name.
+
+So how can you learn how to do this?  This is where frameworks like Pytorch are really useful.  You can create a giant computation graph that not only learns a representation of a question but also of the evidence passages where you can easily find the answer.  So now you learn to push “who said to be or not to be” close to evidence passages that contain “Hamlet” and “city on the Trave that was a member of a confederation of Baltic cities” close to evidence passages that contain Luebeck.  And you can use your favorite neural network to encode both sides.  Today you’d use BERT to do this.
+
+Back in 2015, we used Deep Averaging Networks to do this … here’s an example of what the space looks like for the representations of questions about US presidents.  When you project down to two dimensions, you can see a clockwise progression through time from the founding fathers to the 19th century to the 20th century.
+
+At the end of the 2010s, there were three papers that came out that proposed ways of learning encodings for evidence and questions to find the correct vectors.  These are ORQA (“Open-Retrieval Question-Answering”), REALM (“Retrieval-Augmented Language Model pre-training”), and DPR (“Dense Passage Retrieval”).
+
+So what do these papers say?  ORQA showed that it was possible to do neural retrieval better than an off the shelf IR system.  
+
+REALM improved the pretraining, doing masking of spans that are likely to be the answer.  Instead of BERT, which masks out a random 15% of tokens, they now mask named entities and dates.  Let’s see an example of what this means.  Let’s say you have a text that says “During this conflict, Celia Sánchez created a “farmer’s militia” in order to supply troops, and worked with Frank País in order to create a task force.”  
+
+This could be a quiz bowl question with the answer or it could come from that Wikipedia page, again, we’re just viewing it as raw text FOR bert PRETRAINING.  Is there anything we can do to improve BERT via pretraining?  REALM argues that if you mask these tokens, rather than a random 15% of tokens, you get encoders that do a better job of keeping track of where entities start and end: when your job is to highlight entities in a passage, this entity-focused pretraining gets you better representations.  That’s because hides the very things that are most likely to be the answer to a question: people, places, organizations, and dates.
+
+Let’s take a look at this figure from the REALM paper that discusses how you should get your negative samples.
+
+Their suggestion is to use all of the negative examples from a single batch.  So let’s say your batch size is four: there are four questions in your batch.  Obviously the positive example for question 2 training is the evidence passage that contains the answer to question 2.  But what should you use as negative evidence?  The DPR paper argues you should use in-batch negatives, and take all of the negative examples for everything else in the batch.
+
+Now how do you get these negative examples?  Again, the DPR paper argues that this should be traditional answers from an IR system that have high tf-idf, BM25, etc. scores but don’t have the right answer.
+
+It’s not a huge difference, but it does seem to help.
+
+Let’s wrap up.  These models allow us to not just match words from questions and answers but to learn arbitrary mappings between questions and answers.  I think that we’ve only begun to scratch the possibilities for this kind of system, and recent research is looking into these opportunities.  
+
+In the previous video, we talked about how BERT can find answer spans in questions … how does this combine with deep retrieval?  In some ways, it goes away!  Instead of just indexing entire documents, you can just encode the things that BERT can encode well: Wikipedia paragraphs for instance.  Then you retrieve the paragraphs (rather than the pages) that are likely to have the answer.
+
+So if you’re going to use BERT anyway to find the spans (because it’s better than the sequence-based approaches that came before it), why not go all the way and also use it for the retrieval?  You’ll fix two problems at once!
+
+There are other ways that deep retrieval is better.
+
+Dense passage retrieval lets you find the answer to a question like “how was the monkey king born”.  But since we’re doing the lookup in an arbitrary vector space, we could train our question encoder to take input in any language: all that matters is that the resulting vector space lines up.  But then why does it even have to be text?  We can encode any object as a vector, so why not answer questions with an image?
+
+So, to recap, we got to dense passage retrieval because we didn’t want to put up with thousands of types defining our vocabulary, but we ended up with something that can do image retrieval instead.  So perhaps a picture encoding is worth a thousand words.

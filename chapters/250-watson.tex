@@ -177,10 +177,10 @@ Becomes the lookup
 %
 Some of these can be looked up directly in datasets, but \textsc{start}
 further builds on the systems like \textsc{lunar} and \textsc{baseball}
-(Chapter~\ref{sec:ir:gofai-qa}).
+(Section~\ref{sec:ir:gofai-qa}).
 %
-While those systems LUNAR and
-BASEBALL also need to turn the raw text of questions into a structured
+While those systems \textsc{lunar} and
+\textsc{baseball} also need to turn the raw text of questions into a structured
 representation, the difference of \textsc{start} is that
 is to deal with the
 messiness of Internet text.
@@ -188,7 +188,7 @@ messiness of Internet text.
 And its ability to \emph{search} the
 Internet to find answers is clearly a huge influence on the subject of this
 chapter---\watson{}---and later Dense Passage
-Retrieval later~(Chapter~\ref{ch:methods:deep-retrieval}).
+Retrieval later~(Chapter~\ref{ch:methods_deep_retrieval}).
 
 \subsection{Transforming Questions to find the Answer}
 I
@@ -229,7 +229,7 @@ in the form of a question).
 What \abr{qasm} is doing is doing the reverse: it has a model that
 tries to turn questions into the search string that could find the
 answer to the question (we'll see modern versions of this when we talk about
-multihop question answering in Chapter~\ref{chapter:formats}).
+multihop question answering in Chapter~\ref{ch:formats}).
 %
 \abr{qasm} can apply plenty of transformations: swapping words,
 deleting words, ignoring words (e.g., if you have Cleveland, Ohio and ignore
@@ -240,9 +240,9 @@ Ohio, you’ll find more things about US president Grover Cleveland), etc.
 In the end, you have a model that creates specialized queries from the
 original question.
 %
-Later on, when we talk about dense passage
-retrieval, those systems are doing something similar, except they’re
-generating the query in a continuous vector space (Chapter~\ref{chapter:methods:deep-retrieval}).
+Later on, when we talk about dense passage retrieval, those systems are doing
+something similar, except they’re generating the query in a continuous vector
+space (Chapter~\ref{ch:methods_deep_retrieval}).
 %
 Doing it with real words like QASM is more interpretable: a human could
 understand what’s going on, while a vector query is inscrutable it seems to
@@ -442,7 +442,7 @@ directly because sometimes our features won't be binary.
 %
 And this should look familliar: it looks a lot like the dot product that we
 first saw in the chapter on information retrieval
-(Chapter~\ref{chapter:cranfield}), where we compute the \emph{similarity} of
+(Chapter~\ref{ch:ir}), where we compute the \emph{similarity} of
 two examples by multiplying the \tfidf{} scores of two documents' words.
 
 And this is a good segue to \emph{why} we write this as a dot product rather
@@ -603,10 +603,7 @@ example of which way you should go.
 
 In the lingo, the sample of examples that you ask for the direction is the
 \emph{minibatch}, and this overall process of asking a few (or even one)
-example for a direction is called \emph{stochastic gradient descent} as
-invented by Leon\footnote{Fun fact: Leon was a researcher at \texttt{nec} next
-  to Princeton when I defended my dissertation, and he came to my defense\dots
-  I assume for the free food rather than for the content.} Bouttou~\citep{}.
+example for a direction is called \emph{stochastic gradient descent}~\citep{bottou-04}.
 
 Given that the math for the derivation is everywhere, I will skip it here (you
 can take a look at Chapter~5 of Speech and Language Processing by Jurafsky
@@ -686,6 +683,7 @@ Let's see what features were on and what their current weights in
 Table~\ref{table:watson:features}.
 
 \begin{table}
+  \begin{center}
 \begin{tabular}{ccc}
   \toprule
   Feature & Weight~$w_i$ & $x_i$ \\
@@ -698,6 +696,7 @@ Table~\ref{table:watson:features}.
   Bias & -0.8  &  \\
   \bottomrule
 \end{tabular}
+\end{center}
 \caption{Imagined features used in logistic regression for a wrong example.}
 \label{table:watson:features}
 \end{table}
@@ -855,7 +854,7 @@ These are hints about what kind of response is being sought.
 %
 And lest you think this is an artifice of the skilled writers of \jeopardy{},
 this also appears in more ``natural'' questions like those people ask Google
-(Chapter~\ref{chapter:nq}).
+(Chapter~\ref{ch:datasets_natural}).
 
 And part of what made Watson a good \jeopardy{} Player is that it would learn
 as it explored the category.
@@ -1063,7 +1062,7 @@ have seen a reused clue, you should not praise Watson for finding
 near-repeat questions.
 %
 And it's not just trivia games: Google's dataset of questions (which
-we'll talk about in more Chapter~\ref{chapter:nq}) have
+we'll talk about in more Chapter~\ref{ch:datasets_natural}) have
 many identical questions~\citep{lewis-21}, which makes it an imperfect yardstick.
 %
 Moreover, Watson can also store the entirety of Wikipedia, easily
@@ -1096,7 +1095,7 @@ Unlike for human contestants, the ``difficulty'' of \jeopardy{}
 questions for a computer has no relationship to the nominal value.
 %
 We talk about how Facebook/Meta dealt with this problem in
-Chapter~\ref{ch:adversarial}: tell the authors what's hard for a computer.
+Chapter~\ref{ch:datasets_adversarial}: tell the authors what's hard for a computer.
 
 \section{Two Nice Guys, One Computer with no Shame}
 \label{sec:watson:strategy}
@@ -1212,7 +1211,7 @@ Since then, we've seen claims that computers are smoking lawyers in taking the
 %
 \watson{} was just the beginning of the story, as since then we've seen both a
 tremendous improvement in the technologies that drive \abr{ai} (we review
-these advances in Chapter~\ref{chapter:methods_generation}) and a greater
+these advances in Chapter~\ref{ch:methods_generation}) and a greater
 interest in measuring how smart these models are.
 %
 \watson{} was just the beginning of the story, in both respects.

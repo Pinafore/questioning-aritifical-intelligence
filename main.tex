@@ -9,7 +9,7 @@
 \publisher{University of Maryland}
 
 \newif\ifcomment\commenttrue
-\newif\ifproposal\proposaltrue
+\newif\ifproposal\proposalfalse
 \input{style/preamble}
 
 %%
@@ -54,13 +54,16 @@
   \fi
 }
 
+
 \newcommand{\chapterfile}[3]{
   \ifproposal
+    \stepcounter{chapter}
+    \label{ch:#2}
   \paragraph{#3}
   \input{chapters/blurbs/#2}
   \else
   \chapter{#3}
-  \label{ch:#1}
+  \label{ch:#2}
   \begin{quote}
     \input{chapters/blurbs/#2}
   \end{quote}
@@ -74,15 +77,9 @@
 \graphicspath{{figures/datsets}{figures/leaderboard}}
 
 \begin{document}
-\setcounter{secnumdepth}{0}
+\setcounter{secnumdepth}{1}
 
 \ifproposal
-
-  \begin{quote}
-    \input{chapters/blurbs/watson}
-  \end{quote}
-  \input{chapters/250-watson}
-
   
 \else
 
@@ -101,17 +98,13 @@
 \chapterfile{010}{introduction}{Introduction: The Unanswered Question}
 
 \ifproposal
-\input{chapters/005-proposal}
+  \input{chapters/005-proposal}
+    \chapter{Outline}
+\else
+  \clearpage
 \fi
 
 
-\ifproposal
-
-\else
-
-
-
-\clearpage
 
 
 \proposalpart{Question Answering Past}
@@ -196,14 +189,18 @@ our Questions?}
 
 % \proposalpart{Question Answering Future}
 
-
-\fi
-
 \ifproposal
 
-
+  
+  \chapter{Watson on Jeopardy!: \\ Unquestioned Answers from \abr{ibm}'s tour
+    de force \\ (Sample Chapter)}
+  
+  \begin{quote}
+    \input{chapters/blurbs/watson}
+  \end{quote}
+  \input{chapters/250-watson}
+  
 \fi
-
 
 \backmatter
 
