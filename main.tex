@@ -8,8 +8,8 @@
 \author{Jordan Boyd-Graber}
 \publisher{University of Maryland}
 
-\newif\ifcomment\commenttrue
-\newif\ifproposal\proposalfalse
+\newif\ifcomment\commentfalse
+\newif\ifproposal\proposaltrue
 \input{style/preamble}
 
 %%
@@ -57,7 +57,7 @@
 
 \newcommand{\chapterfile}[3]{
   \ifproposal
-    \stepcounter{chapter}
+     \invisiblechapter{#3}{ch:#2}
     \label{ch:#2}
   \paragraph{#3}
   \input{chapters/blurbs/#2}
@@ -79,33 +79,26 @@
 \begin{document}
 \setcounter{secnumdepth}{1}
 
-\ifproposal
-  
-\else
-
-\tableofcontents
-
-\fi
-
-
-
 
 % Front matter
 
-\input{chapters/000-frontmatter}
 
 
-\chapterfile{010}{introduction}{Introduction: The Unanswered Question}
 
+
+\clearpage
 \ifproposal
-  \input{chapters/005-proposal}
-    \chapter{Outline}
-\else
-  \clearpage
+\input{chapters/005-proposal}
+\tableofcontents
+  \chapter{Chapter Synopses}
+
+  A brief description of each of the proposed chapters.
+  \else
+  \input{chapters/000-frontmatter}
 \fi
 
 
-
+\chapterfile{010}{introduction}{Introduction: The Unanswered Questions}
 
 \proposalpart{Question Answering Past}
 
@@ -134,17 +127,17 @@
 \chapterfile{200}{manchester}{The Manchester Paradigm: The Art of Asking the
   Perfect Question}
 
-\chapterfile{210}{datasets_natural}{Natural Questions}    
+\chapterfile{210}{datasets_found}{Found Data: Free, but what's the
+  true Cost?}    
 
 \chapterfile{220}{datasets_constructed}{Build Your Own Dataset}
 
 \chapterfile{230}{formats}{Formats Beyond Stand-Alone QA}
 
-\chapterfile{250}{watson}{Watson on Jeopardy!: \\ Unquestioned Answers from \abr{ibm}'s tour de force}
-
-\chapterfile{270}{methods_kb}{Answering Questions through Knowledge
+\chapterfile{240}{methods_kb}{Answering Questions through Knowledge
   Bases}
 
+\chapterfile{250}{watson}{Watson on Jeopardy!: \\ Unquestioned Answers from \abr{ibm}'s tour de force}
 
 
 % Introduce syntax / language modeling

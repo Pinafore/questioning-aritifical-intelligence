@@ -85,7 +85,6 @@
 }
 
 \newcommand{\invisiblechapter}[2]{%
-  \phantomchapter%
   \stepcounter{chapter}%
   \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
   \label{#2}
@@ -254,6 +253,8 @@
 
 \newcommand{\category}[1]{\textbf{#1}}
 \newcommand{\tfidf}{\abr{tf}-\abr{idf}}
+
+
 
 \newcommand{\jeopardy}{\textit{Jeopardy!\@}}
 \newcommand{\jeopardyf}{\textit{Jeopardy!}}
