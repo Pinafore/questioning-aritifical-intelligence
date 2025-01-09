@@ -7,26 +7,27 @@ if __name__ == "__main__":
         raw = infile.read()
         blurbs = json.loads(raw)
 
-    for ii in blurbs:
-        with open("chapters/blurbs/%s.tex" % ii, 'w') as outfile:
-            if isinstance(blurbs[ii], list):
-                text, subsections = blurbs[ii]
-            else:
-                text = blurbs[ii]
-                subsections = []
-                
-            outfile.write(text)
+    for blurb in blurbs:
+        short = blurb["short"]
+        with open("chapters/blurbs/%s.tex" % short, 'w') as outfile:
+            text = blurb["summary"]
+            sections = blurb.get("sections", [])
 
-            sections = []
-            for ii in subsections:
-                if len(ii) > 2:
-                    label, section_name, description = ii
-                    sections.append((section_name, description))
-                else:
-                    label, section_name = ii
-                outfile.write("\n\\invisiblesection{%s}{%s}\n\n" % (section_name, label))
+            has_summary = False
+            if any("summary" in x for x in sections):
+                has_summary = True
+                outfile.write("Topics in chapter:\\n\\begin{enumerate*}")                
 
-            if len(sections) > 1:
-                outfile.write("Topics in chapter:\\n\\begin{enumerate*}")
-                outfile.write("\n\t".join("\\item \\textbf{%s:} %s" % (x, y) for x, y in sections))
+            for section in sections:
+                section_name = section["label"]
+                title = section.get("title", "MISSING TITLE")
+                outfile.write("\n\\invisiblesection{%s}{%s}\n\n" % (section_name, title))
+
+                if "summary" in section:
+                    outfile.write("\\item \\textbf{%s:} %s \\n" % (title, section["summary"]))
+
+            if has_summary:
                 outfile.write("\n\\end{enumerate*}")
+
+
+
