@@ -9,7 +9,7 @@
 \publisher{University of Maryland}
 
 \newif\ifcomment\commentfalse
-\newif\ifproposal\proposalfalse
+\newif\ifproposal\proposaltrue
 \input{style/preamble}
 
 %%
@@ -54,11 +54,10 @@
   \fi
 }
 
-
+% Number Label Title
 \newcommand{\chapterfile}[3]{
   \ifproposal
-     \invisiblechapter{#3}{ch:#2}
-    \label{ch:#2}
+     \invisiblechapter{#2}{#3}
   \paragraph{#3}
   \input{chapters/blurbs/#2}
   \else
@@ -167,7 +166,7 @@
   \begin{quote}
     \input{chapters/blurbs/watson}
   \end{quote}
-  \input{chapters/250-watson}
+  \input{chapters/200-watson}
   
 \fi
 
