@@ -18,7 +18,7 @@ if __name__ == "__main__":
             has_summary = False
             if any("summary" in x for x in sections):
                 has_summary = True
-                outfile.write("\\noindent Topics in chapter:\n\\begin{enumerate*}")                
+                outfile.write("\\ifproposal \n \\noindent Topics in chapter:\n\\begin{enumerate*}")                
 
             for section in sections:
                 section_name = section["label"]
@@ -29,7 +29,7 @@ if __name__ == "__main__":
                     outfile.write("\\item \\textbf{%s:} %s {\\tiny %s:%s} \n" % (title, section["summary"], short, section_name))
 
             if has_summary:
-                outfile.write("\n\\end{enumerate*}")
+                outfile.write("\n\\end{enumerate*}\n\\fi")
 
 
 
