@@ -13,10 +13,12 @@ if __name__ == "__main__":
             text = blurb["summary"]
             sections = blurb.get("sections", [])
 
+            outfile.write(text)
+
             has_summary = False
             if any("summary" in x for x in sections):
                 has_summary = True
-                outfile.write("Topics in chapter:\\n\\begin{enumerate*}")                
+                outfile.write("Topics in chapter:\n\\begin{enumerate*}")                
 
             for section in sections:
                 section_name = section["label"]
@@ -24,7 +26,7 @@ if __name__ == "__main__":
                 outfile.write("\n\\invisiblesection{%s}{%s}\n\n" % (section_name, title))
 
                 if "summary" in section:
-                    outfile.write("\\item \\textbf{%s:} %s \\n" % (title, section["summary"]))
+                    outfile.write("\\item \\textbf{%s:} %s \n" % (title, section["summary"]))
 
             if has_summary:
                 outfile.write("\n\\end{enumerate*}")

@@ -8,16 +8,16 @@
       "summary": "In the 1950s, Alan Turing proposed a parlor game that would come to define the artificial intelligence: could a wiley interrogator discern whom they were talking to just through posing clever questions.  The eponymous Turing Test is the most durable (but contentious) definition of what an intelligent computer is, and this chapter reviews how it shaped the development of artificial intelligence."
     },
     {
-      "short": "epic",
-      "summary": "Despite its central importance to \\abr{ai}, asking and answering questions is new---it stretches back into our collective unconcious. Riddles and trivia have persisted for millenia not just because they're entertaining.  Indeed, being able to ask and answer questions is close to godliness.  From the Sphynx to Gestumblindi, this chapter examines how myths from several cultures connect answering questions to forming identity, unlocking the secrets of the universe, and gaining intelligence.  And connecting this to nascent ``superhuman'' \\abr{ai}.  Previously published as \\citet{Rodriguez-21:paradigms}."
-    },
-    {
-      "short": "civilization",
-      "summary": "Corruption and nepotism have been the downfall of multiple civilizations, but the administration of carefully formed questions saved the United States and China from sucumbing to these destructive forces.  From the reforms of Wu Zetian to the Pendelton Act, this chapter examines how information and competence---measured by questions asked in an exam---created meritocracy and social mobility.  The legacy of these exams built an understanding of what it means to write a ``fair'' and ``useful'' question, and brought about massive social change, allowing egalitarian and professional governments to bring order to continent-spanning civilizations."
+      "short": "history",
+      "summary": "Despite its central importance to \\abr{ai}, asking and answering questions is new---it stretches back into our collective unconcious. Riddles and trivia have persisted for millenia not just because they're entertaining.  Indeed, being able to ask and answer questions is close to godliness.  From the Sphynx to Gestumblindi, this chapter examines how myths from several cultures connect answering questions to forming identity, unlocking the secrets of the universe, and gaining intelligence.  And connecting this to nascent ``superhuman'' \\abr{ai}.  Previously published as \\citet{Rodriguez-21:paradigms}.  Corruption and nepotism have been the downfall of multiple civilizations, but the administration of carefully formed questions saved the United States and China from sucumbing to these destructive forces.  From the reforms of Wu Zetian to the Pendelton Act, this chapter examines how information and competence---measured by questions asked in an exam---created meritocracy and social mobility.  The legacy of these exams built an understanding of what it means to write a ``fair'' and ``useful'' question, and brought about massive social change, allowing egalitarian and professional governments to bring order to continent-spanning civilizations.",
+      "sections": [
+        {"label": "epic", "title": "Epic Riddles"},
+        {"label": "civil-service", "title": ""}
+      ]
     },
     {
       "short": "classic",
-      "summary": "The earlies approaches to question answering.",
+      "summary": "The earliest approaches to question answering.",
       "sections": [
         {"label": "baseball", "title": "Who's on First: Answering Questions about Baseball", "summary": "Green et al.'s 1979 Baseball system"},
         {"label": "lunar", "title": "Can you Believe they Put a Man on the Moon?", "summary": "Woods and Kaplan's 1972 LUNAR system"},
@@ -62,7 +62,7 @@
         ]
       },
       {
-        "short": "building",
+        "short": "datasets",
         "summary": "The cliche is that data are the new oil, powering \\abr{ai}.  Fortunately, because humans naturally ask questions, there are many datasets that we can find 'for free'.  However, these datasets still come at a cost: many of these datasets have inherent problems (e.g., ambiguities and false presuppositions) or oddities (only talking about American men) that make them difficult to use for question answering.  This chapter discusses these datasets that have formed the foundation of much of modern \\abr{ai}.  If you can't find the data you need, build it yourself.  But this is not always a perfect solution.  This chapter discusses the datasets that people have built and the new problems that this can create.",
         "sections": [
           {"label": "nq", "title": "Natural Questions Five Years Later", "summary": ""},
@@ -84,7 +84,7 @@
         ]
       },
       {
-        "short": "zermelo",
+        "short": "leaderboards",
         "summary": "How do we know how smart a machine is?  Like a human, we typically give it a test; the difference is that tests for computers are called `leaderboards'. This chapter talks about the pros and cons of leaderboards and how some of the methods used to analyze human standardized tests can help us understand the strengths and weaknesses of not just computer question answering specifically but \\abr{ai} generally.  This also marks the reappearance of item response theory, which can help make deciding the smartest computer more efficient.  Previously published as \\citet{Rodriguez-21:leaderboards} and \\citet{mgor-24}."
       },
       {
