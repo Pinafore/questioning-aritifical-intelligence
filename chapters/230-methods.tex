@@ -1,6 +1,7 @@
 
 
 
+
 In previous videos, we talked about the general framework for how computers answer a question: you have the question, that goes into an information retrieval system, you get some evidence, and then you run a reader over that to find the answer.
 
 Today we’re going to talk about how we can do that a little bit better with the fancy tools like encoders in the previous lectures … and how these new techniques for doing this unlocks exciting advances in question answering.  Stuff called “Deep Retrieval”: instead of using a traditional information retrieval system, we’ll use deep learning to turn both our queries and our evidence into vectors.
@@ -54,3 +55,6 @@ There are other ways that deep retrieval is better.
 Dense passage retrieval lets you find the answer to a question like “how was the monkey king born”.  But since we’re doing the lookup in an arbitrary vector space, we could train our question encoder to take input in any language: all that matters is that the resulting vector space lines up.  But then why does it even have to be text?  We can encode any object as a vector, so why not answer questions with an image?
 
 So, to recap, we got to dense passage retrieval because we didn’t want to put up with thousands of types defining our vocabulary, but we ended up with something that can do image retrieval instead.  So perhaps a picture encoding is worth a thousand words.
+
+\label{chapter:methods_generation}
+
