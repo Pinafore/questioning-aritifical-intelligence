@@ -46,9 +46,9 @@
 
 \setcitestyle{authoryear}
 
-\newcommand{\proposalpart}[1]{
+\newcommand{\proposalpart}[2]{
   \ifproposal
-  \subsection{#1}
+  % \textbf{Part #2: #1}
   \else
   \part{#1}
   \fi
@@ -65,7 +65,7 @@
   \label{ch:#2}
   \begin{quote}
     \input{chapters/blurbs/#2}
-  \end{quote}
+  \end{quote} 
   \input{chapters/#1-#2}
   \fi}
 
@@ -88,7 +88,7 @@
 \clearpage
 \ifproposal
 \input{chapters/005-proposal}
-\tableofcontents
+% \tableofcontents
   \chapter*{Chapter Synopses}
 
   A brief description of each of the proposed chapters.
@@ -99,7 +99,7 @@
 
 \chapterfile{010}{introduction}{Introduction: The Unanswered Questions}
 
-\proposalpart{Question Answering Before Computers}
+\proposalpart{Question Answering Before Computers}{1}
 
 \chapterfile{110}{history}{Question Answering: The Foundation and Savior of Civilization}
 
@@ -107,15 +107,13 @@
 \chapterfile{120}{turing}{The Turing Test: A Game Show Pitch that
   Defined Artificial Intelligence}
 
-\chapterfile{130}{ir}{The Cranfield Paradigm: How a University with an
-  Airstrip made Google Possible}
+\chapterfile{130}{ir}{The Cranfield Paradigm: How a University with an Airstrip made Google Possible}
 % Introduce tf-idf, nearest neighbor search
 
-\chapterfile{140}{manchester}{The Manchester Paradigm: The Art of Asking the
-  Perfect Question}
+\chapterfile{140}{manchester}{The Manchester Paradigm: The Art of Asking the Perfect Question}
 
 
-  \proposalpart{Question Answering Present}
+  \proposalpart{Question Answering Present}{2}
 
   \chapterfile{200}{watson}{Watson on Jeopardy!: \\ Unquestioned Answers from \abr{ibm}'s tour de force}
 
@@ -140,7 +138,7 @@
 
 % How to Write a Good Question
 
-\proposalpart{Question Answering Future}
+\proposalpart{Question Answering Future}{3}
 
 \chapterfile{300}{gameshow}{Fulfiling Turing's Gameshow}
 

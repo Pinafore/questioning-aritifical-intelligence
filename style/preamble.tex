@@ -86,8 +86,10 @@
 
 \newcommand{\invisiblechapter}[2]{%
   \stepcounter{chapter}%
-  \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
-  \label{ch:#2}
+  % Debugging on 12. Jan: removing these two lines seemed to fix problem, perhaps wrong argument is being used as label.
+
+  % \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
+  % \label{ch:#2}
   }
 
 \newcommand{\iid}{\abr{iid}}  

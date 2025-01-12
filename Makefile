@@ -17,4 +17,5 @@ main.aux: $(BIB) main.tex chapters/blurbs/qb.tex
 
 main.pdf: $(TEX) $(GFX) main.aux chapter_blurbs.json scripts/split_blurbs.py
 	pdflatex main
+	pdflatex main
 	cp main.pdf ../jbg-web/teaching/CMSC_848/textbook.pdf
