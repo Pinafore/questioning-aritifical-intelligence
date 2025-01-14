@@ -5,11 +5,18 @@
     },
     {
       "short": "turing",
-      "summary": "In the 1950s, Alan Turing proposed a parlor game that would come to define the artificial intelligence: could a wiley interrogator discern whom they were talking to just through posing clever questions.  The eponymous Turing Test is the most durable (but contentious) definition of what an intelligent computer is, and this chapter reviews how it shaped the development of artificial intelligence."
+      "summary": "In the 1950s, Alan Turing proposed a parlor game that would come to define the artificial intelligence: could a wiley interrogator discern whom they were talking to just through posing clever questions.  The eponymous Turing Test is the most durable (but contentious) definition of what an intelligent computer is, and this chapter reviews how it shaped the development of artificial intelligence.",
+      "sections": [
+        {"label": "legacy", "title": "Turing's Legacy", "summary": "Why Turing is widely considered the father of computer science for multiple reasons."},
+        {"label": "imitation", "title": "The Imitation Game", "summary": "A gay man in England---where homosexuality is criminalized---posits a games about the ability of someone to pass in different gender roles.  Why this is difficult lays the foundation for why computers still struggle to capture human nuance."},
+        {"label": "failures", "title": "No, the Turing Test has not been Solved", "summary": "While many have claimed to pass the Turing Test, it hasn't happened yet.  We review some notable claims of passing the Turing Test and why they fell short."},
+        {"label": "test", "title": "A Rigorous Test", "summary": "The ingredients that make a Turing Test legitimate"},
+        {"label": "agi", "title": "General Artificial Intelligence", "summary": "How the holy grail of AI is defined and how the Turing Test can measure it."}
+      ]
     },
     {
       "short": "history",
-      "summary": "Despite its central importance to \\abr{ai}, asking and answering questions is new---it stretches back into our collective unconcious. Riddles and trivia have persisted for millenia not just because they're entertaining.  Indeed, being able to ask and answer questions is close to godliness.  From the Sphynx to Gestumblindi, this chapter examines how myths from several cultures connect answering questions to forming identity, unlocking the secrets of the universe, and gaining intelligence.  And connecting this to nascent ``superhuman'' \\abr{ai}.  Previously published as \\citet{Rodriguez-21:paradigms}.  Corruption and nepotism have been the downfall of multiple civilizations, but the administration of carefully formed questions saved the United States and China from sucumbing to these destructive forces.  From the reforms of Wu Zetian to the Pendelton Act, this chapter examines how information and competence---measured by questions asked in an exam---created meritocracy and social mobility.  The legacy of these exams built an understanding of what it means to write a ``fair'' and ``useful'' question, and brought about massive social change, allowing egalitarian and professional governments to bring order to continent-spanning civilizations.",
+      "summary": "Despite its central importance to \\abr{ai}, asking and answering questions is not new---it stretches back into our collective unconcious. Riddles and trivia have persisted for millenia not just because they're entertaining.  Indeed, being able to ask and answer questions is close to godliness.  From the Sphynx to Gestumblindi, this chapter examines how myths from several cultures connect answering questions to forming identity, unlocking the secrets of the universe, and gaining intelligence.  And connecting this to nascent ``superhuman'' \\abr{ai}.  Later, beyond proving worthiness in myth, asking questions helped combat corruption and nepotism, the downfall of multiple civilizations.  However, the administration of carefully formed questions saved the China and the United States via the reforms of Wu Zetian to the Pendelton Act.  Exams created meritocracy and social mobility while also building an understanding of what it means to write a ``fair'' and ``useful'' question.",
       "sections": [
         {"label": "epic", "title": "Epic Riddles"},
         {"label": "civil-service", "title": "How Exams Saved China and the US"}
@@ -52,13 +59,13 @@
         "summary": "How do you ask a question: is it text, a picture, or a conversation?  This chapter reviews the different forms question answering can take and what complexities that can introduce.",
         "sections": [
           {"label": "task", "title": "Task vs. Format"},
-          {"label": "question", "title": "", "summary": ""},
-          {"label": "evidence", "title": "", "summary": ""},
-          {"label": "conversation", "title": "", "summary": ""},
-          {"label": "domain", "title": "", "summary": ""},
-          {"label": "language", "title": "", "summary": ""},
-          {"label": "skills", "title": "", "summary": ""},                    
-          {"label": "taxonomy", "title": "", "summary": ""}
+          {"label": "question", "title": "What is a Question?", "summary": ""},
+          {"label": "evidence", "title": "Where do you get an Answer?", "summary": ""},
+          {"label": "conversation", "title": "What did you Mean?", "summary": ""},
+          {"label": "domain", "title": "A Picture is worth a Thousand Questions", "summary": ""},
+          {"label": "language", "title": "Questions Beyond English", "summary": ""},
+          {"label": "skills", "title": "The Skills Needed to Answer Questions", "summary": ""},                    
+          {"label": "taxonomy", "title": "A Taxonomy of Question Answering", "summary": ""}
         ]
       },
       {
@@ -67,6 +74,7 @@
         "sections": [
           {"label": "nq", "title": "Natural Questions Five Years Later", "summary": ""},
           {"label": "iid", "title": "Should QA be IID?", "summary": ""},
+          {"label": "badq", "title": "How questions go Wrong", "summary": ""},
           {"label": "crowdsourcing", "title": "Constructed Datasets from Crowdsourcing", "summary": ""},
           {"label": "generating", "title": "Generating Questions", "summary": ""},
           {"label": "adversarial", "title": "", "summary": "If existing datasets and game show appearances aren't enough to tell whether humans or computers are better at answering questions, what can we do?  While there is an argument for focusing on natural data, modern language models are changing not just what is possible computationally but changing the language itself.  Thus, we need to select examples specifically to challenge computers. These examples are called \\emph{adversarial examples}, and this chapter presents how to gather them and how they can reveal the strengths and weaknesses of computer question answering."}
@@ -80,7 +88,7 @@
           {"label": "mr", "title": "Johnny 5 Can't Read", "summary": "However, putting information in a database is difficult and time-consuming\\dots not all information is in a database (indeed, some information defies strict database schemas).  Thus, we need to teach computers how to read.  This chapter reviews the process of ``machine reading'', where computers find information in a large text corpus and then extracts the answer from it."},
           {"label": "deep-retrieval", "title": "A Vector in a Haystack", "summary": "As deep learning became practical, the field has moved from representing text with discrete words to continuous vectors.  This is also the case for question answering.  This chapter reviews how these representations can help us find relevant answers to questions."},
           {"label": "generation", "title": "We Couldn't Find an Answer, so we had to Generate One", "summary": "The deep learning revolution not just helps us find answers but to generate them.  This chapter talks about the promise and peril of these approaches: how we can synthesize much richer information, make stuff up, encourage these agents to align to our wishes, and how it's hard to tell if an answer is any good."},
-          {"label": "cooperative", "title": "", "summary": "Humans and Computers Working Together can Answer Questions Better"} 
+          {"label": "cooperative", "title": "Cooperative QA", "summary": "Humans and Computers Working Together can Answer Questions Better"} 
         ]
       },
       {
