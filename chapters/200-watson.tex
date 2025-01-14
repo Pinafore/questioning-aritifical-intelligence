@@ -177,7 +177,7 @@ Becomes the lookup
 %
 Some of these can be looked up directly in datasets, but \textsc{start}
 further builds on the systems like \textsc{lunar} and \textsc{baseball}
-(Chapter~\ref{ch:classic}).
+(Chapter~\ref{ch:history}).
 %
 While those systems \textsc{lunar} and
 \textsc{baseball} also need to turn the raw text of questions into a structured
@@ -208,7 +208,7 @@ another language.
 \abr{qasm}'s approach is to explicitly ``undo'' the process to find the
 correct response given an input clue.
 
-In Chapter~\ref{ch:leaderboards}, we'll talk about the cheating scandal
+In Chapter~\ref{sec:leaderboards:cheat}, we'll talk about the cheating scandal
 around the American game show \textit{21}, where Charles van Doren got
 the answers in advance.
 %
@@ -242,9 +242,9 @@ original question.
 %
 Later on, when we talk about dense passage retrieval, those systems are doing
 something similar, except they’re generating the query in a continuous vector
-space (Chapter~\ref{ch:methods_deep_retrieval}).
+space (Chapter~\ref{sec:methods:deep-retrieval}).
 %
-Doing it with real words like QASM is more interpretable: a human could
+Doing it with real words like \abr{qasm} is more interpretable: a human could
 understand what’s going on, while a vector query is inscrutable it seems to
 work better.
 
@@ -854,7 +854,7 @@ These are hints about what kind of response is being sought.
 %
 And lest you think this is an artifice of the skilled writers of \jeopardy{},
 this also appears in more ``natural'' questions like those people ask Google
-(Chapter~\ref{ch:datasets_found}).
+(Chapter~\ref{sec:datasets:nq}).
 
 And part of what made Watson a good \jeopardy{} Player is that it would learn
 as it explored the category.
@@ -927,7 +927,7 @@ competition would take place on normal, written questions.
 %
 In the media coverage of the competition, this focused on avoiding
 video and picture daily doubles (fairly reasonable, but we'll discuss
-how multimedia questions might be more fun in Chapter~\ref{sec:formats:multimodal}).
+how multimedia questions might be more fun in Chapter~\ref{sec:formats:domain}).
 %
 However, this causes two problems: the questions are too easy and do
 not necessarily challenge computers.
@@ -968,7 +968,7 @@ difficult\footnote{And it the difficulty doesn't just ratchet in one
   All of these feature questions written with care to be tuned to abilities of
   the expected players.  \abr{ibm} did not want the computer to be targeted,
   lest the questions be adversarial against the computer.
-  Chapter~\ref{ch:datasets_adversarial} discusses what this would look like if we
+  Chapter~\ref{sec:datasets:adversarial} discusses what this would look like if we
   specifically \emph{wanted} that to happen.} clues~\citep{harris-06}.
 %
 Nonetheless, this is the battlefield where Watson won: ``normal''
@@ -1062,7 +1062,7 @@ have seen a reused clue, you should not praise Watson for finding
 near-repeat questions.
 %
 And it's not just trivia games: Google's dataset of questions (which
-we'll talk about in more Chapter~\ref{ch:datasets_found}) have
+we'll talk about in more Chapter~\ref{sec:datasets:nq}) have
 many identical questions~\citep{lewis-21}, which makes it an imperfect yardstick.
 %
 Moreover, Watson can also store the entirety of Wikipedia, easily
@@ -1095,7 +1095,7 @@ Unlike for human contestants, the ``difficulty'' of \jeopardy{}
 questions for a computer has no relationship to the nominal value.
 %
 We talk about how Facebook/Meta dealt with this problem in
-Chapter~\ref{ch:datasets_adversarial}: tell the authors what's hard for a computer.
+Chapter~\ref{sec:datasets:adversarial}: tell the authors what's hard for a computer.
 
 \section{Two Nice Guys, One Computer with no Shame}
 \label{sec:watson:strategy}
@@ -1211,7 +1211,7 @@ Since then, we've seen claims that computers are smoking lawyers in taking the
 %
 \watson{} was just the beginning of the story, as since then we've seen both a
 tremendous improvement in the technologies that drive \abr{ai} (we review
-these advances in Chapter~\ref{ch:methods_generation}) and a greater
+these advances in Chapter~\ref{sec:methods:generation}) and a greater
 interest in measuring how smart these models are.
 %
 \watson{} was just the beginning of the story, in both respects.
@@ -1220,4 +1220,4 @@ interest in measuring how smart these models are.
 In the next chapters, we go beyond the methods that \watson{} used to the
 modern \abr{qa} has \emph{actually} reached possible parity with humans and
 how to actually measure how far \emph{ai} has come since Ken Jennings lost to
-\watson (Chapter~\ref{ch:leaderboards}).
+\watson{}\ (Chapter~\ref{ch:leaderboards}).

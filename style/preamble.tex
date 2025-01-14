@@ -77,20 +77,21 @@
             {\@cite@ofmt{\csname b@\@citeb\endcsname}}}}{#1}}
 \makeatother
 
-\newcommand{\invisiblesection}[2]{%
-  \phantomsection%
-  \stepcounter{section}%
-  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#2}%
-  \label{sec:#1}
+
+\newcommand{\invisiblesection}[2]{
+	\refstepcounter{section}%
+	  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+	  \sectionmark{#1}
+	  \protected@write\@auxout{}{%
+	 \string\newlabel{#2}{%
+	 {\@currentlabel}%
+	 {\thepage}%
+	 {#1}%
+	 {\@currentHref}{}%
+	}%
+	}%
 }
 
-\newcommand{\invisiblechapter}[2]{%
-  \stepcounter{chapter}%
-  % Debugging on 12. Jan: removing these two lines seemed to fix problem, perhaps wrong argument is being used as label.
-
-  % \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
-  % \label{ch:#2}
-  }
 
 \newcommand{\iid}{\abr{iid}}  
 \newcommand{\feat}[1]{{\small \texttt{#1}}}
@@ -104,27 +105,27 @@
          {\sffamily {\bfseries  {\scshape  #1}}}}}}\\
     \colorbox{blue}{\textcolor{white}{\parbox{0.6\linewidth}{{\sffamily #2}}}}\end{center}}
 \newcommand{\topic}[1]{\underline{#1}}
-\newcommand{\gem}[1]{\mbox{\textsc{gem}}}
+\newcommand{\gem}[1]{\mbox{\scshape{gem}}}
 \newcommand{\abr}[1]{{\scshape #1}}
-\newcommand{\camelabr}[2]{{\small #1}{\textsc{#2}}}
-\newcommand{\abrcamel}[2]{{\textsc #1}{\small{#2}}}
+\newcommand{\camelabr}[2]{{\small #1}{\scshape{#2}}}
+\newcommand{\abrcamel}[2]{{\scshape #1}{\small{#2}}}
 \newcommand{\grammar}[1]{{\color{red} #1}}
 \newcommand{\explain}[2]{\underbrace{#2}_{\mbox{\footnotesize{#1}}}}
 \newcommand{\dir}[1]{\mbox{Dir}(#1)}
 \newcommand{\bet}[1]{\mbox{Beta}(#1)}
-\newcommand{\py}[1]{\mbox{\textsc{py}}(#1)}
-\newcommand{\td}[2]{\mbox{\textsc{TreeDist}}_{#1} \left( #2 \right)}
-\newcommand{\yield}[1]{\mbox{\textsc{Yield}} \left( #1 \right)}
+\newcommand{\py}[1]{\mbox{\scshape{py}}(#1)}
+\newcommand{\td}[2]{\mbox{\scshape{TreeDist}}_{#1} \left( #2 \right)}
+\newcommand{\yield}[1]{\mbox{\scshape{Yield}} \left( #1 \right)}
 \newcommand{\mult}[1]{\mbox{Mult}( #1)}
-\newcommand{\wn}{\textsc{WordNet}}
-\newcommand{\twentynews}{\textsc{20news}}
+\newcommand{\wn}{\scshape{WordNet}}
+\newcommand{\twentynews}{\scshape{20news}}
 \newcommand{\g}{\, | \,}
 \newcommand{\Gam}[1]{\Gamma \left( \textstyle #1 \right)}
 \newcommand{\LG}[1]{\log \Gamma \left( \textstyle #1 \right)}
 \newcommand{\Pois}[1]{\mbox{Poisson}(#1)}
 \newcommand{\pcfg}[3]{#1_{#2 \rightarrow #3}}
 \newcommand{\grule}[2]{#1 \rightarrow #2}
-\newcommand{\kl}[2]{D_{\mbox{\textsc{KL}}} \left( #1 \,||\, #2 \right)}
+\newcommand{\kl}[2]{D_{\mbox{\scshape{KL}}} \left( #1 \,||\, #2 \right)}
 
 \newcommand{\digambig}[1]{\Psi \left( #1 \right) }
 \newcommand{\digam}[1]{\Psi \left( \textstyle #1 \right) }
@@ -210,7 +211,7 @@
 \newcommand{\mycomment}[1]{\pinaforecomment{pink}{Michelle}{#1}}
 \newcommand{\nrcomment}[1]{\pinaforecomment{red}{Naveen}{#1}}
 \newcommand{\ahcomment}[1]{\pinaforecomment{yellow}{Hoyle}{#1}}
-\newcommand{\ahintext}[1]{{\small\textcolor{red}{[#1 -- \textsc{hoyle}]}}}
+\newcommand{\ahintext}[1]{{\small\textcolor{red}{[#1 -- \scshape{hoyle}]}}}
 \newcommand{\mscomment}[1]{\pinaforecomment{lightblue}{Matt}{#1}}
 
 \newcommand{\smalltt}[1]{ {\tt \small #1 }}
@@ -239,16 +240,16 @@
 \newcommand{\newsqa}{\camelabr{News}{qa}}
 \newcommand{\trecqa}{\camelabr{Trec}{qa}}
 \newcommand{\qblink}{\abrcamel{qb}{Link}}
-\newcommand{\qanta}{\textsc{qanta}}
-\newcommand{\muse}{\textsc{muse}}
-\newcommand{\squad}{\textsc{sq}{\small u}\textsc{ad}}
-\newcommand{\xlnet}{\textsc{x}{\small l}\textsc{n}{\small et}}
+\newcommand{\qanta}{\scshape{qanta}}
+\newcommand{\muse}{\scshape{muse}}
+\newcommand{\squad}{\scshape{sq}{\small u}\scshape{ad}}
+\newcommand{\xlnet}{\scshape{x}{\small l}\scshape{n}{\small et}}
 \newcommand{\nq}[0]{\abr{nq}}
-\newcommand{\conll}{\textsc{c}{\small o}\textsc{nll}}
+\newcommand{\conll}{\scshape{c}{\small o}\scshape{nll}}
 \newcommand{\hotpot}{\abr{h}{\small otpot}\abr{qa}}
 \newcommand{\fever}{\abr{fever}}
-\newcommand{\quac}{\textsc{q}{\small u}\textsc{ac}}
-\newcommand{\elmo}{\textsc{elm}{\small o}}
+\newcommand{\quac}{\scshape{q}{\small u}\scshape{ac}}
+\newcommand{\elmo}{\scshape{elm}{\small o}}
 \newcommand{\fone}{$F_1$}
 
 % \jeopardyf{} is for end of sentence uses

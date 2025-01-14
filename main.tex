@@ -11,6 +11,7 @@
 \newif\ifcomment\commentfalse
 \newif\ifproposal\proposaltrue
 \input{style/preamble}
+\usepackage{libertine}
 
 %%
 % If they're installed, use Bergamo and Chantilly from www.fontsite.com.
@@ -22,6 +23,7 @@
 
 \usepackage{booktabs}
 \usepackage{graphicx}
+
 
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{figures/}}
@@ -57,16 +59,21 @@
 % Number Label Title
 \newcommand{\chapterfile}[3]{
   \ifproposal
-     \invisiblechapter{#2}{#3}
-  \paragraph{#3}
-  \input{chapters/blurbs/#2}
+      \begingroup
+      \renewcommand{\cleardoublepage}{}
+      \renewcommand{\clearpage}{}
+      \chapter{#3}\label{chap:#2}
+      \endgroup
+      \vspace{-0.5cm}
+      \input{chapters/blurbs/#2}
+      \vspace{-2.5cm}
   \else
-  \chapter{#3}
-  \label{ch:#2}
-  \begin{quote}
-    \input{chapters/blurbs/#2}
-  \end{quote} 
-  \input{chapters/#1-#2}
+      \chapter{#3}
+      \label{ch:#2}
+      \begin{quote}
+        \input{chapters/blurbs/#2}
+      \end{quote} 
+      \input{chapters/#1-#2}
   \fi}
 
 \makeindex
@@ -89,8 +96,17 @@
 \ifproposal
 \input{chapters/005-proposal}
 % \tableofcontents
-  \chapter*{Chapter Synopses}
+  \chapter{Chapter Synopses}
 
+  \setcounter{chapter}{0}
+
+  \titleformat{\chapter}[display]
+  {\normalfont%
+      \normalsize % %change this size to your needs for the first line
+      \bfseries}{}{20pt}{%
+      \normalsize \thechapter: %change this size to your needs for the second line
+      }
+  
   A brief description of each of the proposed chapters.
   \else
   \input{chapters/000-frontmatter}
@@ -157,8 +173,14 @@
 
 \ifproposal
 
-  
-  \chapter*{Watson on Jeopardy!: \\ Unquestioned Answers from \abr{ibm}'s tour
+\titleformat{\chapter}[display]
+{\normalfont%
+    \huge% %change this size to your needs for the first line
+    \bfseries}{\chaptertitlename\ \thechapter}{20pt}{%
+    \Huge %change this size to your needs for the second line
+    }
+  \setcounter{chapter}{5}
+  \chapter{Watson on Jeopardy!: \\ Unquestioned Answers from \abr{ibm}'s tour
     de force \\ (Sample Chapter)}
   
   \begin{quote}
