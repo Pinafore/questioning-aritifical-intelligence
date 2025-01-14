@@ -82,14 +82,15 @@
 	\refstepcounter{section}%
 	  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
 	  \sectionmark{#1}
-	  \protected@write\@auxout{}{%
-	 \string\newlabel{#2}{%
-	 {\@currentlabel}%
-	 {\thepage}%
-	 {#1}%
-	 {\@currentHref}{}%
-	}%
-	}%
+      \label{#2}
+	  %\protected@write\@auxout{}{%
+	 %\string\newlabel{#2}{%
+	 %{\@currentlabel}%
+	 %{\thepage}%
+	 %{#1}%
+	 %{\@currentHref}{}%
+	% }%
+	%}%
 }
 
 
