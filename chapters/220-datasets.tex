@@ -1,6 +1,6 @@
 \label{chapter:nq}
 
-\section{The Story of Natural Questions}
+\section{What Question Datasets are There?}
 
 My goal with this video is to give an overview of the kinds of question answering datasets that are out there, contrast them, and give my opinion about which is the best one.
 
@@ -14,15 +14,21 @@ Okay, back to the datasets.  Rather than just listing them off, I’m going to t
 
 In another video, there’s another important dimension: who’s writing the question and for what purpose, but I think that’s so important that I want to focus on it by itself.  So if you’re interested in that, check out the Cranfield vs. Manchester discussion linked in the description. 
 
+\section{TREC QA}
+
 Let’s start with the most simple example of a question answering dataset: you get a question as input and you need to produce a short answer.  This is often called factoid QA.  The prototypical example of this is TREC QA.  This is a super old school dataset, but important to remember, as it set the form of everything that came after.
 
 The actual dataset is tiny: only a couple hundred questions.  And the official evaluation process seems impossible by today’s standards: you had professional annotators judge whether a system provided the right answer.  While every other dataset we’ll talk about has more automatic evaluations, this is probably the best way to do it, at least for some trickier answers.
 
 This is our first QA dataset, so let’s put this onto the board here.  Let’s now go into the modern age!
 
+\section{CNN / Daily Mail}
+
 One of the first machine reading data sets was the CNN / Daily Mail data set from Karl Moritz Hermann and company.  Here you have a bunch of news articles.  This dataset started the trend of conditioning a question on a document: in this case a news article.  They asked you to answer questions about those news articles.  For example, “who reached the Cricket World Cup”.  Somewhere in the document was the answer “New Zealand” but you need to find that.
 
 One thing that is controversial is that you didn’t actually find the string “New Zealand” but rather an anonymized symbol.  This meant that you couldn’t just have a language model memorize all the answers (which is even more of a problem now that it was back then).  However, this had another drawback!  Because there weren’t that many symbols, the task was essentially a multiple-choice question: you identified the entities in the paragraph and then you picked which one was correct.  Despite this problem and and that introduced a little bit of noise to the problem, you can see the influence of this question answering dataset on the rest of the field, particularly on “the next big thing”: SQuAD.
+
+\section{SQuAD}
 
 The Stanford question answering dataset has become the gold standard.  While it might not be the best dataset, it’s the most popular.  If you don't report results on SQuAD, you need to explain why.  This 2016 dataset set helped popularized the modern upsurge of question answering.  These questions use paragraphs from Wikipedia ask crowd workers to write questions about that paragraph.  The questions are intended to have an answer that is a span within that Wikipedia paragraph.  One way of thinking about this is that a span is a contiguous span of characters: you highlight that span to give the answer.
 
@@ -34,11 +40,21 @@ One thing that really grinds my gears about SQuAD is that the SQuAD dataset prov
 
 So putting this on the chart, I’m going to put SQuAD a little bit above CNN/DailyMail.  They’re both implicitly multiple choice, but there are more spans than entities, so answering SQuAD questions is a little more difficult.
 
+\section{Search Engines: The Source of Natural Questions}
+
 One criticism of SQuAD questions is that their questions are unnatural.  They’re written by crowdworkers paid to write artificial questions.  Two datasets that use “real” questions are MS Marco and Natural Questions.  They’re both somewhat similar, so I’ll mostly talk about Natural Questions, which is newer as a stand-in for both.  These questions are harder than SQuAD and Trec questions!  That’s because the questions come from people using search engines.  These people don’t always know what they’re asking about (that’s why their using a search engine after all), so sometimes they have false assumptions, ambiguities, and other problems.  
 
-Another facet of these datasets that make the questions harder is that search engines have trained people over years to answer questions themselves by finding webpages.  Nobody gets good answers when they type in a question like “what is the last capital in Western Europe to be invaded by a foreign army” so if you type that into Google you likely will not get an answer to that question directly.  Instead, you’ll piece together multiple queries to answer your question.
+Another facet of these datasets that make the questions harder is that
+search engines have trained people over years to answer questions
+themselves by finding webpages.  Nobody gets good answers when they
+type in a question like “what is the last capital in Western Europe to
+be invaded by a foreign army” so if you type that into Google you
+likely will not get an answer to that question directly.  Instead,
+you’ll piece together multiple queries to answer your question.
 
 In other words, the failure of search engines to answer questions over the last couple of decades limits the usefulness of the kinds of questions that you can get from search engines today.  
+
+
 
 So how does Natural Questions find the answers to these questions?  They find Wikipedia given the question as a search string: an information retrieval problem!  They then have annotators validate that this is a good search result and then have the annotators highlight the answer string.  Now this isn’t perfect.  
 
