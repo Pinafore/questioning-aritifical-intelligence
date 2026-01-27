@@ -20,7 +20,7 @@ if __name__ == "__main__":
         blurbs = json.loads(raw)
 
     for blurb in blurbs:
-        short = blurb["short"]
+        short = blurb["label"]
         with open("chapters/blurbs/%s.tex" % short, 'w') as outfile:
             text = blurb["summary"]
             sections = blurb.get("sections", [])

@@ -2,11 +2,11 @@
 
 With many tasks in computer science, asking the question ``where did this task come from'' has a simple answer usually in the form of an acronym . 
 %
-Character recognition was sparked by the \abr{mnist}\footnote{Throughout, I will do my best to cite the origin of ideas, but \abr{mnist}---like other early works in \abr{ai}---is hard to pin down to a single citation.  The \abr{ocr} group at the United States National Institutes of Standards and Technology (\abr{nist}) was charged with helping the post office sort letters automatically by ``reading'' envelopes, so they organized a conference to try to get people to give it their best shot and released data to let people train models.  One of the approaches from LeCunn et al. years later defined what people mean when they actually say \abr{mnist}, which then became a part of countless tutorials for people learning machine learning.} dataset~\cite{wilkinson-92,lecun-98}; entailment was sparked by \abr{snli}~\cite{maccartney-08,}; sentiment classification was defined by \citet{pang-08}.
+Character recognition was sparked by the \abr{mnist}\footnote{Throughout, I will do my best to cite the origin of ideas, but \abr{mnist}---like other early works in \abr{ai}---is hard to pin down to a single citation.  The \abr{ocr} group at the United States National Institutes of Standards and Technology (\abr{nist}) was charged with helping the post office sort letters automatically by ``reading'' envelopes, so they organized a conference to try to get people to give it their best shot and released data to let people train models.  One of the approaches from LeCunn et al. years later defined what people mean when they actually say \abr{mnist}, which then became a part of countless tutorials for people learning machine learning.} dataset~\citep{wilkinson-92,lecun-98}; entailment was sparked by \abr{snli}~\citep{maccartney-08,bowman-etal-2015-large}; sentiment classification was defined by \citet{pang-08}.
 
 And while there are particular \emph{flavors} of question answering that habe been defined to make life easier or more discriminative for computers, the basic task of ``question in'', ``answer out'' is natural to any inquisitive three year old.
 %
-Of course, question answering is not the only ``natural'' task like this: translation likewise is recognizable to any stranger in a strange land trying to cope with an unfamiliar language: dozens of books have been written on that subject, my favorite is \textit{Le Ton Beau de Marot}~\cite{hofstadter-97}.
+Of course, question answering is not the only ``natural'' task like this: translation likewise is recognizable to any stranger in a strange land trying to cope with an unfamiliar language: dozens of books have been written on that subject, my favorite is \textit{Le Ton Beau de Marot}~\citep{hofstadter-97}.
 
 
 Question answering's roots likewise run deep.  In this chapter, I want to argue that question answering is not just a useful task but one that is woven deep into our Jungian subconsious.
@@ -18,7 +18,7 @@ And beyond these ancient components, it has historically created a historical ba
 \section{The Sphynx}
 \label{sec:civilization:sphynx}
 
-In the Greek of \textit{\OE{}dipus}~\cite{sophocles-59}, the Sphynx asked everyone who entered the city a riddle.  Here’s PDQ Bach’s interpretation of the riddle~\cite{schickele-90}:\footnote{I use this fairly unserious version of the riddle because it is fun and \citet{renger-13} reports hexameter versions, and the origin (Pindar fragments are the first mention) is unclear.  So if one has to arbitrarily pick, a version localized into American vernacular is perhaps the most accessible.}
+In the Greek of \textit{\OE{}dipus}~\citep{sophocles-59}, the Sphynx asked everyone who entered the city a riddle.  Here’s PDQ Bach’s interpretation of the riddle~\citep{schickele-90}:\footnote{I use this fairly unserious version of the riddle because it is fun and \citet{renger-13} reports hexameter versions, and the origin (Pindar fragments are the first mention) is unclear.  So if one has to arbitrarily pick, a version localized into American vernacular is perhaps the most accessible.}
 \begin{quote}
 What starts out on four legs then goes round on two
 Then finishes on three before it’s through
@@ -29,7 +29,7 @@ Well a baby then a man, that’s plain,
 then finally an old geezer on a cane
 \end{quote}
 
-Now I won’t spoil the whole story, but by answering the question correctly, Oedipus revealed that he was smarter than the average bear and also unlocked secrets from his past.  In a commencement address to Whitman college, Dana Burgess~\citet{burgess-13} explained the difference between this and Google’s Natural Questions (covered in detail in Chapter~\ref{ch:datasets_found}) and how that relates to the mission of professors (like me):
+Now I won’t spoil the whole story, but by answering the question correctly, Oedipus revealed that he was smarter than the average bear and also unlocked secrets from his past.  In a commencement address to Whitman college, Dana Burgess~\citet{burgess-13} explained the difference between this and Google’s Natural Questions (covered in detail in Chapter~\ref{ch:datasets}) and how that relates to the mission of professors (like me):
 \begin{quote}
 Nobody told Oedipus who he was; he figured that out for himself.  ... You can do a Google search to find out the capital of Arkansas (Little Rock?) but you can’t do a Google search to find out who you are, what you’re good at, what makes you happy, what matters for your life.  Information transferal isn’t any help with that stuff.
 \end{quote}
@@ -40,7 +40,7 @@ When folks say that a college professor is like a sphinx, they don’t usually m
 
 This aspect of question answering also brings us to another Greek
 connection to asking questions: teaching through the Socratic
-method~\cite{trepanier-17}.
+method~\citep{trepanier-17}.
 %
 Through asking the right questions, a teacher guides the answerer to
 understanding.
@@ -57,7 +57,7 @@ Because I’m a professor, I am somewhat biased in my appreciation of this use o
 %
 If you haven’t heard of this before, you might have experienced it (especially if you’re in my classes).
 %
-Let’s hear how John Houseman explain what it is in the 1971 film The Paper Chase~\cite{paperchase1973}:
+Let’s hear how John Houseman explain what it is in the 1971 film The Paper Chase~\citep{paperchase1973}:
 \begin{quote}
 We use the Socratic Method here.  I call on you, ask you a question\dots and you answer it.  Why don't I just give you a lecture?  Because through my questions, you learn to teach yourselves.
 
@@ -91,7 +91,7 @@ What said \'Odin \\
 in the ear of Baldur, \\
 before he was borne to the fire?
 \end{quote}
-We talk in this book frequently about bad questions (Chapter~\ref{sec:nq:bad}), but this a particularly bad question.  Not only is it something that only Odin knows, it probably has not happened yet (depending on what you believe about the circularity of time), and when it does happen it will end the world by bringing about Ragnar\"ok.  
+We talk in this book frequently about bad questions (Chapter~\ref{ch:bad}), but this a particularly bad question.  Not only is it something that only Odin knows, it probably has not happened yet (depending on what you believe about the circularity of time), and when it does happen it will end the world by bringing about Ragnar\"ok.  
 
 % TODO(jbg): add forward pointers
 
@@ -107,7 +107,7 @@ My goal here is not to say that we should not ask probing questions; subsequent 
 %
 Rather, the lesson of Gestumblindi is that the are of making a riddle is prized.
 %
-Just as some Christians argued that ``cleanliness is next to godliness''~\citep{wesley-1872}, in the Norse tradition, questioning is synonymous with being a God, which will return when we talk about the apocalyptic visions of \abr{ai} (Chapter~\cite{ch:sci_fi}).
+Just as some Christians argued that ``cleanliness is next to godliness''~\citep{wesley-1872}, in the Norse tradition, questioning is synonymous with being a God, which will return when we talk about the apocalyptic visions of \abr{ai} (Chapter~\citep{ch:sci_fi}).
 
 % - Gestumblindi: the art of making a riddle is prized, and it is the
 % Gods who are best at the task
@@ -124,7 +124,7 @@ As governments became larger and had to rule an entire continent, countries had 
 %
 Many countries did this, including the US, whose Pendelton act ended an era of political patronage~\citep{johnson-07}. 
 
-But I’d rather talk about the granddaddy of civil service exams, k\={e}j\v{u}, which for 1300 years determined who became part of the intelligentsia of Imperial China~\cite{qian-82}.
+But I’d rather talk about the granddaddy of civil service exams, k\={e}j\v{u}, which for 1300 years determined who became part of the intelligentsia of Imperial China~\citep{qian-82}.
 %
 It encouraged social mobility by getting smart people good jobs and it encouraged good governance by making sure that important jobs were done by smart people.
 %
@@ -132,15 +132,15 @@ And this is important when you have a diverse, massive, empire that is run by a 
 
 This system worked well for so long because it was built on a foundation of fairness.  The organizers thought about the potential for bias: the exams were transcribed so that bad handwriting wouldn’t be judged against an applicant, children of current members of the imperial court had to submit their exams in their home province, etc.  
 
-Now, it wasn’t perfect, Most notably its quotas led to imbalances between regions.  But it was important enough that recent scholarship has suggested that its abolition after the Russo-Japanese war and a turn to ``Western-style'' education on the Prussian model that turns out good soldiers, helped hasten the end of the Q\-ing dynasty~\cite{bai-16}.
+Now, it wasn’t perfect, Most notably its quotas led to imbalances between regions.  But it was important enough that recent scholarship has suggested that its abolition after the Russo-Japanese war and a turn to ``Western-style'' education on the Prussian model that turns out good soldiers, helped hasten the end of the Q\-ing dynasty~\citep{bai-16}.
 
 As  \citet{chu-15} argues, it’s not just that you have a test to make sure that the smartest people are doing important jobs in society.  Part of the process is also to explain why people got the questions wrong!  This ensures that people trust how the questions are being graded.  If it’s just a black box, it is not an improvement on the capricious systems of patronage that it’s supposed to replace.  As evidence of this, during the Dà Míng dynasty, there was furor over the punctuation of graded exams.
 
 So why am I, a computer science professor, talking all of this nonsense about history?  We use questions to test the intelligence of both humans and machines.  I talk about the Turing Test (Chapter~\ref{ch:turing}), the classic test of computer intelligence, and modern leaderboards (Chapter~\ref{ch:leaderboards}), but in testing computer intelligence we shouldn’t forget about the lessons we’ve learned about human intelligence.
 
-One of those lessons that I think that we’ve forgotten is that questions are not just an evaluation but also for instruction: in the lingo of artificial intelligence, they’re training data (Chapters~\ref{ch:datasets_found} and~\ref{ch:datasets_constructed}) .  And because these training data build intelligence, they should be as high quality as possible so that the \abr{ai} that results is as high quality as possible.
+One of those lessons that I think that we’ve forgotten is that questions are not just an evaluation but also for instruction: in the lingo of artificial intelligence, they’re training data (Chapter~\ref{ch:datasets}) .  And because these training data build intelligence, they should be as high quality as possible so that the \abr{ai} that results is as high quality as possible.
 
-But even if you just take question answering as an evaluation for how smart an \abr{ai} is, society should be able to trust those evaluations.  Just as the civil service exams made people trust their interactions with the government, as \abr{ai} becomes more tightly integrated into our economy and our society, our vetting of AI will become more important (Chapter~\ref{ch:future}).
+But even if you just take question answering as an evaluation for how smart an \abr{ai} is, society should be able to trust those evaluations.  Just as the civil service exams made people trust their interactions with the government, as \abr{ai} becomes more tightly integrated into our economy and our society, our vetting of AI will become more important (Chapter~\ref{ch:scifi}).
 
 Question answering is just one of many ways to secure trust, but it’s analogous to how to ensure lawyers, doctors, and pilots are qualified for their jobs.  So these tests should be unbiased, reliable, and the feedback from the tests should be transparent and understandable.
 
