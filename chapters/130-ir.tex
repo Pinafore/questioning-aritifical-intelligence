@@ -1,24 +1,85 @@
 
 \label{chapter:cranfield}
 
+Often, when I talk about search engines and how to build them, these
+ubiquitous portals to the Internet—whether you’re using Bing, Yahoo!,
+Baidu, or Ask Jeeves—seem like a fundamental law of science.
+%
+With the onslaught of \abr{ai}, they almost seem antiquated\dots my
+parents use Google, but I use Grok.
+%
+But it wasn’t always like that: there was a time before search
+engines, and although there’s a certain charm to card catalogs, that’s
+not an effective way to find information.
+%
+But that was essentially the world before search engines: you had to
+find what you wanted from a list or index.
 
+My goal in this video is to tell the story of the Cranfield paradigm
+and how it made the twentieth century Internet possible.
+%
+Most of this is drawn from the article ``The Evolution of Cranfield''
+by~\citet{voorhees-19}, which I encourage you to read something with
+more detail and more references, more focused on information
+retrieval.
 
+The story begins in 1967 with Cyril Cleverdon at Cranfield University
+in England: which has an airport right on campus.\footnote{Here
+at the University of Maryland we have to walk a whole fifteen minutes
+to get to the oldest continuously operated airport in the world.}
+%
+The University was the heart of British aviation research.
+%
+Cyril Cleverdon was in charge of their library there.  And he was big
+into computers.  He wanted to see if he could measure how good an
+index was.
 
-Often, when I talk about search engines and how to build them, these ubiquitous portals to the Internet—whether you’re using Bing, Yahoo!, Baidu, or Ask Jeeves—seem like a fundamental law of science.  But it wasn’t always like that: there was a time before search engines, and although there’s a certain charm to card catalogs, that’s not a way to find information.
+\begin{figure}
+  \includegraphics[width=\textwidth]{figures/external/Cranfield_Airport_by_Thomas_Nugent}
 
-My goal in this video is to tell the story of the Cranfield paradigm and how it made the twentieth century Internet possible.  Most of this is drawn from the article “The Evolution of Cranfield” by Ellen Voorhees, which I encourage you to read something with more detail, more references, and fewer errors.
+  \caption{Photo of Cranfield University (and its adjacent airstrip).
+    Photo by Thomas Nugent [Creative Commons Attribution-ShareAlike
+    2.0 license].}
+\end{figure}
 
-The story begins in 1967 with Cyril Cleverdon at Cranfield University in England: which has an airport right on campus.  Pretty cool!  Here at the University of Maryland we have to walk a whole fifteen minutes to get to the oldest continuously operated airport in the world.
+Now, when I say ``index'', if you're over 40, you might think of this
+sort of thing in the back of a book~\citep{ritchie88}:
+\begin{quote}
+  \begin{flushright}
+    \flushright INDEX 269
+    \end{flushright}
 
-Cyril Cleverdon was in charge of their library there.  And he was big into computers.  He wanted to see if he could measure how good an index was.  
+  
+  \texttt{read} system call \hphantom{\dots} 170 \\
+  \texttt{readdir} function \hphantom{\dots} 170 \\
+  \texttt{readlines} function \hphantom{\dots} 170 \\
+  \texttt{realloc} library function \hphantom{\dots} 170 \\
+  recursion 86, 139, 141, 182, 269
+\end{quote}
+An author carefully wrote down topics mentioned in a text and told you
+where you could find them (i.e., which page of the book they were
+on).\footnote{In this case, they also helpfully told you that
+  ``recursion'' appeared in the index (the page you're looking at), a
+  computer science joke.}
 
-Wait a second.  When I say “index”, what do you think of?
+But if you’re younger and a computer scientist, you probably think of
+an index as a lookup table of every darn word possible.
+%
+The reason you think that is because of the Cranfield experiments.
+%
+His claim, which was quite controversial at the time, was that you
+could look up documents based on the words in the document.
+%
+You didn’t need laboriously curated indices you could use a machine,
+an engine if you will, to search through them.
+%
+The claim was that the Universal Decimal Classification, a facet
+classification, and alphabetical subject catalog, and a unigram index
+were roughly comparable~\cite{cleverdon-67}.
 
-If you're over 35 and went to a public school, you might think of this sort of thing in the back of a book.  But if you’re younger and a computer scientist, you probably think of an index as a lookup table of every darn word possible.
-
-The reason you think that is because of the Cranfield experiments.  His claim, which was quite controversial at the time, was that you could look up documents based on the words in the document.  You didn’t need laboriously curated indices you could use a machine, an engine if you will, to search through them.
-
-The academic community at the time was skeptical.  There’s no way these newfangled search engines could be better than a trained librarian armed with a card catalog!
+The academic community at the time was skeptical.  There’s no way
+these newfangled search engines could be better than a trained
+librarian armed with a card catalog!
 
 Before we analyze this, just a reminder of how a search engine query is evaluated.  Again, this is old hat now but was revolutionary at the time.  To evaluate a system’s ability to search a dataset, you take some queries from users and then find the truly relevant documents to that query.  Then, given a system’s results, you compute the precision—out of all of the documents they returned how many were right—and recall—out of all possible right documents how many did they find.
 
@@ -53,22 +114,23 @@ worth comparing it to the state of the art in human question
 answering in the mid-twentieth century~\cite{sedman-11}:
 \begin{quote}
 Abbott: Goofy, huh? Now let's see. We have on the bags - we have Who's on first,
-What's on second, I Don't Know's on third.
-Costello: That's what I wanna find out.
-Abbott: I say Who's on first, What's on second, I Don't Know's on third -
-Costello: You know the fellows' names?
-Abbott: Certainly!
-Costello: Well then who's on first?
-Abbott: Yes!
-Costello: I mean the fellow's name!
-Abbott: Who!
-Costello: The guy on first!
-Abbott: Who!
-Costello: The first baseman!
-Abbott: Who!
-Costello: The guy playing first!
-Abbott: Who is on first!
-Costello: Now whaddya askin' me for?
+What's on second, I Don't Know's on third. \\
+Costello: That's what I wanna find out. \\
+Abbott: I say Who's on first, What's on second, I Don't Know's on
+third--- \\
+Costello: You know the fellows' names? \\
+Abbott: Certainly! \\
+Costello: Well then who's on first? \\
+Abbott: Yes! \\
+Costello: I mean the fellow's name! \\
+Abbott: Who! \\
+Costello: The guy on first! \\
+Abbott: Who! \\
+Costello: The first baseman! \\
+Abbott: Who! \\
+Costello: The guy playing first! \\
+Abbott: Who is on first! \\
+Costello: Now whaddya askin' me for? \\
 Abbott: I'm telling you Who is on first. \citep[pages 1002--1004]{light-16}
 \end{quote}
 
