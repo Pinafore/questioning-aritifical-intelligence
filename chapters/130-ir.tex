@@ -77,19 +77,116 @@ The claim was that the Universal Decimal Classification, a facet
 classification, and alphabetical subject catalog, and a unigram index
 were roughly comparable~\cite{cleverdon-67}.
 
-The academic community at the time was skeptical.  There’s no way
-these newfangled search engines could be better than a trained
-librarian armed with a card catalog!
+Before we analyze this, just a reminder of how a search engine query
+is evaluated.  Again, this is old hat now but was revolutionary at the
+time.  To evaluate a system’s ability to search a dataset, you take
+some queries from users and then find the truly relevant documents to
+that query.  Then, given a system’s results, you compute the
+precision—out of all of the documents they returned how many were
+right—and recall—out of all possible right documents how many did they
+find.
 
-Before we analyze this, just a reminder of how a search engine query is evaluated.  Again, this is old hat now but was revolutionary at the time.  To evaluate a system’s ability to search a dataset, you take some queries from users and then find the truly relevant documents to that query.  Then, given a system’s results, you compute the precision—out of all of the documents they returned how many were right—and recall—out of all possible right documents how many did they find.
+Because these concepts are important, let's pause to review how
+success at finding a relevant answer was measured by \citet{keen-66}.
+%
+First let's consider---given a query---how many answers you
+retrieved.
+%
+Some of those were relevant to the query and gave you information you
+wanted.  Let's say there are $A$ of those.  But others were not
+relevant, these are distractions that you still have to weigh
+through.  Let's say there are $B$ of those.
+
+\begin{table}
+\centering
+\begin{tabular}{lccc}
+\toprule
+ & \textbf{Relevant} & \textbf{Non-relevant} & \textbf{Total} \\
+\midrule
+\textbf{Retrieved} 
+    & $A_q$ 
+    & $B_q$ 
+    & $A_q + B_q$ \\
+\textbf{Not Retrieved} 
+    & $C_q$ 
+    & $D_q$ 
+    & $C_q + D_q$ \\
+\midrule
+\textbf{Total} 
+    & $A_q + C_q$ 
+    & $B_q + D_q$ 
+    & $A_q + B_q + C_q + D_q$ \\
+\bottomrule
+\end{tabular}
+\caption{Contingency table for question $q$ used to define precision
+  and recall.}
+\end{table}
+
+Clearly it's better to have $A$ be higher than $B$, and this metric is
+called \emph{precision}:
+\begin{equation}
+  \mbox{precision}(q) = \frac{A_q}{A_q + B_q},
+\end{equation}
+of the answers you provided, how many were relevant.  The higher the
+better.
+%
+But let's consider how many of the relevant answers you did find:
+$A_q$.  It would be better if $A_q$ were \emph{all} the relevant
+documents, of which there are $A_q$ and $C_q$.
+%
+This is called the recall:
+\begin{equation}
+  \mbox{recall}(q) = \frac{A_q}{A_q + C_q}.
+\end{equation}
+Both of these numbers are between 0 (bad) and 1 (good); ideally, you
+would want both to be 1.0, but this is hard to achieve.
+%
+You can get perfect recall by returning all possible answers, but then
+your precision sinks.
+%
+If you return only the answers you're absolutely certain of, your
+recall suffers.
+
+Different applications (or users) would have different tradeoffs.
+%
+If you're trying to find a ``smoking gun'' in a court case, you want
+recall over all else: it doesn't matter if you have to comb through
+too many irrelevant documents.
+%
+But if you're trying to answer a simple question, you don't need every
+document that tells you what the capital of Arkansas is, you just need
+one, and you don't want anything irrelevant.
+
 
 Let’s pause for a moment to recognize how revolutionary this was.  Once you found the relevant documents, you can evaluate *any* system.  Before, you had to run an expensive user experiment every time you tweaked your system: did that output look good?  How about this one.  With a reusable test collection, you could turn the crank on your retrieval system without pesky humans getting in the way.  Just check whether the red box finds the relevant documents!
 
 But not everybody was convinced.  The Cranfield paradigm is making a lot of assumptions here: 
 first, if a document is relevant, it’s equally relevant: everything is equally relevant: showing you my explanation of topic modeling is as good as a video from Siraj Raval’s
-The users’ information needs are static; the answer to the question “who is the president of the united states” never changes, after all
-The next assumption is that all users are the same: when I ask the question “why is the sky blue”, I should get the same answer as my six year old daughter
-Finally, the Cranfield paradigm that somebody, somehow can find the right answer from thousands or millions of documents.
+The users’ information needs are static; the answer to the question
+``who is the president of the united states'' never changes (Nixon is
+still president, right?).
+%
+Finally, the Cranfield paradigm assumes that somebody, somehow can
+find the right answer from thousands or millions of documents.
+
+The academic community at the time was skeptical.  There’s no way
+these newfangled search engines could be better than a trained
+librarian armed with a card catalog!
+And \citet{cuadra-68} noted reasonable criticisms: different users have
+different information needs---I don't need anybody to tell me what the
+capital of Maryland is, but I don't know the capital of the
+Yevreyskaya Oblast; the same user has different needs---I might do the
+same search twice to get the citation for Cuadra and to find a good
+quote.
+%
+And Cuadra does have some good quotes, he correctly warns us:
+\begin{quote}
+  For a time, psychologists devoted their attention
+not to what was important, but to what was measurable. This is a surefire
+approach to a certain kind of respectability, which information
+scientists now desire as much as psychologists did then, but it risks
+losing the baby with the bathwater. 
+\end{quote}
 
 Despite all those flaws, the assumptions—on average—mostly hold.  That’s why we’re still talking about the Cranfield paradigm fifty years later.  And there were some big additions to the Cranfield paradigm.  Most prominent was the use of better document representations and creating larger test collections, which was spearheaded by Karen Spärk Jones a little bit west of Cranfield at Cambridge.  These took the theoretical insights of the original Cranfield experiments and made them into something that could actually work.  Again, this was revolutionary: as a result the British Computing Society named their annual award for researchers in this area after Karen Spärk Jones.
 
