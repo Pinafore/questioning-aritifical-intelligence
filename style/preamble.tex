@@ -26,6 +26,11 @@
 % Preamble.  This may involved editing style files or bst files.  It's
 % painful, but do that rather than messing with this.  This is
 % required by federal government.
+\makeatletter
+\ifx\pdfcreationdate\@undefined
+  \let\pdfcreationdate\creationdate
+\fi
+\makeatother
 \usepackage[a-1b]{pdfx}
 
 % Below should be safe

@@ -4,12 +4,12 @@
 
 %%
 % Book metadata
-\title{Questioning Artificial Intelligence}
+\title{Questioning \\ Artificial \\ Intelligence}
 \author{Jordan Boyd-Graber}
 \publisher{University of Maryland}
 
 \newif\ifcomment\commentfalse
-\newif\ifproposal\proposaltrue
+\newif\ifproposal\proposalfalse
 \input{style/preamble}
 \usepackage{libertine}
 
@@ -23,6 +23,7 @@
 
 \usepackage{booktabs}
 \usepackage{graphicx}
+\usepackage{CJKutf8}
 
 
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
@@ -117,7 +118,7 @@
 
 \proposalpart{Question Answering Before Computers}{1}
 
-\chapterfile{110}{history}{Question Answering: The Foundation and Savior of Civilization}
+\chapterfile{110}{civilization}{Question Answering: The Foundation and Savior of Civilization}
 
 
 \chapterfile{120}{turing}{The Turing Test: A Game Show Pitch that
@@ -139,8 +140,10 @@
 
 \chapterfile{230}{methods}{The Tools to Answer Questions}
 
-
 \chapterfile{240}{leaderboards}{Siri takes the SAT}
+
+\chapterfile{250}{bad}{Finding and Dealing with Bad Questions}
+
 
 % How computers answer questions [NLP]
 
@@ -158,7 +161,7 @@
 
 \chapterfile{300}{gameshow}{Fulfiling Turing's Gameshow}
 
-\chapterfile{310}{scifi}{What AI Dystopias You Should be Afraid of?}
+\chapterfile{310}{sci_fi}{What AI Dystopias You Should be Afraid of}
 
 % Science Fiction QA
 % - Voigt-Kampff
@@ -192,7 +195,7 @@
 
 \backmatter
 
-\bibliography{bib/jbg}
+\bibliography{bib/journal-full,bib/jbg}
 \bibliographystyle{plainnat}
 
 

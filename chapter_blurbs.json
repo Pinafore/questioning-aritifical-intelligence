@@ -15,10 +15,10 @@
       ]
     },
     {
-      "label": "history",
+      "label": "civilization",
       "summary": "Despite its central importance to \\abr{ai}, asking and answering questions is not new---it stretches back into our collective unconcious. Riddles and trivia have persisted for millenia not just because they're entertaining.  Indeed, being able to ask and answer questions is close to godliness.  From the Sphynx to Gestumblindi, this chapter examines how myths from several cultures connect answering questions to forming identity, unlocking the secrets of the universe, and gaining intelligence.  And connecting this to nascent ``superhuman'' \\abr{ai}.  Later, beyond proving worthiness in myth, asking questions helped combat corruption and nepotism, the downfall of multiple civilizations.  However, the administration of carefully formed questions saved the China and the United States via the reforms of Wu Zetian to the Pendelton Act.  Exams created meritocracy and social mobility while also building an understanding of what it means to write a ``fair'' and ``useful'' question.",
       "sections": [
-        {"label": "epic", "title": "Epic Riddles"},
+        {"label": "sphynx", "title": "The Sphynx"},
         {"label": "civil-service", "title": "How Exams Saved China and the US"}
       ]
     },
