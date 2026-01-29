@@ -30,7 +30,52 @@ The users’ information needs are static; the answer to the question “who is 
 The next assumption is that all users are the same: when I ask the question “why is the sky blue”, I should get the same answer as my six year old daughter
 Finally, the Cranfield paradigm that somebody, somehow can find the right answer from thousands or millions of documents.
 
-Despite all those flaws, the assumptions—on average—mostly hold.  That’s why we’re still talking about the Cranfield paradigm fifty years later.  And there were some big additions to the Cranfield paradigm.  Most prominent was the use of better document representations and creating larger test collections, which was spearheaded by Karen Spärk Jones a little bit west of Cranfield at Cambridge.  These took the theoretical insights of the original Cranfield experiments and made them into something that could actually work.  Again, this was revolutionary: as a result the British Computing Society named their annual award for researchers in this area after Karen Spärk Jones.
+Despite all those flaws, the assumptions—on average—mostly hold.
+%
+That’s why we’re still talking about the Cranfield paradigm fifty
+years later.
+%
+And there were some big additions to the Cranfield
+paradigm.
+%
+Most prominent was the use of better document representations and
+creating larger test collections, which was spearheaded by Karen
+Sp\"ark Jones a little bit west of Cranfield at Cambridge and by Ellen
+Vorhees and others at the National Institute for Standards and
+Technology in Gaithersburg, Maryland.
+
+\subsection{Term-Frequency and Inverse Document Frequency}
+\label{sec:ir:tf-idf}
+
+We will talk about neural representations later when we talk about
+models like \abr{bert} (Section~\ref{}).
+%
+Those representations are called \emph{dense}---not because they're
+dumb, they're quite clever---but they packe a lot of information into
+a small packet of computer memory.
+%
+In contrast, the representations that Karen Sp\"ark Jones came up with
+are \emph{sparse}: they could have an entry for every word in your
+language, but for any given question, you're only going to have a
+handful of words present.
+
+And because ``word'' is ambiguous, we'll call this ``term frequency''
+instead.
+%
+The entry for a question has a higher weight for a word the more often
+it appears.
+%
+E.g., if the question is:
+\question{Which of the members of Lincoln's cabinent did Licoln previously serve in the House of Representative with?}
+then the words that appear most commonly are going to be more important.
+%
+In this case, that would be ``Lincoln'' 
+
+These took the theoretical insights of the original
+Cranfield experiments and made them into something that could actually
+work.  Again, this was revolutionary: as a result the British
+Computing Society named their annual award for researchers in this
+area after Karen Spärk Jones.
 
 \section{Old-Fashioned \abr{ai}}
 \label{sec:ir:gofai-qa}
