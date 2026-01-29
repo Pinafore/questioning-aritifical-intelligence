@@ -2,27 +2,65 @@
 
 With many tasks in computer science, asking the question ``where did
 this task come from'' has a simple answer usually in the form of an
-acronym.
+acronym that represented the dataset that first distilled the task
+into a form computers could digest.
 %
-Character recognition was sparked by the \abr{mnist} dataset;
-entailment was sparked by \abr{snli}; sentiment classification was
-defined by \citet{pang-08}.
-
-And while there are particular \emph{flavors} of question answering that habe been defined to make life easier or more discriminative for computers, the basic task of question in, answer out is natural to any inquisitive three year old.
+Character recognition was sparked by the \abr{mnist} dataset derived
+from the zip code numbers scribbled on letters sent via the postal
+service; entailment was sparked by \abr{snli}~\citep{} a new dataset
+created by crowdowrkers inspired by linguistic theory; sentiment
+classification was defined by \citet{pang-08}.
 %
-Of course, question answering is not the only task like this: translation likewise is recognizable to any stranger in a strange land trying to cope with an unfamiliar language: dozens of books have been written on that subject, my favorite is \textit{Le Ton Beau de Marot}.
+In other words, many important common tasks that we trained computers
+to do required a formal definition to make it tractable or
+sufficiently formal.
 
-Question answering's roots likewise run deep.  In this chapter, I want to argue that question answering is not just a useful task but one that is woven deep into our Jungian subconsious.
+And while there are particular \emph{flavors} of question answering
+that have been defined to make life easier or more discriminative for
+computers, the basic task of question in, answer out is natural to any
+inquisitive three year old.
 %
-Answering questions can define your identity, reveal fundamental truths of the universe, and create a shared reality.
+Of course, question answering is not the only task like this:
+translation likewise is recognizable to any stranger in a strange land
+trying to cope with an unfamiliar language: dozens of books have been
+written on that subject.\footnote{My favorite is \textit{Le Ton Beau
+de Marot}~\cite{}.}
+
+To emphasize how ``natural'' question answering is, let's go back to
+mythology.
 %
-This chapter highlights these pillars of question answering and how these questions of identity and knowledge shape not just our modern world but a world where our reality is also partially defined by artificial intelligence.
+This chapter argue that question answering is not just a useful task
+but one that is woven deep into many cultures.
+%
+While we ask our phones plenty of trivial questions, some questions
+are important.
+%
+The examples of question answering that remain a part of our culture
+can define your identity, reveal fundamental truths of the universe,
+and create a shared reality.
+%
+%This chapter highlights these uses of question answering these pillars of question answering and how
+% these questions of identity and knowledge shape not just our modern
+% world but a world where our reality is also partially defined by
+% artificial intelligence.
 
-\section{The Sphynx}
+\section{The Sphynx: A Question that Unlocked a Hero's Past}
 
+In Greek myth, \OE{}depus was a figure who did not know his own
+background.
+%
+The story of \OE{}depus had three major phases: his childhood origins,
+where he was separated from his family; his adulthood, where he forged
+a new identity; and his old age, where he punished himself for his
+misdeeds which happened because he did not connect his origins with
+his actions as an adult.
 
-
-In Greek myth, the Sphynx asked everyone who entered the city a riddle.  Here’s PDQ Bach’s interpretation of the riddle:
+But like any good story, there was foreshadowing that \OE{}depus could
+have used to avoid his unhappy fate.
+%
+He encountered a monster---the Sphynx---who asked everyone who entered
+the city a riddle.  Here’s PDQ Bach’s interpretation of the
+riddle~\citep{}:
 \begin{quote}
 What starts out on four legs then goes round on two
 Then finishes on three before it’s through
@@ -33,36 +71,72 @@ Well a baby then a man, that’s plain,
 then finally an old geezer on a cane
 \end{quote}
 
-Now I won’t spoil the whole story, but by answering the question correctly, Oedipus revealed that he was smarter than the average bear and also unlocked secrets from his past.  In a commencement address to Whitman college, Dana Burgess explained the difference between this and Google’s Natural questions and how that relates to the mission of professors (like me):
-
+By mirroring \OE{}dipus's life structure, encouraging him to think
+about the stages of life and how one person's lifetime can look
+different from the outside, it was a clue that he should consider the clues about his own life.
+%
+And although \OE{}dipus answered \emph{the specific} question correctly, there was a deeper implied question that he failed to answer.
+%
+In a commencement address to Whitman college, Dana Burgess explained
+the difference between this and the questions () you might ask Google
+(Chapter~\ref{chapter:nq}) and how that relates to the mission of
+professors~\citep{}:
 \begin{quote}
-Nobody told Oedipus who he was; he figured that out for himself.  ... You can do a Google search to find out the capital of Arkansas (Little Rock?) but you can’t do a Google search to find out who you are, what you’re good at, what makes you happy, what matters for your life.  Information transferal isn’t any help with that stuff.
+Nobody told Oedipus who he was; he figured that out for himself.
+\dots You can do a Google search to find out the capital of Arkansas
+(Little Rock?) but you can’t do a Google search to find out who you
+are, what you’re good at, what makes you happy, what matters for your
+life.  Information transferal isn’t any help with that stuff.
+
+When folks say that a college professor is like a sphinx, they don’t
+usually mean that in a nice way.  It suggests that we know the answers
+students need, but we keep them secret for the sake of our own
+power\dots That’s part of the riddle of [The Sphynx’s] hybrid nature:
+the curse of being forced to solve a riddle is also the gift of the
+ability to solve riddles.
 \end{quote}
 
-When folks say that a college professor is like a sphinx, they don’t usually mean that in a nice way.  It suggests that we know the answers students need, but we keep them secret for the sake of our own power.  … That’s part of the riddle of [The Sphynx’s] hybrid nature: the curse of being forced to solve a riddle is also the gift of the ability to solve riddles. 
+
 
 \section{Gestumblindi}
 
-In Norse myth, Gestumblindi got into some trouble with King Heidrek and asked the Gods for help.
+In Norse myth, Gestumblindi got into some trouble with King Heidrek
+and asked the Gods for help.
 %
-In response, Odin came to Gestumblindi---looking exactly like him---and stood in his place in front of Heidrek.
+In response, Odin came to Gestumblindi---looking exactly like
+him---and stood in his place in front of Heidrek.
 %
-What took place was an interrogation that went in two directions: King Heidrek attempted to determine who this Gestumblindi-looking person was in front of him and Odin attempted to see how smart King Heidrek was.
+What took place was an interrogation that went in two directions: King
+Heidrek attempted to determine who this Gestumblindi-looking person
+was in front of him and Odin attempted to see how smart King Heidrek
+was.
 
-What I like about this story is that it presages many of the themes that we will see with \abr{ai}: ordinary people thinking that \abr{ai} will help them, an interrogation contest to see who is human or not, and an impersonation.
+What I like about this story is that it presages many of the themes
+that we will see with \abr{ai}: ordinary people thinking that \abr{ai}
+will help them, an interrogation contest to see who is human or not,
+and an impersonation.
 %
-It also presages many of our fears about \abr{ai}: Odin's final question to Heidrek is:
+It also presages many of our fears about \abr{ai}: Odin's final
+question to Heidrek is~\cite{}:
 \begin{quote}
-what had he whispered (or will whisper) to his son, Baldur, before his son is to
-be taken to his funeral pyre.
+what had he whispered (or will whisper) to his son, Baldur, before his
+son is to be taken to his funeral pyre.
 \end{quote}
-We talk in this book frequently about bad questions, but this a particularly bad question.  Not only is it something that only Odin knows, it probably has not happened yet (depending on what you believe about the circularity of time), and when it does happen it will end the world by bringing about Ragnar\"ok.  
+We talk in this book frequently about bad questions, but this a
+particularly bad question.  Not only is it something that only Odin
+knows, it probably has not happened yet (depending on what you believe
+about the circularity of time), and when it does happen it will end
+the world by bringing about Ragnar\"ok.
 
 % TODO(jbg): add forward pointers
 
-Once Heidrek hears this question, he knows that the figure before him is not Gestumblindi but rather Odin.
+Once Heidrek hears this question, he knows that the figure before him
+is not Gestumblindi but rather Odin.
 %
-And like a frustrated customer who thought they were talking to a human for ten minutes only to figure out that they're talking to a bot, Heidrek takes out his sword and attacks, only for Odin to turn into a bird and fly away.
+And like a frustrated customer who thought they were talking to a
+human for ten minutes only to figure out that they're talking to a
+bot, Heidrek takes out his sword and attacks, only for Odin to turn
+into a bird and fly away.
 
 \section{The Socratic Method}
 
