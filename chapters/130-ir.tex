@@ -157,8 +157,13 @@ But if you're trying to answer a simple question, you don't need every
 document that tells you what the capital of Arkansas is, you just need
 one, and you don't want anything irrelevant.
 
+So, if you have a set of queries $q_1$\dots $q_N$ you can run your
+system on each question, get a set of results, compute the precision
+and recall of each one, and then create a ranking of the systems.
 
-Let’s pause for a moment to recognize how revolutionary this was.  Once you found the relevant documents, you can evaluate *any* system.  Before, you had to run an expensive user experiment every time you tweaked your system: did that output look good?  How about this one.  With a reusable test collection, you could turn the crank on your retrieval system without pesky humans getting in the way.  Just check whether the red box finds the relevant documents!
+Let’s pause for a moment to recognize how revolutionary this was.
+%
+Once you found the relevant documents, you can evaluate \emph{any} system.  Before, you had to run an expensive user experiment every time you tweaked your system: did that output look good?  How about this one.  With a reusable test collection, you could turn the crank on your retrieval system without pesky humans getting in the way.  Just check whether the red box finds the relevant documents!
 
 But not everybody was convinced.  The Cranfield paradigm is making a lot of assumptions here: 
 first, if a document is relevant, it’s equally relevant: everything is equally relevant: showing you my explanation of topic modeling is as good as a video from Siraj Raval’s
