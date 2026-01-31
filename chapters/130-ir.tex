@@ -163,7 +163,17 @@ and recall of each one, and then create a ranking of the systems.
 
 Let’s pause for a moment to recognize how revolutionary this was.
 %
-Once you found the relevant documents, you can evaluate \emph{any} system.  Before, you had to run an expensive user experiment every time you tweaked your system: did that output look good?  How about this one.  With a reusable test collection, you could turn the crank on your retrieval system without pesky humans getting in the way.  Just check whether the red box finds the relevant documents!
+Once you found the relevant documents, you can evaluate \emph{any}
+system.
+%
+Before, you had to run an expensive user experiment every time you
+tweaked your system: did that output look good?
+%
+How about this one?
+%
+With a reusable test collection, you could turn the crank on your
+retrieval system without pesky humans getting in the way.  Just check
+whether the red box finds the relevant documents!
 
 But not everybody was convinced.  The Cranfield paradigm is making a lot of assumptions here: 
 first, if a document is relevant, it’s equally relevant: everything is equally relevant: showing you my explanation of topic modeling is as good as a video from Siraj Raval’s
@@ -232,7 +242,52 @@ E.g., if the question is:
 \question{Which of the members of Lincoln's cabinent did Licoln previously serve in the House of Representative with?}
 then the words that appear most commonly are going to be more important.
 %
-In this case, that would be ``Lincoln'' 
+In this case, that would be ``Lincoln''\dots but another seemingly
+important is ``the'' since it also appears just as often.
+
+The great intuition of Sp\"ark Jones is that while you and I know that
+``the'' is unimportant, and you could make a list of such unimportant
+words (often called a ``stop'' list in the lingo), that list is going
+to be brittle.
+%
+For example, ``resolved'' is an unimportant word in legislative
+contexts.
+%
+The thing that ties together unimportant words is that they appear in
+many different questions.
+
+Mathematically, you want to downweight words that appear in many
+documents.  Sp\"ark Jones motivated inverse document frequency as
+\begin{quote}
+[placing] greater emphasis on the value of a term as a means
+of distinguishing one document from another than on its value as an indication of the content of the document itself
+\end{quote}
+%
+In other words, you want to combine the term frequency (this term is
+important to the document) with the
+inverse document frequency (this word is important overall).
+%
+The most common way to do this~\citep[there are countless combinations with
+funny names like BM25]{robertson-09}; the details are important in
+practice but not for understanding the theory.
+%
+The most common way to do this is to weight a term $w$ in document $d$
+as number of times $w$ is in document $d$ relative to the total number
+of terms in $d$, and inversely by the number of documents the word $w$
+appears in $N_d$.
+%
+The term frequency is
+\begin{equation}
+\mathrm{tf}(w,d) = \frac{n(w,d)}{\sum_{w' \in d} n(w',d)},
+\end{equation}
+where the denominator sums over all of the other words in the
+document, and the inverse document frequency is
+\begin{equation}
+\mathrm{idf}(w) = \log \frac{N}{N_d},
+\end{equation}
+where we use $\log$ to not so carefully distinguish very frequent
+words (``the'') from fairly frequent words (``very''); both are about
+as unimportant.
 
 These took the theoretical insights of the original
 Cranfield experiments and made them into something that could actually
@@ -248,11 +303,18 @@ system.
 %
 Build a collection of questions and see how well you can answer them.
 %
-And this defined how computers answered questions in the mid twentieth
+And this defined the evaluation of how many computers answered questions in the mid twentieth
 century.\footnote{This is sometimes called ``good ol' fashioned \abr{ai}'' or
   \abr{gofai} for short.}
+%
+But the approaches were not just using the term weightings above to
+find relevant documents: could we not just find documents to help a
+reader answer a question but generate the answer given a question.
+%
+These approaches went deeper and often used represenations that required
+logic and reasoning to answer questions.
 
-The history of question answering begins with
+Arguably, the history of computer question answering begins with
 answering questions about the American sport
 of baseball.
 %
@@ -282,12 +344,12 @@ Abbott: I'm telling you Who is on first. \citep[pages 1002--1004]{light-16}
 \end{quote}
 
 That’s going to be tough to beat.
-Let’s take a look at the BASEBALL system
-from MIT.
+Let’s take a look at the \abr{baseball} system
+from \abr{mit}.
 %
-Despite the odd phrasing, the BASEBALL system
+Despite the odd phrasing, the \abr{baseball} system
 of Green et al. is essentially a natural language
-interface to an existing database.
+interface to an existing database~\citep{green-61}.
 
 It does this by taking each word in the question,
 trying to match it to a field in its database.
@@ -298,17 +360,36 @@ the question is looking for, which is usually
 found in the question word (this is quite a bit simpler than the lexical
 answer type analysis of the Watson system
 (Chapter~\ref{sec:watson:feature-engineering}), where you need to figure out
-things like ``This Argentenian Author'' could be Borges, Cortazar, or Puig).
+things like ``This Argentenian Author'' could be Borges, Cortazar, or
+Puig).
+%
+For baseball, the scope is relatively narrow: a team, a location, or a
+number (number of runs or wins).
 
-But if you know a database language like SQL,
+Like the search over large document collections the \abr{baseball}
+system specifies what it is looking for using what it calls a
+specification list.
+%
+If the quesiton is \question{Where did the Red Sox play on July 7?},
+the specification is
+\begin{verbatim}
+Place = ?
+ Team = Red Sox
+Month = July
+  Day = 7 
+\end{verbatim}
+and then it finds all of the corresponding records where the Red Sox
+played a game on July 7 and uses that to construct an answer.
+
+But if you know a database language like \abr{sql},
 you recognize that this is essentially a bunch
 of SELECTs and WHEREs.
 %
 This isn’t even taxing the full breadth
-of SQL.
+of \abr{sql}.
 %
 To go the next step, we turn to a system called
-LUNAR.
+\abr{lunar}~\citep{woods-71}.
 
 Which, as you might guess, was about the moon.
 %
@@ -323,18 +404,20 @@ into a rich, recursive grammar.
 But first, it needs to analyze the grammatical
 structure of the input question.
 
-For example, the question “what is the average
-modal plagioclase concentration for lunar
+For example, the question \question{How many samples are there?} is analyzed
+with the following parts of speech:
+\begin{verbatim}
+S Q
+  NP DET HOWMANY
+     N SAMPLE
+     NU PL
+  AUX TNS PRESENT
+  VP V EXIST
+\end{verbatim}
 %
-samples that contain rubidium?” is analyzed
-with the following parts of speech.
-%
-Notice that it’s important to detect things
-like relative clauses, which restrict the
-%
-level of analysis.
+Unlike \abr{baseball} it can handle previous contexts (like
+conversational \abr{qa}, Chapter~\ref{sec:formats:conversation}).
 
-\jbgcomment{Need a figure for this}
 
 After that syntactic analysis, it then gets
 turned into a logical form that can be executed
@@ -343,45 +426,46 @@ against its database.
 
 In 2022, it’s probably not worth going into
 that.
-
+%
 Our databases don’t look like this anymore.
 %
 One thing that I found interesting in rereading
 this in the perspective of the 21st century,
 %
 is that it also has something that looks like
-an IR component, although it’s explicitly
+an \abr{ir} component, although it’s explicitly
 %
 looking for documents tagged with a particular
 topic, unlike doing something like tf-idf
 %
 retrieval.
 
-The last old school QA system I wanted to
+The last old school \abr{qa} system I wanted to
 talk about is probably the most famous of
 %
-them all: SHRLDU.
+them all: \abr{shrdlu}.
 %
-SHRDLU was described in the thesis of Terry
+\abr{shrdlu} was described in the thesis of Terry
 Winograd\dots remember that name, we’ll be
 %
-seeing it again!
+seeing it again in Chapter~\ref{sec:datasets:adversarial}!
 
-Unlike the LUNAR and BASEBALL which are exactly
+Unlike the \abr{lunar} and \abr{baseball} which are exactly
 what they say on the tin, I need to explain
 %
 the name a little bit more.
 %
 This isn’t going to be easy.
 
-First, since you’re reading a book printed in the twenty-first century,
+First, since you’re reading a book printed\footnote{In all likelihood,
+you're not actually reading a printed book, but a boy can dream.} in the twenty-first century,
 you probably don’t know what a linotype
 system is.
 %
-It was the “missing link” between moveable
+It was the ``missing link'' between moveable
 type presses (where you had to move the letters
 in by hand) and sending output from a computer
-keyboard to a “real” printer.
+keyboard to a ``real'' printer.
 
 The most amzing part of this system is that
 it had a keyboard: when you hit a key, it
@@ -436,8 +520,8 @@ more and more input until the protagonist
 of the story selectively feeds it Buddhist
 philosophy and it achieves Nirvana.
 %
-Despite its funny name, SHRDLU remains the
-OG question answering system.
+Despite its funny name, \abr{shrdlu} remains the
+\abr{og} question answering system.
 
 The basic idea is that Instead of just answering
 questions about a static world, you could
@@ -447,36 +531,36 @@ This is a later rendering of it … back in
 the early 70s computer graphics aren’t as
 advanced as they are today.
 
-\jbgcomment{Add SHRDLU screenshot}
 
-Wow, how far we’ve come.
-%
+
 And if the system couldn’t tell what object
 you’re asking about (e.g., it’s ambiguous),
 %
 it asks a follow-up question to clarify which
-one you meant.
+one you meant (which is still a challenge we discuss in Chapter~\ref{ch:bad}).
 %
 I’m not going to go through the components
-of SHRDLU, but it is fairly similar to LUNAR:
+of \abr{shrdlu}, but it is fairly similar to \abr{lunar}:
 %
-you parse sentences into a logical form.
+you parse sentences into a logical form and find what matches in the
+knowledge base.
 %
 The big difference is that the knowledge base
 isn’t static: it changes as the user interacts
 %
 with the block world.
 
-So there’s this part of the diagram that’s
-unique to SHRDLU.
-%
-But I’m not going to talk about the details
-of the implementation that much.
-%
-Why not?
+\begin{figure}
+  \includegraphics[width=.5\linewidth]{external/shrdlu}
+  \caption{A screen shot of the \abr{shrdlu} system.  Unlike other
+    early \abr{qa} systems with a static world, you can move the
+    blocks around and ask questions about them.  However, it's a very
+    small world.}
+\end{figure}
 
-Because you’ve probably noticed that these
-systems are talking about narrower and narrower
+The reason that I'm not talking about the details is because you’ve
+probably noticed that these systems are talking about narrower and
+narrower
 %
 domains.
 %
@@ -484,21 +568,21 @@ They can just answer questions about baseball
 games (not even baseball players), rocks from
 %
 the moon (not rocks generally, that’s too
-much), and even SHRDLU goes further to build
+much)\dots \abr{shrdlu} goes further to build
 %
 its own world and only answering questions
 about that.
 
 And that goes back to the origin of the name
-SHRDLU: taking text and making it into a reality
+\abr{shrdlu}: taking text and making it into a reality
 %
 rather than understanding the world as it
 is.
 %
 And the world as it is has ambiguity.
 
-Let’s go back to the “Who’s on first
-bit” that I started this video with.
+Let’s go back to the ``Who’s on first''
+bit that I started this video with.
 %
 So let me explain\footnote{At the risk of explaining the joke to much, there
 are additional aspects that showcase the difficulties
@@ -521,11 +605,14 @@ interprets it as a proper noun.
 Now, usually, that’s the right way to do
 it.
 %
+That is what all of the systems in this chapter would have done: it's
+hard coded into their interpretations.
+%
 But natural language is funny and ambiguous
 sometimes.
 
 And that’s the big difference between modern
-QA systems and these older systems.
+\abr{qa} systems and these older systems.
 %
 They’re small and brittle: when they work,
 they work really well.
@@ -537,16 +624,12 @@ questions from people on the Internet.
 %
 But that’s not to say that logic, semantic
 parsing, and knowledge bases have no place
-%
 in 21st century question answering systems:
 rather than taking a string of text and giving
-%
 a single answer, there are probabilistic interpretations
 that provide a distribution over interpretations,
-%
 and then you train approaches using the Cranfield
 paradigm to make sure that, yes, on average
-%
 it can answer the typical user’s questions.
 
 \section{Leading up to Google}
@@ -554,36 +637,33 @@ it can answer the typical user’s questions.
 And that's exactly the long-lasting legacy of the Cranfield paradigm shaped
  how we get answers from the internet.
  %
- For that, we need to leave central England and meet new player: NIST.  The
+ For that, we need to leave central England and have the mantle get
+ taken up by a new player: \abr{nist}.  The
  American National Institute for Standards and Technology.
 
 While the story of the birth of the Cranfield paradigm is an innovative
-insight with Cyril Cleverdon combined with the vision of Karen Spärk Jones,
-the story of NIST’s development of these test collections is one of slow,
+insight with Cyril Cleverdon combined with the vision of Karen Sp\"ark Jones,
+the story of \abr{nist}’s development of these test collections is one of slow,
 methodological iteration.  Building up decades of expertise and slowly
 building up bigger and better test collections, updating them each year so
-that by the time Google’s PageRank came around, there’s no question about how
-to tell whether a search engine is good enough.
+that by the time Google’s PageRank~\citep{brin-98} came around, Google
+used the same evaluations internally to optimize their algorithms.
 
-Just fire up the latest test collection from the TREC conference, compute your precision and recall, and call it a day.
+Just fire up the latest test collection, compute your precision and recall, and call it a day.
 %
 And this approach toward evaluation is with us in everything we do.  Test
-collections are how we evaluate virtual assistants, question answering
-systems, and just about every aspect of the modern Internet.  And it’s not
+collections are how we evaluate virtual assistants, new \abr{ai}
+systems, and just about every aspect of the modern Internet (Chapter~\ref{ch:leaderboards}).  And it’s not
 always for the best.  The ubiquity of these reusable test collections leads to
 overfitting.  TREC puts out new datasets every year or so, but that’s not fast
 enough for machine learning in the 21st century!  And while the focus on real
 user data is good, the data you collect is biased by who is using technology
 (mostly rich people from Western countries) and how they’ve been trained to
 ask questions through decades of living with Cranfield-paradigm systems.  And
-unlike people who work on, say, human-computer interaction, those building QA
+unlike people who work on, say, human-computer interaction, those building \abr{qa}
 systems often don’t actually put their system in front of real users.  And I
 don’t think that’s what Cyril Cleverdon would have wanted.  His goal, as a
 librarian, was to help users.  And yes, reusable test collections help you do
 that—and they’ve spawned multibillion dollar companies around the world—but at
 the end of the day you still need to check whether real users are actually
 finding the information they need.
-
-\jbgcomment{Citations for Google paper, examples}
-
-\jbgcomment{Forward point to leaderboard chapter}
