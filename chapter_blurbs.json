@@ -76,8 +76,7 @@
           {"label": "iid", "title": "Should QA be IID?", "summary": ""},
           {"label": "badq", "title": "How questions go Wrong", "summary": ""},
           {"label": "crowdsourcing", "title": "Constructed Datasets from Crowdsourcing", "summary": ""},
-          {"label": "generating", "title": "Generating Questions", "summary": ""},
-          {"label": "adversarial", "title": "", "summary": "If existing datasets and game show appearances aren't enough to tell whether humans or computers are better at answering questions, what can we do?  While there is an argument for focusing on natural data, modern language models are changing not just what is possible computationally but changing the language itself.  Thus, we need to select examples specifically to challenge computers. These examples are called \\emph{adversarial examples}, and this chapter presents how to gather them and how they can reveal the strengths and weaknesses of computer question answering."}
+            {"label": "generating", "title": "Generating Questions", "summary": ""}
         ]        
       }, 
       {
@@ -98,7 +97,8 @@
         "label": "leaderboards",
         "summary": "How do we know how smart a machine is?  Like a human, we typically give it a test; the difference is that tests for computers are called `leaderboards'. This chapter talks about the pros and cons of leaderboards and how some of the methods used to analyze human standardized tests can help us understand the strengths and weaknesses of not just computer question answering specifically but \\abr{ai} generally.  This also marks the reappearance of item response theory, which can help make deciding the smartest computer more efficient.  Previously published as \\citet{Rodriguez-21:leaderboards} and \\citet{mgor-24}.",
         "sections": [
-          {"label": "cheat", "title":"When 21 questions are worthless", "summary": "We compare how a trivia cheating scandal extends to AI leaderboards."}
+            {"label": "cheat", "title":"When 21 questions are worthless", "summary": "We compare how a trivia cheating scandal extends to AI leaderboards."},
+          {"label": "adversarial", "title": "", "summary": "If existing datasets and game show appearances aren't enough to tell whether humans or computers are better at answering questions, what can we do?  While there is an argument for focusing on natural data, modern language models are changing not just what is possible computationally but changing the language itself.  Thus, we need to select examples specifically to challenge computers. These examples are called \\emph{adversarial examples}, and this chapter presents how to gather them and how they can reveal the strengths and weaknesses of computer question answering."}	    
         ]
       },
       {
@@ -106,7 +106,7 @@
         "summary": "The year is 2025, and there's a new gameshow that not only showcases the most advanced \\abr{ai} available but also keeps the public informed about the limitations and struggles of current technology.  This chapter outlines the ten seasons of the show and how it tracks the development of machine intelligence, leading to passing Turing Test."
       },
       {
-        "label": "scifi",
+        "label": "sci_fi",
         "summary": "While the book began with how question answering in myth helped the ancients grapple with a changing and uncertain world, today's fictions represent our contemporary attempts to understand the advent of intelligent computers.  This chapter reviews human--computer question answering in 2001, Star Trek, The Terminator, Blade Runner, Futurama, and what these depictions reveal about both human conceptions of artificial intelligence and how it might shape future deployments of question answering.",
         "sections": [
           {"label": "presentations", "title": "Computer, speculate", "summary": "A review of the role of QA in science fiction: voigt-kampf, star trek, etc."},

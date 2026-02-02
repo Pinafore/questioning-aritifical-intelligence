@@ -75,7 +75,7 @@ an engine if you will, to search through them.
 %
 The claim was that the Universal Decimal Classification, a facet
 classification, and alphabetical subject catalog, and a unigram index
-were roughly comparable~\cite{cleverdon-67}.
+were roughly comparable~\citep{cleverdon-67}.
 
 Before we analyze this, just a reminder of how a search engine query
 is evaluated.  Again, this is old hat now but was revolutionary at the
@@ -221,7 +221,7 @@ Technology in Gaithersburg, Maryland.
 \label{sec:ir:tf-idf}
 
 We will talk about neural representations later when we talk about
-models like \abr{bert} (Section~\ref{}).
+models like \abr{bert} (Section~\ref{sec:methods:deep-retrieval}).
 %
 Those representations are called \emph{dense}---not because they're
 dumb, they're quite clever---but they packe a lot of information into
@@ -320,7 +320,7 @@ of baseball.
 %
 Since one of my big interests is comparing human vs. computer ability, it's
 worth comparing it to the state of the art in human question
-answering in the mid-twentieth century~\cite{sedman-11}:
+answering in the mid-twentieth century~\citep{sedman-11}:
 \begin{quote}
 Abbott: Goofy, huh? Now let's see. We have on the bags - we have Who's on first,
 What's on second, I Don't Know's on third. \\
@@ -370,7 +370,7 @@ Like the search over large document collections the \abr{baseball}
 system specifies what it is looking for using what it calls a
 specification list.
 %
-If the quesiton is \question{Where did the Red Sox play on July 7?},
+If the quesiton is \question{Where did the Red Sox play on July 7?}
 the specification is
 \begin{verbatim}
 Place = ?
@@ -448,7 +448,7 @@ them all: \abr{shrdlu}.
 \abr{shrdlu} was described in the thesis of Terry
 Winograd\dots remember that name, we’ll be
 %
-seeing it again in Chapter~\ref{sec:datasets:adversarial}!
+seeing it again in Chapter~\ref{sec:leaderboards:adversarial}!
 
 Unlike the \abr{lunar} and \abr{baseball} which are exactly
 what they say on the tin, I need to explain
@@ -496,14 +496,14 @@ by the author Fredric Brown.
 That story is about a Linotype machine—the
 pinnacle of technology at the time—that
 became self-aware because it understood all
-of the information being fed into it (Figure~\ref{ir:linotype}).
+of the information being fed into it (Figure~\ref{fig:ir:linotype}).
 
 \begin{figure}[!ht]
-    \subfloat[Linotype Machine\label{fig:subfig-1:dummy}]{%
+    \subfloat[Linotype Machine\label{fig:ir:linotype-machine}]{%
       \includegraphics[width=0.45\textwidth]{figures/external/wikipedia_commons_Linotype_Simplex_1895}
     }
     \hfill
-    \subfloat[First sub-figure\label{subfig-2:dummy}]{%
+    \subfloat[Linotype Science Fiction\label{fig:ir:etaoin-shrdlu}]{%
       \includegraphics[width=0.45\textwidth]{figures/external/public_domain_etaoin_shrdlu}
     }
     \caption{The origin of the name ``\abr{shrdlu}'': the most frequent
@@ -551,7 +551,7 @@ isn’t static: it changes as the user interacts
 with the block world.
 
 \begin{figure}
-  \includegraphics[width=.5\linewidth]{external/shrdlu}
+  \includegraphics[width=1.0\linewidth]{figures/external/shrdlu}
   \caption{A screen shot of the \abr{shrdlu} system.  Unlike other
     early \abr{qa} systems with a static world, you can move the
     blocks around and ask questions about them.  However, it's a very
