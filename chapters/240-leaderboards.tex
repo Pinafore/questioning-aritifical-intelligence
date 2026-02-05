@@ -69,6 +69,109 @@ in machine learning and natural language processing.  Very similar models are
 used for rating players in chess and other games and for predicting how
 politicians will vote on particular bills.
 
+\section{How Humans Cheat}
+\label{sec:leaderboards:cheat}
+
+
+Last year, I wrote a position paper about the AI researchers who make question answering systems can learn from trivia nerds.  Given the time constraints of the conference and the need to be more “academic”, I couldn’t say everything I wanted to.  So I’ll try not to be too repetitive in this video.  What I would like to do is talk more about how the trivia community learned hard lessons and how the question answering community is still learning those lessons.  I’m hoping by going into a little more detail about how the trivia community made mistakes … might prod computer scientists to see how they might be relevant to how we’re training and evaluating computer question answering systems.
+
+Even if you don’t care about question answering specifically, I think this will help get ideas across about how to do effective evaluation in machine learning.
+Okay, so what are hard won lessons of the trivia community that the geniuses working on AI have yet to master?  1.  Don’t cheat.  2.  Reward knowledge 3. Write good questions.  While that may seem simple, it took a while for humans to figure these things out for trivia competitions, and the artificial intelligence community is still figuring it out.
+
+GI Bill Footage from CBS This Morning:
+https://www.youtube.com/watch?v=fgtvMceoimU
+
+As veterans returned home from World War II, there was a huge thirst for new forms of entertainment.  The Manhattan project and the space race showed the importance of knowledge and expertise, and the GI Bill turned open the taps of knowledge to an information-thirsty populace.  These trends were naturally reflected in popular entertainment, as new quiz shows like Twenty One sprang up.
+
+https://youtu.be/JRKxNpwqBac?t=1154
+
+What’s the matter with 21?  It was rigged, as Herb sandbagged to let his opponent win as documented in the 1994 movie Quiz Show!  
+
+https://youtu.be/bj-m3Ddmn0E?t=83
+
+The handsome Charles van Doren was able to peek at the answers and did pretty well!
+
+Now, the obvious version of cheating is something that we don’t often see in AI research.  But there are subtler ways that systems after a manner cheat.  Let’s think about this very abstractly.  Let’s say that when you are asked some questions, you get to absorb some information that you can use next time.
+
+Now, in the 21 cheating scandal, the process allegedly went something like this: 
+Let’s try practicing these questions!
+Sure …
+Ooh, you got two wrong, here are the correct answers
+You could then compute the total length of the correct answers and that’s how much information “leaked” from the test set.  That’s a lot!  
+
+Now, let’s compare that with a more “reasonable” system that resembles what you actually see for a lot of question answering datasets.  You can submit a system that answers questions (usually as a docker container to make sure it doesn’t phone home), and then you get back a score with how well you did.  There’s no problem here, right?  You don’t know what the answer is, right?
+
+Well, don’t forget that computers have infinite patience … think about it like cracking a password.  You could try all possible answers for position 1, all possible answers for position 2, etc.  But computers can crack more cleverly … you have a set of answers and have some confidence on each guess.  Take your lowest confidence answer, switch the answer.  
+If the score goes up, the guess went from wrong to right.  
+If the score goes down, the guess went from right to wrong.
+If the score stays the same, the guess stayed wrong … keep hunting.
+But in this example, the score went up, so we know that that answer was actually correct.  Nobody explicitly told us the answer was Uluru, but the effect is the same.  If you do it this way, there are thousands of possibilities to try, not millions.  And this is clearly in the realm of possibility for computers: even if you can’t probe every answer, you can still crank up your score quite a bit (and don’t forget that outcomes are correlated!).
+
+Now, I don’t think people would actually do this (or at least admit to it), but there are many black box neural network optimization toolkits that adjust the many parameters of a neural model (often on dev data).  And implicitly, even on test data, you get higher numbers for some models than others … and that’s a signal.  People try out many different models and just use the highest score as the legitimate representative of a system or a technique.
+
+Jesse Dodge has done some great work on how to more fairly report experimental results without cheating: essentially, you need to have a budget for how many comparisons you make.  And then you need to apply the same budget to every system fairly.
+
+And this is why I think the human model for comparing question answering ability (i.e., a trivia tournament) is the model we should follow: you only get to run on the test data. 
+
+And, yeah, maybe the reason is that we can’t wipe human memories.  But I think it’s more realistic, even for computers: you only have a single chance to make a first impression on a user.  And this is why the model is also what happens for DARPA evaluations.
+
+Now, bad stuff happens in this style of evaluation.  We had a particularly embarrassing outing in 2016 when we lost … very badly against some smart humans.  Despite having done much better the year before. 
+
+Us losing (badly) to top quiz bowlers:
+https://www.youtube.com/watch?v=c2kGD1EdfFw
+
+Ugh, that still hurts. But that’s not an argument against these style of evaluations.  You should lower your embarrassment threshold and do evaluations more frequently.
+
+And this is why I use surprise questions for my courses to see how well systems react to novel data.
+
+But it’s not just the sanctity of the test set.  Let’s move on to how you ask questions.
+
+Regular viewers of this channel will know that I am an advocate of the Quizbowl model of asking questions.  But let’s dig into its evolution a little bit more.  
+
+The mythology of Quizbowl says that it was a USO diversion created by Canadian Don Reid as a way of entertaining allied troops in Europe.  However, in my reading it seems that a lot of the core ideas were introduced by host Allen Ludden once it became a radio program.  
+
+But the key idea is that the questions can be interrupted, meaning that part of the skill is correctly balancing your own uncertainty.  Every word is an opportunity for either team to show that it knows more than the other team.  I have videos arguing for why this is the right and proper way to evaluate who knows more about a topic, so I will keep this brief.  
+
+In that 2020 paper I mentioned before, Ben Boerschinger and I argued that you want question answering datasets to be maximally discriminative. 
+
+See the paper for the equations!  But the moral of the story is that the Quizbowl format popularized by College Bowl created the right format for reliably determining who knows the most about a topic.  Every question is discriminative.  In other words, rewarding knowledge rather than buzzer speed or luck (you can see my other videos for why, for instance Jeopardy isn’t a good test of human vs. computer intelligence).
+
+But the format is a necessary but not sufficient condition: you also need to have good quality questions.  
+
+Let’s now turn to the final lesson from the trivia community: writing good questions.  During the early nineties, three heroes created the Academic Competition Federation.  As a point of Terrapin pride, John and Ramesh were Maryland students.  Together, with Carol Guthrie, they created an organization dedicated to creating questions that fully take advantage of the beauty and elegance of the Quizbowl format.
+
+So what innovations did they introduce?  First, avoiding ambiguity: 
+
+So what does a good question look like?  First, you don’t want to have ambiguous questions.  For example, if you ask the question “What’s the capital of Georgia”, you answer beautiful Tblisi but the official answer is Atlanta, then you’re going to be upset! 
+
+Sewon Min recently had a great paper highlighting this problem in modern question answering datasets in 2020, but this was a big part of the diatribes Carol was making in the early nineties.
+
+Part of ACF's style was to make sure that what they’re asking is obvious as a reaction to some of the excesses of ambiguous or misleading college bowl questions.  There are many dimensions of this.  For example, making sure that you don’t just ask “when was the Battle of Hastings” you say things like “in what year” or “day and month required”.  This is a problem in datasets like SQuAD and Natural Questions where it’s not always clear what’s required to answer the question: annotators just highlight whatever is convenient.
+
+So why is this a problem?  Machine learning algorithms have an objective function that they’re trying to optimize.  If they give a correct answer, they should be rewarded so that they can repeat the process on the next question.  If you get the question, “What is the capital of Georgia” and you’re ruled incorrect when you say “Atlanta” (after learning the opposite lesson from the previous training example), you are going to be upset.  And this is true whether you’re a human or a machine learning algorithm.
+
+Similarly, you need to accept all of the possible answers to a question.  Again, we see the same pattern as before: research papers are only now recapitulating the lessons learned by the trivia community 40 years ago.  A great undergrad I’m working with showed that this can make machine learning question answering systems more robust.  If you only accept “Timothy Donald Cook” as the correct answer for “Who is the CEO of Apple”, then that makes “Tim Cook” as wrong as “Tim Apple”.  Again, this confuses algorithms that are trying to learn how to answer these questions.  And even if you just care about climbing the leaderboards, we recently had a paper explaining how to squeeze out a few more points by paying attention to that.
+
+https://slate.com/culture/2019/04/jeopardy-quiz-bowl-connection-ken-jennings.html
+
+Another organization that should be mentioned in the promulgation of good Quizbowl is National Academic Quiz Tournaments, founded by R. Hentzel.  Not only have they created a system of good, discriminative high-quality tournaments for middle school and high school students in North America, they have also served as the employer of people like Ken Jennings and Larissa Kelly (and full disclosure, me too in the early aughts) and have made Quizbowl more professional.  Here’s Ken Jenning’s extolling the virtues of Quizbowl in a NAQT promotional video.
+
+There are many ways that this is relevant: things have different names because of language, history, pen names, nicknames, convenience, mathematical equivalence, or domain-specific rules.  The new professional organizations have created systematic evaluations that, because the goal is to reward knowledge, also are the kinds of rules for judging the correctness of machine answers.  Even if a user might prefer to get their answers in Fahrenheit, the computer should know that they’re the same thing!
+
+But these organizations are not just question writing organizations.  Their goal is to create efficient systems for as quickly as possible determining out of 256 teams at a convention center which knows the most.  In addition to the Quizbowl format, the selection of appropriately difficult questions asked at the right time to the right teams makes this possible.
+
+Here, I don’t even have a “perfect” recent paper to flash on the screen to show that, yeah, computer science knows that it’s a problem 40 years to late.  We’ve been working on using item response theory and adversarial interfaces, but there’s still quite a ways to go.  
+
+Let’s take how computer comparisons lag behind those for humans.  While there are monthly competitions to see which human can best answer questions, computers are reusing stale data from 2018 to see who’s best.  And those questions are written by random people on the internet: either crowdworkers or clueless people looking for answers in a search engine.  In contrast, domain experts are writing questions lovingly edited by people like Ken Jennings and Larissa Kelly when people go to NAQT or ACF competitions.  
+
+And while things like Dynabench are trying to create adversarial datasets (or our own TrickMe interface), these datasets are tiny compared to the tens of thousands of questions written every year for human trivia competitions.  I, of course, think that this is a possibility for synergies between the two communities.
+
+Computers can help find patterns and reduce drudgery: make human trivia more exciting and efficient.  And the trivia experts, with their depth of knowledge, can help computers understand more of the world.  Likewise, the best practices of the hard won victories of the last seventy years of trivia can help machine learning researchers avoid the same mistakes.
+
+And, most importantly, I think it can be fun for everybody, especially us researchers.
+ 
+
+
 \section{How Computers Cheat}
 \label{sec:cheating}
 

@@ -46,7 +46,7 @@ did indeed change the world.
 After his defeat, Gary Kasparov took a ``if you can't beat them, join them''
 approach and then began arguing for Centaur Chess: humans and computers
 playing chess together (this works for question answering too, as we discuss
-in Chapter~\ref{sec:methods:cooperative}).
+in Chapter~\ref{sec:leaderboards:cooperation}).
 %
 Likewise, the best Go players became more creative and novel moves by 
 incorporating computer-like play into their play style~\cite{shin-23}.
@@ -177,7 +177,7 @@ Becomes the lookup
 %
 Some of these can be looked up directly in datasets, but \textsc{start}
 further builds on the systems like \textsc{lunar} and \textsc{baseball}
-(Chapter~\ref{ch:history}).
+(Chapter~\ref{sec:ir:gofai-qa}).
 %
 While those systems \textsc{lunar} and
 \textsc{baseball} also need to turn the raw text of questions into a structured
@@ -927,7 +927,7 @@ competition would take place on normal, written questions.
 %
 In the media coverage of the competition, this focused on avoiding
 video and picture daily doubles (fairly reasonable, but we'll discuss
-how multimedia questions might be more fun in Chapter~\ref{sec:formats:domain}).
+how multimedia questions might be more fun in Chapter~\ref{sec:formats:multimodal}).
 %
 However, this causes two problems: the questions are too easy and do
 not necessarily challenge computers.
@@ -959,16 +959,14 @@ This isn't fun to play.
 Nor is it fun to watch.
 %
 This is why \jeopardy{}'s tournament of champions is played on much more
-difficult\footnote{And it the difficulty doesn't just ratchet in one
-  direction, all ``special'' matches use designated questions: ``Celebrity
+difficult\footnote{The difficulty ratchet isn't one way; all ``special'' matches use designated questions: ``Celebrity
   \jeopardy{}'' are easier (as mocked by categories like ``States that end
   with Hampshire'' or clues like ``You wear these on your face to help you see
   better'' on \textit{Saturday Night Live}), and ``College \jeopardy{}'' isn't
   necessarily easier but does have more college football and popular music.
-  All of these feature questions written with care to be tuned to abilities of
-  the expected players.  \abr{ibm} did not want the computer to be targeted,
+  Questions are tuned to expected players' abilities.  \abr{ibm} did not want the computer to be targeted,
   lest the questions be adversarial against the computer.
-  Chapter~\ref{sec:datasets:adversarial} discusses what this would look like if we
+  Chapter~\ref{sec:leaderboards:adversarial} discusses what this would look like if we
   specifically \emph{wanted} that to happen.} clues~\citep{harris-06}.
 %
 Nonetheless, this is the battlefield where Watson won: ``normal''
@@ -1095,7 +1093,7 @@ Unlike for human contestants, the ``difficulty'' of \jeopardy{}
 questions for a computer has no relationship to the nominal value.
 %
 We talk about how Facebook/Meta dealt with this problem in
-Chapter~\ref{sec:datasets:adversarial}: tell the authors what's hard for a computer.
+Chapter~\ref{sec:leaderboards:adversarial}: tell the authors what's hard for a computer.
 
 \section{Two Nice Guys, One Computer with no Shame}
 \label{sec:watson:strategy}

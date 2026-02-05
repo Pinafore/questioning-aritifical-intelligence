@@ -62,7 +62,7 @@
           {"label": "question", "title": "What is a Question?", "summary": ""},
           {"label": "evidence", "title": "Where do you get an Answer?", "summary": ""},
           {"label": "conversation", "title": "What did you Mean?", "summary": ""},
-          {"label": "domain", "title": "A Picture is worth a Thousand Questions", "summary": ""},
+          {"label": "multimodal", "title": "A Picture is worth a Thousand Questions", "summary": ""},
           {"label": "language", "title": "Questions Beyond English", "summary": ""},
           {"label": "skills", "title": "The Skills Needed to Answer Questions", "summary": ""},                    
           {"label": "taxonomy", "title": "A Taxonomy of Question Answering", "summary": ""}

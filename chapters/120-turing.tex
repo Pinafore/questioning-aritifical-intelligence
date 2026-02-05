@@ -11,10 +11,25 @@ the Nazi Enigma device (which is why his memorial bench has ciphertext
 underneath his name) and helped bring World War II in Europe to an
 earlier conclusion.
 
+Turing's life is incredible.  Beyond saving thousands of lives
+by breaking German codes, Turing hypothesized what a computer could
+do.
+%
+His abstraction of a Turing machine is the field's definition of what
+it means to know what a computer can do.
+%
+If a problem can be solved on a theoretical Turing machine, we call it
+``computable''; any computer made using standard logic\footnote{E.g.,
+  this applies to any computer that Intel will put out but not to
+  quantum computers (should they ever work).} can also solve
+the problem.\footnote{Assuming you have sufficient memory and time.}
 
 \section{The Imitation Game}
 \label{sec:turing:imitation}
 
+Whole books have been devoted to these other facets of Turing, in
+addition to his bittersweet personal life.
+%
 But Turing is also a game designer.  Quoting from Bishop’s
 description:
 \begin{quote}
@@ -29,18 +44,13 @@ description:
 The players can lie, so the key to correctly deciding the genders of
 the players is more about determining which player lacks key knowledge
 about the experience of being a man or a woman.\footnote{What makes
-  the Turing Test more poignant to me, at least, is that as a closeted
+  the Turing Test more poignant is that as a closeted
   gay man in a country where homosexuality is illegal, every
   interaction is dangerous: Turing is pretending to be something that
   he is not, and has to present himself as if he were a heterosexual
-  man.  There's no evidence evidence to suggest that this was an
+  man, and with every conversation it is possible he is being interrogated to see if he can
+  pass this test of deception.  There's no evidence evidence to suggest that this was an
   inspiration for his first Turing Test, however.}
-
-But what does this have to do with \abr{ai}?  Turing then thought,
-let’s replace the man and the woman with a computer and a human.  If
-the interrogator cannot determine which is the computer and which is
-the machine, then the machine has displayed something that looks like
-intelligence.
 
 This is hard because there are lots of ``tells'' that can expose
 someone who is transgressing against their assigned gender roles.
@@ -53,7 +63,35 @@ And while an impostor can read many accounts to get an idea of what
 someone has said about it, simply parroting these stories does not
 equate to understanding.
 
-\section{No, the Turing Test has not been Solved}
+\section{The Second Turing Test}
+
+But what does this have to do with \abr{ai}?  Turing then thought,
+let’s replace the man with a computer.  If
+the interrogator cannot determine whether the entity on the other end
+of the teletype is a human or a machine (even when they're both
+claiming to be a machine), then the machine has displayed something that looks like
+intelligence.
+
+Why do we need this silly game?
+%
+Becuase if you picked something that correlates with intelligence (say
+playing chess), you could fairly easily make a machine that can only
+do that.
+%
+Turing believed---and enough  have gone along with this---that
+answering questions about any topic is a general enough test of
+intelligence that it would require something of equivalent
+intelligence to a human to win the game.
+
+To recap, to have a Turing test, you need \textbf{A Skilled
+  Interrogator}, \textbf{An Unrestricted Domain}, and \textbf{Knowdge
+  that You're Playing the Game}.
+%
+As we'll see in a second, many of the times have claimed that the
+Turing Test has been past fail because one of these ingredients has
+been lacking.
+
+\subsection{No, the Turing Test has not been Solved}
 \label{sec:turing:failures}
 
 \jbgcomment{Add CICERO rant here}
@@ -98,6 +136,45 @@ simple, intuitive test of whether we have achieved artificial
 intelligence.  So although we haven’t had a real Turing Test yet, a
 judge asking questions of either an \abr{ai} or a human remains many
 researchers’ goal.
+
+\section{The First Turing Test: Deception and Theory of Mind}
+
+\citet{sterrett-00} argues that Turing actually proposed two versions
+of his eponymous test.
+%
+There are actually two ways of interpreting ``replace the man with a
+computer'' in the Imitation Game.
+%
+A more literal interpretation would be a computer and a man would both
+compete who could best impersonate a woman.
+
+Sterrett argues that this is a more fair test because it puts the
+human and the man in a more similar role: they are both pretending to
+be something they are not.
+%
+\jbgcomment{check cite}
+XXX says that a dullard in the Second Turing test must do nothing more
+than answer questions honestly; there's no skill involved.
+%
+As we argue in Chapter~\ref{ch:leaderboards}, we are often interested
+in comparing human vs. computer skill.
+%
+This scenario has humans and computers both compete to pretend to be a
+woman, and you could measure the relative probability of
+success.\footnote{While I am also a fan of this interpretation of the
+  Turing Test, it is less well-defined and standardized.  An obvious
+  criticism is that you would probably want the interrogator to always
+be a woman.}
+
+What I like about this opportunity for comparison is that it requires
+humans and computers to explicitly use theory of mind\citep{}: they
+must create a ficticious persona that will be probed by the
+interrogrator and also craft responses in a way that will elicit the
+correct responses from the interrogator.\footnote{If asking questions
+  about gender is off-putting, you could easily replace this with an
+  American pretending to be a Brit; the same principles apply.}
+
+
 
 \section{A Rigorous Test}
 \label{sec:turing:test}
