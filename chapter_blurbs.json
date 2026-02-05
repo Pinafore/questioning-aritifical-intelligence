@@ -5,11 +5,11 @@
     },
     {
       "label": "turing",
-      "summary": "In the 1950s, Alan Turing proposed a parlor game that would come to define the artificial intelligence: could a wiley interrogator discern whom they were talking to just through posing clever questions.  The eponymous Turing Test is the most durable (but contentious) definition of what an intelligent computer is, and this chapter reviews how it shaped the development of artificial intelligence.",
+      "summary": "In the 1950s, Alan Turing proposed a parlor game that would come to define the artificial intelligence: could a wiley interrogator discern whom they were talking to just through posing clever questions.  The eponymous Turing Test is the most durable (but contentious) definition of what an intelligent computer is, but it is built on deception.",
       "sections": [
-        {"label": "legacy", "title": "Turing's Legacy", "summary": "Why Turing is widely considered the father of computer science for multiple reasons."},
+        {"label": "legacy", "title": "Turing's Legacy", "summary": "Why Turing is widely considered the father of computer science for multiple reasons and how contributed to cloak and dagger spy operations."},
         {"label": "imitation", "title": "The Imitation Game", "summary": "A gay man in England---where homosexuality is criminalized---posits a games about the ability of someone to pass in different gender roles.  Why this is difficult lays the foundation for why computers still struggle to capture human nuance."},
-        {"label": "failures", "title": "No, the Turing Test has not been Solved", "summary": "While many have claimed to pass the Turing Test, it hasn't happened yet.  We review some notable claims of passing the Turing Test and why they fell short."},
+        {"label": "failures", "title": "No, the Turing Test has not been Solved", "summary": "While many have claimed to pass the Turing Test, it hasn't happened yet.  We review some notable claims of passing the Turing Test and why they fell short, and why you shouldn't fall for the claims of charlatans."},
         {"label": "test", "title": "A Rigorous Test", "summary": "The ingredients that make a Turing Test legitimate"},
         {"label": "agi", "title": "General Artificial Intelligence", "summary": "How the holy grail of AI is defined and how the Turing Test can measure it."}
       ]
