@@ -82,6 +82,9 @@
             {\@cite@ofmt{\csname b@\@citeb\endcsname}}}}{#1}}
 \makeatother
 
+\newcommand{\rotlabel}[1]{%
+\rotatebox[origin=r]{90}{\centering \textbf{#1}}%
+}
 
 \newcommand{\invisiblesection}[2]{
 	\refstepcounter{section}%
@@ -136,7 +139,7 @@
 \newcommand{\digambig}[1]{\Psi \left( #1 \right) }
 \newcommand{\digam}[1]{\Psi \left( \textstyle #1 \right) }
 \newcommand{\ddigam}[1]{\Psi' \left( \textstyle #1 \right) }
-
+\newcommand{\expp}[1]{\mbox{exp} \left( \textstyle #1 \right) }
 
 \renewenvironment{quote}
 {\list{}{\rightmargin\leftmargin}%

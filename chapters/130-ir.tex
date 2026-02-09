@@ -23,6 +23,9 @@ by~\citet{voorhees-19}, which I encourage you to read something with
 more detail and more references, more focused on information
 retrieval.
 
+\section{Cleverdon's Clever Collection}
+\label{sec:ir:cranfield}
+
 The story begins in 1967 with Cyril Cleverdon at Cranfield University
 in England: which has an airport right on campus.\footnote{Here
 at the University of Maryland we have to walk a whole fifteen minutes
@@ -82,9 +85,12 @@ is evaluated.  Again, this is old hat now but was revolutionary at the
 time.  To evaluate a system’s ability to search a dataset, you take
 some queries from users and then find the truly relevant documents to
 that query.  Then, given a system’s results, you compute the
-precision—out of all of the documents they returned how many were
+precision---out of all of the documents they returned how many were
 right—and recall—out of all possible right documents how many did they
 find.
+
+\section{Is it Better to Find All the Good Things or for Everything Found to be Good?}
+\label{sec:ir:precision-recall}
 
 Because these concepts are important, let's pause to review how
 success at finding a relevant answer was measured by \citet{keen-66}.
@@ -157,6 +163,15 @@ But if you're trying to answer a simple question, you don't need every
 document that tells you what the capital of Arkansas is, you just need
 one, and you don't want anything irrelevant.
 
+Sometimes you want to balance precision and recall.  A common
+combination of these two measures of goodness is $F_1$ score, which is
+the harmonic mean of precision and recall:
+\begin{equation}
+  F_1 \equiv = 2 \frac{\mbox{precision} \cdot
+    \mbox{recall}}{\mbox{precision} + \mbox{recall}} = 
+\label{eq:f-score}
+\end{equation}
+
 So, if you have a set of queries $q_1$\dots $q_N$ you can run your
 system on each question, get a set of results, compute the precision
 and recall of each one, and then create a ranking of the systems.
@@ -217,7 +232,7 @@ Sp\"ark Jones a little bit west of Cranfield at Cambridge and by Ellen
 Vorhees and others at the National Institute for Standards and
 Technology in Gaithersburg, Maryland.
 
-\subsection{Term-Frequency and Inverse Document Frequency}
+\subsection{Which Words Matter Most in your Index?}
 \label{sec:ir:tf-idf}
 
 We will talk about neural representations later when we talk about
@@ -289,13 +304,39 @@ where we use $\log$ to not so carefully distinguish very frequent
 words (``the'') from fairly frequent words (``very''); both are about
 as unimportant.
 
+But this only gives the \emph{representation} of a document.
+%
+How does this go from a query to finding relevant answers?
+%
+Given a query representation $\vec q$---a vector with a sparse entry
+for every term---and a document representation $\vec d$---also a
+vector with a sparse entry for every term---to find the similarity, we
+see how similar they are.
+%
+The more words that overlap, the higher the similarity.
+%
+Moreover, the higher the weight of the words, the more important their
+contribution to the similarity.
+%
+To turn these intuitions into mathematics, we multiply each of the
+terms' weights and add them all up:
+\begin{equation}
+  \mbox{similarity}(\vec q, \vec d) = \sum_t \vec q_t \cdot \vec d_t.
+  \label{eq:ir:dot-product}
+\end{equation}
+This operation is called a dot product.
+%
+Because most terms' weight will be zero, this is essentially looking
+for overlap of words that are important to the document but that don't
+appear in many different documents.
+
 These took the theoretical insights of the original
 Cranfield experiments and made them into something that could actually
 work.  Again, this was revolutionary: as a result the British
 Computing Society named their annual award for researchers in this
-area after Karen Spärk Jones.
+area after Karen Sp\"ark Jones.
 
-\section{Old-Fashioned \abr{ai}}
+\section{Old-Fashioned \abr{ai}'s Search for Meaning}
 \label{sec:ir:gofai-qa}
 
 Given the Cranfield paradigm, we now have a setup for creating \abr{qa}
@@ -632,7 +673,8 @@ and then you train approaches using the Cranfield
 paradigm to make sure that, yes, on average
 it can answer the typical user’s questions.
 
-\section{Leading up to Google}
+\section{Making Hide and Seek (in Documents) a Professional Game}
+\label{sec:ir:nist}
 
 And that's exactly the long-lasting legacy of the Cranfield paradigm shaped
  how we get answers from the internet.
@@ -667,3 +709,5 @@ librarian, was to help users.  And yes, reusable test collections help you do
 that—and they’ve spawned multibillion dollar companies around the world—but at
 the end of the day you still need to check whether real users are actually
 finding the information they need.
+
+\jbgcomment{Would be nice to have clearer connection to Google}

@@ -3,8 +3,9 @@ We begin the ``modern'' age of computer question answering and the rise of
 \abr{ai} with \watson{}: an \abr{ibm}-built \abr{ai} that could play the
 American game show \jeopardyf{}
 
-It's been over a decade since \watson{} appeared on \abr{tv}, but it was
-revolutionary.  This chapter will talk about how it changed my life, how it
+It's been over a decade since \watson{} appeared on \abr{tv}, but the
+passage of time has not dulled the luster of this 
+revolutionary \textit{tour de force}.  This chapter will talk about how it changed my life, how it
 changed the way the public thought about \abr{ai}, and how its technology
 paved the way for ``modern'' \abr{ai} as exemplified by \mm{}s like \abr{gpt}.
 
@@ -14,6 +15,7 @@ argument that the game was subtly rigged in a way that set back research on
 \abr{ai}.
 
 \section{Why \abr{ibm} Chose \jeopardy{} for a Grand Challenge}
+\label{sec:grand-challenge}
 
 \watson{} is part of a long history of ``grand challenge'' projects meant to
 symbolize progress on \abr{ai}.
@@ -21,8 +23,7 @@ symbolize progress on \abr{ai}.
 \abr{ibm} (International Business Machines) is a New York-based technology
 company that for much of the twentieth century was synonymous with computing.
 
-\subsection{Grand Challenges}
-\label{sec:grand-challenge}
+
 
 It had previously wowed the world by creating ``Deep Blue'', a chess-playing
 computer that defeated Gary Kasparov in 1997, widely considered the best chess
@@ -49,12 +50,12 @@ playing chess together (this works for question answering too, as we discuss
 in Chapter~\ref{sec:leaderboards:cooperation}).
 %
 Likewise, the best Go players became more creative and novel moves by 
-incorporating computer-like play into their play style~\cite{shin-23}.
+incorporating computer-like play into their play style~\cite{shin-25}.
 %
 And two decades after \abr{darpa}'s autonomous grand challenge, we now have
 self-driving cars on the street in several \abr{us} cities.
 
-So what made \abr{ibm} pick \jeopardy{} for its grand challenge?
+So what made \jeopardy{} the right pick for this grand challenge?
 
 
 \subsection{What \jeopardy{} is and How it Works}
@@ -119,7 +120,7 @@ Then, my scepticism turned to jealousy.
 I watched, along with the rest of the world, one of the greatest
 achievements of \abr{ai} unfold in front of me.
 %
-What was I doing wasting my time working on language models if this was
+What was I doing wasting my time working on language models~\citep{boyd-graber-10:linguistic} if this was
 also legitimate research?
 
 Let me be clear that the technical triumphs are indisputable (and, in
@@ -153,7 +154,7 @@ unreasonable effectiveness of big data'', and this required scaling
 approaches to web-scale data.
 %
 The first things that people tried was scaling up the ``good,
-old-fashioned'' approaches that defined the rule-based systems.
+old-fashioned'' approaches that defined the rule-based systems (Chapter~\ref{sec:ir:gofai-qa}).
 %
 Probably the most prominent system in this category is Start from Boris Katz
 at \textsc{mit}.  This system first launched in 1993.
@@ -169,20 +170,19 @@ For example, given the question:\footnote{This is an impressive/complicated ques
 %
 \question{Who directed \emph{Gone with the Wind}?}
 %
-Becomes the lookup
-\begin{quote}
-  \texttt{(get "imdb-movie" "Gone with the Wind (1939)" "DIRECTOR") =>
-    ("George Cukor" "Victor Fleming" "Sam Wood")}~\citep{katz-02}.
-\end{quote}
+Becomes the lookup~\citep{katz-02}
+\begin{verbatim}
+(get "imdb-movie" "Gone with the Wind (1939)"
+                  "DIRECTOR") =>
+    ("George Cukor" "Victor Fleming" "Sam Wood"))
+\end{verbatim}
 %
 Some of these can be looked up directly in datasets, but \textsc{start}
-further builds on the systems like \textsc{lunar} and \textsc{baseball}
-(Chapter~\ref{sec:ir:gofai-qa}).
+further builds on the systems like \textsc{lunar} and
+\textsc{baseball} we talked about in previous chapters.
 %
-While those systems \textsc{lunar} and
-\textsc{baseball} also need to turn the raw text of questions into a structured
-representation, the difference of \textsc{start} is that
-is to deal with the
+While those systems also need to turn the raw text of questions into a structured
+representation, \textsc{start} had to do that and deal with the
 messiness of Internet text.
 %
 And its ability to \emph{search} the
@@ -191,8 +191,7 @@ chapter---\watson{}---and later Dense Passage
 Retrieval later~(Chapter~\ref{sec:methods:deep-retrieval}).
 
 \subsection{Transforming Questions to find the Answer}
-I
-n the next chapters about neural language models, we will discuss how new
+In the next chapters about neural language models, we will discuss how new
 models \emph{transform} questions into numbers (vectors) to find or generate
 the answer.
 %
@@ -233,16 +232,17 @@ multihop question answering in Chapter~\ref{ch:formats}).
 %
 \abr{qasm} can apply plenty of transformations: swapping words,
 deleting words, ignoring words (e.g., if you have Cleveland, Ohio and ignore
-Ohio, you’ll find more things about US president Grover Cleveland), etc.
+Ohio, you’ll find distracting things about \abr{us} president Grover Cleveland), etc.
 
 \jbgcomment{Turn this into a real example}
 
 In the end, you have a model that creates specialized queries from the
 original question.
 %
-Later on, when we talk about dense passage retrieval, those systems are doing
-something similar, except they’re generating the query in a continuous vector
-space (Chapter~\ref{sec:methods:deep-retrieval}).
+Later on, when we talk about dense passage retrieval, those systems
+are doing something similar, except they’re generating the query in a
+continuous dense vector space
+(Chapter~\ref{sec:methods:deep-retrieval}).
 %
 Doing it with real words like \abr{qasm} is more interpretable: a human could
 understand what’s going on, while a vector query is inscrutable it seems to
@@ -252,7 +252,7 @@ But how does this allow \watson{} to answer questions?
 %
 When a question comes in, \watson{} searches over previous \jeopardy{}
 questions, Wikipedia, articles, and a select subset of the Internet to find
-evidence that can answer the question.
+evidence that can answer the question (Section~\ref{sec:ir:tf-idf}).
 
 \subsection{Buzzing is important for Humans and Computers}
 
@@ -279,8 +279,7 @@ The buzzer needs to decide if it should trust this guess.
 It has a number that it associates with seeing the exact clue before; let's
 arbitrarily say that it's 3.0.  It then compares that score with its threshold
 on when to buzz.  Again, let's arbitrarily say that the threshold is 1.0.  3.0
-is larger than 1.0, so it buzzes in with that guess (We'll talk more about how to set these numbers not-so-arbitrarily in
-Section~\ref{sec:watson:logistic-regression}).
+is larger than 1.0, so it buzzes in with that guess (We'll talk more about how to set these numbers not-so-arbitrarily shortly).
 
 But \jeopardy{} doesn’t have one kind of clue.  There are many different types
 of question, and sometimes you get a clue from the category about what kind of
@@ -290,7 +289,7 @@ response have to rhyme with each other and that it will have something to do
 with alchohol.
 %
 So, to answer the clue:
-\question{Rice wine for the guy who rides a racehorse},
+\question{Rice wine for the guy who rides a racehorse}
 %
 you are essentially doing a constrained search: you can find individual pieces
 that fit the clues (e.g., rewriting synonyms to discover things like makkoli,
@@ -367,7 +366,9 @@ look something like this:
 What made \watson{} such a \textit{tour de force} is that humans had to come
 up with each of these features.
 %
-This is not a one and done process.  If you're building a system like
+This is not a one and done process.
+%
+If you're building a system like
 this, you should look at things the system is still getting wrong and
 add a new feature to correct the issue.  This is the same process that
 Watson used to build their statistical system.  Maybe the system got
@@ -375,37 +376,69 @@ confused when somebody has a quote from literature and you need to
 make sure that doesn’t get counted or add a new feature to handle that
 case.  It’s very rare to get the features right the first time around.
 
-
-
-The statistical approach has some advantages over the neural approach
+This statistical approach has some advantages over the neural approach
 we'll see in the next chapter: it is easy to understand why a system
 is doing what it is.  And it's easy to fix problems as they pop up.
 
+Let's see how this might happen.
+%
+For example, the constraint is that the correct answer starts with a
+particular letter.
+%
+Often, this is straightforward in the category name: \textbf{Starts
+  with ``L''}.
+%
+So you might have a feature that matches that exactly.
+%
+But then you discover that this feature misses \textbf{Crossword Clues
+  ``P''}, and you can check that the feature didn't fire for that
+example and generalize that category.
 
-In other cases, the constraint is that the correct answer starts with a particular letter.  
-
-The category that I feared the most was anagrams: where you need to rearrange the letters in the clue to get to the answer.  This is actually easier for a computer than a human!
+The category that I feared the most was anagrams: where you need to
+rearrange the letters in the clue to get to the answer.
+%
+This is actually easier for a computer than a human!
+%
+If you have ``anagram'' in the category name, you create a feature
+that is true if the set of letters matches for both the clue and the guess.
 
 Each of these can have different approaches that can generate guesses that
 might be the correct answer.  And you might think that this is all encoded in
 the category.  Not so!
+%
+Sometimes the pattern reveals itself as you work your way through a
+category.  For example \textbf{Let's Make a Movie Crossover!} requires
+you to combine two movie titles (or characters) together.
+%
+So you would want a feature that would check for consistency with
+previous correct responses in the category.
 
-And for “normal” clues, this looks a lot like the reformulations that we saw in QASM: 400th anniversary of 1898 gets rewritten to 27th May 1498, India gets transformed into Kappad, and then you can find something with the correct response: Vasco de Gama.
+And for``normal'' clues, generating a guess looks a lot like the
+reformulations that we saw in QASM:
+\question{In May 1898 Portugal celebrated the 400th anniversary of
+  this explorer's arrival in India}
+A 400\textsup{th} anniversary of 1898 gets rewritten to May 1498, India gets transformed into Kappad, and then you can find something with the correct response: \answer{Vasco de Gama}.
 
 So the first phase of the Watson pipeline is to---in parallel---generate all
 sorts of guesses based on different interpretations of the question.  Some try
-to solve anagrams, others look for rhymes, others run an IR query like the
+to solve anagrams, others look for rhymes, others run an \abr{ir} query like the
 Start system we talked about before, others are doing transformations like the
-QASM approach we talked about before.
-
+\abr{qasm} approach we talked about before.
+%
 And sometimes the approaches need to take a recursive approach, combining
 different subsystems to get to the right answer.
 
-\subsection{Logistic Regression and Gradient Descent}
+\subsection{Deciding When to Trust a Guess: Which Features Matter?}
 \label{sec:watson:logistic-regression}
 
 From this you have dozens of possible guesses.  How do you know which---if
-any—to select?  This all gets fed into a logistic regression problem.  This
+any—to select?
+%
+Combining inputs to predict a value is often called a regression
+problem, and when the prediction is a binary decision, this is called
+a \emph{logistic regression} problem.
+% This all gets fed into a logistic regression problem.
+This
 can take into account how consistent the evidence matches the clue, how
 popular the response is, and it can even take into account things like
 Jeopardy!’s love of puns.
@@ -416,9 +449,13 @@ of our features.
 For the moment, let's continue that assumption\dots but we'll try to improve
 them so that we get more buzzes right and fewer wrong.
 %
-This will require a bit of math, so if you just want to jump ahead to the big
-picture (e.g., if you already know what \abr{sgd} for logistic regression
-looks like), go ahead to Section~\ref{sec:watson:feature-engineering}.
+This will require a bit of math, so if you just want to jump ahead to
+the big picture,\footnote{This will be our first ``technical''
+  section.  You don't need to read the technical sections to
+  understand the rest of the non-technical parts of the book, but
+  subsequent technical sections \emph{will} depend on previous
+  technical sections.} go ahead to
+Section~\ref{sec:watson:feature-engineering}.
 
 So what does it mean to get more buzzes right?  First, we need to define a
 little terminology: we need to consider the correct examples $\mathcal{X}_c$
@@ -442,7 +479,7 @@ directly because sometimes our features won't be binary.
 %
 And this should look familliar: it looks a lot like the dot product that we
 first saw in the chapter on information retrieval
-(Chapter~\ref{ch:ir}), where we compute the \emph{similarity} of
+(Equation~\ref{eq:ir:dot-product} in Chapter~\ref{ch:ir}), where we compute the \emph{similarity} of
 two examples by multiplying the \tfidf{} scores of two documents' words.
 
 And this is a good segue to \emph{why} we write this as a dot product rather
@@ -461,6 +498,9 @@ the weights to compute a score for the guess.
 %
 The higher the score, the better the guess and the more likely the system will
 answer.
+%
+And the weights will implicitly encode how important a feature is for
+making a decision.
 
 But this doesn't answer the question of how we can learn what the weights
 should be.
@@ -509,10 +549,10 @@ In this case our objective is to make the probability saying we should
 buzz---computed from our weights---for incorrect buzzes be as low as possible.
 %
 So this means that we're going to transform our weights into a
-probability~$\pi_i$ between zero and one that gets big when the weights pass the threshold:
+probability~$\pi_i$ between zero and one that gets big when the weights pass the threshold~$b$:
 %
 \begin{equation}
-  \pi_i = \sigma \left( \sum_j w_{j} x_{i,j} - b \right) \equiv p(\mbox{buzz} \g {\bm x}) \equiv \frac{1}{1+\exp{-\left(\sum_{j} w_j
+  \pi_i = \sigma \left( \sum_j w_{j} x_{i,j} - b \right) \equiv p(\mbox{buzz} \g {\bm x}) \equiv \frac{1}{1+\expp{-\left(\sum_{j} w_j
         x_{i,j} + b \right)}}.
   \label{eq:watson:pi}
 \end{equation}
@@ -532,7 +572,7 @@ probability of joint events together, but this leads to a very small number
 (since probabilities are less than one), so for mathematical convenience we
 take the log:
 \begin{equation}
-  \mathcal{L}' \equiv = \explain{How right are we}{\sum_{i \in \mathcal{X}_c}
+  \mathcal{L}' \equiv \explain{How right are we}{\sum_{i \in \mathcal{X}_c}
     \log{\pi_i}} + \explain{How wrong are we}{\sum_{i \in
       \mathcal{X}_f} \log{1 - \pi_i}}.
   \label{eq:watson:logprob}
@@ -545,7 +585,7 @@ Later in the book, objective functions like this will be called a \emph{loss
 \emph{minimize our mistakes}, so what we will do now (somewhat confusingly) is
 to minimize the negative of $\mathcal{L}'$, which we will call $\mathcal{L}$:
 \begin{equation}
-  \mathcal{L} \equiv = -\sum_{i \in \mathcal{X}_c}
+  \mathcal{L} = -\sum_{i \in \mathcal{X}_c}
     \log{\pi_i} - \sum_{i \in
     \mathcal{X}_f} \log{1 - \pi_i}.
   \label{eq:watson:loss}
@@ -624,8 +664,10 @@ w_j^{(old)} - \lambda \explain{error}{(\pi_i - y_i)} x_{i,j}.
 The most important part of the equation is the error: how far off your
 prediction for example~$j$ is.
 %
-Remember that the true outcome~$y_i$ is binary (either you should have
-buzzed---$y_i=1.0$---or you shouldn't have---$y_i=0.0$), but that the
+Remember that the true outcome~$y_i$ is binary: either you should have
+buzzed---$y_i=1.0$---or you shouldn't have---$y_i=0.0$.
+%
+However, the
 prediction~$\pi_i$ is a probability and thus ranges between 0.0 and 1.0.
 %
 The more right you are---the closer you are to $y_i$---the less the weights
@@ -645,8 +687,7 @@ say you should have buzzed when you didn't.
 If the error was negative, your prediction was too high, and so you slightly decrease all of the feature weights that
 caused you to get it wrong.
 
-The other input to the update is how much of this feature the example has:
-$x_{i,j}$.
+The other input to the update is how much of this feature the example has:~$x_{i,j}$.
 %
 To make sure your gradients don't get too big or too small, in practice we often
 standardize the feature weights so that they have mean zero and unit variance.
@@ -662,15 +703,12 @@ Let's say that you have a clue
 that Watson famously got wrong as a final \jeopardy{} when it answered the
 famous American city \answer{Toronto}.
 %
-So in this case our buzzer input\footnote{In reality, the calculus for Final
-  \jeopardy{} is a little different because it makes sense to provide some
-  answer no matter what, you don't really buzz in.  However, you still want
+So in this case our buzzer input\footnote{The calculus for Final
+  \jeopardy{} is different: you always provide a guess, so there's no buzzing.  However, you still want
   the best answer to have the highest probability, so we can still work
-  through this example.  And indeed, given the debugging output \watson{}
-wasn't very confident in its wrong output, so it probably
-  wouldn't have ``buzzed in'' during normal play,
-suggesting that everything was working as intended.  We talk about wagers at a cursory level in
-  Section~\ref{sec:watson:strategy}.} is whether we should buzz on this clue
+  through this example.  Given the debugging output \watson{}
+wasn't  confident, so it probably
+  wouldn't have ``buzzed in'' during normal play.} is whether we should buzz on this clue
 with the response \answer{Toronto}, for which we get a $\pi_i$.
 %
 For the sake of concreteness, let's say $\pi_i$ is 0.4\dots it's not high, but it
@@ -740,7 +778,7 @@ First, lets see how these features translate into a probability:
 \end{align}
 
 From Equation~\ref{eq:watson:update}, the error is 0.5---$\pi_i$ should have
-been zero, but it was 0.5---and if we assume that our step size\footnote{In practice, this would
+been zero, but it was~0.5---and if we assume that our step size\footnote{In practice, this would
   be a really bad step size---it's way too large, you're likely to jump over
   the valley in the objective function you're looking for---but we'll go with
   this because it makes the math easier.} is 1.0,
@@ -834,14 +872,18 @@ wrong (Figure~\ref{fig:watson:bad-month}).
 
 
 Something that is particularly unique to \jeopardy{} and not to the
-other QA settings we’ve looked at is that the category (they text that appears
+other \abr{qa} settings we’ve looked at is that the category (they text that appears
 atop the column a clue appears in) is a huge
 constraint on what the correct responses are.
 %
 A large part of the
 Jeopardy! buzzer is figuring out the ``lexical answer type'': what kind of
 thing can the answer be and only buzzing in on the things that are consistent
-with that type.
+with that type.\footnote{The Watson project called these signifiers
+  lexical answer types, but the Quizbowl community
+  (Section~\ref{sec:manchester:qb}) uses the term ``pronoun'' or
+  ``identifier''.  I prefer lexical answer type, however, so I'll
+  stick with that.}
 %
 Part of
 this is is looking at clues in the clue.
@@ -866,6 +908,11 @@ While we don't know for sure how this was implemented in detail, we can
 imagine that there is a feature that suggests whether the clue is consistent
 with an answer type of ``day'' or ``month'' (e.g., this clue is consistent
 with a ``month'' as an answer, and \answer{June} is a month).
+%
+Resources like WordNet~\citep{miller-90} can help with this: it
+provides a tree-like organization for all of the nouns in English so
+that you can check whether ``June'' is a month, whether a
+``schnauzer'' is a dog, or whether ``pride'' is an emotion.
 %
 And information from the current column could also be included in this, either
 directly in the computation of the feature or directly encoding something like
@@ -1010,7 +1057,7 @@ wait for a light to turn on.
 \jeopardy{} gurus explicitly advise new players not to wait for the light---your puny human reflexes are too slow.
 %
 Indeed, one of Ken Jenning's strengths was his uncanny ability to
-internalize the cadence of Alex's voice and when a technitian would
+internalize the cadence of Alex's voice and when a tech would
 activate the buzzer~\citep{jennings-06}.
 %
 In contrast, Watson is literally an electromechanical buzzing machine
@@ -1205,7 +1252,7 @@ And this is not the end of the story for judging whether computers are
 superhuman in their intelligence.
 %
 Since then, we've seen claims that computers are smoking lawyers in taking the
-\abr{lsat} or is better than radiologists in reading X-rays.
+\abr{lsat}~\citep{malik-24} or is better than radiologists in reading X-rays~\citep{bellamy-22}.
 %
 \watson{} was just the beginning of the story, as since then we've seen both a
 tremendous improvement in the technologies that drive \abr{ai} (we review
@@ -1217,5 +1264,5 @@ interest in measuring how smart these models are.
 
 In the next chapters, we go beyond the methods that \watson{} used to the
 modern \abr{qa} has \emph{actually} reached possible parity with humans and
-how to actually measure how far \emph{ai} has come since Ken Jennings lost to
+how to actually measure how far \abr{ai} has come since Ken Jennings lost to
 \watson{}\ (Chapter~\ref{ch:leaderboards}).

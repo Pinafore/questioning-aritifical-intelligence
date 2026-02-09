@@ -4,7 +4,11 @@ The history of artificial intelligence begins in many ways with a
 question answering game called the Turing Test.  This idea came out of the research of a
 researcher at the University of Manchester named Alan Turing.
 %
-But 
+But the history is much deeper than that; there are spies,
+misrepresentations, deceptions, and attempting to unmask pretenders.
+%
+This chapter shows how this history of deception defined how we
+approach \abr{ai} today.
 
 \section{Turing's Legacy: A Cloak and Dagger Computer Problem}
 \label{sec:turing:legacy}
@@ -14,19 +18,35 @@ to computer science, you may know him as one of the scientists who decoded
 the Nazi Enigma device (which is why his memorial bench has ciphertext
 underneath his name, Figure~\ref{fig:turing:bench}).
 
+
+% https://en.wikipedia.org/wiki/Alan_Turing_Memorial#/media/File:Alan_Turing_18-10-2009_11-10-27.JPG
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=.8\linewidth]{figures/external/Alan_Turing_18-10-2009_11-10-27~~}
+    \end{center}
+  \label{fig:turing:bench}
+  \caption{A memorial bench of Alan Turing in Manchester, England.
+    The ciphertext under his name represents his contributions to
+    breaking the Enigma code.}
+\end{figure}
+
+
 While now the story is well known, at the time it was one of the
 world's most closely kept secrets.
 %
 \jbgcomment{Check spelling / add cite}
 To prevent the Germans from knowing that Turing (and the rest of the
-Bletchly Park team) had cracked the code, the British fabricated
+Bletchley Park team) had cracked the code, the British fabricated
 alternate explanations of how they gathered valuable intelligence.
 %
-For example, in 19XX, the British engineered a flyover by a
-reconnasance plane to ``spot'' a German ship as an alternate
-explanation for how the British knew to attack them.
+At one level they attributed the intelligence to a British-run spy
+ring in German called `Boniface', and then was called
+`Ultra'~\citep{gilbert-15}.
+% Footnote 1653 
 %
-XXX argued that this shortened the length of the war.
+For example the British engineered a flyover by a
+reconnaissance plane to ``spot'' a German ship as an alternate
+explanation for how the British knew to attack them~\citep{wilcox-01}.
 
 Turing's life is incredible.  Beyond saving thousands of lives
 by breaking German codes, Turing hypothesized what a computer could
@@ -45,7 +65,7 @@ the problem.\footnote{Assuming you have sufficient memory and time.}
 \label{sec:turing:imitation}
 
 In addition to the deception that the British government did to hide
-Turing's work, Turing himself had to decieve the British government
+Turing's work, Turing himself had to deceive the British government
 about his own life.
 %
 To put it bluntly, Turing was a gay man living in a country that
@@ -96,9 +116,9 @@ And while an impostor can read many accounts to get an idea of what
 someone has said about these topics, simply parroting these stories does not
 equate to understanding.
 %
-This is analagous to current \abr{ai} craze: they have read all of the
+This is analogous to current \abr{ai} craze: they have read all of the
 Internet, and the challenge is to measure whether all of that ingested
-knowledge can fuel an insipient intelligence.
+knowledge can fuel an incipient intelligence.
 
 \section{The Second Turing Test}
 
@@ -117,7 +137,7 @@ intelligence.
 
 Why do we need this silly game?
 %
-Becuase if you picked something that correlates with intelligence (say
+Because if you picked something that correlates with intelligence (say
 playing chess), you could fairly easily make a machine that can only
 do that.
 %
@@ -127,7 +147,7 @@ intelligence that it would require something of equivalent
 intelligence to a human to win the game.
 
 To recap, to have a Turing test, you need \textbf{A Skilled
-  Interrogator}, \textbf{An Unrestricted Domain}, and \textbf{Knowdge
+  Interrogator}, \textbf{An Unrestricted Domain}, and \textbf{Knowledge
   that You're Playing the Game}.
 %
 As we'll see in a second, many of the times have claimed that the
@@ -178,7 +198,7 @@ might satisfy. Turing’s test as originally defined, on the other hand had a
 clear goal, to serve as a sufficient condition for demonstrating that a human
 artifact exhibited intelligent behavior. Even this goal is lost in the Loebner
 prize competition. By limiting the test, it no longer serves its original purpose
-(and arguably no purpose at all), as Turing’s syllogism fails.13 It is questionable
+(and arguably no purpose at all), as Turing’s syllogism fails. It is questionable
 whether the notion of a Turing test limited in the ways specified by the Loebner
 prize committee is even a coherent one.
 \end{quote}
@@ -187,7 +207,7 @@ prize committee is even a coherent one.
 Another example that some people claim is an example of AI passing the
 Turing Test is Google Duplex: Google offers to call a restaurant to
 make a reservation for you.  Their text-to-speech system is very good,
-but also puts in dysfluencies such as adding ``um'' and pauses to make
+but also puts in disfluencies such as adding ``um'' and pauses to make
 it sound more human.
 %
 Here, the judge---a poor service worker taking a reservation and
@@ -219,15 +239,15 @@ One of the best known criticisms of the Turing Test are inspired by
 Searle's Chinese Room: imagine a monolingual American from Omaha
 trapped in a box with an incredible collection of translations.
 %
-Chineese text comes in, and he needs to provide a Russian translation.
+Chinese text comes in, and he needs to provide a Russian translation.
 %
-He understands neither language, but can look up the appropraite
+He understands neither language, but can look up the appropriate
 translation from his collection of books.
 %
 To an outside observer, he has full mastery of both languages.  Does
 this Omahan actually possess that understanding?
 
-There are serveral counterarguments to this criticism: you're not
+There are several counterarguments to this criticism: you're not
 evaluating the man himself but rather the system he is a part of.
 %
 The room, plus the astounding translation materials (and whoever put
@@ -237,7 +257,7 @@ translations.
 While I think there is some merit to this defense, I prefer the
 ``interactive proof'' argument by Stu Shieber~\citep{Shieber-07}.
 
-Scheiber argues that the number of sentences in any language is so
+Sheiber argues that the number of sentences in any language is so
 unfathomably large that the Turing Test is able to probe whether the
 effect is mere memorization or not.
 %
@@ -245,60 +265,54 @@ With reasonable assumptions, a Turing test of, say 300 turns would
 have a vanishingly small probability of a false positive.
 %
 In other words, it would be impossible to encode everything necessary
-in the Omahan's lookup to decieve a skilled inquisitor.
+in the Omahan's lookup to deceive a skilled inquisitor.
 
 \begin{table}[t]
-\centering
-\begin{tabular}{p{3.6cm}p{4.2cm}p{4.2cm}p{4.2cm}}
+  \centering
+  \rowcolors{2}{gray!10}{white}
+\begin{tabular}{p{0.3cm}p{3.05cm}p{3.05cm}p{3.05cm}}
 \toprule
-\textbf{Test} &
-\textbf{Goal of interrogator} &
-\textbf{Goal of control human subject} &
-\textbf{Goal of candidate subject} \\
+& 
+\textbf{Original Imitation Game} &
+\textbf{First Turing Test} &
+\textbf{Second Turing Test} \\
 \midrule
 
-\textbf{Original Imitation Game} \newline
-(man impersonating woman)
-&
-Identify which hidden participant is really the woman, based only on written replies.
-&
-Answer truthfully as the woman, helping the interrogator make the correct identification.
-&
---- (no machine participant in this version). \\
+\rotlabel{Interrogator} &
+Identify which hidden participant is really the woman, based only on written replies. &
+Identify which hidden participant is really the woman, based only on written replies. &
+Determine which hidden participant is human and which is a machine, based only on conversation. \\[0.8em]
 
-\textbf{First Turing Test} \newline
-(man / computer impersonating woman)
-&
-Identify which hidden participant is really the woman, based only on written replies.
-&
-Answer truthfully as the woman, serving as the baseline for successful identification.
-&
-Impersonate the woman well enough that the interrogator cannot reliably distinguish it from the human impersonator. \\
+\rotlabel{Control} &
+Answer truthfully as the woman, helping the interrogator make the correct identification. &
+Answer truthfully as the woman, serving as the baseline for successful identification. &
+Respond naturally as a human, making it possible for the interrogator to recognize them as human. \\[0.8em]
 
-\textbf{Second Turing Test} \newline
-(human vs.\ machine)
-&
-Determine which hidden participant is human and which is a machine, based only on conversation.
-&
-Respond naturally as a human, making it possible for the interrogator to recognize them as human.
-&
+\rotlabel{Candidate} &
+A man impersonates the woman well enough that the interrogator cannot reliably distinguish it from the human impersonator. &
+A man \textbf{or a computer} impersonates the woman well enough that the interrogator cannot reliably distinguish it from the human impersonator. &
 Respond in a way that is indistinguishable from the human participant, so that the interrogator cannot reliably tell it is a machine. \\
 
 \bottomrule
 \end{tabular}
 \caption{Different versions of the imitation game and the Turing Test,
-  distinguished by participant roles and goals.}
+  distinguished by participant roles and goals.  While the original
+  Imitation Game was about a man impersonating a woman, the Second
+  Turing Test is conventionally what people mean when people talk
+  about \emph{The} Turing Test.  However, I agree with
+  \citet{Sterrett-00}'s take that the \textbf{First Turing Test} is
+  implied by Turing's proposal, and in many ways make more sense.}
 \label{table:turing:tests}
 \end{table}
 
 \section{The First Turing Test: Deception and Theory of Mind}
 \label{sec:turing:first-test}
 
-\citet{sterrett-00} argues that Turing actually proposed two versions
+\citet{Sterrett-00} argues that Turing actually proposed two versions
 of his eponymous test (Table~\ref{table:turing:tests}).\footnote{This is an argument because Turing's
   specification is vague; there is a question whether the ambiguity
-  was inadvertant or intentional.  I prefer to think of it as
-  intentional, but it fits whith this chapter's theme of connecting
+  was inadvertent or intentional.  I prefer to think of it as
+  intentional, but it fits with this chapter's theme of connecting
   the Turing Test with deception, so take my self-serving
   interpretation with a grain of salt.}
 %
@@ -313,7 +327,7 @@ human and the man in a more similar role: they are both pretending to
 be something they are not.
 %
 \jbgcomment{check cite}
-XXX says that a dullard in the Second Turing test must do nothing more
+\citet{Sterrett-00} says that a dullard in the Second Turing test must do nothing more
 than answer questions honestly; there's no skill involved.
 %
 As we argue in Chapter~\ref{ch:leaderboards}, we are often interested
@@ -328,8 +342,8 @@ be a woman.}
 
 What I like about this opportunity for comparison is that it requires
 humans and computers to explicitly use theory of mind\citep{}: they
-must create a ficticious persona that will be probed by the
-interrogrator and also craft responses in a way that will elicit the
+must create a fictitious persona that will be probed by the
+interogator and also craft responses in a way that will elicit the
 correct responses from the interrogator.\footnote{If asking questions
   about gender is off-putting, you could easily replace this with an
   American pretending to be a Brit; the same principles apply.}
@@ -340,7 +354,7 @@ A cynic would that all humans lie, so we we want to have an \abr{ai}
 that can do cognitively difficult tasks, it should also be able to lie as well
 as a human.
 %
-\citep{hendricksen-24} argues that children learning to lie is not a
+\citet{hendricksen-24} argues that children learning to lie is a
 good outcome, lying shows that the have mastered important skills:
 knowing what others know (sometimes called ``theory of mind''),
 navigating social interactions (``self control''), and being able to
@@ -375,7 +389,7 @@ The goal is to take over the entire map through skillfully moving
 fleets and armies across the map.
 %
 It's hard to best the description of the game that that appeared in
-the Times obituarity of the game's creator, Allan Calhamer~\citep{fox-13}:
+the Times obituary of the game's creator, Allan Calhamer~\citep{fox-13}:
 \begin{quote}
 In each of the game’s compulsory negotiation periods, which involve whispering furtively in corners while simultaneously routing eavesdroppers, players in weaker positions band together against those in stronger ones.
 
@@ -404,7 +418,9 @@ against a machine, and online commentary quickly jumped to ``passing
 the Turing Test''.
 
 \begin{figure}
-  \includegraphics[width=0.8\linewidth]{figures/twitter/cicero_turing}
+  \begin{center}
+    \includegraphics[width=0.8\linewidth]{figures/twitter/cicero_turing}
+    \end{center}
   \label{fig:turing:cicero-turing}
   \caption{After \abr{cicero} was unveiled, the reporting focused on
     how players could not detect that they were playing against a
@@ -481,15 +497,6 @@ Without that, claims of ``mastery'' risk mistaking fluent dialogue and
 strong tactics for the deeper competencies that the Turing Test was
 meant to probe.
 
-% https://en.wikipedia.org/wiki/Alan_Turing_Memorial#/media/File:Alan_Turing_18-10-2009_11-10-27.JPG
-\begin{figure}
-  \includegraphics[width=.9\linewidth]{figures/external/Alan_Turing_18-10-2009_11-10-27~~}
-  \label{fig:turing:bench}
-  \caption{A memorial bench of Alan Turing in Manchester, England.
-    The ciphertext under his name represents his contributions to
-    breaking the Enigma code.}
-\end{figure}
-
 \section{A Rigorous Test}
 \label{sec:turing:test}
 
@@ -503,8 +510,12 @@ adversaries.
 \begin{figure}
   \includegraphics[width=0.8\linewidth]{figures/plots/f1_by_phase}
   \label{fig:turing:diplomacy-detection}
-  \caption{Players in a game of \textit{Diplomacy} can reliably detect
-    an \abr{ai} opponent.}
+  \caption{Although Meta claimed that human players did not recognize
+    when they were playing against computer opponents (an unannounced,
+    imprompteau Turing Test), \citet{Wongkamjan-24} show that players
+    in a game of \textit{Diplomacy} \emph{can} reliably detect an
+    \abr{ai} opponent.  $F_1$ Score is a combination of precision and
+    recall, as introduced in Section~\ref{sec:ir:precision-recall} (Equation~\ref{eq:f-score}).}
 \end{figure}
 
 And although few people are running Turing Test experiments today, it

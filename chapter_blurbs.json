@@ -4,6 +4,32 @@
       "summary": "Since this is a book about question answering, I should try to answer some questions to start things out.  I'm going to try to answer: ``what's this book about'', ``who am I'', and ``who can use this book''."
     },
     {
+      "label": "civilization",
+      "summary": "Despite its central importance to \\abr{ai}, asking and answering questions is not new---it stretches back into our collective unconcious. Riddles and trivia have persisted for millenia not just because they're entertaining.  Indeed, being able to ask and answer questions is close to godliness.  From the Sphynx to Gestumblindi, this chapter examines how myths from several cultures connect answering questions to forming identity, unlocking the secrets of the universe, and gaining intelligence.  And connecting this to nascent ``superhuman'' \\abr{ai}.  Later, beyond proving worthiness in myth, asking questions helped combat corruption and nepotism, the downfall of multiple civilizations.  However, the administration of carefully formed questions saved the China and the United States via the reforms of Wu Zetian to the Pendelton Act.  Exams created meritocracy and social mobility while also building an understanding of what it means to write a ``fair'' and ``useful'' question.",
+"sections": [
+  {
+    "label": "sphynx",
+    "title": "The Riddle of the Sphynx: Questions that Define Destiny",
+    "summary": "Introduces question answering through myth: the Sphynx’s riddle as an early example of how questions can determine life, death, and human identity."
+  },
+  {
+    "label": "socratic",
+    "title": "Socratic Questions as a Teaching Tool",
+    "summary": "Explores the Socratic method as a foundational model of question answering, where dialogue and probing questions serve as a tool for reasoning, learning, and uncovering hidden assumptions."
+  },
+  {
+    "label": "gestumblindi",
+    "title": "Only a God Would Ask Questions Like that, ``Gestumblindi''",
+    "summary": "Examines the Old Norse riddle contest of Gestumblindi, highlighting how question answering has long been tied to wit, deception, and the boundary between human and divine knowledge."
+  },
+  {
+    "label": "civil-service",
+    "title": "How Exams Saved China and the US",
+    "summary": "Shows how large-scale examination systems in imperial China and later the United States institutionalized question answering as a mechanism for governance, meritocracy, and social power."
+  }
+]
+    },
+    {
       "label": "turing",
       "summary": "In the 1950s, Alan Turing proposed a parlor game that would come to define the artificial intelligence: could a wiley interrogator discern whom they were talking to just through posing clever questions.  The eponymous Turing Test is the most durable (but contentious) definition of what an intelligent computer is, but it is built on deception.",
       "sections": [
@@ -13,60 +39,126 @@
         {"label": "test", "title": "A Rigorous Test", "summary": "The ingredients that make a Turing Test legitimate"},
         {"label": "agi", "title": "General Artificial Intelligence", "summary": "How the holy grail of AI is defined and how the Turing Test can measure it."}
       ]
+    },    
+    {
+  "label": "ir",
+  "summary": "Modern search engines feel inevitable, but they emerged from a radical mid-century idea: that question answering systems could be evaluated scientifically using reusable test collections. This chapter traces the origins of the Cranfield paradigm, introduces precision and recall as the core metrics of retrieval, and shows how sparse term-based methods like tf-idf laid the groundwork for large-scale evaluation efforts at NIST and ultimately for web search as we know it. It also situates these retrieval advances within the broader trajectory of “good old fashioned” AI approaches to question answering.",
+  "sections": [
+    {
+      "label": "cranfield",
+      "title": "Cleverdon's Clever Collection",
+      "summary": "Introduces Cyril Cleverdon’s Cranfield experiments, which replaced librarian-crafted indexing with a measurable framework for evaluating retrieval systems using shared document collections and relevance judgments."
     },
     {
-      "label": "civilization",
-      "summary": "Despite its central importance to \\abr{ai}, asking and answering questions is not new---it stretches back into our collective unconcious. Riddles and trivia have persisted for millenia not just because they're entertaining.  Indeed, being able to ask and answer questions is close to godliness.  From the Sphynx to Gestumblindi, this chapter examines how myths from several cultures connect answering questions to forming identity, unlocking the secrets of the universe, and gaining intelligence.  And connecting this to nascent ``superhuman'' \\abr{ai}.  Later, beyond proving worthiness in myth, asking questions helped combat corruption and nepotism, the downfall of multiple civilizations.  However, the administration of carefully formed questions saved the China and the United States via the reforms of Wu Zetian to the Pendelton Act.  Exams created meritocracy and social mobility while also building an understanding of what it means to write a ``fair'' and ``useful'' question.",
-      "sections": [
-        {"label": "sphynx", "title": "The Sphynx"},
-        {"label": "civil-service", "title": "How Exams Saved China and the US"}
-      ]
+      "label": "precision-recall",
+      "title": "Is it Better to Find All the Good Things or for Everything Found to be Good?",
+      "summary": "Presents the classic contingency-table view of retrieval evaluation, defining precision and recall as the fundamental tradeoff between finding relevant documents and avoiding irrelevant ones."
     },
     {
-      "label": "classic",
-      "summary": "The earliest approaches to question answering.",
-      "sections": [
-        {"label": "baseball", "title": "Who's on First: Answering Questions about Baseball", "summary": "Green et al.'s 1979 Baseball system"},
-        {"label": "lunar", "title": "Can you Believe they Put a Man on the Moon?", "summary": "Woods and Kaplan's 1972 LUNAR system"},
-        {"label": "shrlu", "title": "A Sentient Printing Machine", "summary": "Winograd's SHRDLU"},
-        {"label": "kb", "title": "Knowledge Bases Get Large", "summary": "Scaling up old-fashioned methods in the Internet age"}
-      ]},
-    {
-      "label": "ir",
-      "summary": "Information retrieval is the foundation of multi-billion dollar web companies from Baidu to Yahoo!  But none of these companies would exist without the ideas of reusable test collections and term-based queries, which came about because of a few crazy experiments that happened in a small UK University in Cranfield.  This chapter lays out the history of this methodology (which has become known as the Cranfield paradigm) and how it can answer questions.",
-        "sections": [
-          {"label": "cranfield", "title": "Reusible test collections"},
-          {"label": "tf-idf", "title": "Automatic indexing"},
-          {"label": "trec", "title": "Making Hide and Seek a Professional Game"}
-        ]
+      "label": "tf-idf",
+      "title": "Which Words Matter Most in your Index?",
+      "summary": "Explains how term-frequency and inverse document frequency weighting, developed by Karen Spärck Jones, transformed Cranfield’s evaluation insights into practical retrieval methods that could scale beyond curated catalogs."
     },
+    {
+      "label": "gofai-qa",
+      "title": "Old-Fashioned \\abr{ai}'s Search for Meaning",
+	"summary": "Connects information retrieval to symbolic AI traditions, where question answering was framed as logical inference and knowledge representation rather than ranking documents by statistical similarity.  Discusses Green et al.'s 1979 Baseball system; Woods and Kaplan's 1972 LUNAR system; and Winograd's SHRDLU."
+    },
+    {
+      "label": "nist",
+      "title": "Making Hide and Seek (in Documents) a Professional Game",
+      "summary": "Describes how NIST and the TREC competitions institutionalized the Cranfield paradigm, building larger test collections that enabled systematic progress and shaped the evaluation culture behind Google-era search."
+    }
+  ]
+},
     {
         "label": "manchester",
         "summary": "While computer scientists were getting their feet wet answering questions in the wake of World War II, trivia enthusiasts were perfecting how to ask the perfect question.  This chapter outlines the conventions and processes of the highest form of question answering---in the biased opinion of the author---and argues for why many of these standards could be a part of creating data for computer question answering.  Previously published as \\citet{boyd-graber-20}.",
         "sections": [
-          {"label": "name", "title": "Two British University Towns Alike in Question Answering"},
-          {"label": "university-challenge", "summary": "Grenada Studios in Manchester's QA format."},
-          {"label": "qb", "title": "It Takes a Village to Ask a Question", "summary": "The norms of the trivia community"},
-          {"label": "naming", "title": "Cranfield vs. Manchester", "summary": "The distinction between the two paradigms and why we call it that."}
+            {"label": "name", "title": "Two British University Towns Alike in Question Answering", "summary": "In contrast to the existing Cranfield Paradigm, we propose the Manchester paradigm, which creates probing questions to test specific skills of \\abr{ai} systems."},
+            {"label": "qb", "title": "It Takes a Village to Ask a Question", "summary": "I review the Quizbowl---whose University Challenge is one of the reasons we adopt the name Manchester paradigm---and how it reflects the incremental perfection of question answering for humans and what lessons (e.g., adjudication, focusing on discriminative questions) can transfer to computer question answering."},
+	    {"label": "craft", "title": "The Craft of Question Writing", "summary": "A good trivia question should be unambiguous, discriminative, and test knowledge.  We review how these norms developed and are executed in crafting questions for humans."},
+            {"label": "distinction", "title": "Ignore the Distinction at Your Peril", "summary": "Why the distinction between Cranfield and Manchester is relevant for understanding \\abr{ai} ability."},
+	    {"label": "tournaments", "title": "Your Trivia Tournament is a Leaderboard", "summary": "Leaderboards in question answering are not fundamentally new: they are accuracy statistics that induce rankings, much like trivia tournaments. This section argues that QA evaluation can learn from decades of human competition norms about fairness, clarity, and discrimination."}
         ]
     },
       {
         "label": "watson",
-        "summary": "It's been nearly a decade since IBM Watson crushed two puny humans on Jeopardy!  Some people took that to mean that computers were definitively better than humans at trivia.  But that isn't the complete answer---this chapter, inspired by Jeopardy!'s gimmick of responding to answers to questions, questions some of the ``answers'' that emerged from IBM's tour de force."
+          "summary": "It's been nearly a decade since IBM Watson crushed two puny humans on Jeopardy!  Some people took that to mean that computers were definitively better than humans at trivia.  But that isn't the complete answer---this chapter, inspired by Jeopardy!'s gimmick of responding to answers to questions, questions some of the ``answers'' that emerged from IBM's tour de force.",
+	  "sections": [
+  {
+    "label": "grand-challenge",
+    "title": "Why IBM Chose Jeopardy! for a Grand Challenge",
+    "summary": "Places Watson in the tradition of AI grand challenges such as Deep Blue and AlphaGo, emphasizing how these projects are designed to create cultural as well as technical shifts in the understanding of machine intelligence."
+  },
+  {
+    "label": "how-watson-works",
+    "title": "How Watson Works",
+    "summary": "Introduces Watson as a statistical QA system built from retrieval, feature engineering, and probabilistic decision-making rather than modern neural generation."
+  },
+  {
+    "label": "rigged",
+    "title": "This Game Is Rigged, I Tell Ya!",
+    "summary": "Presents the chapter’s central critique: Watson’s victory was not a clean scientific comparison, because the match conditions systematically advantaged the machine."
+  },
+	      {
+		  "label": "strategy",
+		  "title": "Two Nice Guys, One Computer with no Shame",
+		  "summary": "Watson is not just a system that provides answers to questions.  It also needs to decide which questions to answer and whether to trust a guess.  How does it decide these, and how does that contribute to Watson's percieved human domination."
+
+	      },
+  {
+    "label": "legacy",
+    "title": "The Legacy of Watson",
+    "summary": "Concludes that Watson marked both a milestone in question answering and a cautionary tale about evaluation, motivating the need for fairer benchmarks and clearer measures of progress."
+  }
+]
       },
       {
         "label": "formats",
         "summary": "How do you ask a question: is it text, a picture, or a conversation?  This chapter reviews the different forms question answering can take and what complexities that can introduce.",
         "sections": [
-          {"label": "task", "title": "Task vs. Format"},
-          {"label": "question", "title": "What is a Question?", "summary": ""},
-          {"label": "evidence", "title": "Where do you get an Answer?", "summary": ""},
-          {"label": "conversation", "title": "What did you Mean?", "summary": ""},
-          {"label": "multimodal", "title": "A Picture is worth a Thousand Questions", "summary": ""},
-          {"label": "language", "title": "Questions Beyond English", "summary": ""},
-          {"label": "skills", "title": "The Skills Needed to Answer Questions", "summary": ""},                    
-          {"label": "taxonomy", "title": "A Taxonomy of Question Answering", "summary": ""}
-        ]
+  {
+    "label": "task",
+    "title": "Task vs. Format",
+    "summary": "Introduces the distinction between what question answering systems are trying to accomplish (the task) and the external shape that QA takes in practice (the format). The chapter argues that many of the hardest problems in QA emerge not from new tasks, but from new formats that demand context, interaction, or multiple kinds of evidence."
+  },
+  {
+    "label": "question",
+    "title": "What is a Question?",
+    "summary": "Explores how questions vary far beyond short factoid prompts, ranging from multihop queries to conversational follow-ups and long-form explanations. The section emphasizes that defining what counts as a “question” is itself a modeling challenge, because real information needs are often underspecified, contextual, and evolving."
+  },
+  {
+    "label": "evidence",
+    "title": "Where do you get an Answer?",
+    "summary": "Discusses the role of evidence in QA systems, contrasting settings where answers are directly extractable from a single passage with formats that require gathering multiple supporting documents. The section frames retrieval, linking, and reasoning over evidence as central bottlenecks for moving beyond one-hop machine reading."
+  },
+  {
+    "label": "conversation",
+    "title": "What did you Mean?",
+    "summary": "Focuses on conversational question answering, where users ask sequences of context-dependent questions that require memory, clarification, and ambiguity resolution. The section surveys datasets like QuAC, CoQA, and CANARD, and highlights the evaluation difficulty: conversational success depends on interaction quality, not just matching a reference answer."
+  },
+  {
+    "label": "multimodal",
+    "title": "A Picture is worth a Thousand Questions",
+    "summary": "Extends QA beyond text to multimodal settings, where systems must answer questions about images, video, or audio. The section introduces visual QA datasets such as VQA and VizWiz, explains how transformers incorporate visual objects as inputs, and argues that evaluation becomes harder when answers are not naturally grounded in text spans."
+  },
+  {
+    "label": "language",
+    "title": "Questions Beyond English",
+    "summary": "Briefly motivates the need for QA systems that work across languages and cultural contexts, where named entities, scripts, and question conventions differ substantially. The section notes that multilingual QA raises both technical challenges in retrieval and deeper questions about what constitutes an acceptable answer across linguistic communities."
+  },
+  {
+    "label": "skills",
+    "title": "The Skills Needed to Answer Questions",
+    "summary": "Synthesizes the diverse capabilities required for robust QA: retrieval, coreference resolution, multistep reasoning, and dialog management. The section emphasizes that QA is not a single problem but a bundle of interacting skills."
+  },
+  {
+    "label": "taxonomy",
+    "title": "A Taxonomy of Question Answering",
+    "summary": "Concludes by organizing QA formats into a broader taxonomy, showing how multihop, conversational, long-form, multimodal, and spoken QA each stress different assumptions about questions, evidence, and evaluation. The section argues that progress in QA depends on matching models and metrics to the true complexity of human information seeking."
+  }
+]
       },
       {
         "label": "datasets",
