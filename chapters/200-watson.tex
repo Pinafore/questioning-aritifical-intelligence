@@ -479,7 +479,12 @@ directly because sometimes our features won't be binary.
 %
 And this should look familliar: it looks a lot like the dot product that we
 first saw in the chapter on information retrieval
-(Equation~\ref{eq:ir:dot-product} in Chapter~\ref{ch:ir}), where we compute the \emph{similarity} of
+\ifproposal
+(Chapter~\ref{ch:ir})),
+\else
+(Equation~\ref{eq:ir:dot-product} in Chapter~\ref{ch:ir}),
+\fi
+where we compute the \emph{similarity} of
 two examples by multiplying the \tfidf{} scores of two documents' words.
 
 And this is a good segue to \emph{why} we write this as a dot product rather
