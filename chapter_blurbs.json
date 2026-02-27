@@ -1,16 +1,16 @@
 [
     {
       "label": "introduction",
-      "summary": "Since this is a book about question answering, I should try to answer some questions to start things out.  I'm going to try to answer: ``what's this book about'', ``who am I'', and ``who can use this book''."
+      "summary": "Since this is a book about question answering, I should try to answer some questions to start things out: ``what's this book about'', ``who am I'', and ``who can use this book''."
     },
     {
       "label": "civilization",
-      "summary": "Despite its central importance to \\abr{ai}, asking and answering questions is not new---it stretches back into our collective unconscious. Riddles and trivia have persisted for millennia not just because they're entertaining.  Indeed, being able to ask and answer questions is close to godliness.  From the Sphynx to Gestumblindi, this chapter examines how myths from several cultures connect answering questions to forming identity, unlocking the secrets of the universe, and gaining intelligence.  And connecting this to nascent ``superhuman'' \\abr{ai}.  Later, beyond proving worthiness in myth, asking questions helped combat corruption and nepotism, the downfall of multiple civilizations.  However, the administration of carefully formed questions saved China and the United States via the reforms from Wu Zetian to the Pendelton Act.  Exams created meritocracy and social mobility while also building an understanding of what it means to write a ``fair'' and ``useful'' question.",
+      "summary": "Despite its central importance to \\abr{ai}, the concept of asking and answering questions is not new; it stretches back into our collective unconscious. Riddles and trivia have persisted for millennia not just because they're entertaining.  Rather, in many cultures, being able to ask and answer questions is close to godliness. From the Sphynx to Gestumblindi, this chapter examines how myths from multiple cultures connect answering questions to forming identity, unlocking the secrets of the universe, and gaining intelligence. Beyond mythis, in recorded history, asking questions helped combat corruption and nepotism, which were the downfall of multiple civilizations.  Indeed, the administration of carefully formed questions saved China and the United States via the reforms from Wu Zetian to the Pendelton Act.  Exams created meritocracy and social mobility while also building an understanding of what it means to write a ``fair'' and ``useful'' question.",
 "sections": [
   {
     "label": "sphynx",
     "title": "The Riddle of the Sphynx: Questions that Define Destiny",
-    "summary": "Introduces question answering through myth: the Sphynx’s riddle as an early example of how questions can determine life, death, and human identity."
+    "summary": "Introduces question answering through myth, including the Sphynx’s riddle as an early example of how questions can determine life, death, and human identity."
   },
   {
     "label": "socratic",
@@ -31,18 +31,18 @@
     },
     {
       "label": "turing",
-      "summary": "In the 20th century, we turned the instinct of measuring worth through questions toward machines. In the 1950s, Alan Turing proposed a parlor game that would come to define artificial intelligence: could a wily interrogator discern whom they were talking to just through posing clever questions.  The eponymous Turing Test is the most durable (but contentious) definition of what an intelligent computer is, but it is built on deception.",
+      "summary": "In the 20th century, we turned the instinct of measuring worth through questions toward machines. In the 1950s, Alan Turing proposed a parlor game that would come to define artificial intelligence: could a wily interrogator discern whom they were talking to just through posing clever questions? The eponymous Turing Test is the most durable (but contentious) definition of what an intelligent computer is, but it is built on deception.",
       "sections": [
         {"label": "legacy", "title": "Turing's Legacy", "summary": "Why Turing is widely considered the father of computer science for multiple reasons and how he contributed to cloak and dagger spy operations."},
         {"label": "imitation", "title": "The Imitation Game", "summary": "A gay man in England---where homosexuality is criminalized---posits a game about the ability of someone to pass in different gender roles.  Why this is difficult lays the foundation for why computers still struggle to capture human nuance."},
         {"label": "failures", "title": "No, the Turing Test has not been Solved", "summary": "While many have claimed to pass the Turing Test, it hasn't happened yet.  We review some notable claims of passing the Turing Test and why they fell short, and why you shouldn't fall for the claims of charlatans."},
-        {"label": "test", "title": "A Rigorous Test", "summary": "The ingredients that make a Turing Test legitimate"},
+        {"label": "test", "title": "A Rigorous Test", "summary": "The ingredients that make a Turing Test legitimate."},
         {"label": "agi", "title": "General Artificial Intelligence", "summary": "How the holy grail of AI is defined and how the Turing Test can measure it."}
       ]
     },    
     {
   "label": "ir",
-  "summary": "Modern search engines feel inevitable, but they emerged from a radical mid-century idea: that question answering systems could be evaluated scientifically using reusable test collections. While the Turing test is a \\emph{conceptual} measurement, this chapter traces the origins of the Cranfield paradigm's \\emph{empirical} measurement of machines' ability to answer questions.  It introduces precision and recall as the core metrics of retrieval, and shows how sparse term-based methods like tf-idf laid the groundwork for large-scale evaluation efforts at NIST and ultimately for web search as we know it. It also situates these retrieval advances within the broader trajectory of “good old fashioned” AI approaches to question answering.",
+  "summary": "Modern search engines feel inevitable, but they emerged from a radical mid-century idea: that question answering systems could be evaluated scientifically using reusable test collections. While the Turing test is a \\emph{conceptual} measurement, this chapter traces the origins of the Cranfield paradigm's \\emph{empirical} measurement of machines' ability to answer questions.  It introduces precision and recall as the core metrics of retrieval, and shows how sparse term-based methods like tf-idf laid the groundwork for large-scale evaluation efforts at NIST and ultimately for web search as we know it. It also situates these retrieval advances within the broader trajectory of “good old fashioned” AI approaches to question answering. ! Irene comment: I think this needs to be more parallel to be a stronger contrast with the Manchester paradigm, and you need to explicitly say something like "the Cranfield paradigm ",
   "sections": [
     {
       "label": "cranfield",
@@ -73,10 +73,10 @@
 },
     {
         "label": "manchester",
-        "summary": "While computer scientists were getting their feet wet answering questions in the wake of World War II, trivia enthusiasts were perfecting how to ask the perfect question.  This chapter outlines the conventions and processes of the highest form of question answering---in the biased opinion of the author---and argues for why many of these standards could be a part of creating data for computer question answering.  Previously published as \\citet{boyd-graber-20}.",
+        "summary": "While computer scientists were getting their feet wet answering questions in the wake of World War II, trivia enthusiasts were developing how to ask the perfect question.  This chapter outlines the conventions and processes of the highest form of question answering---in the biased opinion of the author---and argues for why many of these standards could be a part of creating data for computer question answering.  Previously published as \\citet{boyd-graber-20}.",
         "sections": [
-            {"label": "name", "title": "Two British University Towns Alike in Question Answering", "summary": "In contrast to the existing Cranfield Paradigm, we propose the Manchester paradigm, which creates probing questions to test specific skills of \\abr{ai} systems."},
-            {"label": "qb", "title": "It Takes a Village to Ask a Question", "summary": "I review the Quizbowl---whose University Challenge incarnation is one of the reasons we adopt the name Manchester paradigm---and how it reflects the incremental perfection of question answering for humans and what lessons (e.g., adjudication, focusing on discriminative questions) can transfer to computer question answering."},
+            {"label": "name", "title": "Two British University Towns, Alike in Question Answering", "summary": "In contrast to the existing Cranfield Paradigm, we propose the Manchester paradigm, which creates probing questions to test specific skills of \\abr{ai} systems."},
+            {"label": "qb", "title": "It Takes a Village to Ask a Question", "summary": "I review the Quizbowl competitions---whose University Challenge incarnation is one of the reasons we adopt the name Manchester paradigm---and how it reflects the incremental perfection of question answering for humans and what lessons (e.g., adjudication, focusing on discriminative questions) can transfer to computer question answering."},
 	    {"label": "craft", "title": "The Craft of Question Writing", "summary": "A good trivia question should be unambiguous, discriminative, and test knowledge.  We review how these norms developed and are executed in crafting questions for humans."},
             {"label": "distinction", "title": "Ignore the Distinction at Your Peril", "summary": "Why the distinction between Cranfield and Manchester is relevant for understanding \\abr{ai} ability."},
 	    {"label": "tournaments", "title": "Your Trivia Tournament is a Leaderboard", "summary": "Leaderboards in question answering are not fundamentally new: they are accuracy statistics that induce rankings, much like trivia tournaments. This section argues that QA evaluation can learn from decades of human competition norms about fairness, clarity, and discrimination."}
@@ -84,7 +84,7 @@
     },
       {
         "label": "watson",
-          "summary": "It's been nearly a decade since IBM Watson crushed two puny humans on Jeopardy!  Some people took that to mean that computers were definitively better than humans at trivia.  But that isn't the complete answer---this chapter, inspired by Jeopardy!'s gimmick of responding to answers to questions, questions some of the ``answers'' that emerged from IBM's tour de force.",
+          "summary": "It's been nearly a decade since IBM Watson crushed two puny humans on Jeopardy!.  Some people took that to mean that computers were definitively better than humans at trivia.  But that isn't the complete answer---this chapter, inspired by Jeopardy!'s gimmick of responding to answers to questions, questions some of the ``answers'' that emerged from IBM's tour de force.",
 	  "sections": [
   {
     "label": "grand-challenge",
@@ -116,7 +116,7 @@
       },
       {
         "label": "formats",
-        "summary": "How do you ask a question: is it text, a picture, or a conversation?  This chapter reviews the different forms question answering can take and what complexities that can introduce.",
+        "summary": "How do you ask a question: via text, a picture, or a conversation?  This chapter reviews the different forms question answering can take and what complexities that can introduce.",
         "sections": [
   {
     "label": "task",
@@ -162,7 +162,7 @@
       },
       {
         "label": "datasets",
-        "summary": "The clich\\'e is that data are the new oil, powering \\abr{ai}.  Fortunately, because humans naturally ask questions, there are many datasets that we can find `for free'.  However, these datasets still come at a cost: many of these datasets have inherent problems (e.g., ambiguities and false presuppositions) or oddities (only talking about American men) that make them difficult to use for question answering.  This chapter discusses these datasets that have formed the foundation of much of modern \\abr{ai}.  If you can't find the data you need, build it yourself.  But this is not always a perfect solution.  This chapter discusses the datasets that people have built and the new problems that this can create.",
+        "summary": "The clich\\'e is that data are the new oil, powering \\abr{ai}.  Fortunately, because humans naturally ask questions, there are many datasets that we can find `for free'.  However, these datasets still come at a cost: many of these datasets have inherent problems (e.g., ambiguities and false presuppositions) or oddities (only talking about American men) that make them difficult to use for question answering.  This chapter discusses these datasets that have formed the foundation of much of modern \\abr{ai}. Of course, if you can't find the data you need, you can build it yourself.  But this is not always a perfect solution.  This chapter also discusses the datasets that people have built and the new problems that this can create.",
           "sections": [
               {"label": "crowdsourcing", "title": "Constructed Datasets from Crowdsourcing", "summary": "The SQuAD dataset helped create the first wave of question answering.  It also paved the way for other constructed datasets built from workers on the web."},      
               {"label": "nq", "title": "Natural Questions Five Years Later", "summary": "Google's Natural Questions dataset represents the most realistic dataset to question answering, but is it a good way to train computers?"},
@@ -206,13 +206,13 @@
           "summary": "The year is 2025, and there's a new gameshow that not only showcases the most advanced \\abr{ai} available but also keeps the public informed about the limitations and struggles of current technology.  This chapter outlines the ten seasons of the show and how it tracks the development of machine intelligence, leading to passing the Turing Test.",
 	  "sections": [
 	      {"label": "knowledge", "title": "Where there's room for improvement", "summary": "One of the core arguments of the book is that AI can learn from trivia and game shows.  What if we put our money where our mouth is and followed through?  How could we improve AI by taking the best of both worlds and made it entertaining?"},
-	      {"label": "culture", "title": "Moving beyond White American Men", "summary": "Many datasets---both Cranfield and Manchester---overwhelmingly talk about white American men.  Is that a problem, and if so, how might we improve dataset representation and \\abr{ai}'s understanding of other people and places."},
+	      {"label": "culture", "title": "Moving beyond White American Men", "summary": "Many datasets---both Cranfield and Manchester---overwhelmingly talk about white American men.  Is that a problem, and if so, how might we improve dataset representation and \\abr{ai}'s understanding of other people and places?"},
 	      {"label": "social", "title": "Some Rules aren't Written", "summary": "One of the reasons I'm still a fan of the Turing test is that it put implicit social norms as a key part of the test.  This has not been incorporated into major AI evaluations, but it should."},
 	      {"label": "roadmap", "title": "Making the Turing Test Real (and Fun)", "summary": "We conclude the chapter with a roadmap for how an AI game show could grow and evolve into a replicable, entertaining, and effective test of AI intellectual and social intelligence that Alan Turing would recognize as a descendant of his thought experiment."}
 	  ]},
       {
         "label": "sci_fi",
-        "summary": "While the book began with how question answering in myth helped the ancients grapple with a changing and uncertain world, today's fictions represent our contemporary attempts to understand the advent of intelligent computers.  This chapter reviews human--computer question answering in 2001, Star Trek, The Terminator, Blade Runner, Futurama, and what these depictions reveal about both human conceptions of artificial intelligence and how it might shape future deployments of question answering.",
+        "summary": "While the book began by discussing mythical question answering and how it helped the ancients grapple with a changing and uncertain world, today's fictions represent our contemporary attempts to understand the advent of intelligent computers.  This chapter reviews human--computer question answering in 2001, Star Trek, The Terminator, Blade Runner, Futurama, and what these depictions reveal about both human conceptions of artificial intelligence and how they might shape future deployments of question answering.",
         "sections": [
           {"label": "presentations", "title": "Computer, speculate", "summary": "A review of the role of QA in science fiction: Voigt-Kampf, Star Trek, and Futurama have all used humans questioning computers to test how human or intelligent they are.  Do these portrayals offer lessons for the real world?"},
             {"label": "fake-fears", "title": "p(Doom)", "summary": "Beyond the imagining of science fiction, what are the actual downsides to the widespread availability and deployment of `intelligent' \\abr{ai}?  This chapter talks about \\abr{ai}'s ability to amplify existing negative \\emph{human} tendencies in responding to questions and how---while dangerous and worthy of mitigation---don't demand us to halt the development of modern \\abr{ai}."},
