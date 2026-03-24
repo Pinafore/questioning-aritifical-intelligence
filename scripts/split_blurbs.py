@@ -27,7 +27,9 @@ if __name__ == "__main__":
 
             outfile.write("%s \\\\ \n\n" % text)
 
-            titles = ["\t\\item \\textbf{%s.} %s" % (x["title"], x.get("summary", "")) for x in sections if "title" in x]
+
+            titles = ["\t\\item \\textbf{%s} %s" % (x["title"] + ("." if not x["title"][-1] in "?!" else ""),
+                                                        x.get("summary", "")) for x in sections if "title" in x]
             labels = ["\t\\invisiblesection{%s}{sec:%s:%s}" % (x.get("title", ""), short, x["label"]) for x in sections]
 
             outfile.write("\\ifproposal \n")
