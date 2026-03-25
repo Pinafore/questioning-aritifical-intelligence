@@ -31,7 +31,7 @@
     },
     {
       "label": "turing",
-      "summary": "In the 20th century, we turned the instinct of measuring worth through questions toward machines. In the 1950s, Alan Turing proposed a parlor game that would come to define artificial intelligence: could a wily interrogator discern whom they were talking to just through posing clever questions? The eponymous Turing Test is the most durable (but contentious) definition of what an intelligent computer is, but it is built on deception.",
+      "summary": "In the 20th century, we turned the instinct of measuring worth through questions toward machines. In the 1950s, Alan Turing proposed a parlor game that would come to define artificial intelligence: could a wily interrogator discern their partner just by posing clever questions? The eponymous Turing Test is the most durable (but contentious) definition of what an intelligent computer is, but it is built on deception.",
       "sections": [
         {"label": "legacy", "title": "Turing's Legacy", "summary": "Why Turing is widely considered the father of computer science for multiple reasons and how he contributed to cloak and dagger spy operations."},
         {"label": "imitation", "title": "The Imitation Game", "summary": "A gay man in England---where homosexuality is criminalized---posits a game about the ability of someone to pass in different gender roles.  Why this is difficult lays the foundation for why computers still struggle to capture human nuance."},
@@ -116,7 +116,7 @@
       },
       {
         "label": "formats",
-        "summary": "How do you ask a question: via text, a picture, or a conversation?  We review the different forms question answering can take and what complexities that can introduce.",
+        "summary": "How do you ask a question: text, picture, or conversation?  We review the different forms question answering can take and what complexities that can introduce.",
         "sections": [
   {
     "label": "task",
@@ -177,7 +177,7 @@
           {"label": "mr", "title": "Johnny 5 Can't Read", "summary": "However, putting information in a database is difficult and time-consuming\\dots not all information is in a database (indeed, some information defies strict database schemas).  Thus, we need to teach computers how to ``read'': where computers find information in a large text corpus and then extract the answer from it."},
           {"label": "deep-retrieval", "title": "A Vector in a Haystack", "summary": "As deep learning became practical, the field has moved from representing text with discrete words to continuous vectors.  This is also the case for question answering.  These representations can help us find relevant answers to questions."},
             {"label": "generation", "title": "We Couldn't Find an Answer, so we had to Generate One", "summary": "The deep learning revolution not just helps us find answers but to generate them.  These approaches offer both promise and peril: we can synthesize much richer information, make stuff up, encourage these agents to align to our wishes using RLHF, but it's now harder to tell if an answer is any good."},
-	              {"label": "rag", "title": "A Tawdry Rag", "summary": "Generation and retrieval are not a dichotomy, however: sometimes you can do a web search and then think about the process to better answer a question.  This approach---called \abr{rag}---helps systems stay up to date and grounded in reality."}
+	              {"label": "rag", "title": "A Tawdry Rag", "summary": "Generation and retrieval are not a dichotomy, however: sometimes you can do a web search and then think about the process to better answer a question.  This approach---called \\abr{rag}---helps systems stay up to date and grounded in reality."}
         ]
       },
       {
@@ -206,7 +206,7 @@
         "label": "gameshow",
           "summary": "The year is 2035, and there's a new gameshow that not only showcases the most advanced \\abr{ai} available but also keeps the public informed about the limitations and struggles of current technology.  We outline the ten seasons of the show and how it tracks the development of machine intelligence, leading to passing the Turing Test.",
 	  "sections": [
-	      {"label": "knowledge", "title": "Where there's room for improvement", "summary": "One of the core arguments of the book is that AI can learn from trivia and game shows.  What if we put our money where our mouth is and followed through?  How could we improve AI by taking the best of both worlds and made it entertaining?"},
+	      {"label": "knowledge", "title": "Where there's room for improvement", "summary": "One of the core arguments of the book is that AI can learn from trivia and game shows.  What if we put our money where our mouth is and followed through?  How could we improve AI by taking the best of both worlds and make it entertaining?"},
 	      {"label": "culture", "title": "Moving beyond White American Men", "summary": "Many datasets---both Cranfield and Manchester---overwhelmingly talk about white American men.  Is that a problem, and if so, how might we improve dataset representation and \\abr{ai}'s understanding of other people and places?"},
 	      {"label": "social", "title": "Some Rules aren't Written", "summary": "One of the reasons I'm still a fan of the Turing test is that it put implicit social norms as a key part of the test.  This has not been incorporated into major AI evaluations, but it should."},
 	      {"label": "roadmap", "title": "Making the Turing Test Real (and Fun)", "summary": "We conclude the chapter with a roadmap for how an AI game show could grow and evolve into a replicable, entertaining, and effective test of AI intellectual and social intelligence that Alan Turing would recognize as a descendant of his thought experiment."}
