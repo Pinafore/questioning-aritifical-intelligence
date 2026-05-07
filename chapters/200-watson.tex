@@ -31,13 +31,14 @@ player of the time~\citep{hsu-02}.
 
 Google/DeepMind had a similar ambition when they created AlphaGo. In a similar vein to DeepBlue, in 2016 AlphaGo defeated Lee Sedol, who was widely considered the best Go player of the time~\citep{koch-16}.
 %
-A different \abr{ai} grand challenge was issued by the United States' Defense Advance Projecects Research Administration
+Other \abr{ai} grand challenges include those issued by funding agencies like
+the United States' Defense Advance Projects Research Administration
 (\abr{darpa}) to build autonomous cars that can drive a hundred miles
 in the Mojave, although the best team just managed over seven miles~\citep{patterson-05}.
 %
 
-
-The goal of these projects was not just to advance technology, but to create such a big splash that people change how they think about technology.
+The goal of these projects is not just to advance technology but to create a
+big enough splash that people change how they think about technology.
 
 It's hard to imagine an alternate world where these grand challenges did not
 happen, but I don't think it's an exaggeration to say that these grand challenges
@@ -91,7 +92,7 @@ board'' and can select the next clue.
 One advantage of controlling the board is that some questions are
 called ``Daily Doubles'' which allow the player to potentially double
 their score: a player can wager any part of their score, and if they
-get it right they get that ammount added to their score (but a wrong
+get it right they get that amount added to their score (but a wrong
 response will subtract it from their score).
 
 \subsection{How \watson{} changed my life}
@@ -109,7 +110,7 @@ From the trivia community, I heard of some people who were being paid
 by \abr{ibm} to play trivia games, but who couldn't say anything
 more.
 
-I was very sceptical.
+I was very skeptical.
 %
 By the time that \watson{} came to fruition, I had moved to the
 University of Maryland.
@@ -143,7 +144,7 @@ the work that came before Watson that helped inspire it.
 
 \subsection{Rule-based Question Answering}
 
-Preceeding the statistical age of \abr{qa} was the \emph{rule-based}
+Before the statistical age of \abr{qa} was the \emph{rule-based}
 age: systems that were impressive on individual questions about
 baseball or geology but that failed miserably as soon as it saw a question
 that was unexpected in terms of the domain.
@@ -416,7 +417,7 @@ reformulations that we saw in QASM: [IY note: this is not in this chapter or the
 
 \question{In May 1898 Portugal celebrated the 400th anniversary of
   this explorer's arrival in India}
-A 400\textsup{th} anniversary of 1898 gets rewritten to May 1498, India gets transformed into Kappad, and then you can find something with the correct response: \answer{Vasco de Gama}. [IY comment: how does India get transformed into Kappad? It's a village, not a translation? But this might be related to QASM]
+A 400\textsuperscript{th} anniversary of 1898 gets rewritten to May 1498, India gets transformed into Kappad, and then you can find something with the correct response: \answer{Vasco de Gama}.
 
 So the first phase of the Watson pipeline is to---in parallel---generate all
 sorts of guesses based on different interpretations of the question.  Some try
@@ -476,7 +477,7 @@ in it'').
 We write this as a multiplication and not as just adding the feature weights
 directly because sometimes our features won't be binary.
 %
-And this should look familliar: it looks a lot like the dot product that we
+And this should look familiar: it looks a lot like the dot product that we
 first saw in the chapter on information retrieval
 \ifproposal
 (Chapter~\ref{ch:ir}),
@@ -731,7 +732,7 @@ Table~\ref{table:watson:features}.
   Feature & Weight~$w_i$ & $x_i$ \\
   \midrule
   \abr{ir} Score & 2 & 0.1 \\
-  \underline{Toronto} compatability with Category & 1 & 0.2 \\
+  \underline{Toronto} compatibility with Category & 1 & 0.2 \\
   Knowledge Base (\# Airports in Toronto) & 0.1 & 2 \\
   Previous responses (\answer{Toronto}) & 0.005 & 40 \\
   \midrule
@@ -746,7 +747,7 @@ Table~\ref{table:watson:features}.
 These are reasonable features: the \abr{ir} score encodes how similar this is
 to questions that you've seen before;
 %
-the category feature encodes whether the answer is compatable with the
+the category feature encodes whether the answer is compatible with the
 category ``\abr{us} cities'' (and while you imagine that it isn't great, you
 could imagine substituting ``American'' for ``\abr{us}'', which would make
 \answer{Toronto} a lot more plausible);
@@ -1198,9 +1199,9 @@ fan~\citep{marchese-18}:\footnote{\citet{rogak-20} quotes a saltier
 %
 And nobody, nobody, wanted to make Alex unhappy.
 
-Ken would sometimes do a little hunding for the Daily Double against a
-particularly formiddable opponent, but he would normally be
-well-behavied so as not to upset the powers that be.
+Ken would sometimes do a little hunting for the Daily Double against a
+particularly formidable opponent, but he would normally be
+well-behaved so as not to upset the powers that be.
 %
 \watson{}, however, was a soulless machine; and having a machine on the
 stage was so exciting that
@@ -1227,7 +1228,7 @@ Let's review Watson's appearance on \jeopardy{}:
         \item Watson can win the buzzer race whenever it wants.
 \end{enumerate*}
 If Watson wins such a match, does that mean that it is superior to
-these supurb humans?
+these exemplary humans?
 
 I hope that you are reluctant to answer ``yes'' (not just
 because \jeopardy{} has trained you to respond to answers with
