@@ -10,3 +10,15 @@ chapters/110-history.tex~
 chapters/220-datasets.tex~
 chapters/002-about.tex~
 chapters/130-ir.tex~
+*.aux
+*.bbl
+*.idx
+*.blg
+/chapters/blurbs
+main.pdf
+main.synctex.gz
+main.out
+scripts/split_blurbs.py~
+*.xmpi
+main.toc
+main.log

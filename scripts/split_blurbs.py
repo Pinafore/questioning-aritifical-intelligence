@@ -15,7 +15,7 @@ if __name__ == "__main__":
     print("Draft sections:", flags.draft_sections)
     print("Proposal sections:", flags.proposal_sections)
 
-    with open("chapter_blurbs.json", 'r') as infile:
+    with open("chapter_blurbs.json", 'r', encoding='utf-8') as infile:
         raw = infile.read()
         blurbs = json.loads(raw)
 
