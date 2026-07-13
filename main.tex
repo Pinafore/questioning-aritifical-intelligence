@@ -1,12 +1,14 @@
-\documentclass[bfivepaper,twosided,justified,nobib]{style/tufte-book}
-
-\hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
+\PassOptionsToPackage{colorlinks}{hyperref}
+\documentclass{style/cambridge7A}
 
 %%
 % Book metadata
 \title{Questioning \\ Artificial \\ Intelligence}
 \author{Jordan Boyd-Graber}
-\publisher{University of Maryland}
+\providecommand{\refer}{reference}
+\providecommand{\can}{candidate}
+\providecommand{\contentsfinish}{}
+\providecommand{\newpmemlabel}[2]{}
 
 \newif\ifcomment\commentfalse
 \newif\ifproposal\proposalfalse
