@@ -114,6 +114,42 @@ Okay, that’s enough about quiz bowl. Let’s put it on the board: the answer s
 
 \jbgcomment{Work on this chapter in conjunction with iid draft}
 
+\section{Conversational Datasets}
+
+Let’s start with the datasets.  I mentioned some of these very briefly in the datasets video, but now we can linger a little bit longer on these conversational QA datasets.  There are others, but I wanted to talk about: QBLink, CoCa, Quack, and CANARD.  
+
+Now you might think that conversational QA might mean that you might get a respite from my Quizbowl fixation, but not so fast!  The trivia community is also a source of found data for conversation-like questions.  With my former students, we created a dataset of questions these questions start with a sentence to set the context and then you have to answer three (usually) questions within that context.  
+
+Other than the Manchester-style questions and answers, there’s nothing special like pyramidality that makes them “optimal”.  I just hink they’re neat.
+
+For example, you have a leadin that gives the context.  “Only twenty­ one million units in this system will ever be created. Name this digital payment system whose transactions are recorded on a “block chain”. Now, notice that you cannot answer this question *just* from the literal question … it depends on the context.  There are plenty of cryptocurrencies (more every day), but the 21 million number is unique to Bitchoin.
+
+Then we move on to the next question: it was invented by this person, who, according to a dubious Newsweek cover story, is a 64­ year ­old Japanese­American man who lives in California.  Now, you could probably answer this just from the clue here, but it helps to know that “it” here is Bitcoin.  Otherwise you have to do a multihop to figure out that this is Bitcoin and it was invented by someone who purported to be Satoshi Nakamoto.
+
+Finally, the final question is much easier if you know that Bitcoin is involved.
+
+Let’s move on to the next dataset, QuAC (Question Answering in Context) which appeared at the same time as our dataset and is noticeable for introducing emojis in paper titles.  Two of my former students—He He and Mohit—worked on this Cranfield paradigm dataset, where two crowdworkers play the role of a teacher and a student.  The teacher gets to see a Wikipedia page but the student does not.  They have a conversation and the student tries to figure out as much as possible about that topic.  
+
+And just like the QB link dataset, you need to do things like resolve coreference, know the topic of the questions, etc.
+
+And again, one of the big plusses is that the answers are all anchored in the Wikipedia page (in this case Daffy Duck), so there’s gold evidence that useful for machine reading techniques.  But the challenge is that you also need to embed the context somehow!
+
+One approach would be to just transform the conversational, context-specific questions into “normal” that look more like NQ or SQuAD, so we had crowdworkers rewrite the questions into forms that don’t require the context.  We called this dataset Canard, short for Context Abstraction: Necessary Additional Rewritten Discourse, where Canard is of course the French word for “duck”.
+
+And by conditioning on the entire context, you can indeed create questions that don’t need additional context, but it’s not as good as the human rewrites.
+
+The final dataset I’d like to talk about is CoQA, which looks a lot like QuAC—it came out a year after QuAC.  But rather than anchoring on a Wikipedia page, it is anchored on a short vignette, here it’s an 80th birthday party.  Like in QuAC there’s a student and a teacher and the student asks questions of the teacher.  But unlike QuAC there are also rationales that explain why a question has a particular answer.
+
+One thing that you’ll notice about these datasets is that they’re not really a true conversation.  It’s kind of one sided.  And part of that is the tricky problem of evaluation.  You need datasets to train models … but to train a model you need a loss function.  To have a loss function you need to know if an answer is correct.  
+
+In some cases, the evaluation can look a lot like our evaluations for “normal” question answering.  You just need to give an entity.  Then you can use the same metrics that we saw for, say, machine reading question answering: entity equivalence, exact match, span F1, etc.  That’s what you can do for the datasets that we’ve talked about thus far.
+
+But is a conversation just spouting the entities?  No, of course not.  You can’t just have a conversation just through cultural references.  
+
+As we’ll talk about in the long-form question answering segment, evaluating longer answers is really hard.  
+
+So are there ways that you can make the problem easier within a conversational context?  Research in dialog systems typically divide the task into two phases: figure out a dialog act that fits in the context of the conversation, and then given the correct dialog act, you then need to generate the raw text that actually goes to the user. 
+
 \section{Natural Questions Five Years Later}
 \label{sec:nq:problems}
 
@@ -470,3 +506,9 @@ Instead of writing more questions, they use pyramidality (Section~\ref{sec:pyram
 \label{ch:adversarial}
 
 
+\subsection{What if there's no one right answer?}
+
+
+RLHF datasets
+
+Personalization datasets

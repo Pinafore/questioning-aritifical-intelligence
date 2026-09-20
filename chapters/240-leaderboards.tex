@@ -75,6 +75,24 @@ politicians will vote on particular bills.
 
 Last year, I wrote a position paper about the AI researchers who make question answering systems can learn from trivia nerds.  Given the time constraints of the conference and the need to be more “academic”, I couldn’t say everything I wanted to.  So I’ll try not to be too repetitive in this video.  What I would like to do is talk more about how the trivia community learned hard lessons and how the question answering community is still learning those lessons.  I’m hoping by going into a little more detail about how the trivia community made mistakes … might prod computer scientists to see how they might be relevant to how we’re training and evaluating computer question answering systems.
 
+
+The trivia community learned its evaluation norms the hard way. In the 1950s,
+the popularity of television quiz shows led to high-profile scandals, including
+rigged outcomes on \emph{Twenty One} and the notoriety of Charles van
+Doren.\jbgcomment{TODO: find real cites \url{https://youtu.be/JRKxNpwqBac?t=1154} \url{https://youtu.be/bj-m3Ddmn0E?t=83}}
+The lesson was simple: do not cheat. The implication for \abr{qa} evaluation is
+less obvious, but the logic is the same. If a system can repeatedly probe a
+test set and use the score as feedback, then information leaks from the test
+set even without revealing the answers.
+
+This leakage can be subtle. A system can flip a low-confidence answer and see
+whether the score increases or decreases, effectively learning which answers
+are right. With enough attempts, and with correlations across questions, a
+system can improve its score without improving its underlying ability. This is
+why careful evaluation requires a budgeted comparison process and a clear
+separation between development and test data.
+
+
 Even if you don’t care about question answering specifically, I think this will help get ideas across about how to do effective evaluation in machine learning.
 Okay, so what are hard won lessons of the trivia community that the geniuses working on AI have yet to master?  1.  Don’t cheat.  2.  Reward knowledge 3. Write good questions.  While that may seem simple, it took a while for humans to figure these things out for trivia competitions, and the artificial intelligence community is still figuring it out.
 
@@ -133,6 +151,31 @@ The mythology of Quizbowl says that it was a USO diversion created by Canadian D
 But the key idea is that the questions can be interrupted, meaning that part of the skill is correctly balancing your own uncertainty.  Every word is an opportunity for either team to show that it knows more than the other team.  I have videos arguing for why this is the right and proper way to evaluate who knows more about a topic, so I will keep this brief.  
 
 In that 2020 paper I mentioned before, Ben Boerschinger and I argued that you want question answering datasets to be maximally discriminative. 
+
+
+The \qa{} community is obsessed with evaluation.
+Schools, companies, and newspapers hail new \abr{sota}s and topping
+leaderboards, giving rise to troubling claims~\citep{lipton-19} that an
+``\abr{ai} model tops humans''~\citep{najberg-18} because it `won'
+some leaderboard, putting ``millions of jobs at
+risk''~\citep{cuthbertson-18}.
+But what is a leaderboard?
+A leaderboard is a statistic about \qa{} accuracy that induces a ranking over participants.
+
+Newsflash: this is the same as a trivia tournament.
+The trivia community has been doing this for decades~\citep{jennings-06}.
+The key difference is that the trivia community has learned hard lessons about
+fairness, clarity, and discrimination, and those lessons should inform how we
+design and interpret \qa{} leaderboards.
+
+If we treat a leaderboard as a tournament, we should also treat the test set
+as sacred. Repeated probing---even when you do not see the answers---can leak
+information through the score itself. Computers have infinite patience: you
+can flip a low-confidence answer, see whether the score rises or falls, and
+learn something about what was right. This is not hypothetical; it is the same
+logic that motivates budgeted comparisons and careful reporting of model
+selection.
+
 
 See the paper for the equations!  But the moral of the story is that the Quizbowl format popularized by College Bowl created the right format for reliably determining who knows the most about a topic.  Every question is discriminative.  In other words, rewarding knowledge rather than buzzer speed or luck (you can see my other videos for why, for instance Jeopardy isn’t a good test of human vs. computer intelligence).
 

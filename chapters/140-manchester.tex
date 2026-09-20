@@ -1,35 +1,45 @@
 
 % NOTE: This chapter develops the Manchester paradigm and its evaluation norms.
-While Chapter~\ref{ch:ir} introduced Ellen Voorhees's Cranfield paradigm as a
-way of testing systems' ability to answer information-seeking questions, this
-chapter introduces an alternative---the Manchester paradigm. You have not
-heard of it before because we are making it up.
+While Chapter~\ref{ch:ir} introduced Ellen Voorhees's Cranfield
+paradigm as a way of testing systems' ability to answer
+information-seeking questions, this chapter introduces an
+alternative---the Manchester paradigm. You have not heard of before
+because I'm making it up right now.  So hopefully you'll indulge me a
+little as I make a case for why it's a good name.
 
-This chapter explains why we picked the name---symmetry with Cranfield and a
-nod to question answering mythology---and argues why the Manchester paradigm is
-often more effective than the Cranfield paradigm. This will matter for the
-serious business of leaderboards (Chapter~\ref{ch:leaderboards}). But until
-then, this chapter spends time on fun, silly trivia games played by college
-nerds and the complicated rules they have made up over the years, which help
-us determine how smart an \abr{ai} is.
+This chapter first explains why we picked the name---symmetry with
+Cranfield and a nod to question answering mythology we mentioned in
+Chapter~\ref{}---and argues why the Manchester paradigm is often more
+effective than the Cranfield paradigm. This will matter for the
+serious business of leaderboards (Chapter~\ref{ch:leaderboards}). But
+until then, this chapter spends time on fun, silly trivia games played
+by college nerds and the complicated rules they have made up over the
+years, which help us determine how smart an \abr{ai} is.
 
 \section{Two British University Towns Alike in Question Answering}
 \label{sec:manchester:name}
 
-Question answering inherits two evaluation traditions. The Cranfield paradigm
-prioritizes serving users (as discussed in Chapter~\ref{ch:ir}). In this
-chapter, we introduce a new alternative---the Manchester paradigm---which
-prioritizes probing intelligence through designed questions. We keep the
-Cranfield discussion light here and focus on why the Manchester framing matters
+Question answering inherits two evaluation traditions. The Cranfield
+paradigm prioritizes serving users (as discussed in
+Chapter~\ref{ch:ir}), and is the one that originally dominated the
+computer science literature. This chapter will introduce an alternative that has been increasingly important to the development of modern \abr{ai}.  If the Cranfield paradigm got \abr{ai} to crawl, the Manchester paradigm got it to run.\footnote{Query whether we want \abr{ai} to be moving too quickly.}
+%
+Because this chapter is introducing the Manchester paradigm---which prioritizes probing
+intelligence through designed questions---we will keep the Cranfield
+discussion light here and focus on why the Manchester framing matters
 for evaluation.
 
 \subsection{Why the Name Manchester}
 \label{sec:manchester:why-name}
 
-We choose ``Manchester'' for symmetry with ``Cranfield,'' but the name is also
-substantive. It names a paradigm that treats questions as probes of
-intelligence rather than requests for information. The name also points to
-three strands of question answering history: teaching, comparing, and probing.
+We choose ``Manchester'' for symmetry with ``Cranfield'', they're both
+British university towns.  But there are many British towns and cities
+with universities.  Pedro Rodriguez and I picked Manchester because
+Manchester also connects to three strands of question answering
+history: teaching, comparing, and probing.
+%
+I'll go through these briefly here to connect with previous chapters
+and to connect with what we will discuss later in the chapter.
 
 \paragraph{To Teach: The Sphinx and the Socratic Method}
 Manchester's Regiment used the Sphinx as its symbol~\cite{farmer-01}, and the
@@ -43,135 +53,67 @@ questions guide the answerer to insight~\cite{trepanier-17}. The Manchester
 paradigm adopts this stance: questions are instruments for teaching and
 probing, not just for retrieving facts.
 
+We talked about all of these aspects before, but I reiterate them to
+drive the point home.  Sometimes we ask questions not becuase we want
+to know the answer but because we want to achieve something by asking
+the question: to test to see if someone is worthy or to teach someone
+by forcing them to work their way through to an answer.
+
 \paragraph{To Compare: Granada Studios and \textit{University Challenge}}
-Granada Studios, home of \textit{University Challenge}, made a competitive,
-discriminative style of question answering famous~\citep{taylor_mcnulty_meek,baber-15}.
-The host knows the answer. The goal is to compare answerers, not to satisfy a
-user's information need. This competitive framing foreshadows our Quizbowl
-discussion in Section~\ref{sec:manchester:qb} and motivates the leaderboard
-analogies in Section~\ref{sec:manchester:tournaments}.
+Manchester's Granada Studios created a quiz show called
+\textit{University Challenge}~\citep{taylor_mcnulty_meek,baber-15}.
+%
+The host knows the answer, so the the goal not to satisfy a
+user's information need.  Instead, the goal is to see whether which four students---the ones from Balliol College or Sheffield---are smarter.
+%
+In the united states, this unique competition is called \quizbowl{}, and it has unique properties that I think can help inform the development and evaluation of \abr{ai}.
+%
+In this chapter, we'll talk about how the philosophy of \quizbowl{} can inform the authoring of individual questions.
+%
+Later, in Chapter~\ref{}, we will discuss how the philosophy of \quizbowl{} tournaments can improve \abr{ai} evaluation.
 
 \paragraph{To Probe: The Turing Test}
-Alan Turing's imitation game reframes intelligence as a question-driven
-evaluation problem (Chapter~\ref{ch:turing}). Rather than define intelligence,
-Turing proposes an indistinguishability test~\citep{Turing-95}. That move is
-quintessentially Manchester: it uses questions to probe whether a machine can
-match a human's capabilities. This logic underlies modern \abr{qa} challenges
-that are designed to reveal specific strengths and weaknesses rather than to
-serve users directly.
+Alan Turing was in Manchester when he proposed his imitation game, which reframes intelligence as a question-driven
+evaluation  (Chapter~\ref{ch:turing}). Rather than define intelligence,
+Turing proposes an indistinguishability test~\citep{Turing-95}: a computer is intelligent when it can answer questions as well as a human.
+%
+But the judge asking the questions epitomizes the Manchester paradigm: devising questions that---given the skills shown and topics discussed---are most likely to trip up a computer.
+%
+As we discuss in Section~\ref{} this adversarial framing is increasingly an important part of \abr{ai} development.
 
-\subsection{What the Manchester Framing Adds}
-\label{sec:manchester:framing}
-
-The Manchester paradigm emphasizes questions designed to probe for specific
-capabilities. This does not replace user-centered evaluation; instead it makes
-explicit that some datasets and leaderboards are better understood as tests of
+To recap, the Manchester paradigm emphasizes questions designed to
+probe for specific capabilities. This does not replace user-centered
+evaluations \textit{a la} Cranfield; instead it makes explicit that
+some datasets and leaderboards are better understood as tests of
 competence rather than proxies for user satisfaction.
 
-\section{Your Trivia Tournament is a Leaderboard}
+\section{University Challenge: A Manchester Template for Evaluating Intelligence}
 \label{sec:manchester:tournaments}
 
-The \qa{} community is obsessed with evaluation.
-Schools, companies, and newspapers hail new \abr{sota}s and topping
-leaderboards, giving rise to troubling claims~\citep{lipton-19} that an
-``\abr{ai} model tops humans''~\citep{najberg-18} because it `won'
-some leaderboard, putting ``millions of jobs at
-risk''~\citep{cuthbertson-18}.
-But what is a leaderboard?
-A leaderboard is a statistic about \qa{} accuracy that induces a ranking over participants.
-
-Newsflash: this is the same as a trivia tournament.
-The trivia community has been doing this for decades~\citep{jennings-06}.
-The key difference is that the trivia community has learned hard lessons about
-fairness, clarity, and discrimination, and those lessons should inform how we
-design and interpret \qa{} leaderboards.
-
-If we treat a leaderboard as a tournament, we should also treat the test set
-as sacred. Repeated probing---even when you do not see the answers---can leak
-information through the score itself. Computers have infinite patience: you
-can flip a low-confidence answer, see whether the score rises or falls, and
-learn something about what was right. This is not hypothetical; it is the same
-logic that motivates budgeted comparisons and careful reporting of model
-selection.
-
-These concerns are not new. The Manchester framing makes them unavoidable:
-if a leaderboard is a competition, we must do what competitions do to be fair.
-This will be important for the serious business of leaderboards
-(Chapter~\ref{ch:leaderboards}), where we formalize what it means for a
-leaderboard to discriminate between systems.
-
-Section~\ref{sec:tournament} details this overlap between the qualities of a
-first-class \abr{qa} dataset (and its requisite leaderboard).
-The experts running these tournaments are imperfect, but they have learned from
-their past mistakes (see Appendix~\ref{sec:history} for a brief historical
-perspective) and created a community that reliably identifies those best at
-question answering.
-Beyond the format of the \emph{competition}, trivia norms ensure individual
-questions are clear, unambiguous, and reward knowledge (Section~\ref{sec:manchester:craft}).
-
-We are not saying that academic \abr{qa} should surrender to trivia questions
-or the community---far from it.
-The trivia community does not understand the real-world information-seeking
-needs of users or what questions challenge computers.
-However, they have well-tested protocols to declare that someone is better at
-answering questions than another.
-This collection of tradecraft and principles can nonetheless help the \abr{qa}
-community.
-
-Beyond these general concepts that \abr{qa} can learn from,
-Section~\ref{sec:manchester:qb} reviews how the ``gold standard'' of trivia
-formats, \qb{}, can improve traditional \abr{qa}.
-We then briefly discuss how research that uses fun, fair, and good trivia
-questions can benefit from the expertise, pedantry, and passion of the trivia
-community (Section~\ref{sec:call}).
-
-The trivia community learned its evaluation norms the hard way. In the 1950s,
-the popularity of television quiz shows led to high-profile scandals, including
-rigged outcomes on \emph{Twenty One} and the notoriety of Charles van
-Doren.\jbgcomment{TODO: find real cites \url{https://youtu.be/JRKxNpwqBac?t=1154} \url{https://youtu.be/bj-m3Ddmn0E?t=83}}
-The lesson was simple: do not cheat. The implication for \abr{qa} evaluation is
-less obvious, but the logic is the same. If a system can repeatedly probe a
-test set and use the score as feedback, then information leaks from the test
-set even without revealing the answers.
-
-This leakage can be subtle. A system can flip a low-confidence answer and see
-whether the score increases or decreases, effectively learning which answers
-are right. With enough attempts, and with correlations across questions, a
-system can improve its score without improving its underlying ability. This is
-why careful evaluation requires a budgeted comparison process and a clear
-separation between development and test data.
-
-Two further lessons follow. First, evaluation should reward knowledge rather
-than luck or speed. This is why trivia formats emphasize discriminative
-questions and why a leaderboard should be interpreted as a competitive
-comparison rather than a casual statistic. Second, good evaluation requires
+What makes \textit{University Challenge} unique compared to other quiz shows is that it rewards knowledge rather
+than luck or speed. Second, good evaluation requires
 good questions. Crafting such questions is a skill, and it is one that the
-trivia community has refined for decades.
+trivia community has refined for decades, starting with the unique format of \textit{University Challenge}.
 
-There are, of course, tradeoffs. Human tournaments are not perfect, and
-embarrassing losses happen. We suffered a particularly public loss in 2016
-against expert quiz bowl players.\footnote{\url{https://www.youtube.com/watch?v=c2kGD1EdfFw}}
-That is not an argument against rigorous evaluations. If anything, it is a
-reminder to evaluate more frequently and with fresh questions. It is also a
-reason to use surprise questions in courses and system evaluations, where a
-single attempt better reflects real-world use.
-
-These points motivate the next sections, which move from test-set sanctity to
-the structure of questions themselves.
-
-\section{Quiz Bowl}
 \label{sec:manchester:qb}
 
 \subsection{Quizbowl Lineage and the \textit{University Challenge} Link}
 \label{sec:manchester:qb-lineage}
 
-Quizbowl is the clearest embodiment of the Manchester paradigm in practice.
-Its mythology traces to a USO diversion, often credited to Don Reid, and its
-modern format was shaped by radio host Allen Ludden. It shares a family
-resemblance with \textit{University Challenge}: both are competitive,
-knowledge-centered formats in which the asker already knows the answer, and the
-goal is to compare answerers rather than to serve a user. This is the
-``compare'' motivation that motivates the Manchester paradigm.
+My North American readers will at this point be shouting that I have failed to mention Don Reid.
+%
+During World War II, he created a \abr{uso} entertainment program that evolved into a 
+modern format was shaped by radio host Allen Ludden.
+%
+It shares a family resemblance\footnote{And like all families, there's
+  some drama here about who came up with the idea first.  I think that
+  Don Reid deserves the credit, but I'm foregrounding Manchester to
+  emphasize the links with Turing.} with \textit{University
+  Challenge}: both are competitive, knowledge-centered formats in
+which the asker already knows the answer, and the goal is to compare
+answerers rather than to serve a user. More importantly, their
+questions are designed to discriminate who knows the most by having
+players ``buzz in'' to signal that they know the answer.
 
 \subsection{Discriminative Questions and Incremental Evidence}
 \label{sec:manchester:qb-discriminative}
@@ -180,19 +122,16 @@ Quizbowl's defining property is interruptibility: questions are read aloud and
 can be answered at any time. Each word is a chance to demonstrate knowledge.
 This makes Quizbowl maximally discriminative, rewarding knowledge rather than
 buzzer speed or luck. It is also a better model for evaluating \abr{qa} than
-formats where answers are only permitted after the question is fully read, as
-in \jeopardy{}.\footnote{\jeopardy{} is still a canonical comparison task, as
-  in \abr{ibm} Watson's match against Ken Jennings~\citep{ferrucci2010building}.}
+formats where answers are only permitted after the question is fully read.
+%
+One example of such a format is the American \abr{tv} show \jeopardy{}, which I review exhaustively in Chapter~\ref{} (and indeed, Ken's remark will mirror some of my criticism).
 
-This matters because leaderboards should discriminate between systems. In
-earlier work, we argued that an ideal \abr{qa} dataset maximizes the proportion
-of discriminative questions. Quizbowl operationalizes that idea by using
-incremental evidence within each question.
+The easiest way to explain \quizbowl{} is with an example question.
 
-We have shown example \qb{} questions, but have not explained the format; see
-\citet{DBLP:journals/corr/abs-1904-04792} for more. You might be scared off by
-how long the questions are, but in real \qb{} tournaments they are not finished
-because the questions are \emph{interruptible}.
+
+You might be scared off by how long the questions are, but in real
+\qb{} tournaments they are not finished because the questions are
+\emph{interruptible}.
 
 \paragraph{Interruptible}
 
@@ -222,12 +161,16 @@ are not pyramidal.
 \paragraph{Pyramidal}
 \label{sec:manchester:pyramidality}
 
-Recall that effective datasets discriminate the best from the rest---the higher
-the proportion of effective questions~$\rho$, the better. \qb{}'s~$\rho$ is
-nearly 1.0 because discrimination happens \emph{within} a question: after every
-word, an answerer must decide if they know enough to answer. \qb{} questions
-are arranged to be maximally \emph{pyramidal}: questions begin with hard clues
-that require deep understanding and proceed to more accessible clues.
+The goal of a quiz bowl game is to discriminate who know more about a topic: the smarter team should on average get the question right.
+%
+\quizbowl{} questions do a better job than ``stand alone'' questions
+because discrimination happens \emph{within} a question: after every
+word, an answerer must decide if they know enough to answer. \qb{}
+questions are arranged to be maximally \emph{pyramidal}: questions
+begin with hard clues that require deep understanding and proceed to
+more accessible clues.
+
+\jbgcomment{Connect to example question and talk through how they're discriminative going from harder to easier}
 
 \subsection{Adjudication and Protests as Quality Control}
 \label{sec:manchester:qb-adjudication}
