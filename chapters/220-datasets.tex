@@ -394,11 +394,10 @@ In the trivia world, this is called a {\bf play test}:
 get in the shoes of someone \emph{answering} the questions.
 If you find them boring, repetitive, or uninteresting, so will
 crowdworkers.
-If you can find shortcuts to answer questions~\citep{rondeau-18,
-  kaushik-18}, so will a computer.
+If you can find shortcuts to answer questions~\citep{rondeau-18,kaushik-18}, so will a computer.
 
 Concretely, \citet{weissenborn-17} catalog artifacts in \squad{}~\citep{rajpurkar-18}, the most popular \abr{qa} leaderboard.
-If you see a list like ``Along with Canada and the United Kingdom, what country\dots'', you can ignore the rest of the question and just type Ctrl+F~\citep{yuan-19, russell-20} to find the third country---\underline{Australia} in this case---that appears with ``Canada and the \abr{uk}''.
+If you see a list like ``Along with Canada and the United Kingdom, what country\dots'', you can ignore the rest of the question and just type Ctrl+F~\citep{yuan-19,russell-20} to find the third country---\underline{Australia} in this case---that appears with ``Canada and the \abr{uk}''.
 Other times, a \squad{} playtest would reveal frustrating questions that are 
 i) answerable given the information but not with a direct span,\footnote{A source paragraph says ``In [Commonwealth countries]\dots the term is generally restricted to\dots Private education in North America covers the whole gamut\dots''; thus, ``What is the term private school restricted to in the US?'' has the information needed but not as a span.}
 ii) answerable only given facts beyond the given paragraph,\footnote{A source paragraph says ``Sculptors [in the collection include] Nicholas Stone, Caius Gabriel Cibber, [...], \underline{Thomas Brock}, Alfred Gilbert, [...] and Eric Gill'', i.e., a list of names; thus, the question ``Which British sculptor whose work includes the Queen Victoria memorial in front of Buckingham Palace is included in the V\&A collection?'' should be unanswerable in \squad{}.}
@@ -409,7 +408,7 @@ iv)  or non-questions.
 \searchqa{}~\citep{dunn-17}, derived from \jeopardy{}, asks ``An article that he wrote about his riverboat days was eventually expanded into \textit{Life on the Mississippi}.''
 The apprentice and newspaper writer who wrote the article is named Samuel Langhorne Clemens; however, the reference answer is his later pen name, \underline{Mark Twain}.
 Most \qa{} evaluation metrics would count \underline{Samuel Clemens} as incorrect.
-In a real game of \jeopardy{}, this would not be an issue (Section~\ref{sec:ambiguity}).
+In a real game of \jeopardy{}, this would not be an issue (Section~\ref{sec:manchester:ambiguity}).
 
 Of course, fun is relative, and any dataset is bound to contain errors.
 However, playtesting is an easy way to find systematic problems: unfair, unfun playtests make for ineffective leaderboards.
@@ -462,7 +461,7 @@ Taking a cue from Vygotsky's proximal development theory of human learning~\cite
 These Goldilocks\footnote{In a British folktale first recorded by Robert Southey, the character Goldilocks finds three beds: one too hard, one not hard enough, and one ``just right''.} questions (not random noise) decide who tops the leaderboard.
 Unfortunately, existing datasets have many easy questions.
 \citet{sugawara-20} find that ablations like shuffling word order~\citep{feng-18}, shuffling sentences, or only offering the most similar sentence do not impair systems.
-Newer datasets such as \abr{drop}~\citep{dua-19} and HellaSwag~\citep{zellers-19} are harder for \emph{today}'s systems; because Goldilocks is a moving target, we propose annual evaluations in Section~\ref{sec:call}.
+Newer datasets such as \abr{drop}~\citep{dua-19} and HellaSwag~\citep{zellers-19} are harder for the systems they were designed to test; because Goldilocks is a moving target, I argue for annual evaluations in Section~\ref{sec:manchester:qb-blind}.
 
 \subsection{Why so few Goldilocks questions?}
 
@@ -492,7 +491,7 @@ need.\footnote{Using a more sophisticated simulation approach, the
   discriminate systems with less than a seven absolute score point
   difference.}
 The same terror besets trivia tournament organizers.
-Instead of writing more questions, they use pyramidality (Section~\ref{sec:pyramidality}) to make every question count.
+Instead of writing more questions, they use pyramidality (Section~\ref{sec:manchester:pyramidality}) to make every question count.
 
 
 \begin{figure*}[t!]

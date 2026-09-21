@@ -15,7 +15,7 @@ not an effective way to find information.
 But that was essentially the world before search engines: you had to
 find what you wanted from a list or index.
 
-My goal in this video is to tell the story of the Cranfield paradigm
+My goal in this chapter is to tell the story of the Cranfield paradigm
 and how it made the twentieth century Internet possible.
 %
 Most of this is drawn from the article ``The Evolution of Cranfield''
@@ -27,8 +27,8 @@ retrieval.
 \label{sec:ir:cranfield}
 
 The story begins in 1967 with Cyril Cleverdon at Cranfield University
-in England: which has an airport right on campus.\footnote{Here
-at the University of Maryland we have to walk a whole fifteen minutes
+in England: which has an airport right on campus.\footnote{My students
+at the University of Maryland have to walk a whole fifteen minutes
 to get to the oldest continuously operated airport in the world.}
 %
 The University was the heart of British aviation research.
@@ -48,16 +48,14 @@ index was.
 Now, when I say ``index'', if you're over 40, you might think of this
 sort of thing in the back of a book~\citep{ritchie88}:
 \begin{quote}
-  \begin{flushright}
-    \flushright INDEX 269
-    \end{flushright}
-
-  
-  \texttt{read} system call \hphantom{\dots} 170 \\
-  \texttt{readdir} function \hphantom{\dots} 170 \\
-  \texttt{readlines} function \hphantom{\dots} 170 \\
-  \texttt{realloc} library function \hphantom{\dots} 170 \\
-  recursion 86, 139, 141, 182, 269
+  \begin{tabular}{@{}lr@{}}
+    \multicolumn{2}{r@{}}{INDEX 269} \\[\smallskipamount]
+    \texttt{read} system call & 170 \\
+    \texttt{readdir} function & 170 \\
+    \texttt{readlines} function & 170 \\
+    \texttt{realloc} library function & 170 \\
+    recursion & 86, 139, 141, 182, 269
+  \end{tabular}
 \end{quote}
 An author carefully wrote down topics mentioned in a text and told you
 where you could find them (i.e., which page of the book they were
@@ -167,8 +165,8 @@ Sometimes you want to balance precision and recall.  A common
 combination of these two measures of goodness is $F_1$ score, which is
 the harmonic mean of precision and recall:
 \begin{equation}
-  F_1 \equiv = 2 \frac{\mbox{precision} \cdot
-    \mbox{recall}}{\mbox{precision} + \mbox{recall}} = 
+  F_1(q) = 2 \frac{\operatorname{precision}(q) \cdot
+    \operatorname{recall}(q)}{\operatorname{precision}(q) + \operatorname{recall}(q)}.
 \label{eq:f-score}
 \end{equation}
 
@@ -191,7 +189,7 @@ retrieval system without pesky humans getting in the way.  Just check
 whether the red box finds the relevant documents!
 
 But not everybody was convinced.  The Cranfield paradigm is making a lot of assumptions here: 
-first, if a document is relevant, it’s equally relevant: everything is equally relevant: showing you my explanation of topic modeling is as good as a video from Siraj Raval’s
+first, if a document is relevant, it’s equally relevant: everything is equally relevant: showing you my explanation of topic modeling is as good as a video from Siraj Raval.
 The users’ information needs are static; the answer to the question
 ``who is the president of the united states'' never changes (Nixon is
 still president, right?).
@@ -465,7 +463,7 @@ turned into a logical form that can be executed
 %
 against its database.
 
-In 2022, it’s probably not worth going into
+In \currentyear{}, it’s probably not worth going into
 that.
 %
 Our databases don’t look like this anymore.
@@ -498,8 +496,9 @@ the name a little bit more.
 %
 This isn’t going to be easy.
 
-First, since you’re reading a book printed\footnote{In all likelihood,
-you're not actually reading a printed book, but a boy can dream.} in the twenty-first century,
+First, since you’re reading a book printed\footnote{Given the proliferation
+of e-readers and people reading everything on their devices, you're
+probably not reading this on a dead tree.} in the twenty-first century,
 you probably don’t know what a linotype
 system is.
 %
@@ -560,7 +559,11 @@ more and more input until the protagonist
 %
 of the story selectively feeds it Buddhist
 philosophy and it achieves Nirvana.
-%
+
+To recap the route to this name: Linotype machines helped distribute
+information, and ``ETAOIN SHRDLU'' signaled that something had gone wrong
+in that process.  Brown used those letters as the title of a story about
+a machine that became self-aware by reading what it printed.  Winograd
 Despite its funny name, \abr{shrdlu} remains the
 \abr{og} question answering system.
 
@@ -593,7 +596,8 @@ with the block world.
 
 \begin{figure}
   \includegraphics[width=1.0\linewidth]{figures/external/shrdlu}
-  \caption{A screen shot of the \abr{shrdlu} system.  Unlike other
+  \caption{A recreation of the \abr{shrdlu} system by the author, Jordan
+    Boyd-Graber.  Unlike other
     early \abr{qa} systems with a static world, you can move the
     blocks around and ask questions about them.  However, it's a very
     small world.}
@@ -655,7 +659,7 @@ sometimes.
 And that’s the big difference between modern
 \abr{qa} systems and these older systems.
 %
-They’re small and brittle: when they work,
+The older systems are small and brittle: when they work,
 they work really well.
 %
 But they don’t work that often.

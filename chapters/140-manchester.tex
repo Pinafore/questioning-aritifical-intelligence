@@ -9,7 +9,7 @@ little as I make a case for why it's a good name.
 
 This chapter first explains why we picked the name---symmetry with
 Cranfield and a nod to question answering mythology we mentioned in
-Chapter~\ref{}---and argues why the Manchester paradigm is often more
+Chapter~\ref{ch:civilization}---and argues why the Manchester paradigm is often more
 effective than the Cranfield paradigm. This will matter for the
 serious business of leaderboards (Chapter~\ref{ch:leaderboards}). But
 until then, this chapter spends time on fun, silly trivia games played
@@ -44,7 +44,7 @@ and to connect with what we will discuss later in the chapter.
 \paragraph{To Teach: The Sphinx and the Socratic Method}
 Manchester's Regiment used the Sphinx as its symbol~\cite{farmer-01}, and the
 Sphinx riddle tradition underscores questions that test the answerer more than
-they inform the asker (Chapter~\ref{ch:civilization:civilization}).
+they inform the asker (Chapter~\ref{ch:civilization}).
 In Greek myth, the Sphinx asks everyone who enters the city a riddle that is
 explicitly designed to test the answerer~\cite{renger-13}. The point of the
 riddle is not information seeking; it is to teach and reveal understanding.
@@ -70,7 +70,7 @@ In the united states, this unique competition is called \quizbowl{}, and it has 
 %
 In this chapter, we'll talk about how the philosophy of \quizbowl{} can inform the authoring of individual questions.
 %
-Later, in Chapter~\ref{}, we will discuss how the philosophy of \quizbowl{} tournaments can improve \abr{ai} evaluation.
+Later, in Chapter~\ref{ch:leaderboards}, I discuss how the philosophy of \quizbowl{} tournaments can improve \abr{ai} evaluation.
 
 \paragraph{To Probe: The Turing Test}
 Alan Turing was in Manchester when he proposed his imitation game, which reframes intelligence as a question-driven
@@ -79,7 +79,8 @@ Turing proposes an indistinguishability test~\citep{Turing-95}: a computer is in
 %
 But the judge asking the questions epitomizes the Manchester paradigm: devising questions that---given the skills shown and topics discussed---are most likely to trip up a computer.
 %
-As we discuss in Section~\ref{} this adversarial framing is increasingly an important part of \abr{ai} development.
+This need to expose an answerer's weaknesses also shapes the craft of
+question writing (Section~\ref{sec:manchester:craft}).
 
 To recap, the Manchester paradigm emphasizes questions designed to
 probe for specific capabilities. This does not replace user-centered
@@ -97,15 +98,22 @@ trivia community has refined for decades, starting with the unique format of \te
 
 \label{sec:manchester:qb}
 
-\subsection{Quizbowl Lineage and the \textit{University Challenge} Link}
+\subsection{\quizbowl{} Lineage and the \textit{University Challenge} Link}
 \label{sec:manchester:qb-lineage}
 
 My North American readers will at this point be shouting that I have failed to mention Don Reid.
 %
-During World War II, he created a \abr{uso} entertainment program that evolved into a 
-modern format was shaped by radio host Allen Ludden.
+After returning from World War II, Reid drew on \abr{uso}
+morale-building activities to develop the format with its first host,
+Allen Ludden.  \textit{College Bowl} premiered on radio in 1953 and
+moved to television in 1959~\citep{baber-15}.
 %
-It shares a family resemblance\footnote{And like all families, there's
+Even keeping score took practice: Grant Tinker, later president of
+\abr{nbc}, was the game's first scorekeeper, and Ludden sometimes had
+to ad lib while Tinker caught up with the unfamiliar scoring
+system~\citep{baber-15}.
+
+\textit{College Bowl} shares a family resemblance\footnote{And like all families, there's
   some drama here about who came up with the idea first.  I think that
   Don Reid deserves the credit, but I'm foregrounding Manchester to
   emphasize the links with Turing.} with \textit{University
@@ -114,6 +122,13 @@ which the asker already knows the answer, and the goal is to compare
 answerers rather than to serve a user. More importantly, their
 questions are designed to discriminate who knows the most by having
 players ``buzz in'' to signal that they know the answer.
+
+That history matters because the format for comparing answerers was
+developed by people trying to make a good game, long before it became
+an evaluation task for \abr{ai}.  The lessons for machine question
+answering lie in the details: when players can interrupt, how clues
+are ordered, and how writers make the competition fair.  I turn to
+those details next.
 
 \subsection{Discriminative Questions and Incremental Evidence}
 \label{sec:manchester:qb-discriminative}
@@ -124,7 +139,9 @@ This makes Quizbowl maximally discriminative, rewarding knowledge rather than
 buzzer speed or luck. It is also a better model for evaluating \abr{qa} than
 formats where answers are only permitted after the question is fully read.
 %
-One example of such a format is the American \abr{tv} show \jeopardy{}, which I review exhaustively in Chapter~\ref{} (and indeed, Ken's remark will mirror some of my criticism).
+One example is the American \abr{tv} show \jeopardy{}, whose buzzer
+rules matter for Watson's match against human champions
+(Chapter~\ref{ch:watson}).
 
 The easiest way to explain \quizbowl{} is with an example question.
 
@@ -539,7 +556,7 @@ Instead, focus more resources on the bubble.
 Common ground has its limits. That there is not a strict dichotomy between
 Manchester and Cranfield can mask the importance of distinguishing motivations.
 Some robustness proposals test models on inputs users would not make, or on
-challenging but unnatural adversarial questions~\citep{feng2018rawr,jia2017adversarial,wallace2018trick,bartolo2020beat,kiela2021dynabench}.
+challenging but unnatural adversarial questions~\citep{feng2018rawr,jia2017adversarial,wallace-19,bartolo2020beat,kiela2021dynabench}.
 These tests can be valuable for probing capabilities, but they do not directly
 improve the user experience in the short term. The Manchester paradigm
 welcomes these probes; the Cranfield paradigm will often ignore them. If we do
@@ -555,7 +572,7 @@ much more difficult~\citep{chu2002piquant,deutscher-21,jennings2011ibm}. The
 same tension shows up in dataset design. \squad{} questions were written by
 people who knew the answers, but the data do not follow Manchester-style
 question-writing norms; the result was a proliferation of shortcuts and
-artifacts that later analyses exposed~\citep{weissenborn2017simple}. In
+artifacts that later analyses exposed~\citep{weissenborn-17}. In
 contrast, Manchester-oriented benchmarks such as the Winograd challenge
 explicitly try to avoid cheap tricks~\citep{levesque2014behavior}. The point is
 not that one paradigm is superior, but that each requires different care.
@@ -566,7 +583,7 @@ Competitions are designed to discriminate between answerers quickly. The world
 accepted that Watson was better than Ken Jennings and Brad Rutter after 122
 answers because the format is optimized to separate abilities. Cranfield-style
 leaderboards, in contrast, require thousands of questions and still may not
-have enough statistical power to meaningfully rank systems~\citep{card2020power,rodriguez2021leaderboard}.
+have enough statistical power to meaningfully rank systems~\citep{card2020power,Rodriguez-21:leaderboards}.
 This is another place where answer equivalence matters: if your evaluation
 cannot recognize legitimate variants, you need more data to compensate for the
 noise. The Manchester paradigm forces us to confront this issue directly by

@@ -1,5 +1,4 @@
 
-\label{ch:leaderboards}
 
 In a previous video, I talked about how questions created modern civilization:
 the use of exams to select civil servants.  Compared to the alternative that
@@ -239,12 +238,12 @@ recommendations for future benchmark tasks.
 
 Leaderboard evaluations---for better or worse---are the
 \textit{de facto} standard for measuring progress in question
-answering~\citep{squad16} and in many \nlp{}
+answering~\citep{rajpurkar-16} and in many \nlp{}
 tasks~\citep{wang2019superglue}.
 An unfortunate side effect of leaderboard popularity is \abr{sota}-chasing, often at the expense of carefully inspecting data and models~\citep{linzen2020progress}.
 For example, the same  ``super-human'' models that top question answering leaderboards~\citep{najberg-18} often fail spectacularly~\citep{feng2018rawr,wallace2019universal} by learning non-generalizable statistical patterns~\citep{mccoy2019heuristics,niven2019probing}.
 Finally, focusing \textit{solely} on metrics conflates progress on a specific \emph{task} with progress on real-world \nlp{} \emph{problems} behind the task~\citep{bender2020climbing}.
-Plainly, focusing on headline \abr{sota} numbers ``provide(s) limited value for scientific progress absent insight into what drives them'' and where they fail~\citep{lipton2019troubling}.
+Plainly, focusing on headline \abr{sota} numbers ``provide(s) limited value for scientific progress absent insight into what drives them'' and where they fail~\citep{lipton-19}.
 
 In this work we take leaderboards ``as they are,'' and imagine how they
 might better support research.
@@ -252,7 +251,7 @@ Leaderboards establish differences between
 models on a fixed task.
 Hence, leaderboards should enable and encourage the comparison of models and
 inspection of examples.
-And leaderboards should also signal when they have outlived their usefulness~\citep{boydgraber2020nerds}.
+And leaderboards should also signal when they have outlived their usefulness~\citep{Boyd-Graber-20}.
 
 \begin{figure}[t]
   \centering
@@ -285,7 +284,7 @@ summary statistics~\citep{edgeworth1888exams}.
   lead to a more nuanced ranking of models, identifying poor \itms{}, and
   better understanding of a dataset and task.  Throughout the paper, we use
   the question answering (\qa{}) benchmark
-  \squad{}~2.0~\citep{rajpurkar2018know}.  For example, \name{} can identify
+  \squad{}~2.0~\citep{rajpurkar-18}.  For example, \name{} can identify
   questions that are challenging to models and questions that are wrong
   (incorrectly annotated).  In addition to better understanding datasets, it
   is also helpful for efficiently selecting evaluation items to annotate.  We
@@ -501,9 +500,9 @@ $\theta_{c}$ is greater than six.
 
 This is a more mathematical formulation of the ``easy'' and ``hard''
 dataset splits in question
-answering~\citep{sugawara2018easier,Rondeau2018-um,sen2020learn}.
+answering~\citep{sugawara-18,rondeau-18,sen2020learn}.
 In \pl{3}, this recapitulates the observation of
-\citet{boydgraber2020nerds} that annotation error can hinder effective
+\citet{Boyd-Graber-20} that annotation error can hinder effective
 leaderboards.
 \name{} helps systematize these observations and diagnose dataset issues.
 
@@ -571,7 +570,7 @@ As we show in \S\ref{ch:isicle:exp}, na\"ive rankings are noisier than \irt{} ra
 
 Leaderboards should: (1) reliably and efficiently rank
 better models ahead of worse
-models~\citep{sutcliffe1992pragmatics,voorhees2003evaluating} and (2)
+models~\citep{sutcliffe1992pragmatics,voorhees-03} and (2)
 guide inspection of \itms{} and \subjs{} (\S\ref{ch:isicle:interp}).
 The first ameliorates the unavoidable randomness
 of finite evaluations while the second enables
@@ -742,7 +741,7 @@ original motivation for using \irt{}.\footnote{ Since the maximum trial size was
 
 \irt{} can also guide the construction of tests.
 Just as \irt{} practitioners prepare tests for humans, we too construct tests for machines.
-In educational testing, collecting responses from humans is expensive; likewise, although \emph{questions} are cheap in search-based \qa{} tasks~\citep{Nguyen2016MSMA,kwiatkowski2019nq}, annotating \emph{answers} is expensive.
+In educational testing, collecting responses from humans is expensive; likewise, although \emph{questions} are cheap in search-based \qa{} tasks~\citep{Nguyen2016MSMA,kwiatkowski-19}, annotating \emph{answers} is expensive.
 Likewise, ``grading'' machine dialog responses is expensive and \irt{} helps~\citep{sedoc2020irt}.
 To emulate this setting, we use computerized adaptive testing~\citep{weiss1984cat} to iteratively select \squad{} \itms{} to ``annotate.''
 
@@ -826,8 +825,8 @@ Then we show that---like in educational testing---\irt{} identifies good and bad
 \end{figure*}
 
 Several works curate easy and hard \abr{qa} subsets based on how many
-models answer correctly~\citep{Rondeau2018-um} or
-heuristics~\citep{sugawara2018easier}.
+models answer correctly~\citep{rondeau-18} or
+heuristics~\citep{sugawara-18}.
 \irt{} can create similar subsets using \pl{3}, the best 1D model.
 \Diff{} finds where \subjs{} improve while \discability{} and
 feasibility can surface \itms{} that may be invalid.
@@ -866,7 +865,7 @@ We select ten \itms{} from each of these groups: the most negative \discability{
 For each, we annotate whether the \itm{} was correct, was ``correct'' yet flawed in some way, or simply wrong (Figure~\ref{fig:example-error}).\footnote{
     Annotation guidelines provided in supplementary materials; Figure~\ref{fig:example-error} uses the first set of annotations which were later augmented by two additional sets of annotations.
 }
-Inter-annotator agreement between three authors on this three-way annotation with Krippendorff's $\alpha$~\citep{kripp2004,artstein2008inter} is $0.344$.
+Inter-annotator agreement between three authors on this three-way annotation with Krippendorff's $\alpha$~\citep{kripp2004,artstein-08} is $0.344$.
 Despite only modest agreement, just as in the development of education tests, negative \discability{} is predictive of bad \itms{}.
 When \discability{} is negative, then the probability of getting
 the answer right is higher when ability is \emph{lower}, which is
@@ -962,7 +961,7 @@ yardsticks~\citep{hernandez2020yardsticks} more reliable,
 interpretable, and part of curating the benchmark itself.
 In line
 with our reliability goal, just as statistical tests should appear in
-publications~\citep{dror2018guide,Dodge2019ShowYW}, they should be
+publications~\citep{dror2018guide,dodge-19}, they should be
 ``freebies'' for leaderboard
 participants~\citep{ethayarajh2020utility}.  Alternatively,
 \citet{hou2019leader} posit that leaderboards could be automatically
@@ -979,7 +978,7 @@ overfit~\citep{recht2019generalize} which---although
 mitigable~\citep{blum2015ladder,andersonCook2019host}---is best solved
 by continually collecting new data~\citep{kiela2021dynabench}.
 Ideally, new data should challenge models through adversarial
-collection~\citep{wallace2018trick,nie2019adversarial} and related
+collection~\citep{wallace-19,nie2019adversarial} and related
 methods~\citep{Gardner2020-gn}.  However, if making an easy
 leaderboard more difficult is possible, the
 leaderboard has outlived its helpfulness and should be retired~\citep{voorhees1999trec8}.
@@ -1000,10 +999,10 @@ runnable models rather than static
 predictions~\citep{ma2021dynaboard}.
 
 \paragraph{\textbf{Active Learning}}
-Beyond \irt{}, the analysis of training dynamics and active learning~\citep{settles09active} is helpful for actively sampling specific \itms{} or identifying low-quality \itms{}~\citep{brodley1999mislabel}.
+Beyond \irt{}, the analysis of training dynamics and active learning~\citep{settles-09} is helpful for actively sampling specific \itms{} or identifying low-quality \itms{}~\citep{brodley1999mislabel}.
 For example, \citet{swayamdipta2020cartography} and \citet{pleiss2020aum} propose alternative training dynamics-based methods for identifying difficult \itms{} as well annotation errors.
 Even closer to goals, \citet{rahman2020active} use active learning to build a test collection.
-Explicitly measuring how effectively examples separate the best \subj{} from the rest allows test set curators to ``focus on the bubble''~\citep{boydgraber2020nerds}, prioritizing examples most likely to reveal interesting distinctions between submitted systems.
+Explicitly measuring how effectively examples separate the best \subj{} from the rest allows test set curators to ``focus on the bubble''~\citep{Boyd-Graber-20}, prioritizing examples most likely to reveal interesting distinctions between submitted systems.
 
 \paragraph{\textbf{Alternate Formulations}}
 \irt{} is an example of convergent evolution of models that
@@ -1043,7 +1042,7 @@ Lastly, our work is a proof of concept using \squad{} 2.0 as a test bed and our 
 
 We see a few directions for future work.
 First, this paper is intended to validate \irt{} and its usefulness as an active part of the leaderboard lifecycle; the natural next step is to implement it in a leaderboard.
-Second, our \irt{} models do not incorporate the \itm{} content (e.g., example text) to predict responses, but in principle could; Bayesian models with metadata~\citep{card2018meta} and ideal point models from political science~\citep{poole1985spatial} that incorporate bills and speeches do exactly this~\citep{gerrish2011text,nguyen2015tea,kraft2016vote}.
+Second, our \irt{} models do not incorporate the \itm{} content (e.g., example text) to predict responses, but in principle could; Bayesian models with metadata~\citep{card2018meta} and ideal point models from political science~\citep{poole1985spatial} that incorporate bills and speeches do exactly this~\citep{gerrish2011text,nguyen:boyd-graber:resnik:miler-2015,kraft2016vote}.
 Analogously, \irt{} for leaderboards can and should also incorporate text from passages, questions, and answers to better model what makes questions difficult.
 Such a model can also predict which characteristics would create discriminating or difficult \itms{}.
 Lastly, multidimensional \irt{} models to evaluate multiple skills could aid multi-task or multi-metric leaderboards like \abr{mrqa}~\citep{fisch2019mrqa} and Dynaboard~\citep{ma2021dynaboard}.
@@ -1354,7 +1353,7 @@ Here we provide reproducibility details to complement our source code (\href{htt
 
 All \irt{} models are implemented in PyTorch~\citep{pytorch2019} and Pyro~\citep{bingham2018pyro}.
 Linear models are trained with Vowpal Wabbit~\citep{Agarwal2014ARE}.
-The topic model that generates features for the linear model uses Mallet~\citep{McCallumMALLET}.
+The topic model that generates features for the linear model uses Mallet~\citep{mallet}.
 
 The number of \irt{} model parameters is proportional to the number of \subjs{} $m$ and the number of \itms{} $n$.
 The \pl{1}~has one parameter per \subj{} and one per \itm{}.
