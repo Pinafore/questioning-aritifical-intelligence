@@ -47,7 +47,7 @@ did indeed change the world.
 After his defeat, Gary Kasparov took a ``if you can't beat them, join them''
 approach and then began arguing for Centaur Chess: humans and computers
 playing chess together (this works for question answering too, as we discuss
-in Chapter~\ref{sec:leaderboards:cooperation}).
+in Section~\ref{sec:leaderboards:cooperation}).
 %
 Likewise, the best Go players became more creative and novel moves by 
 incorporating computer-like play into their play style~\citep{shin-25}.
@@ -154,7 +154,7 @@ unreasonable effectiveness of big data'', and this required scaling
 approaches to web-scale data.
 %
 The first things that people tried was scaling up the ``good,
-old-fashioned'' approaches that defined the rule-based systems (Chapter~\ref{sec:ir:gofai-qa}).
+old-fashioned'' approaches that defined the rule-based systems (Section~\ref{sec:ir:gofai-qa}).
 %
 Probably the most prominent system in this category is Start from Boris Katz
 at \textsc{mit}.  This system first launched in 1993.
@@ -188,7 +188,7 @@ messiness of Internet text.
 And its ability to \emph{search} the
 Internet to find answers is clearly a huge influence on the subject of this
 chapter---\watson{}---and later, Dense Passage
-Retrieval~(Chapter~\ref{sec:methods:deep-retrieval}).
+Retrieval~(Section~\ref{sec:methods:deep-retrieval}).
 
 \subsection{Transforming Questions to find the Answer}
 In the next chapters about neural language models, we will discuss how new
@@ -207,7 +207,7 @@ another.
 \abr{qasm}'s approach is to explicitly ``undo'' the process to find the
 correct response given an input clue.
 
-In Chapter~\ref{sec:leaderboards:cheat}, we'll talk about the cheating scandal
+In Section~\ref{sec:leaderboards:cheat}, we'll talk about the cheating scandal
 around the American game show \textit{21}, where Charles van Doren got
 the answers in advance.
 %
@@ -242,7 +242,7 @@ original question.
 Later on, when we talk about dense passage retrieval, those systems
 are doing something similar, except they’re generating the query in a
 continuous dense vector space
-(Chapter~\ref{sec:methods:deep-retrieval}).
+(Section~\ref{sec:methods:deep-retrieval}).
 %
 Doing it with real words like \abr{qasm} is more interpretable: a human could
 understand what’s going on, while a vector query is inscrutable it seems to
@@ -897,7 +897,7 @@ These are hints about what kind of response is being sought.
 %
 And lest you think this is an artifice of the skilled writers of \jeopardy{},
 this also appears in more ``natural'' questions like those people ask Google
-(Chapter~\ref{sec:datasets:nq}).
+(Section~\ref{sec:datasets:nq}).
 
 And part of what made Watson a good \jeopardy{} Player is that it would learn
 as it explored the category.
@@ -975,7 +975,7 @@ competition would take place on normal, written questions.
 %
 In the media coverage of the competition, this focused on avoiding
 video and picture daily doubles (fairly reasonable, but we'll discuss
-how multimedia questions might be more fun in Chapter~\ref{sec:formats:multimodal}).
+how multimedia questions might be more fun in Section~\ref{sec:formats:multimodal}).
 %
 However, this causes two problems: the questions are too easy and do
 not necessarily challenge computers. [IY comment: these seem like the same problem to me]
@@ -1014,7 +1014,7 @@ difficult\footnote{The difficulty ratchet isn't one way; all ``special'' matches
   necessarily easier but does have more college football and popular music.
   Questions are tuned to expected players' abilities.  \abr{ibm} did not want the computer to be targeted,
   lest the questions be adversarial against the computer.
-  Chapter~\ref{sec:leaderboards:adversarial} discusses what this would look like if we
+  Section~\ref{sec:leaderboards:adversarial} discusses what this would look like if we
   specifically \emph{wanted} that to happen.} clues~\citep{harris-06}.
 %
 Nonetheless, this is the battlefield where Watson won: ``normal''
@@ -1025,7 +1025,7 @@ Instead, it all came down to the buzzer.
 \subsection{John Henry vs. the Buzzing Machine}
 \label{sec:watson:human-buzzing}
 
-Unlike \qb{} (Chapter~\ref{sec:manchester:qb}), while \jeopardy{} also uses
+Unlike \qb{} (Section~\ref{sec:manchester:qb}), while \jeopardy{} also uses
 signaling devices, these only work \emph{once the question has been
   read in its entirety}; Ken Jennings (also a former \qb{} player while he was a student at
 \abr{byu}) himself explains it on a \textit{Planet Money}
@@ -1108,7 +1108,7 @@ have seen a reused clue, you should not praise Watson for finding
 near-repeat questions.
 %
 And it's not just trivia games: Google's dataset of questions (which
-we'll talk about in more Chapter~\ref{sec:datasets:nq}) have
+I'll discuss further in Section~\ref{sec:datasets:nq}) have
 many identical questions~\citep{lewis-21}, which makes it an imperfect yardstick. [IY comment: I don't understand what this is conveying in the context of this book]
 %
 Moreover, Watson can also store the entirety of Wikipedia, easily
@@ -1123,13 +1123,14 @@ to be a \jeopardy{} answer.
 
 Where systems like Watson struggle are on computation, matching novels
 and movies to plots, combining multiple clues, lateral thinking, and
-wordplay~\citep{kaushik-18}. [IY: I deleted the next 3 paragraphs bc I think this one made the point, and I was not sure what they were saying]
+wordplay~\citep{kaushik-18}.
+% IY: I deleted the next 3 paragraphs bc I think this one made the point, and I was not sure what they were saying
 
 In other words, the ``difficulty'' of \jeopardy{}
 questions on the board were calibrated for humans; they do not apply to computers.
 %
 We talk about how Facebook/Meta dealt with this problem in
-Chapter~\ref{sec:leaderboards:adversarial}: tell the authors what's hard for a computer.
+Section~\ref{sec:leaderboards:adversarial}: tell the authors what's hard for a computer.
 
 \section{Two Nice Guys, One Computer with no Shame}
 \label{sec:watson:strategy}

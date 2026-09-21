@@ -122,7 +122,7 @@ Now you might think that conversational QA might mean that you might get a respi
 
 Other than the Manchester-style questions and answers, there’s nothing special like pyramidality that makes them “optimal”.  I just hink they’re neat.
 
-For example, you have a leadin that gives the context.  “Only twenty­ one million units in this system will ever be created. Name this digital payment system whose transactions are recorded on a “block chain”. Now, notice that you cannot answer this question *just* from the literal question … it depends on the context.  There are plenty of cryptocurrencies (more every day), but the 21 million number is unique to Bitchoin.
+For example, you have a leadin that gives the context.  “Only twenty­ one million units in this system will ever be created. Name this digital payment system whose transactions are recorded on a “block chain”. Now, notice that you cannot answer this question \emph{just} from the literal question … it depends on the context.  There are plenty of cryptocurrencies (more every day), but the 21 million number is unique to Bitchoin.
 
 Then we move on to the next question: it was invented by this person, who, according to a dubious Newsweek cover story, is a 64­ year ­old Japanese­American man who lives in California.  Now, you could probably answer this just from the clue here, but it helps to know that “it” here is Bitcoin.  Otherwise you have to do a multihop to figure out that this is Bitcoin and it was invented by someone who purported to be Satoshi Nakamoto.
 
@@ -163,11 +163,11 @@ How is the “correct” interpretation chosen in the original Natural Questions
 
 Another development is the realization that not all questions are valid and shouldn’t be answered.  There are multiple aspects of this: appropriately calibrating your QA system to abstain when it doesn’t know the answer for example.  Natural Questions actually does a pretty good job of supporting this by having unanswerable questions.
 
-But instead, I want to focus on linguistic phenomena that *causes* a question to *become* unanswerable.  This line of research began with what has come to be known as as “the lightbulb paper” from the title “Which linguist invented the lightbulb”, which highlights the problem: there’s a well-defined answer to the question “who invented the first commercially successful light bulb”, but it sure as heck wasn’t a linguist … answering that question would perhaps not be useful to a user.
+But instead, I want to focus on linguistic phenomena that \emph{causes} a question to \emph{become} unanswerable.  This line of research began with what has come to be known as as “the lightbulb paper” from the title “Which linguist invented the lightbulb”, which highlights the problem: there’s a well-defined answer to the question “who invented the first commercially successful light bulb”, but it sure as heck wasn’t a linguist … answering that question would perhaps not be useful to a user.
 
 There are two takeaways here: First that many QA systems tend to roll with questions like “When did Pablo Picasso paint the Mona Lisa” and answer 1503, hundreds of years before Picasso was born.  Second, that many of the unanswerable questions in Natural Questions are unanswerable because of these phenomena.  And it’s not just Natural Questions: Yu et al showed that this also shows up on Reddit.  It’s an important problem!
 
-But we don’t actually know *why* a particular natural question is unanswerable.  Is it because Wikipedia lacks the information, because there’s a false assumption, because there’s actually dispute about the canonical answer to a question, or because it’s a matter of taste / opinion?  Because Natural Questions was focused on factual QA (a reasonable position five years ago), we don’t have a single comprehensive dataset to address all of these issues (the numbers here are just for a small sample of NQ).
+But we don’t actually know \emph{why} a particular natural question is unanswerable.  Is it because Wikipedia lacks the information, because there’s a false assumption, because there’s actually dispute about the canonical answer to a question, or because it’s a matter of taste / opinion?  Because Natural Questions was focused on factual QA (a reasonable position five years ago), we don’t have a single comprehensive dataset to address all of these issues (the numbers here are just for a small sample of NQ).
 
 And perhaps we don’t need that any more.  With RLHF, we can just mix a bunch of datasets together.  Perhaps we don’t need a monolithic QA training dataset to rule them all.  We just need robust evaluation protocols (which can be much smaller). 
 
@@ -175,7 +175,7 @@ And this is, again, a weakness of Natural Questions … it’s not a great evalu
 
 This is something that the trivia community has known for a while.  You can’t reuse clues!  For important test sets (like national trivia tournaments), you need to make sure that you’re finding new, interesting clues that haven’t been used before (or at least for a while).  This is why we’ve always used the flagship national trivia tournaments as our test sets for quiz bowl.
 
-So that’s all I have about the problems of Natural Questions.  But I want to make it clear that *Natural Questions remains a great resource*.  It hasn’t been matched.  I still use it.  I’m jealous of the people who got to build it.  But it’s important to know the limitations.  Is there anything I got wrong, anything I missed?  If so, let me know in the comments.
+So that’s all I have about the problems of Natural Questions.  But I want to make it clear that \emph{Natural Questions remains a great resource}.  It hasn’t been matched.  I still use it.  I’m jealous of the people who got to build it.  But it’s important to know the limitations.  Is there anything I got wrong, anything I missed?  If so, let me know in the comments.
 
 Now, for all of the reasons I talked about before, it probably will never be done again.  Nobody is crazy enough to do it.  But how would I do it if someone were foolish enough to give me the resources to create the next iteration of something like it?
 
@@ -207,7 +207,7 @@ from somewhere, and NLP systems are no different!  If you were to ask a
 statistician, they would tell you get a sample from an \iid{} distribution:
 independent and identically distributed.  Independent means that example
 $x_{n}$ does not depend on on any of the previous examples 1 to n-1, indeed,
-all of the examples come from the *same* underlying distribution.
+all of the examples come from the \emph{same} underlying distribution.
 
 But that’s the problem.  Language isn’t like neutrinos spewed from the sun or
 water from a geyser.  Language is inherently an interactive process: and what
@@ -460,7 +460,7 @@ In between easy questions (system answers correctly with probability 1.0) and ha
 Taking a cue from Vygotsky's proximal development theory of human learning~\citep{chaiklin-03}, these discriminative questions---rather than the easy or the hard ones---should most improve \abr{qa} systems.
 These Goldilocks\footnote{In a British folktale first recorded by Robert Southey, the character Goldilocks finds three beds: one too hard, one not hard enough, and one ``just right''.} questions (not random noise) decide who tops the leaderboard.
 Unfortunately, existing datasets have many easy questions.
-\citet{sugawara-20} find that ablations like shuffling word order~\citep{feng-18}, shuffling sentences, or only offering the most similar sentence do not impair systems.
+\citet{sugawara-20} find that ablations like shuffling word order~\citep{Feng-18}, shuffling sentences, or only offering the most similar sentence do not impair systems.
 Newer datasets such as \abr{drop}~\citep{dua-19} and HellaSwag~\citep{zellers-19} are harder for the systems they were designed to test; because Goldilocks is a moving target, I argue for annual evaluations in Section~\ref{sec:manchester:qb-blind}.
 
 \subsection{Why so few Goldilocks questions?}

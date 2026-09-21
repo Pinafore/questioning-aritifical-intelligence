@@ -25,8 +25,15 @@ writing question when new material is needed. Earlier additions are listed in
 - Chapters 11 and 12 lack draft bodies. Identify existing source material for
   author review; ask the author to write missing material. Do not silently drop
   promised chapters.
-- Chapter 9 is a short lecture script, assumes neural encoders have already been
-  taught, and ends with a generation label but no generation section.
+  Source check: `dynabench.tex` contains the Wallace adversarial-question-writing
+  interface and a literary clue example. `game-show.tex` contains an annual
+  blind-test proposal already represented in Chapter 5, plus a speech-versus-text
+  discussion using a Kilkenny clue. Neither supplies the promised ten-season,
+  2035 gameshow narrative in `chapter_blurbs.json`. `modern-qa.tex` only says
+  “Write me”. No material moved; ask the author for the gameshow narrative source.
+- Chapter 9 now contains the author's expanded methods script, revised on
+  2026-09-21. Generation has a real section; missing examples, equations, and
+  uncertain citations are tracked in `methods-review.md`.
 - Chapters 7, 8, and 10 contain roughly ten thousand or more source words each;
   Chapter 2 contains about two thousand. Counts guide review, not padding.
 - Chapter 10 retains paper experiments, supplementary sections, and unfinished
@@ -34,36 +41,32 @@ writing question when new material is needed. Earlier additions are listed in
 - Chapter 13 introduces objective functions and training data after Chapter 9
   already assumes them. Establish prerequisites earlier and refer back in the
   discussion of risks. Avoid duplicating the technical explanations.
-- The introduction inputs both a blurb and an about section with repeated prose;
-  consolidate them and revise the book roadmap against the actual chapters.
+- The duplicated introductory blurb input has been removed; review the book
+  roadmap against the actual chapters.
 - Recover missing bibliography entries from supplied source projects where
   possible. Verify identities and claim support before adding entries; do not
   fabricate bibliographic records or substitute merely similar papers.
 - Missing tables, appendices, and their methods need recovery or a supported
   rewrite. A label alone would not resolve the missing content.
+  The final chapter's `sec:unsup` reference promises a discussion of applications
+  and evaluation of unsupervised learning that is not present. Ask the author
+  whether this promise belongs in the book before drafting or removing it.
 
 ## Remaining author notes
 
-- Global: distinguish present-year references from historical dates; normalize
-  quizbowl and Jeopardy macros; replace video-script directions; use singular
-  author voice and acknowledge student contributions in front matter.
-- Explain the question-box design at its first actual use, including the
-  Jeopardy and Jurafsky/Martin connections.
-- Relocate the standardized-test history from Chapter 10 to the historical
-  discussion, with transitions and without repetition.
-- Chapter 3: repair author rendering, add Turing citations, and shorten the
-  Diplomacy discussion and remove the requested figure after checking references.
-- Chapter 4: reorganize SHRDLU paragraphs, explain ambiguity resolution with
-  primary-source support, strengthen the closing section, and consider the
-  requested tf-idf and relational-table figures.
-- Chapter 5: cite the work with Pedro explicitly; locate a sourced
-  Turing/Manchester question for the author to discuss its pyramidality; verify
-  Turing's Manchester affiliation in 1950. The missing University Challenge
-  bibliography entry `taylor_mcnulty_meek` has been recovered from `pedro.bib`.
+See `original-notes-status.md` for the current item-by-item status of the pasted
+notes, including completed changes and the new ROUGE-consolidation item.
+See `methods-review.md` for follow-up on the new Chapter 9 script.
+The author section also promises named acknowledgments at the end of the book;
+the author needs to supply that list or revise the promise.
 
 ## Verification still required
 
-No LaTeX compiler was found on PATH. Locate or provision a usable build toolchain,
+No LaTeX compiler was found on PATH or in the standard TeX Live and MiKTeX
+installation locations checked on this Windows host. The Makefile now defaults
+to building `main.pdf`, runs `makeindex`, and requires an explicit `make publish`
+to copy the PDF into the website checkout; these commands have not been run.
+Locate or provision a usable build toolchain,
 generate blurbs, compile with bibliography and index, resolve errors and warnings,
 and inspect the rendered book. Review all chapter transitions, factual support,
 duplication, technical prerequisites, and length/depth balance. Do not treat a

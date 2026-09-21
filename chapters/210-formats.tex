@@ -6,7 +6,7 @@
 
 Thus far, we’ve talked about models that can take a question, find some evidence, and extract the answer.  That works for things like SQuAD, TriviaQA, and (many) Natural Questions.  
 
-But what about the MultiHop datasets that we talked about before?  How would these sorts of models do a hop?  Just as a refresher (watch the previous video if you want more), in datasets like HotPotQA, you need to answer questions like “Where was Facebook founded” by hopping through evidence documents.  While the approaches we talked about can handle one hop just fine, how would you go about solving these problems when you need to find *multiple* pieces of evidence?
+But what about the MultiHop datasets that we talked about before?  How would these sorts of models do a hop?  Just as a refresher (watch the previous video if you want more), in datasets like HotPotQA, you need to answer questions like “Where was Facebook founded” by hopping through evidence documents.  While the approaches we talked about can handle one hop just fine, how would you go about solving these problems when you need to find \emph{multiple} pieces of evidence?
 
 We won’t go as deep into the weeds on these techniques because this is relatively early days; as I record this in 2022, the details are probably going to change dramatically.  But barring surprises, hopefully the broad strokes about the general ideas of how to answer these multihop questions will stay relatively similar.  Nonetheless, I’ll give the titles and authors as we go so that if you’re interested in the papers you can dig in a little bit more.
 
@@ -14,7 +14,7 @@ We talked about that before with so-called “MultiHop” questions.  How do sys
 
 Let’s first talk about following structured links.  This is probably the most obvious and is probably the most similar to what you’d do if you as a human typed in a query, found a page, and then clicked on the link that got you a little bit closer to what you thought the answer would be.  Of course, knowing which link to explore takes a little trial and error.  We did something like this in 2020 with a model called DELFT, and this paper from Chen et al. explores different ways of following links: following a link on the Wikipedia page or resolving a coreference chain … which is a lot like the examples that we showed in our last video introducing Multihop (for example, getting the answer to Susanah and the Elders, requires figuring out who “her” is).  Then my former student Chen Zhao followed up our work with a collaboration with Microsoft called TransformerXH.  This seems like the most popular approach.
 
-But sometimes you can’t find a link that easily.  There could be a different strategy that you could use to solve a multihop question.  If you typed into the Wikipedia search bar to get the first query, why not just type a new query?  This is the approach taken by Qi et al with the wonderfully named model “Golded Retriever”.  It learns how to formulate queries *conditioned* on the original query, evidence you got from the first query, to get to the next piece of evidence.  For example here, to solve this question it explicitly creates the query “Armada author” to figure out that it was written by Ernest Cline.
+But sometimes you can’t find a link that easily.  There could be a different strategy that you could use to solve a multihop question.  If you typed into the Wikipedia search bar to get the first query, why not just type a new query?  This is the approach taken by Qi et al with the wonderfully named model “Golded Retriever”.  It learns how to formulate queries \emph{conditioned} on the original query, evidence you got from the first query, to get to the next piece of evidence.  For example here, to solve this question it explicitly creates the query “Armada author” to figure out that it was written by Ernest Cline.
 
 One nice thing this about this is that these approaches are pretty interpretable: knowing what searches and evidence led to the answer lets a user inspect the chain to know if it’s good or not.  This paper from Inoue et al. goes even further by doing abstractive summarization to create sentences that find the minimal information that’s sufficient for answering the question.  So then for the question “Charlie Rowe plays Billy Costa in a film based on what novel?” you get this nice abstracted explainer that says “Charlie Rowe plays Billy Costa in the Golden Compass.  The Golden Compass is a film based on the novel Northern Lights.”  Pretty good!
 
@@ -28,13 +28,13 @@ The first challenge is how do you know if a piece of evidence is good or not?  T
 
 One clue is that if the answer isn’t in a passage, then it cannot be be right.  And we assume that we do know the answer to the question … we just don’t know how to get there.  This holds true for just about any dataset, so it’s not too crazy an assumption.  But you do need to be able to cope with different forms of the answer.  If the answer is “Tim Cook”, you should be able to accept “Timothy Cook” or “Timothy Donald Cook”.
 
-But then any passage that contains the answer as a substring is a good answer.  “New Jersey” is the answer to both the question “in what state is Rutgers located” and “which state is the home of Fountains of Wayne”, but we only want the string when it answers the appropriate question.  But thanks to datasets like SQuAD, there are existing models for answering questions *given* a passage in the standard machine reading context, so we can get a score for each potential piece of evidence: how well does it answer the question?
+But then any passage that contains the answer as a substring is a good answer.  “New Jersey” is the answer to both the question “in what state is Rutgers located” and “which state is the home of Fountains of Wayne”, but we only want the string when it answers the appropriate question.  But thanks to datasets like SQuAD, there are existing models for answering questions \emph{given} a passage in the standard machine reading context, so we can get a score for each potential piece of evidence: how well does it answer the question?
 
 This is important so let’s go over this with an example.  Let’s say we want to answer the question “What state does Sang-Wook Cheong work as a materials scientist?”.  We get our second hop query after the first hop says he works at Rutgers.  The second hop needs to tell us the Rutgers is in New Jersey.  We can always say that everything without “New Jersey” isn’t a good piece of evidence.  In addition, anything that has the “New Jersey” but doesn’t actually answer the question isn’t a good piece of evidence: like this thing about Fountains of Wayne, which is also in New Jersey.  And things that answer the question and look like an answer to the question we keep.
 
-This now forms a cycle: start with *some* IR-based QA model, gather some evidence, label it as we just talked about, and retrain a reader, and more importantly a retriever.  Then start the cycle again.  And you can also train a reranker to squeeze out a few more points.
+This now forms a cycle: start with \emph{some} IR-based QA model, gather some evidence, label it as we just talked about, and retrain a reader, and more importantly a retriever.  Then start the cycle again.  And you can also train a reranker to squeeze out a few more points.
 
-So let’s see if this actually works.  Compared to traditional IR, trained models that use the explicit evidence from HotPotQA for fully supervised training like Transformer XH from MSR can do much better, getting the answer in the top 10 results 90% of the time.  We can get almost the same results without those annotations, suggesting our approach not just works, but it needs strictly less data.
+So let’s see if this actually works.  Compared to traditional IR, trained models that use the explicit evidence from HotPotQA for fully supervised training like Transformer XH from MSR can do much better, getting the answer in the top 10 results 90\% of the time.  We can get almost the same results without those annotations, suggesting our approach not just works, but it needs strictly less data.
 
 Nonetheless, it’s still well short of the creativity and the depth that motivated, smart humans can.  In other words, it still well short of our goal of automating Dan Russell.  And even within the limited world of HotPotQA, there’s some recent work showing that models are taking shortcuts to get to the answer and not creating complete reasoning chains.
 
@@ -61,7 +61,7 @@ If you’ve watched our other videos about machine reading question answering, w
 
 First, what is the human state of the art here?  Research librarians are probably the best searchers when you have a really tricky question you have to answer.  Friend of UMD’s library school Google’s Dan Russel has written a book called “The Joy of Search” that showcases the process for figuring out tricky questions.
 
-He goes through individual questions on his blog, which I encourage you to read: there’s a link to the process here.  I don’t want to go through the whole solution … that’s Dan’s thing, and you should check out his blog post, but I do want to focus on *why* answering “Why is the Carquinez Strait so underdeveloped” is so difficult.  First, the question is a counterfactual about something (development) that *didn’t* happen.  So to answer the question, you first need to find out the old name for this property outlined in red, who owned it in the 19th century, see whom they sold it two in the 20th century, and cross-reference that to zoning decisions that got made at the appropriate county level.
+He goes through individual questions on his blog, which I encourage you to read: there’s a link to the process here.  I don’t want to go through the whole solution … that’s Dan’s thing, and you should check out his blog post, but I do want to focus on \emph{why} answering “Why is the Carquinez Strait so underdeveloped” is so difficult.  First, the question is a counterfactual about something (development) that \emph{didn’t} happen.  So to answer the question, you first need to find out the old name for this property outlined in red, who owned it in the 19th century, see whom they sold it two in the 20th century, and cross-reference that to zoning decisions that got made at the appropriate county level.
 
 This is not something that computers can currently do.  And I don’t think that we’re going to get anywhere close in the near future.  But I do want to talk today about how we can inch in that direction.
 
@@ -84,7 +84,7 @@ But let’s take a look at how quiz bowl self-annotates these multihop links.  T
 
 Let’s move on to another question.  This time about this painting.  The question is: “A Lorenzo Lotto painting of this woman includes a cartouche showing her response to an accusation.”  Okay, so let’s see what turns up with a search of Wikipedia.  The first step is to figure out which one of these is correct.  
 
-In the first evidence, you need to know that a signature and a date isn’t a response to an accusation, so that’s out.  Then you need to know that a cartouche on “his” beret is inconsistent with the question’s use of “this woman”, so that just leaves the last last piece of evidence, where you have a woman and dialog in a cartouche.  This is why the distractor setting in HotPotQA can be so tricky!  A search result can turn up a bunch of seemingly relevant material, but you need to pick the right answer out of it somehow.  What makes the distractor setting of HotPotQA more tractable than quiz bowl is that the answer is in there *somewhere* which is not guaranteed in quiz bowl.  Moreover, in quiz bowl the correct pieces of evidence are not annotated.
+In the first evidence, you need to know that a signature and a date isn’t a response to an accusation, so that’s out.  Then you need to know that a cartouche on “his” beret is inconsistent with the question’s use of “this woman”, so that just leaves the last last piece of evidence, where you have a woman and dialog in a cartouche.  This is why the distractor setting in HotPotQA can be so tricky!  A search result can turn up a bunch of seemingly relevant material, but you need to pick the right answer out of it somehow.  What makes the distractor setting of HotPotQA more tractable than quiz bowl is that the answer is in there \emph{somewhere} which is not guaranteed in quiz bowl.  Moreover, in quiz bowl the correct pieces of evidence are not annotated.
 
 Okay, now the challenge is to figure out who this “her” is here.  So if you go to the start of this article, you can see that this is Susanna from the Book of Daniel.  So often, this multihop reasoning is essentially coreference resolution either within a document or across documents.
 
@@ -141,7 +141,7 @@ Now you might think that conversational QA might mean that you might get a respi
 
 Other than the Manchester-style questions and answers, there’s nothing special like pyramidality that makes them “optimal”.  I just hink they’re neat.
 
-For example, you have a leadin that gives the context.  “Only twenty­ one million units in this system will ever be created. Name this digital payment system whose transactions are recorded on a “block chain”. Now, notice that you cannot answer this question *just* from the literal question … it depends on the context.  There are plenty of cryptocurrencies (more every day), but the 21 million number is unique to Bitchoin.
+For example, you have a leadin that gives the context.  “Only twenty­ one million units in this system will ever be created. Name this digital payment system whose transactions are recorded on a “block chain”. Now, notice that you cannot answer this question \emph{just} from the literal question … it depends on the context.  There are plenty of cryptocurrencies (more every day), but the 21 million number is unique to Bitchoin.
 
 Then we move on to the next question: it was invented by this person, who, according to a dubious Newsweek cover story, is a 64­ year ­old Japanese­American man who lives in California.  Now, you could probably answer this just from the clue here, but it helps to know that “it” here is Bitcoin.  Otherwise you have to do a multihop to figure out that this is Bitcoin and it was invented by someone who purported to be Satoshi Nakamoto.
 
@@ -208,13 +208,16 @@ Apu : Slavery it is, sir.
 
 Like the examiner, it’s often easier to go for the shorter answer … it’s easier to score, anway.   There are many ways to answer “What was the cause of the American Civil War”.  Everything that Apu said was correct, and there are many ways to phrase what he said.  Detecting all the things that are semantically equivalent to that is itself a NLP-complete problem.  To understand how, despite that difficulty, we’re trying to build systems that can answer long complicated questions, we’ll go through two datasets that can help computers answer hard questions and we’ll see what makes them both hard to answer and hard to tell when the answer is right.
 
+\subsection{Long Answers}
+\label{sec:formats:long-answers}
+
 Let’s first begin with Complex Answer Retrieval, often called “CAR” for short.  This is a dataset from TREC and Laura Dietz at the University of New Hampshire.  If you haven’t seen our previous video about Like many of the other question answering datasets we’ve talked about, the source information comes from Wikipedia.  
 
-They start with questions like “How do you make Candy” or “Is chocolate healthy” and run a search over all of Wikipedia.  Like with traditional relevance judgements, annotators then mark whether the passages retrieved are a good answer for these questions.  NIST annotators mark whether a passage *must* be included in the answerset, *can* be included, is on topic (but not a good answer) or just irrelevant. 
+They start with questions like “How do you make Candy” or “Is chocolate healthy” and run a search over all of Wikipedia.  Like with traditional relevance judgements, annotators then mark whether the passages retrieved are a good answer for these questions.  NIST annotators mark whether a passage \emph{must} be included in the answerset, \emph{can} be included, is on topic (but not a good answer) or just irrelevant.
 
 Now, getting annotators to agree on this isn’t trivial: if you look at the kappa statistics, it’s between 0.5 and 0.7.  You can then run the standard precision / recall statistics for an IR engine.  So is it the case that long form QA isn’t actually that hard?
 
-No, it’s still that hard!  This can only work if Wikipedia has the perfect answer for every question already written down.  But although Wikipedia is pretty big, it’s not *that* big.  
+No, it’s still that hard!  This can only work if Wikipedia has the perfect answer for every question already written down.  But although Wikipedia is pretty big, it’s not \emph{that} big.
 
 Another dataset that tries to address the “long answer” problem is the ELI5 dataset.  This is built from a subreddit where people pose questions and people try to answer them using simple language.  What I like about Reddit is that there are clear rules about what questions are allowed, how they can be answered, and then people vote on which of the answers is best.
 
@@ -222,32 +225,7 @@ Despite these beautiful rules and style guidelines, the questions aren’t as be
 
 So now we have examples of questions and good answers.  But we can’t just test whether the two strings are equal or not … so how do you know if the output of a system is good or not?
 
-This is actually very similar to the problem faced in machine translation: you want translations to be as close to a reference translation as possible.  So they developed a metric call BLEU, or Bilingual Evaluation Understudy that counts up how many words overlap between a reference translation and system outputs.
-
-It’s called an “understudy” because it’s meant to mirror the adequacy and fluency judgements of human annotators.  
-
-But we’re not talking about machine translation today, but you can use a very similar idea for comparing two pieces of English text.  So BLEU in French means “blue”; the other metric we’ll be talking about is ROUGE, which means “red” in French, and stands for “Recall-Oriented Understudy for Gisting Evaluation”.  Unlike BLEU, which tries to get the translation exactly right—in other words getting precision and recall high—ROUGE focuses on recall.  
-
-Let’s see how it works.   Like BLEU, ROUGE looks for a certain number of n-grams.  Let’s start with bigrams for simplicity.  Let’s say you want to compare these two sentences.  First, you gather up all of the bigrams.  One of the four matches, so this means that it would have a ROUGE-2 of ¼.  
-
-But ROUGE-N requires choosing what N should be.  A more popular variant is to use the “longest common subsequence” or LCS.  Finding the longest common subsequence is a popular example problem when you’re first learning dynamic programming … while writing a program to compute it can be a little tricky, for short sentences you can fairly easy eyeball: what is the longest sequence of words that is in *both* sequences.  For these two sentences, that would be “parents annoy the children”.  
-
-Given that LCS, we can then compute the precision and recall and then we get the ROUGE-L measure.  One nice thing about this is that it’s upper bounded by the unigram overlap between the two strings.
-
-We spent a lot of time talking about ROUGE-L … does that mean that this is the right way to compute whether a long answer is a good one or not?  Compare the generated answer to the reference ELI5 answer?  A recent paper from my former student Mohit shows that … uhh maybe not!
-
-ELI5, like a lot of other Cranfield QA datasets, have a lot of overlap between the training and test set (this is less of a problem in the Manchester paradigm, as the authors explicitly avoid repetition).  Thus, the system doesn’t always learn to generalize … it can memorize instead.
-
-I’m not going to talk about their system much—it’s a good one, check out the paper linked in the description—but like you might do for the CAR task, it also has a retrieval component.  But it doesn’t really matter what you retrieve!  Getting random retrievals can add in some specific words that can up your ROUGE-L score.
-
-And it also seems that you can game the system with really stupid baselines that *shouldn’t* get a good score and end up … doing quite well.  For example, just copying the answer over and over again or copy/pasting a random training answer sometimes beat the gold answer.
-
-So this makes it hard to prove that your snazzy new algorithm is actually good.  So what’s the answer?  I think that question answering always will depend on human evaluations, but while automatic factoid question answering evaluations are often “good enough”, I don’t think—as I record this in early 2022—we can confidently say that we have a “good enough” automatic evaluation with long for question answering.
-
-So that means that you really need to do a human evaluation.  There’s nothing wrong with that!  Again, I wish that this were more common for question answering.  But for our modern data-hungry algorithms and our fast-paced research culture, projects don’t always have the luxury to do evaluation right … with the finicky, expensive human evaluations of these very long answers.
-
-So what’s the right way to quickly evaluate QA systems that output more than a couple of words?  Well, I have the answer right here … unfortunately it’s this video is too small to contain it.
-Answering questions about images
+Section~\ref{sec:methods:long-answers} explains \abr{rouge} and its limitations, and Section~\ref{sec:methods:preferences} turns to learning from human judgments.
 
 \section{Multimodal}
 \label{sec:formats:multimodal}
@@ -290,7 +268,7 @@ So to correct these issues, VQA 2.0 paired two pictures together so that the ans
 
 So can models answer these questions?  The accuracy has been climbing by 14 points over the last four years … getting near 80\% accuracy.  So what models are behind these impressive numbers?
 
-Like with text, transformers with Muppet names like Oscar, BERT, and Ernie are to blame.  But how do transformers deal with *visual* input?  Thus far, we’ve only been talking about words and word embeddings.  Just like you need to split a sentence into word pieces, the first step is to break an image into pieces to correspond to objects.  
+Like with text, transformers with Muppet names like Oscar, BERT, and Ernie are to blame.  But how do transformers deal with \emph{visual} input?  Thus far, we’ve only been talking about words and word embeddings.  Just like you need to split a sentence into word pieces, the first step is to break an image into pieces to correspond to objects.
 
 Now, I don’t know how this works and even if I did, it would be out of scope for this course, so I won’t talk about how all these fancy boxes come about.  But once you have these boxes, you can then embed these boxes through a linear or non-linear transformation of the constituent pixels which—unlike words—are already continuous vectors.  Just like words have an embedding based on the word’s type and the token’s position, the visual word embedding also is a function of the pixels and its location.
 
@@ -306,7 +284,7 @@ And while other datasets are implicitly multiple choice—if you ask SQuAD when 
 
 So why is QA over images always multiple choice?  Because we have a hard time agreeing on what the answer should be!  We saw this problem for long-form QA and even for factoid QA you need to be sure to have all of the relevant names for an item.  Because we don’t have text to ground the answer (again, which makes text-based QA more like multiple choice), even for everyday items you need to figure out what name to give something. 
 
-So, for example, take the question what is Mr. Burns wearing in the picture?  What should you call these?  Mules?  Houseshoes?  I personally think that some of these are better than others, but arguably all of these should be accepted.  And Mr. Burns seems to prefer “Slippers”.  And this isn’t just a problem in English: here’s a map for what slippers are called in the German-speaking world.  Naming things from a picture is hard, describing what a thing is doing is even harder, and harder still is describing *interactions*.  What is Mr. Burns doing to his slippers?  Dancing? Bouncing? Flaunting? Tapping?  Given all of that flexibility, evaluating whether an answer is correct is just generally hard, as we’ve seen many times before.
+So, for example, take the question what is Mr. Burns wearing in the picture?  What should you call these?  Mules?  Houseshoes?  I personally think that some of these are better than others, but arguably all of these should be accepted.  And Mr. Burns seems to prefer “Slippers”.  And this isn’t just a problem in English: here’s a map for what slippers are called in the German-speaking world.  Naming things from a picture is hard, describing what a thing is doing is even harder, and harder still is describing \emph{interactions}.  What is Mr. Burns doing to his slippers?  Dancing? Bouncing? Flaunting? Tapping?  Given all of that flexibility, evaluating whether an answer is correct is just generally hard, as we’ve seen many times before.
 
 And images aren’t static … often we care about answering questions about moving pictures.  I.e., movies or TV.  There have also been datasets about these questions as well.  Just like VQA, these are multiple choice … But does that mean you need to watch the movie to answer the questions?  Not necessarily … movies also have closed captions/subtitles,audio descriptions, and scripts.  Just in case you’re not familiar with these, let’s talk about them and discuss what they can and cannot answer.
 Captions are the text that appear at the bottom of the screen and are available for people who are hard of hearing or who just want to be able to also read what the person is saying.  They’re not always purfect, but they usually get the point acroos.  It’s a lot of work to do it manually!  [But a good place to hide jokes!]
@@ -339,7 +317,7 @@ If you want to help the channel provide a big gradient to the algorithm by likin
 
 How Punters Cheating with AI has Made Pub Quizzes' Audio Rounds Better
 
-If you went to a pub quiz at the turn of the century, one staple that you’d *always* see was music identification: the pub master plays a song and you’re supposed to identify it.  But that’s far less common these days.  A big reason is that—as far as AI is concerned—it’s mostly a solved problem … apps like Shazam and YouTube content ID can do this with extremely high accuracy even in a noisy bar.  And thus it has become really easy to cheat in a pub quiz.  It’s also why, even though this video is about answer questions about music, I’m not going to put any popular music in this video. 
+If you went to a pub quiz at the turn of the century, one staple that you’d \emph{always} see was music identification: the pub master plays a song and you’re supposed to identify it.  But that’s far less common these days.  A big reason is that—as far as AI is concerned—it’s mostly a solved problem … apps like Shazam and YouTube content ID can do this with extremely high accuracy even in a noisy bar.  And thus it has become really easy to cheat in a pub quiz.  It’s also why, even though this video is about answer questions about music, I’m not going to put any popular music in this video.
 
 Bleeding Gums Murphy was never popular.
 
@@ -427,7 +405,7 @@ That’s true!  And until there is a Shazzam equivalent that’s as good and as 
 
 And if we want a computer to be able to do that, we need to repeat this cycle, probably multiple times.  But not just for images, but for all of the kinds of questions that we want a computer to answer.  
 
-But one part of this process is AI helping humans cheat!  Are you condoning cheating?  No, of course not.  Because what this is really doing is helping the smart, clever people who create these questions be more creative.  But we as AI researchers can make it easier for that adversarial authoring process to happen.  Easier both for the authors, who end up with a better output with less effort and easier for the AI systems that need to train on data to get the most challenging data that requires actually *understanding* the underlying information.
+But one part of this process is AI helping humans cheat!  Are you condoning cheating?  No, of course not.  Because what this is really doing is helping the smart, clever people who create these questions be more creative.  But we as AI researchers can make it easier for that adversarial authoring process to happen.  Easier both for the authors, who end up with a better output with less effort and easier for the AI systems that need to train on data to get the most challenging data that requires actually \emph{understanding} the underlying information.
 
 And that is what makes this sort of research so fun.  Just as a pub quiz should reward knowledge and add excitement of competition, we can use that same creative energy to make our algorithms less brittle and more robust.  
 
@@ -436,7 +414,7 @@ When we talked about Watson (link in the description), one of my minor criticism
 
 Now, if you’ve just been watching the error rate for automatic speech recognition (ASR for short), the numbers are really impressive.  And Microsoft has claimed that these results are superhuman!  But these headline numbers are typically given as a word error rate, or more precisely a token error rate.  And it’s true that the word error rate is average is lower than human numbers, that’s hiding something.  The most common word in English is the … so just getting that right doesn’t mean that much.
 
-Indeed, the most frequent words in English appear *a lot*.  This is called a Zipfian distribution, where the probability of a word is inversely proportional to its frequency rank.  So getting these highly frequent words right is easy and counts for a lot of the word error rate.  
+Indeed, the most frequent words in English appear \emph{a lot}.  This is called a Zipfian distribution, where the probability of a word is inversely proportional to its frequency rank.  So getting these highly frequent words right is easy and counts for a lot of the word error rate.
 
 But are these the words that matter for question answering?  No!  Named entities are the things that matter, and they’re much less common.  Let’s take a look at question answering data.  Every dot here is an error, and when the original word is very common … there aren’t many speech recognition errors.
 
@@ -450,7 +428,7 @@ Finally, you can also look for words that “sound” similar to words that you�
 
 And you need datasets to do this.  One cheap way is to use text to speech (i.e., have a computer do the speaking) and then try to recognize this.  This is strictly easier than the real world: there’s no background noise, the pronunciations are always consistent, and there’s only one speaker.
 
-We did this first for the Manchester paradigm, and then a group from CMU did it for the Cranfield paradigm.  As far as I know, there’s no dataset of *real* speech even though there are tons of podcasts and youtube videos of people reading and answering questions.  And because the question are all written down, you could line then up.  But to the best of my knowledge, nobody has done that: project idea!
+We did this first for the Manchester paradigm, and then a group from CMU did it for the Cranfield paradigm.  As far as I know, there’s no dataset of \emph{real} speech even though there are tons of podcasts and youtube videos of people reading and answering questions.  And because the question are all written down, you could line then up.  But to the best of my knowledge, nobody has done that: project idea!
 
 And if you have diverse speakers, you could contend with the disparities in ASR: much of the training data come from white men, so when tested on other groups, accuracy drops.
 

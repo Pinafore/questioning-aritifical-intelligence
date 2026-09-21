@@ -1,4 +1,7 @@
 
+.DEFAULT_GOAL := main.pdf
+.PHONY: clean publish parts
+
 TEX = $(wildcard chapters/*.tex *.tex */*.tex)
 GFX = $(wildcard figures/*.*)
 BIB = $(wildcard bib/*.bib)
@@ -17,7 +20,10 @@ main.aux: $(BIB) main.tex chapters/blurbs/watson.tex
 
 main.pdf: $(TEX) $(GFX) main.aux chapter_blurbs.json scripts/split_blurbs.py
 	pdflatex main
+	makeindex main
 	pdflatex main
+
+publish: main.pdf
 	cp main.pdf ../jbg-web/teaching/CMSC_848/textbook.pdf
 
 parts: main.pdf

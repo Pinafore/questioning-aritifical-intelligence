@@ -73,7 +73,7 @@ In this chapter, we'll talk about how the philosophy of \quizbowl{} can inform t
 Later, in Chapter~\ref{ch:leaderboards}, I discuss how the philosophy of \quizbowl{} tournaments can improve \abr{ai} evaluation.
 
 \paragraph{To Probe: The Turing Test}
-Alan Turing was in Manchester when he proposed his imitation game, which reframes intelligence as a question-driven
+Alan Turing was in Manchester when he proposed his imitation game~\citep{manchester-turing-25}, which reframes intelligence as a question-driven
 evaluation  (Chapter~\ref{ch:turing}). Rather than define intelligence,
 Turing proposes an indistinguishability test~\citep{Turing-95}: a computer is intelligent when it can answer questions as well as a human.
 %
@@ -133,9 +133,9 @@ those details next.
 \subsection{Discriminative Questions and Incremental Evidence}
 \label{sec:manchester:qb-discriminative}
 
-Quizbowl's defining property is interruptibility: questions are read aloud and
+\quizbowl{}'s defining property is interruptibility: questions are read aloud and
 can be answered at any time. Each word is a chance to demonstrate knowledge.
-This makes Quizbowl maximally discriminative, rewarding knowledge rather than
+This makes \quizbowl{} maximally discriminative, rewarding knowledge rather than
 buzzer speed or luck. It is also a better model for evaluating \abr{qa} than
 formats where answers are only permitted after the question is fully read.
 %
@@ -178,7 +178,7 @@ are not pyramidal.
 \paragraph{Pyramidal}
 \label{sec:manchester:pyramidality}
 
-The goal of a quiz bowl game is to discriminate who know more about a topic: the smarter team should on average get the question right.
+The goal of a \quizbowl{} game is to discriminate who knows more about a topic: the smarter team should on average get the question right.
 %
 \quizbowl{} questions do a better job than ``stand alone'' questions
 because discrimination happens \emph{within} a question: after every
@@ -192,7 +192,7 @@ more accessible clues.
 \subsection{Adjudication and Protests as Quality Control}
 \label{sec:manchester:qb-adjudication}
 
-Format is necessary but not sufficient. Quizbowl works because the community
+Format is necessary but not sufficient. \quizbowl{} works because the community
 invests in question quality and adjudication. In the early 1990s, the Academic
 Competition Federation (\abr{acf}) formalized norms for clarity, specificity,
 and fair evaluation. Their rules are designed to avoid ambiguity and to make
@@ -298,7 +298,7 @@ earlier.
 \label{sec:manchester:craft}
 
 Trivia enthusiasts agree that questions need to be well written (despite other disagreements).
-Asking ``good questions'' requires sophisticated pragmatic reasoning~\citep{hawkins-15}, and pedagogy explicitly acknowledges the complexity of writing effective questions for assessing student performance~\citep[focusing on multiple choice questions]{Haladyna-04}. 
+Asking ``good questions'' requires sophisticated pragmatic reasoning~\citep{hawkins-15}, and pedagogy explicitly acknowledges the complexity of writing effective questions for assessing student performance~\citep[focusing on multiple choice questions]{haladyna-04}.
 
 \abr{qa} datasets, however, are often collected from the wild or written by untrained
 crowdworkers.
@@ -556,7 +556,7 @@ Instead, focus more resources on the bubble.
 Common ground has its limits. That there is not a strict dichotomy between
 Manchester and Cranfield can mask the importance of distinguishing motivations.
 Some robustness proposals test models on inputs users would not make, or on
-challenging but unnatural adversarial questions~\citep{feng2018rawr,jia2017adversarial,wallace-19,bartolo2020beat,kiela2021dynabench}.
+challenging but unnatural adversarial questions~\citep{Feng-18,jia2017adversarial,wallace-19,bartolo2020beat,kiela2021dynabench}.
 These tests can be valuable for probing capabilities, but they do not directly
 improve the user experience in the short term. The Manchester paradigm
 welcomes these probes; the Cranfield paradigm will often ignore them. If we do

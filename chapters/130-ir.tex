@@ -76,7 +76,7 @@ an engine if you will, to search through them.
 %
 The claim was that the Universal Decimal Classification, a facet
 classification, and alphabetical subject catalog, and a unigram index
-were roughly comparable~\citep{cleverdon-67}.
+were roughly comparable~\citep{CLEVERDON-67}.
 
 Before we analyze this, just a reminder of how a search engine query
 is evaluated.  Again, this is old hat now but was revolutionary at the
@@ -251,8 +251,10 @@ instead.
 The entry for a question has a higher weight for a word the more often
 it appears.
 %
-E.g., if the question is:
-\question{Which of the members of Lincoln's cabinent did Licoln previously serve in the House of Representative with?}
+E.g., if the question is:\footnote{I format questions this way to evoke
+the classic \jeopardy{} question display and to join the tradition of
+Jurafsky and Martin's \textit{Speech and Language Processing}~\citep{jurafsky-24}.}
+\question{Which of the members of Lincoln's cabinet did Lincoln previously serve in the House of Representatives with?}
 then the words that appear most commonly are going to be more important.
 %
 In this case, that would be ``Lincoln''\dots but another seemingly
@@ -398,7 +400,7 @@ the question is looking for, which is usually
 %
 found in the question word (this is quite a bit simpler than the lexical
 answer type analysis of the Watson system
-(Chapter~\ref{sec:watson:feature-engineering}), where you need to figure out
+(Section~\ref{sec:watson:feature-engineering}), where you need to figure out
 things like ``This Argentenian Author'' could be Borges, Cortazar, or
 Puig).
 %
@@ -455,7 +457,7 @@ S Q
 \end{verbatim}
 %
 Unlike \abr{baseball} it can handle previous contexts (like
-conversational \abr{qa}, Chapter~\ref{sec:formats:conversation}).
+conversational \abr{qa}, Section~\ref{sec:formats:conversation}).
 
 
 After that syntactic analysis, it then gets
@@ -487,7 +489,7 @@ them all: \abr{shrdlu}.
 \abr{shrdlu} was described in the thesis of Terry
 Winograd\dots remember that name, we’ll be
 %
-seeing it again in Chapter~\ref{sec:leaderboards:adversarial}!
+seeing it again in Section~\ref{sec:leaderboards:adversarial}!
 
 Unlike the \abr{lunar} and \abr{baseball} which are exactly
 what they say on the tin, I need to explain
@@ -564,35 +566,23 @@ To recap the route to this name: Linotype machines helped distribute
 information, and ``ETAOIN SHRDLU'' signaled that something had gone wrong
 in that process.  Brown used those letters as the title of a story about
 a machine that became self-aware by reading what it printed.  Winograd
+then took \abr{shrdlu} as the name for his interactive \abr{ai} system.
+
 Despite its funny name, \abr{shrdlu} remains the
 \abr{og} question answering system.
 
-The basic idea is that Instead of just answering
-questions about a static world, you could
-move objects around in this 3D world.
-%
-This is a later rendering of it … back in
-the early 70s computer graphics aren’t as
-advanced as they are today.
+\abr{shrdlu} lets you move objects around in a three-dimensional world,
+not just ask questions about a static one.  Figure~\ref{fig:ir:shrdlu}
+is a later rendering; computer graphics in the early seventies were
+not as advanced as they are today.
 
+If \abr{shrdlu} cannot tell which object you mean, it asks a follow-up
+question to clarify the ambiguity, a challenge I return to in
+Chapter~\ref{ch:bad}.
 
-
-And if the system couldn’t tell what object
-you’re asking about (e.g., it’s ambiguous),
-%
-it asks a follow-up question to clarify which
-one you meant (which is still a challenge we discuss in Chapter~\ref{ch:bad}).
-%
-I’m not going to go through the components
-of \abr{shrdlu}, but it is fairly similar to \abr{lunar}:
-%
-you parse sentences into a logical form and find what matches in the
-knowledge base.
-%
-The big difference is that the knowledge base
-isn’t static: it changes as the user interacts
-%
-with the block world.
+Like \abr{lunar}, \abr{shrdlu} parses sentences into a logical form
+and finds matches in a knowledge base.  The big difference is that
+the knowledge base changes as the user interacts with the block world.
 
 \begin{figure}
   \includegraphics[width=1.0\linewidth]{figures/external/shrdlu}
@@ -601,6 +591,7 @@ with the block world.
     early \abr{qa} systems with a static world, you can move the
     blocks around and ask questions about them.  However, it's a very
     small world.}
+  \label{fig:ir:shrdlu}
 \end{figure}
 
 The reason that I'm not talking about the details is because you’ve
@@ -627,7 +618,7 @@ is.
 And the world as it is has ambiguity.
 
 Let’s go back to the ``Who’s on first''
-bit that I started this video with.
+bit that I started this section with.
 %
 So let me explain\footnote{At the risk of explaining the joke to much, there
 are additional aspects that showcase the difficulties

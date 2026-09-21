@@ -7,41 +7,35 @@ for definitive verification. This is an inventory, not an editorial-readiness ce
 
 | Chapter | File | Approximate words |
 |---|---|---:|
-| 1 | chapters/010-introduction.tex | 1,546 |
+| 1 | chapters/010-introduction.tex | 1,456 |
 | 2 | chapters/110-civilization.tex | 2,431 |
 | 3 | chapters/120-turing.tex | 4,022 |
-| 4 | chapters/130-ir.tex | 4,184 |
-| 5 | chapters/140-manchester.tex | 4,944 |
-| 6 | chapters/200-watson.tex | 8,597 |
-| 7 | chapters/210-formats.tex | 10,792 |
+| 4 | chapters/130-ir.tex | 4,171 |
+| 5 | chapters/140-manchester.tex | 4,941 |
+| 6 | chapters/200-watson.tex | 8,572 |
+| 7 | chapters/210-formats.tex | 10,138 |
 | 8 | chapters/220-datasets.tex | 10,440 |
-| 9 | chapters/230-methods.tex | 1,452 |
+| 9 | chapters/230-methods.tex | 5,335 |
 | 10 | chapters/240-leaderboards.tex | 11,920 |
 | 11 | chapters/250-bad.tex | 19 |
 | 12 | chapters/300-gameshow.tex | 0 |
-| 13 | chapters/310-sci_fi.tex | 5,532 |
+| 13 | chapters/310-sci_fi.tex | 5,531 |
 
 ## Unresolved source references
 
 - `chapters/140-manchester.tex`: `\ref{tab:more_ae_examples}`
 - `chapters/220-datasets.tex`: `\ref{sec:synthetic-discriminative}`
-- `chapters/310-sci_fi.tex`: `\ref{chap:gai}`
 - `chapters/310-sci_fi.tex`: `\ref{sec:unsup}`
 
 ## Citation keys absent from bibliography
 
-- `chapters/120-turing.tex`: `Shieber-07`
 - `chapters/120-turing.tex`: ``
-- `chapters/130-ir.tex`: `cleverdon-67`
-- `chapters/140-manchester.tex`: `Haladyna-04`
 - `chapters/140-manchester.tex`: `bulian2022tomayto`
 - `chapters/140-manchester.tex`: `carberry_jeopardy_casebook`
-- `chapters/140-manchester.tex`: `kamalloo-etal-2023-evaluating`
 - `chapters/140-manchester.tex`: `kim2024prometheus`
 - `chapters/140-manchester.tex`: `naqt_correctness`
 - `chapters/140-manchester.tex`: `verga2024replacingjudgesjuriesevaluating`
 - `chapters/140-manchester.tex`: `wang2023evaluating`
-- `chapters/220-datasets.tex`: `feng-18`
 - `chapters/310-sci_fi.tex`: `DoshiVelez-17`
 - `chapters/310-sci_fi.tex`: ``
 - `chapters/310-sci_fi.tex`: `andrews-15`
