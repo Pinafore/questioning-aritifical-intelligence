@@ -22,3 +22,4 @@ scripts/split_blurbs.py~
 *.xmpi
 main.toc
 main.log
+local_data/NQ-open.train.jsonl

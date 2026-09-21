@@ -75,7 +75,12 @@ I started with the cost of representing a large vocabulary and ended with repres
 \label{sec:methods:reading}
 
 Machine reading uses retrieved evidence to find an answer.  Natural Questions~\citep{kwiatkowski-19}, introduced in Section~\ref{sec:datasets:nq}, supplies questions, Wikipedia pages, and annotated answers.
-% AUTHOR: Supply the running Natural Questions example and its passage.
+Consider these three versions of the same question:
+\begin{itemize}
+\item ``when was the name windsor adopted by the royal family'' --- \answer{1917}
+\item ``when did the royal family take the name windsor'' --- \answer{1917}
+\item ``when did the royal family adopt the name windsor'' --- \answer{in 1917}
+\end{itemize}
 
 The retrieval step in Section~\ref{sec:methods:deep-retrieval} provides passages for the reader to examine.
 
@@ -87,7 +92,11 @@ An extractive reader works much like a highlighter: given a question and a passa
 
 Annotated spans provide training data: the reader learns to assign high probability to answer spans and low probability to other spans.  As my collaborators and I discuss in the \abr{pedants} paper~\citep{li-etal-2024-pedants}, this is usually fairly easy, but it can get complicated.  Let's just review a few monarchs to make the point.  For example, is Elizabeth I the same person as Elizabeth II?  No.  Is James II the same person as James VII?  Uh, they could be \dots{} since James II of England was James VII of Scotland.    Is Catherine the Great the same person as Charles the Bald?  No, of course not.  Is Charlemagne the same person as Karl der Grosse?  Yes, depending on whether you ask a French or a German \dots{} and don't dare ask them whether that monarch who founded the Holy Roman Empire had his octagonal palace in Aachen or Aix-la-Chapelle.
 
-So let's go back to the example question.  We know that the answer is XXX, so we highlight all the times we see that (or something equivalent to it) in the passage.  Because it's the year something happened, it appears a lot in this passage.  While all of these are technically correct, they could be right for the wrong reasons.  So the hope is that the model would learn to give higher weight to the ones that do a good job of answering the question and less to the spurious answers.\footnote{As it turns out, it does do this, but what if there is no good answer?  In that case, it often just returns the best thing that looks like the answer.  Which leads to the algorithm answering nonsensical questions like ``When did Leonardo da Vinci paint the Sistine Chapel?'' with ``between 1508 and 1512''.}
+So let's go back to the Windsor questions.  We know that the answer is \answer{1917}, so a string-matching procedure could highlight every occurrence of that year in a retrieved passage, including this one from Wikipedia's article on the House of Windsor:
+
+\evidence{High anti-German sentiment amongst the people of the British Empire during the First World War reached a peak in March \answer{1917}, when the Gotha G.IV, a heavy aircraft capable of crossing the English Channel, began bombing London directly and became a household name.}\footnote{\url{https://en.wikipedia.org/wiki/House_of_Windsor}; emphasis added.}
+
+The highlighted year matches the answer string, but the passage describes bombing, not the royal family's adoption of the name Windsor.  A system could therefore return the right string for the wrong reason.  The hope is that training gives higher scores to spans supported by the surrounding evidence and lower scores to these spurious matches.\footnote{But what if there is no good answer?  A reader may return the best-looking span anyway, answering a question such as ``When did Leonardo da Vinci paint the Sistine Chapel?'' with ``between 1508 and 1512''.}
 
 As Section~\ref{sec:methods:preferences} discusses, people can prefer different answers to the same question---but for a while, this seemed to work fairly well.  Google would ``call out'' the answers to obvious questions without forcing you to click through to the underlying page, and it used its world-class information retrieval to find a page that might contain the answer, extract a span with that answer from the page, and then provide that answer.  Going back to our running example, a system would score all the start and stop positions, and we could rank all of the possibilities in order of their scores.
 % AUTHOR: Supply the scored answer-span example.
@@ -137,7 +146,7 @@ Is that fair?  We don't let humans bring all of Wikipedia in when they take the 
 Large language models can store information in their parameters.  T5~\citep{raffel-20}, developed at Google, casts many language tasks, including question answering, as generating text from text.
 T5's pretraining objective resembles \abr{bert}'s, but it reconstructs missing spans of text rather than predicting each masked token separately.  These spans become multiword ``slots'' to fill.
 
-And this makes a lot of sense!  Think about what happens when you have a question on, say, \jeopardyf{}  As Chapter~\ref{ch:watson} explains, the first step is to find the lexical answer type.  So in some sense you're filling in the blank: In 2001, XXX became the shortest NBA MVP in history.  But you have some additional information: that blank needs to be a person, a guard, and a member of the Philadelphia 76ers.
+And this makes a lot of sense!  Think about what happens when you have a question on, say, \jeopardyf{}  As Chapter~\ref{ch:watson} explains, the first step is to find the lexical answer type.  So in some sense you're filling in the blank: In 2001, \underline{\hspace{2cm}} became the shortest \abr{nba} \abr{mvp} in history.  But you have some additional information: that blank needs to be a person, a guard, and a member of the Philadelphia 76ers.
 
 That resembles T5's pretraining task: recover the missing text.  In this example, the missing name is Allen Iverson.
 
@@ -228,11 +237,10 @@ There is still a practical problem: we cannot ask a human to rate every answer g
 
 All of this breaks down, however, when the question is problematic.  For example, some questions that tripped up early \abr{qa} systems were ``When did Leonardo paint the Sistine Chapel'' or ``Is the king of France bald''.  These questions contain what are called ``false presuppositions'': Michelangelo painted the Sistine Chapel, and France no longer has a king.  Because a reward model can learn what looks like a good answer to familiar questions, and those questions look like legitimate questions, it can encourage answers that accept the false presuppositions and blithely answer.
 
-You might think that these questions are unrealistic, but questions with hidden assumptions are common in the medical domain.  For example, XXX found a real-life example from a new mother: ``When can I resume breastfeeding after I've been sick''.  Models will go along with the assumption---like an improv actor
-% AUTHOR: Identify Jon's paper and the breastfeeding example's source; verify the quoted medical claim before publication.
-saying ``yes and''---but a responsible actor would push back against the incorrect assumption embedded in the question: ``Um, actually, if you have a cold, the only way your newborn will get antibodies against it is through breastfeeding, since its immune system isn't developed yet.''
+You might think that these questions are unrealistic, but questions with hidden assumptions are common in the medical domain.
+For example, \citet{srikanth-24-pregnant} examine the question ``Can I breastfeed my baby when I am ill?''  A model can go along with a question's assumptions---like an improv actor saying ``yes and''~\citep{cho-20-spolin}---but a helpful answer may need to challenge them.  In the paper's example, the fuller answer addresses the belief that all illnesses pass through breast milk and explains that antibodies in breast milk can help protect the baby.
 
-But how do you push back?  This requires coming up with a strategy.  Sometimes you're missing information.  If the question is ``what's the capital of Georgia'', you might need to ask which Georgia they mean.  You might need to ask for context: ``how old is the baby'', ``what were you sick with''.  These are called discourse moves, and they direct the conversation in different directions.  YYY showed how different communities prefer different techniques to deal with questions that were complicated or poorly formed.
+But how do you push back?  This requires coming up with a strategy.  Sometimes you're missing information.  If the question is ``what's the capital of Georgia'', you might need to ask which Georgia they mean.  You might need to ask for context: ``how old is the baby'', ``what were you sick with''.  These are called discourse moves, and they direct the conversation in different directions.  \citet{srikanth-26-discotrace} show how different communities favor different answering strategies, including clarifying a question or challenging its assumptions.
 
 Given this, how do you get to a good answer?
 
@@ -241,10 +249,9 @@ Given this, how do you get to a good answer?
 
 Pushing back against a flawed question isn't the only case where you need to plan before you answer.  Generating intermediate reasoning is often called ``chain of thought''~\citep{wei-22}, and it can build the scaffolding of an answer before you get the true answer.  For example, this can help address the multihop questions we saw in Section~\ref{sec:formats:multihop}.
 
-% AUTHOR: Revise the scratchpad below: the clue does not establish a shared border, and XXX still needs an identity.
 Before the language model generates a final answer to the question \question{A mechanic was arrested in one of these two countries for using women's underwear soaked in invisible ink to pass secrets to the other.}, it creates an intermediate scratchpad:
 \begin{quote}
-To answer this question, I need to figure out both countries.  The first country seems easier.  Mossad is associated with Israel, and given that the country must border Israel, the best candidate is Egypt.  After verifying that XXX is from Egypt, we should confirm ``Israel and Egypt'' first.
+To answer this question, I need to figure out both countries.  Mossad is associated with Israel, and the arrest took place in Cairo, which is in Egypt.  These two pieces of evidence point to ``Israel and Egypt''.
 \end{quote}
 
 % AUTHOR: Which process-reward or verifier paper supports the following training claim? Wei et al. supports prompting, not this training method.

@@ -9,13 +9,13 @@ for definitive verification. This is an inventory, not an editorial-readiness ce
 |---|---|---:|
 | 1 | chapters/010-introduction.tex | 1,456 |
 | 2 | chapters/110-civilization.tex | 2,431 |
-| 3 | chapters/120-turing.tex | 4,022 |
+| 3 | chapters/120-turing.tex | 4,036 |
 | 4 | chapters/130-ir.tex | 4,171 |
 | 5 | chapters/140-manchester.tex | 4,941 |
 | 6 | chapters/200-watson.tex | 8,572 |
 | 7 | chapters/210-formats.tex | 10,138 |
 | 8 | chapters/220-datasets.tex | 10,440 |
-| 9 | chapters/230-methods.tex | 5,335 |
+| 9 | chapters/230-methods.tex | 5,398 |
 | 10 | chapters/240-leaderboards.tex | 11,920 |
 | 11 | chapters/250-bad.tex | 19 |
 | 12 | chapters/300-gameshow.tex | 0 |

@@ -7,9 +7,6 @@ figures, equations, or a Transformer tutorial.
 
 ## Citations needing identification or confirmation
 
-- “Jon's paper” on accepting false premises, the source of the breastfeeding
-  example, and “YYY” on communities' preferred discourse moves. The quoted
-  medical explanation also needs verification against its source.
 - The specific Dagan and Socher sources for the AI-completeness attributions.
 - The paper intended for training mathematical reasoning with intermediate
   rewards/verifiers. Wei et al. (2022) supports chain-of-thought prompting;
@@ -21,14 +18,13 @@ figures, equations, or a Transformer tutorial.
 
 ## Material for the author to supply or decide
 
-- The Natural Questions running example, its passage, and start/end probabilities
-  (the answer still appears as XXX in the script).
+- Start/end probabilities for the now-supplied Windsor example, if retaining
+  the proposed scored-span illustration. Do not invent model probabilities.
 - The presidential-embedding figure and additional Cairo/Mossad evidence passages.
 - The preference-ranking figure if desired, reward/KL objective, and any
   Transformer overview or alignment-dataset examples.
-- Revise the Egypt/Israel scratchpad: a shared border does not follow from the
-  question, and its remaining XXX needs an identity. It is retained as a draft,
-  not presented as verified reasoning.
+- The Egypt/Israel scratchpad now uses the existing Cairo/Mossad evidence;
+  the unsupported border assumption and unnecessary identity placeholder are gone.
 - Identify the science-fiction scene in the commented YouTube link.
 - There is also repeated multihop material (Lotto and Egypt/Israel) and the Apu
   dialogue across formats and methods. Decide which chapter should own each;
@@ -75,3 +71,35 @@ Questions, EfficientQA, BLEU, and ROUGE. Added 11 records:
 The source audit finds no missing citation keys or reference targets in methods
 and no duplicate labels in the book. ROUGE counts were checked computationally.
 A compiled PDF still needs checking; no local LaTeX compiler was available.
+
+## Follow-up: supplied references and remaining placeholders
+
+Added `cho-20-spolin` and `srikanth-26-discotrace` after the author identified
+these papers. The supplied DiscoTrace PDF URL was inaccessible; the accessible
+preprint at https://arxiv.org/html/2604.15140v1/ supports the answering-strategy
+claim. The EMNLP 2026 venue and full author name follow the author's metadata.
+
+All five literal manuscript placeholders are now resolved:
+
+| Location | Status |
+|---|---|
+| Machine-reading answer year | The author supplied three Windsor questions with answer 1917 and a misleading Wikipedia passage; all are incorporated. |
+| Iverson cloze | Changed XXX to an explicit underlined answer slot; the following sentence already supplies Allen Iverson. |
+| Breastfeeding example attribution | Cited Pregnant Questions (Srikanth et al., 2024), Figure 1; matched the question wording and narrowed the explanation to what the source supports. |
+| Communities' discourse moves | Replaced YYY with the DiscoTrace citation and wording supported by its findings. |
+| Egypt/Israel scratchpad | Rewritten from existing evidence; no identity placeholder remains. |
+
+Other unfinished material is listed above: the figures, scored spans, reward/KL
+objective, optional Transformer explanation, science-fiction scene, and uncertain
+Dagan/Socher, Hinton, and process-reward references remain open.
+
+
+The Windsor passage is quoted from the text supplied by the author, with a
+Wikipedia source link and the answer-year highlighted. The explanation now
+separates a matching string from evidence for the name change; the supplied
+passage contains only one occurrence of 1917, so the old repeated-year claim
+was removed. No model scores have been invented.
+
+Maternal-health source: https://aclanthology.org/2024.naacl-long.403/, Figure 1.
+The script's “only way” antibody claim was removed; the revised passage describes
+the paper's response and preserves the separate SPOLIN citation for the analogy.

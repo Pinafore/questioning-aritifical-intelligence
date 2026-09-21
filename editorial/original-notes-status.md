@@ -10,8 +10,8 @@ Checked against the original pasted notes and current source on 2026-09-21.
   pedagogical “we” where it means author and reader together.
 - Move the standardized-test history out of `240-leaderboards.tex` into the
   historical discussion. Keep the psychometric methods with leaderboards.
-- Chapter 3: add the Turing-machine reference and references for the books/films;
-  shorten Joy's Diplomacy discussion and remove the requested figure.
+- Chapter 3: add the Turing-machine reference; shorten Joy's Diplomacy
+  discussion and remove the requested figure.
 - Chapter 4: explain SHRDLU's ambiguity resolution and limitations with references
   to specific Winograd chapters. The author supplies this new explanation and
   the expanded closing section.
@@ -29,7 +29,9 @@ Checked against the original pasted notes and current source on 2026-09-21.
 - Question-box explanation at its first use in the tf-idf section.
 - Chapter 2: Oedipus as a Greek story; model-training connection; clarification
   of Odin's role and the reference to Turing. Earlier prose remains reviewable.
-- Chapter 3: Wilcox author metadata; “effectively read all of the Internet”.
+- Chapter 3: Wilcox author metadata; “effectively read all of the Internet”;
+  citations to Hodges's *Alan Turing: The Enigma* (1983) and Tyldum's
+  *The Imitation Game* (2014).
 - Chapter 4: recursion alignment, Maryland wording, F1 equation, Siraj punctuation,
   e-reader footnote, Linotype recap, SHRDLU paragraph organization and figure credit,
   and the “small and brittle” wording. The new technical explanation is still open.
