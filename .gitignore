@@ -23,3 +23,16 @@ scripts/split_blurbs.py~
 main.toc
 main.log
 local_data/NQ-open.train.jsonl
+*.tex#
+local_data/\#blade_runner_script.txt\#
+local_data/blade_runner_script.txt
+local_data/Frank Herbert - Dune 1 - Dune.pdf
+local_data/measure_of_a_man.txt
+local_data/Phillip_K._Dick_-_Do_Androids_Dream_of_Electric_Sheep.pdf
+local_data/Phillip_K._Dick_-_Do_Androids_Dream_of_Electric_Sheep.txt
+local_data/The-Diamond-Age-Novel.pdf
+local_data/The-Diamond-Age-Novel.txt
+tmp/extract_diamond_text.py
+tmp/extract_dick_text.py
+tmp/search_diamond.py
+tmp/search_diamond_text.py
