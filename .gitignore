@@ -22,6 +22,8 @@ scripts/split_blurbs.py~
 *.xmpi
 main.toc
 main.log
+/build/latexdiff/
+/build/latexdiff-inputs.txt*
 local_data/NQ-open.train.jsonl
 *.tex#
 local_data/\#blade_runner_script.txt\#

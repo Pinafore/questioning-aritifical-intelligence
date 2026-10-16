@@ -43,6 +43,12 @@ A neural network can learn representations for both questions and evidence passa
 Back in 2015, my collaborators and I used deep averaging networks to represent \quizbowl{} questions~\citep{iyyer-15}.  In a two-dimensional projection of questions about \abr{us} presidents, the representations progress clockwise from the founding fathers through the nineteenth and twentieth centuries.
 % AUTHOR: Restore the presidential-embedding projection from the lecture slides.
 
+The dot product from Equation~\ref{eq:ir:dot-product} also scores learned
+question and passage vectors in \abr{dpr}~\citep{karpukhin-20}; inside a
+Transformer, attention uses scaled query--key dot products, converts them
+to weights with a softmax, and takes a weighted sum of the corresponding
+value vectors~\citep{vaswani-17}.
+
 In 2019 and 2020, three papers developed neural retrieval for question answering: \abr{orqa} (Open-Retrieval Question Answering)~\citep{lee-19}, \abr{realm} (Retrieval-Augmented Language Model Pre-Training)~\citep{guu-20}, and \abr{dpr} (Dense Passage Retrieval)~\citep{karpukhin-20}.
 
 \abr{orqa} shows that learned retrieval can beat an off-the-shelf retrieval system on questions from users seeking information, although \abr{bm25} remains competitive when question writers already know the answer.

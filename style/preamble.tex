@@ -110,6 +110,28 @@
 \newcommand{\answer}[1]{\uline{#1}}
 \newcommand{\question}[1]{\begin{center}\colorbox{blue}{\textcolor{white}{\parbox{0.6\linewidth}{{\sffamily
             #1}}}}\end{center}}
+% Evidence is a source excerpt, not necessarily proof of the proposed answer.
+% Use the current line width so excerpts also fit inside lists.
+\definecolor{evidencepaper}{RGB}{250,247,239}
+\definecolor{evidenceedge}{RGB}{155,146,128}
+\newcommand{\evidence}[1]{%
+  \par\smallskip
+  \begingroup
+  \setlength{\fboxsep}{10pt}%
+  \setlength{\fboxrule}{0.4pt}%
+  \noindent\hspace*{0.03\linewidth}%
+  \fcolorbox{evidenceedge}{evidencepaper}{%
+    \parbox{\dimexpr0.90\linewidth-2\fboxsep-2\fboxrule\relax}{%
+      \normalfont\rmfamily\small\raggedright
+      {\footnotesize\scshape\color{evidenceedge}Evidence}\par\nobreak
+      \smallskip
+      {\color{evidenceedge}\hrule height 0.4pt}\nobreak\smallskip
+      #1\par
+    }%
+  }%
+  \endgroup
+  % Leave the paragraph open so a following citation or footnote stays attached.
+}
 \newcommand{\catquestion}[2]{\begin{center}\colorbox{blue}{\textcolor{white}{\parbox{0.6\linewidth}{\centering
          {\sffamily {\bfseries  {\scshape  #1}}}}}}\\
     \colorbox{blue}{\textcolor{white}{\parbox{0.6\linewidth}{{\sffamily #2}}}}\end{center}}

@@ -8,24 +8,24 @@ for definitive verification. This is an inventory, not an editorial-readiness ce
 | Chapter | File | Approximate words |
 |---|---|---:|
 | 1 | chapters/010-introduction.tex | 1,456 |
-| 2 | chapters/110-civilization.tex | 2,431 |
-| 3 | chapters/120-turing.tex | 4,036 |
-| 4 | chapters/130-ir.tex | 4,171 |
-| 5 | chapters/140-manchester.tex | 4,941 |
+| 2 | chapters/110-civilization.tex | 2,427 |
+| 3 | chapters/120-turing.tex | 4,297 |
+| 4 | chapters/130-ir.tex | 4,245 |
+| 5 | chapters/140-manchester.tex | 5,049 |
 | 6 | chapters/200-watson.tex | 8,572 |
 | 7 | chapters/210-formats.tex | 10,138 |
 | 8 | chapters/220-datasets.tex | 10,440 |
-| 9 | chapters/230-methods.tex | 5,398 |
-| 10 | chapters/240-leaderboards.tex | 11,920 |
+| 9 | chapters/230-methods.tex | 5,443 |
+| 10 | chapters/240-leaderboards.tex | 12,043 |
 | 11 | chapters/250-bad.tex | 19 |
 | 12 | chapters/300-gameshow.tex | 0 |
-| 13 | chapters/310-sci_fi.tex | 5,531 |
+| 13 | chapters/310-sci_fi.tex | 7,031 |
 
 ## Unresolved source references
 
 - `chapters/140-manchester.tex`: `\ref{tab:more_ae_examples}`
 - `chapters/220-datasets.tex`: `\ref{sec:synthetic-discriminative}`
-- `chapters/310-sci_fi.tex`: `\ref{sec:unsup}`
+- `chapters/310-sci_fi.tex`: `\ref{}`
 
 ## Citation keys absent from bibliography
 
@@ -39,27 +39,16 @@ for definitive verification. This is an inventory, not an editorial-readiness ce
 - `chapters/310-sci_fi.tex`: `DoshiVelez-17`
 - `chapters/310-sci_fi.tex`: ``
 - `chapters/310-sci_fi.tex`: `andrews-15`
-- `chapters/310-sci_fi.tex`: `croley-08`
-- `chapters/310-sci_fi.tex`: `feldman-15`
-- `chapters/310-sci_fi.tex`: `fiat-16`
-- `chapters/310-sci_fi.tex`: `goodman-17`
 - `chapters/310-sci_fi.tex`: `hillier-03`
-- `chapters/310-sci_fi.tex`: `hoiles-17`
 - `chapters/310-sci_fi.tex`: `lachow-11`
 - `chapters/310-sci_fi.tex`: `leiner-09`
-- `chapters/310-sci_fi.tex`: `lessig-08`
-- `chapters/310-sci_fi.tex`: `light-99`
 - `chapters/310-sci_fi.tex`: `miller-15`
 - `chapters/310-sci_fi.tex`: `moroney-97`
-- `chapters/310-sci_fi.tex`: `nieuwland-18`
 - `chapters/310-sci_fi.tex`: `pogge-92`
-- `chapters/310-sci_fi.tex`: `russakovsky-15`
 - `chapters/310-sci_fi.tex`: `speicher-18`
 - `chapters/310-sci_fi.tex`: `spufford-10`
 - `chapters/310-sci_fi.tex`: `tanczer-18`
-- `chapters/310-sci_fi.tex`: `thrun-10`
 - `chapters/310-sci_fi.tex`: `trotsky-32`
-- `chapters/310-sci_fi.tex`: `vardi-18`
 - `chapters/310-sci_fi.tex`: `yaqoob-19`
 
 ## Repeated labels (including chapterfile labels)

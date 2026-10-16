@@ -73,7 +73,7 @@
 },
     {
         "label": "manchester",
-        "summary": "While computer scientists were getting their feet wet answering questions in the wake of World War II, trivia enthusiasts were developing how to ask the perfect question.  The conventions and processes of the highest form of human question answering---in the biased opinion of the author---should be a part of creating data for computer question answering.  Previously published as \\citet{boyd-graber-20}.",
+        "summary": "While computer scientists were getting their feet wet answering questions in the wake of World War II, trivia enthusiasts were developing how to ask the perfect question.  The conventions and processes of the highest form of human question answering---in the biased opinion of the author---should be a part of creating data for computer question answering.  Previously published as \\citet{Boyd-Graber-20}.",
         "sections": [
             {"label": "name", "title": "Two British University Towns, Alike in Question Answering", "summary": "In contrast to the existing Cranfield Paradigm, we propose the Manchester paradigm, which creates probing questions to test specific skills of \\abr{ai} systems."},
             {"label": "qb", "title": "It Takes a Village to Ask a Question", "summary": "I review the Quizbowl competitions---whose University Challenge incarnation is one of the reasons we adopt the name Manchester paradigm---and how it reflects the incremental perfection of question answering for humans and what lessons (e.g., adjudication, focusing on discriminative questions) can transfer to computer question answering."},

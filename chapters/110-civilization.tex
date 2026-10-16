@@ -58,28 +58,29 @@ Because I’m a professor, I am somewhat biased in my appreciation of this use o
 %
 If you haven’t heard of this before, you might have experienced it (especially if you’re in my classes).
 %
-Let’s hear how John Houseman explain what it is in the 1971 film The Paper Chase~\citep{paperchase1973}:
+Let's hear John Houseman explain it in \textit{The Paper Chase}~\citep{paperchase1973}:
 \begin{quote}
 We use the Socratic Method here.  I call on you, ask you a question\dots and you answer it.  Why don't I just give you a lecture?  Because through my questions, you learn to teach yourselves.
 
-Through this method of questioning, answering\dots questioning, answering\dots we seek to develop in you
-the ability to analyze that vast complex of facts that constitute the relationships of members within a given society.  Questioning and answering.
-
-At times you may feel that you have found the correct answer. I assure you that this is a total delusion on your part. You will never find the correct, absolute, and final answer.  In my classroom, there is always another question\dots another question to follow your answer.
-
-Yes, you're on a treadmill.  My little questions spin the tumblers of your mind. You're on an operating table. My little questions are the fingers probing your brain.
-
-We do brain surgery here.  You teach yourselves the law but I train your mind.  You come in here with a skull full of mush\dots and you leave thinking like a lawyer.
+[\dots] You teach yourselves the law but I train your mind.
 \end{quote}
 
-I want to particularly hone in on the assertion that it ``trains your brain''.  While not quite mythological, the term ``Socratic Dialog'' goes back to ancient Greece.  Plato featured Socrates in his dialogues Euthyphro and Ion~\citep{PlatoDialogs}, giving the perspective of the student the student, the person answering the questions, struggling with multiple interpretations and ``showing their work'' as they emerge on the other side, enlightened by the exchange.
+I want to particularly hone in on the assertion ``I train your mind''.  While not quite mythological, the term ``Socratic Dialog'' goes back to ancient Greece.  Plato featured Socrates in his dialogues Euthyphro and Ion~\citep{PlatoDialogs}, giving the perspective of the student, the person answering the questions, struggling with multiple interpretations and ``showing their work'' as they emerge on the other side, enlightened by the exchange.
 
 And indeed, one of the best moments for me as a professor is to see the aha moment in students eyes after they answer a question correctly.  And this is still how we train lawyers, who have to use argument and discussion to keep our society ordered!  But as we will see later in this chapter, that is not the only way the questions and answers create order in our civilization.
 
-Questions and answers also train the artificial minds discussed in this
-book.  Thousands of humans have supplied questions, answers, and feedback
-on crappy computer answers to help train \abr{ai} models.  Questions are
-not just a way to test intelligence: they are also a way to build it.
+The way we train human minds has also become a way to train computer
+minds.  Thousands of humans have supplied questions, answers, and feedback
+on crappy computer answers to help train \abr{ai} models.  In
+Section~\ref{sec:methods:preferences}, I return to this process as
+reinforcement learning from human feedback (\abr{rlhf}): using people's
+judgments of answers to teach a model what makes an answer better.
+Questions are not just a way to test intelligence; they are also a way to
+build it.
+
+But a good answer can leave us with another question: who, or what, is
+answering?  The next story turns from training a mind to figuring out
+whose mind we are dealing with.
 
 \section{Only a God Would Ask Questions Like that, ``Gestumblindi''}
 \label{sec:civilization:gestumblindi}
@@ -107,10 +108,15 @@ And like a frustrated customer who thought they were talking to a human for ten 
 To be clear, I don't think that \abr{ai} is a godlike being.  In this
 analogy, Odin plays the role of the \abr{ai}: the king thinks he is
 talking to a human, but he is not.  Their exchange exposes the deception.
-The same concern goes beyond annoying encounters with automated call
-centers: using questions to distinguish a human from a machine is central
-to Alan Turing's definition of \abr{ai}, as I discuss in
-Chapter~\ref{ch:turing}.
+When we cannot tell whether an answer comes from a person or a machine,
+we may have to ask more questions just to establish who we are talking
+to.  That is the connection to Turing's test in Chapter~\ref{ch:turing}.
+
+But the deception also damages trust: an impressive answer can become a
+reason for suspicion.  The story gives an old form to an anxiety that
+still appears in science fiction---an intelligence in our midst that
+knows too much and is not what it seems.  I return to those fears in
+Chapter~\ref{ch:sci_fi}.
 
 This verbal jousting is common for the Norse Gods~\citep{MITCHELL-20}; being a God requires Omniscience, so the only way to tell if you are in the company of God is through riddles.
 %
@@ -118,14 +124,13 @@ The only problem is that---at least in Norse Myth---challenging a God is hazardo
 %
 My goal here is not to say that we should not ask probing questions; subsequent chapters will argue that we should ask these questions often and advise on how to ask the questions well.
 %
-Rather, the lesson of Gestumblindi is that the are of making a riddle is prized.
+Rather, the lesson of Gestumblindi is that the art of making a riddle is prized.
 %
-Just as some Christians argued that ``cleanliness is next to godliness''~\citep{wesley-1872}, in the Norse tradition, questioning is synonymous with being a God, which will return when I discuss apocalyptic visions of \abr{ai} (Chapter~\ref{ch:sci_fi}).
+Just as some Christians argued that ``cleanliness is next to godliness''~\citep{wesley-1872}, in the Norse tradition, questioning is synonymous with being a God.
 
-% - Gestumblindi: the art of making a riddle is prized, and it is the
-% Gods who are best at the task
+Civil service exams bring that concern about trust down to earth: how do
+we decide whether to entrust someone with power over our lives?
 
-% Perhaps add snow white and Turing's fascination with it? 
 \section{The Foundation of Civilization}
 \label{sec:civil-service}
 
@@ -149,13 +154,28 @@ Now, it wasn’t perfect, Most notably its quotas led to imbalances between regi
 
 As  \citet{chu-15} argues, it’s not just that you have a test to make sure that the smartest people are doing important jobs in society.  Part of the process is also to explain why people got the questions wrong!  This ensures that people trust how the questions are being graded.  If it’s just a black box, it is not an improvement on the capricious systems of patronage that it’s supposed to replace.  As evidence of this, during the Dà Míng dynasty, there was furor over the punctuation of graded exams.
 
-So why am I, a computer science professor, talking all of this nonsense about history?  We use questions to test the intelligence of both humans and machines.  I talk about the Turing Test (Chapter~\ref{ch:turing}), the classic test of computer intelligence, and modern leaderboards (Chapter~\ref{ch:leaderboards}), but in testing computer intelligence we shouldn’t forget about the lessons we’ve learned about human intelligence.
+So why am I, a computer science professor, talking all of this nonsense
+about history?  Vetting people for government jobs with precise,
+well-defined questions helped make competence something the public could
+expect, rather than a matter of patronage.  The stakes were not just
+exam scores: they were the quality of government and the lives of the
+people it served.
 
-One of those lessons that I think that we’ve forgotten is that questions are not just an evaluation but also for instruction: in the lingo of artificial intelligence, they’re training data (Chapter~\ref{ch:datasets}) .  And because these training data build intelligence, they should be as high quality as possible so that the \abr{ai} that results is as high quality as possible.
+Our evaluations of \abr{ai} are supposed to provide a similar basis for
+trust, but I don't think we are doing as good a job.  Part of the problem
+is that computers are different from humans: a question that separates
+knowledgeable people from unprepared ones may not tell us the same thing
+about a machine.  But part of the problem is our own forgetfulness.  The
+care taken over fairness, grading, and explaining mistakes in human
+examinations should inform how we test computers, too.
 
-\jbgcomment{Should add some text about what makes for a good question, perhaps add the FAA stuff here.}
-
-But even if you just take question answering as an evaluation for how smart an \abr{ai} is, society should be able to trust those evaluations.  Just as the civil service exams made people trust their interactions with the government, as \abr{ai} becomes more tightly integrated into our economy and our society, our vetting of AI will become more important (Chapter~\ref{ch:scifi}).
+This motivates the Manchester paradigm in Chapter~\ref{ch:manchester}:
+we need to design questions deliberately to probe an answerer's
+abilities, rather than assume that any collection of questions makes a
+good test.  Chapter~\ref{ch:leaderboards} returns to how we use the results
+to compare systems.  And the Socratic connection matters here as well:
+when questions become training data (Chapter~\ref{ch:datasets}), the
+quality of the questions helps determine what the system learns.
 
 Question answering is just one of many ways to secure trust, but it’s analogous to how to ensure lawyers, doctors, and pilots are qualified for their jobs.  So these tests should be unbiased, reliable, and the feedback from the tests should be transparent and understandable.
 

@@ -15,13 +15,20 @@ not an effective way to find information.
 But that was essentially the world before search engines: you had to
 find what you wanted from a list or index.
 
+Before we build a search engine, though, we need to agree on what counts
+as finding the answer.  Abbott and Costello's ``Who's on First?'' gives
+us the problem in miniature: Abbott supplies a name, but Costello hears
+another question.  An answer can be right under one interpretation and
+useless under another.  This chapter is about those two intertwined
+problems: interpreting what someone wants and evaluating whether we
+have given it to them.
+
 My goal in this chapter is to tell the story of the Cranfield paradigm
 and how it made the twentieth century Internet possible.
 %
 Most of this is drawn from the article ``The Evolution of Cranfield''
-by~\citet{voorhees-19}, which I encourage you to read something with
-more detail and more references, more focused on information
-retrieval.
+by~\citet{voorhees-19}, which I encourage you to read for
+more detail and references focused on information retrieval.
 
 \section{Cleverdon's Clever Collection}
 \label{sec:ir:cranfield}
@@ -47,16 +54,16 @@ index was.
 
 Now, when I say ``index'', if you're over 40, you might think of this
 sort of thing in the back of a book~\citep{ritchie88}:
-\begin{quote}
-  \begin{tabular}{@{}lr@{}}
+\begin{center}
+  \begin{tabular*}{0.9\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
     \multicolumn{2}{r@{}}{INDEX 269} \\[\smallskipamount]
     \texttt{read} system call & 170 \\
     \texttt{readdir} function & 170 \\
     \texttt{readlines} function & 170 \\
     \texttt{realloc} library function & 170 \\
     recursion & 86, 139, 141, 182, 269
-  \end{tabular}
-\end{quote}
+  \end{tabular*}
+\end{center}
 An author carefully wrote down topics mentioned in a text and told you
 where you could find them (i.e., which page of the book they were
 on).\footnote{In this case, they also helpfully told you that
@@ -78,6 +85,11 @@ The claim was that the Universal Decimal Classification, a facet
 classification, and alphabetical subject catalog, and a unigram index
 were roughly comparable~\citep{CLEVERDON-67}.
 
+The crucial word here is ``relevant''.  A document that mentions every
+word in a question can still miss what the asker means.  Cleverdon's
+experiment needs judgments about that meaning before it can compare
+ways of finding documents.
+
 Before we analyze this, just a reminder of how a search engine query
 is evaluated.  Again, this is old hat now but was revolutionary at the
 time.  To evaluate a system’s ability to search a dataset, you take
@@ -98,7 +110,7 @@ retrieved.
 %
 Some of those were relevant to the query and gave you information you
 wanted.  Let's say there are $A$ of those.  But others were not
-relevant, these are distractions that you still have to weigh
+relevant, these are distractions that you still have to wade
 through.  Let's say there are $B$ of those.
 
 \begin{table}
@@ -151,6 +163,7 @@ your precision sinks.
 If you return only the answers you're absolutely certain of, your
 recall suffers.
 
+A good score depends on what the user needs from the answer.
 Different applications (or users) would have different tradeoffs.
 %
 If you're trying to find a ``smoking gun'' in a court case, you want
@@ -187,6 +200,12 @@ How about this one?
 With a reusable test collection, you could turn the crank on your
 retrieval system without pesky humans getting in the way.  Just check
 whether the red box finds the relevant documents!
+
+The catch is that a reusable judgment freezes an interpretation of the
+question.  Abbott and Costello could agree to score ``Who'' as the right
+answer without ever resolving Costello's confusion.  In much the same
+way, a retrieval score tells us how well a system matches the collection's
+judgments; whether those judgments capture a user's needs is another question.
 
 But not everybody was convinced.  The Cranfield paradigm is making a lot of assumptions here: 
 first, if a document is relevant, it’s equally relevant: everything is equally relevant: showing you my explanation of topic modeling is as good as a video from Siraj Raval.
@@ -226,21 +245,25 @@ paradigm.
 %
 Most prominent was the use of better document representations and
 creating larger test collections, which was spearheaded by Karen
-Sp\"ark Jones a little bit west of Cranfield at Cambridge and by Ellen
-Vorhees and others at the National Institute for Standards and
+Sp\"arck Jones a little bit west of Cranfield at Cambridge and by Ellen
+Voorhees and others at the National Institute of Standards and
 Technology in Gaithersburg, Maryland.
 
 \subsection{Which Words Matter Most in your Index?}
 \label{sec:ir:tf-idf}
 
+Weighting words gives us a practical way to search without first
+resolving every ambiguity.  It does not tell us whether ``Who'' is a name,
+but it can tell us which words distinguish one document from another.
+
 We will talk about neural representations later when we talk about
 models like \abr{bert} (Section~\ref{sec:methods:deep-retrieval}).
 %
 Those representations are called \emph{dense}---not because they're
-dumb, they're quite clever---but they packe a lot of information into
+dumb, they're quite clever---but they pack a lot of information into
 a small packet of computer memory.
 %
-In contrast, the representations that Karen Sp\"ark Jones came up with
+In contrast, the representations that Karen Sp\"arck Jones came up with
 are \emph{sparse}: they could have an entry for every word in your
 language, but for any given question, you're only going to have a
 handful of words present.
@@ -260,7 +283,7 @@ then the words that appear most commonly are going to be more important.
 In this case, that would be ``Lincoln''\dots but another seemingly
 important is ``the'' since it also appears just as often.
 
-The great intuition of Sp\"ark Jones is that while you and I know that
+The great intuition of Sp\"arck Jones is that while you and I know that
 ``the'' is unimportant, and you could make a list of such unimportant
 words (often called a ``stop'' list in the lingo), that list is going
 to be brittle.
@@ -272,7 +295,7 @@ The thing that ties together unimportant words is that they appear in
 many different questions.
 
 Mathematically, you want to downweight words that appear in many
-documents.  Sp\"ark Jones motivated inverse document frequency as
+documents.  Sp\"arck Jones motivated inverse document frequency as
 \begin{quote}
 [placing] greater emphasis on the value of a term as a means
 of distinguishing one document from another than on its value as an indication of the content of the document itself
@@ -324,7 +347,10 @@ terms' weights and add them all up:
   \mbox{similarity}(\vec q, \vec d) = \sum_t \vec q_t \cdot \vec d_t.
   \label{eq:ir:dot-product}
 \end{equation}
-This operation is called a dot product.
+This operation is called a dot product.  Keep it in mind: in
+Section~\ref{sec:methods:deep-retrieval}, it will compare learned question
+and passage vectors in dense retrieval and help a Transformer's attention
+mechanism match queries to keys before combining their values.
 %
 Because most terms' weight will be zero, this is essentially looking
 for overlap of words that are important to the document but that don't
@@ -334,26 +360,22 @@ These took the theoretical insights of the original
 Cranfield experiments and made them into something that could actually
 work.  Again, this was revolutionary: as a result the British
 Computing Society named their annual award for researchers in this
-area after Karen Sp\"ark Jones.
+area after Karen Sp\"arck Jones.
 
 \section{Old-Fashioned \abr{ai}'s Search for Meaning}
 \label{sec:ir:gofai-qa}
 
-Given the Cranfield paradigm, we now have a setup for creating \abr{qa}
-system.
+Finding a relevant document leaves the reader to interpret it; producing
+an answer makes the computer responsible for that interpretation.
 %
-Build a collection of questions and see how well you can answer them.
+The Cranfield paradigm gives us a way to evaluate either task: build a
+collection of questions, decide what would count as success, and compare
+systems on the same examples.
 %
-And this defined the evaluation of how many computers answered questions in the mid twentieth
-century.\footnote{This is sometimes called ``good ol' fashioned \abr{ai}'' or
-  \abr{gofai} for short.}
-%
-But the approaches were not just using the term weightings above to
-find relevant documents: could we not just find documents to help a
-reader answer a question but generate the answer given a question.
-%
-These approaches went deeper and often used represenations that required
-logic and reasoning to answer questions.
+But the early approaches to generating answers went beyond counting
+words.  They used logic and representations of the world to work out
+what a question meant.\footnote{This is sometimes called ``good old-fashioned
+  \abr{ai}'', or \abr{gofai} for short.}
 
 Arguably, the history of computer question answering begins with
 answering questions about the American sport
@@ -384,7 +406,8 @@ Costello: Now whaddya askin' me for? \\
 Abbott: I'm telling you Who is on first. \citep[pages 1002--1004]{light-16}
 \end{quote}
 
-That’s going to be tough to beat.
+The joke turns on a failure to agree on what kind of answer is being
+requested: a person's name or an explanation of a question word.
 Let’s take a look at the \abr{baseball} system
 from \abr{mit}.
 %
@@ -395,13 +418,13 @@ interface to an existing database~\citep{green-61}.
 It does this by taking each word in the question,
 trying to match it to a field in its database.
 %
-The the challenge then is to figure out what
+The challenge then is to figure out what
 the question is looking for, which is usually
 %
 found in the question word (this is quite a bit simpler than the lexical
 answer type analysis of the Watson system
 (Section~\ref{sec:watson:feature-engineering}), where you need to figure out
-things like ``This Argentenian Author'' could be Borges, Cortazar, or
+things like ``This Argentinian Author'' could be Borges, Cortazar, or
 Puig).
 %
 For baseball, the scope is relatively narrow: a team, a location, or a
@@ -411,7 +434,7 @@ Like the search over large document collections the \abr{baseball}
 system specifies what it is looking for using what it calls a
 specification list.
 %
-If the quesiton is \question{Where did the Red Sox play on July 7?}
+If the question is \question{Where did the Red Sox play on July 7?}
 the specification is
 \begin{verbatim}
 Place = ?
@@ -422,9 +445,11 @@ Month = July
 and then it finds all of the corresponding records where the Red Sox
 played a game on July 7 and uses that to construct an answer.
 
-But if you know a database language like \abr{sql},
-you recognize that this is essentially a bunch
-of SELECTs and WHEREs.
+If you know a database language like \abr{sql}, you recognize the shape
+of this query: \texttt{SELECT} a field \texttt{WHERE} the other fields
+match.  \abr{sql}'s predecessor, \abr{sequel}, came later~\citep{chamberlin-74},
+but the comparison makes the division of labor clear: interpreting the
+question determines the query, and the database supplies the answer.
 %
 This isn’t even taxing the full breadth
 of \abr{sql}.
@@ -481,64 +506,32 @@ topic, unlike doing something like tf-idf
 %
 retrieval.
 
-The last old school \abr{qa} system I wanted to
-talk about is probably the most famous of
-%
-them all: \abr{shrdlu}.
-%
-\abr{shrdlu} was described in the thesis of Terry
-Winograd\dots remember that name, we’ll be
-%
-seeing it again in Section~\ref{sec:leaderboards:adversarial}!
+The last old-school \abr{qa} system takes interpretation into a world the
+user can change: \abr{shrdlu}.  Terry Winograd described it in his
+thesis~\citep{winograd-71}; his name will return with the Winograd Schema
+Challenge in Section~\ref{sec:leaderboards:adversarial}.  Unlike
+\abr{baseball} and \abr{lunar}, however, its name needs some explanation.
 
-Unlike the \abr{lunar} and \abr{baseball} which are exactly
-what they say on the tin, I need to explain
-%
-the name a little bit more.
-%
-This isn’t going to be easy.
+The name begins with a machine for printing words rather than
+understanding them.  Since you're reading a book printed\footnote{Given the
+  proliferation of e-readers, you're probably not reading this on a dead tree.}
+in the twenty-first century, you may not know what a Linotype machine
+is.  It was the ``missing link'' between movable type, where letters
+had to be arranged by hand, and sending output from a computer keyboard
+to a printer.  Its keyboard controlled the casting of a line of type
+into a metal piece called a slug.
 
-First, since you’re reading a book printed\footnote{Given the proliferation
-of e-readers and people reading everything on their devices, you're
-probably not reading this on a dead tree.} in the twenty-first century,
-you probably don’t know what a linotype
-system is.
-%
-It was the ``missing link'' between moveable
-type presses (where you had to move the letters
-in by hand) and sending output from a computer
-keyboard to a ``real'' printer.
-
-The most amzing part of this system is that
-it had a keyboard: when you hit a key, it
-would jam some metal together to create a
-beautiful printing piece called a slug.
-
-But one key the machine didn’t have was
-a backspace button: you can’t undo melting
-metal together.
-
-So if you screwed something up, you needed
-some way to signal don’t use this slug.
-%
-So the operator would button mash.
-%
-The first two columns of buttons, spell out
-ETAOIN SHRDLU: a phrase that represents when
-%
-technology goes wrong\dots a warning that human
-intervention is needed to prevent garbage
-%
-in, garbage out: you don’t want your readers
-to see this, after all.
-%
-Thus, that became a title of a short story
-by the author Fredric Brown.
-%
-That story is about a Linotype machine—the
-pinnacle of technology at the time—that
-became self-aware because it understood all
-of the information being fed into it (Figure~\ref{fig:ir:linotype}).
+A mistake on a Linotype machine could leave a peculiar trace in print.
+There was no backspace to undo a cast slug, so an operator could mark a
+spoiled line by running down the first two columns of keys: ETAOIN SHRDLU.
+Those letters warned that human intervention was needed to keep garbage
+out of the finished page.  Fredric Brown borrowed them for a story about
+a Linotype machine that becomes self-aware by understanding the material
+it prints (Figure~\ref{fig:ir:linotype}).  The machine demands more and
+more input until the protagonist feeds it Buddhist philosophy and it
+achieves Nirvana.  We'll return to machines coming alive in
+Chapter~\ref{ch:sci_fi}; here, the name poses a useful question about
+whether processing words amounts to understanding them.
 
 \begin{figure}[!ht]
     \subfloat[Linotype Machine\label{fig:ir:linotype-machine}]{%
@@ -556,33 +549,21 @@ of the information being fed into it (Figure~\ref{fig:ir:linotype}).
   \end{figure}
 
 
-This machine becomes voracious, demanding
-more and more input until the protagonist
-%
-of the story selectively feeds it Buddhist
-philosophy and it achieves Nirvana.
+Winograd's \abr{shrdlu} makes that question concrete by grounding language
+in a small, changing world.  You can move objects around in three
+dimensions and ask questions about them, rather than just query a static
+database.  Like \abr{lunar}, it parses sentences and consults a knowledge
+base, but that knowledge base changes as the user moves the blocks.
+Figure~\ref{fig:ir:shrdlu} is a later rendering; computer graphics in the
+early seventies were not as advanced as they are today.
 
-To recap the route to this name: Linotype machines helped distribute
-information, and ``ETAOIN SHRDLU'' signaled that something had gone wrong
-in that process.  Brown used those letters as the title of a story about
-a machine that became self-aware by reading what it printed.  Winograd
-then took \abr{shrdlu} as the name for his interactive \abr{ai} system.
-
-Despite its funny name, \abr{shrdlu} remains the
-\abr{og} question answering system.
-
-\abr{shrdlu} lets you move objects around in a three-dimensional world,
-not just ask questions about a static one.  Figure~\ref{fig:ir:shrdlu}
-is a later rendering; computer graphics in the early seventies were
-not as advanced as they are today.
-
-If \abr{shrdlu} cannot tell which object you mean, it asks a follow-up
-question to clarify the ambiguity, a challenge I return to in
-Chapter~\ref{ch:bad}.
-
-Like \abr{lunar}, \abr{shrdlu} parses sentences into a logical form
-and finds matches in a knowledge base.  The big difference is that
-the knowledge base changes as the user interacts with the block world.
+Clarification is part of answering a question in this world.  If
+\abr{shrdlu} cannot tell which object you mean, it can ask a follow-up
+question~\citep{winograd-71}.  Instead of repeating ``Who!'' at an
+increasingly frustrated Costello, a useful conversation partner can check
+which interpretation is intended.  That changes what we should reward:
+sometimes the appropriate response is another question, a point I return
+to in Chapter~\ref{ch:bad}.
 
 \begin{figure}
   \includegraphics[width=1.0\linewidth]{figures/external/shrdlu}
@@ -594,115 +575,76 @@ the knowledge base changes as the user interacts with the block world.
   \label{fig:ir:shrdlu}
 \end{figure}
 
-The reason that I'm not talking about the details is because you’ve
-probably noticed that these systems are talking about narrower and
-narrower
-%
-domains.
-%
-They can just answer questions about baseball
-games (not even baseball players), rocks from
-%
-the moon (not rocks generally, that’s too
-much)\dots \abr{shrdlu} goes further to build
-%
-its own world and only answering questions
-about that.
+The strength of these systems is also their limitation: each makes its
+world small enough to interpret precisely.  \abr{baseball} answers
+questions about games, \abr{lunar} about moon rocks, and \abr{shrdlu}
+about its own blocks.  Within those boundaries, a database record or a
+changed arrangement of blocks gives us a concrete way to check an answer.
+Outside them, the assumptions that made interpretation tractable become
+sources of mistakes.
 
-And that goes back to the origin of the name
-\abr{shrdlu}: taking text and making it into a reality
-%
-rather than understanding the world as it
-is.
-%
-And the world as it is has ambiguity.
+``Who's on First?'' shows how a reasonable assumption can go wrong.
+Costello treats ``who'' as an interrogative pronoun when Abbott intends
+a proper noun.\footnote{At the risk of explaining the joke too much,
+  ``I Don't Know'' can likewise name a player rather than express a lack
+  of knowledge.  The difficulty is deciding what a speaker is doing with
+  the words, not merely recognizing the words themselves.}
+A question parser that always treats ``who'' as a request for a person
+would make the same mistake.  Natural language gives us good reasons to
+prefer an interpretation, but it also gives us exceptions.
 
-Let’s go back to the ``Who’s on first''
-bit that I started this section with.
-%
-So let me explain\footnote{At the risk of explaining the joke to much, there
-are additional aspects that showcase the difficulties
-in question answering.  
-Pragmatics can be misinterpreted: ``I don't know'' can be a statement of fact
-rather than saying that you \emph{lack} knowledge.  And grammar can be
-critical in deciphering clues: ``I want to throw the guy at first base, so I
-pick up the ball and throw it to Who'' makes it clear that ``who'' is a name,
-while ``throw it to whom'' makes it clear that this is an interogative in the
-objective case.} the Abbot and Costello routine:
-there is a baseball player that has the name
-%
-``Who''.
-
-Costello cannot figure out that “who”
-is not an interrogative pronoun and never
-%
-interprets it as a proper noun.
-%
-Now, usually, that’s the right way to do
-it.
-%
-That is what all of the systems in this chapter would have done: it's
-hard coded into their interpretations.
-%
-But natural language is funny and ambiguous
-sometimes.
-
-And that’s the big difference between modern
-\abr{qa} systems and these older systems.
-%
-The older systems are small and brittle: when they work,
-they work really well.
-%
-But they don’t work that often.
-
-They’re not going to be able to handle random
-questions from people on the Internet.
-%
-But that’s not to say that logic, semantic
-parsing, and knowledge bases have no place
-in 21st century question answering systems:
-rather than taking a string of text and giving
-a single answer, there are probabilistic interpretations
-that provide a distribution over interpretations,
-and then you train approaches using the Cranfield
-paradigm to make sure that, yes, on average
-it can answer the typical user’s questions.
+The older systems are small and brittle: when they work, they work really
+well, but their carefully bounded worlds do not cover random questions
+from people on the Internet.  That doesn't make logic, semantic parsing,
+or knowledge bases obsolete.  It makes interpretation itself something
+to evaluate: did the system choose the right reading, and did its answer
+help the user?  A fixed test collection lets us compare approaches on
+those questions, provided we remember whose interpretations it records.
 
 \section{Making Hide and Seek (in Documents) a Professional Game}
 \label{sec:ir:nist}
 
-And that's exactly the long-lasting legacy of the Cranfield paradigm shaped
- how we get answers from the internet.
- %
- For that, we need to leave central England and have the mantle get
- taken up by a new player: \abr{nist}.  The
- American National Institute for Standards and Technology.
+The lasting contribution of Cranfield was a way to make disagreements
+about good answers testable.  To see that approach grow, we need to leave
+central England for the American National Institute of Standards and
+Technology, \abr{nist}.  Its Text REtrieval Conference, \abr{trec}, began
+in 1992 and brought researchers together to compare systems using common
+documents, questions, and evaluation procedures~\citep{nist-trec}.
 
-While the story of the birth of the Cranfield paradigm is an innovative
-insight with Cyril Cleverdon combined with the vision of Karen Sp\"ark Jones,
-the story of \abr{nist}’s development of these test collections is one of slow,
-methodological iteration.  Building up decades of expertise and slowly
-building up bigger and better test collections, updating them each year so
-that by the time Google’s PageRank~\citep{brin-98} came around, Google
-used the same evaluations internally to optimize their algorithms.
+Shared evaluations made progress visible across research groups.
+\abr{nist}'s work extended the Cranfield approach through years of
+building and refining test collections~\citep{voorhees-19}.  The resulting
+comparisons were precursors to the leaderboards we will examine in
+Chapter~\ref{ch:leaderboards}: a common task and scoring procedure made
+it possible to put different systems' results side by side.  But agreeing
+on a score still required agreeing on what counted as success.
 
-Just fire up the latest test collection, compute your precision and recall, and call it a day.
-%
-And this approach toward evaluation is with us in everything we do.  Test
-collections are how we evaluate virtual assistants, new \abr{ai}
-systems, and just about every aspect of the modern Internet (Chapter~\ref{ch:leaderboards}).  And it’s not
-always for the best.  The ubiquity of these reusable test collections leads to
-overfitting.  TREC puts out new datasets every year or so, but that’s not fast
-enough for machine learning in the 21st century!  And while the focus on real
-user data is good, the data you collect is biased by who is using technology
-(mostly rich people from Western countries) and how they’ve been trained to
-ask questions through decades of living with Cranfield-paradigm systems.  And
-unlike people who work on, say, human-computer interaction, those building \abr{qa}
-systems often don’t actually put their system in front of real users.  And I
-don’t think that’s what Cyril Cleverdon would have wanted.  His goal, as a
-librarian, was to help users.  And yes, reusable test collections help you do
-that—and they’ve spawned multibillion dollar companies around the world—but at
-the end of the day you still need to check whether real users are actually
-finding the information they need.
+The individual \abr{trec} tracks also made that agreement specific to a
+task.  Finding a relevant document is different from finding an answer
+inside it: the question answering track asked systems to return short
+passages containing answers~\citep{voorhees1999trec8}.  We'll meet that
+format again in Chapter~\ref{ch:datasets}.  These tasks should also look
+familiar when we reach the language models in Chapter~\ref{ch:methods}:
+collections of inputs paired with desired outputs can supply examples
+for fine-tuning, as well as tests of performance~\citep{raffel-20,wei-22}.
+The connection is the task design; a held-out evaluation set still needs
+to stay separate from training data.
 
-\jbgcomment{Would be nice to have clearer connection to Google}
+Reusable collections let us improve systems without running a new user
+study for every change.  They also make it tempting to optimize the score
+and forget the user.  Repeatedly tuning against a benchmark can overfit
+its particular questions, while the people represented in a collection
+may not be the people who need the resulting system.  These are central
+problems for the leaderboards in Chapter~\ref{ch:leaderboards}, not reasons
+to give up on evaluation.  Cleverdon's goal as a librarian was to help
+people find information; a good evaluation should keep us accountable
+to that goal.
+
+Abbott has an answer, but Costello still doesn't have the information he
+needs.  That gap has followed us from indexes to block worlds: matching
+words, executing a query, and earning a good score each tell us something,
+but we need to ask whether it is the thing we care about.  In
+Chapter~\ref{ch:manchester}, the questions themselves become a deliberate
+instrument for testing what someone knows.  Who asks them, what they mean,
+and what makes an answer acceptable will matter just as much as how we
+compute the score.

@@ -1394,7 +1394,22 @@ In total, this included 520 trials which corresponds to twice that many trained 
 \section{Adversarial Questions}
 \label{sec:leaderboards:adversarial}
 
-We first learned about Terry Winograd in Chapter
+Ambiguity can be something we deliberately build into an evaluation.
+We first learned about Terry Winograd and \abr{shrdlu} in
+Chapter~\ref{ch:ir}; the Winograd Schema Challenge turns the problem of
+interpreting language into a test of commonsense reasoning~\citep{levesque-12}.
+A schema pairs sentences in which a small change reverses who a pronoun
+refers to.  Consider the classic example:
+\begin{quote}
+The city councilmen refused the demonstrators a permit because they
+[feared/advocated] violence.
+\end{quote}
+With ``feared'', the intended referent of ``they'' is the councilmen;
+with ``advocated'', it is the demonstrators.  Most of the words stay the
+same, but the appropriate answer changes.  Unlike Abbott and Costello,
+the evaluator makes the intended distinction explicit: the system must
+respond to the change in meaning, rather than give the same plausible
+answer to both versions.
 
 \section{Human--Computer Cooperation}
 \label{sec:leaderboards:cooperation}
