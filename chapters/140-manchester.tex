@@ -16,18 +16,34 @@ until then, this chapter spends time on fun, silly trivia games played
 by college nerds and the complicated rules they have made up over the
 years, which help us determine how smart an \abr{ai} is.
 
-\section{Two British University Towns Alike in Question Answering}
-\label{sec:manchester:name}
-
-Question answering inherits two evaluation traditions. The Cranfield
-paradigm prioritizes serving users (as discussed in
-Chapter~\ref{ch:ir}), and is the one that originally dominated the
-computer science literature. This chapter will introduce an alternative that has been increasingly important to the development of modern \abr{ai}.  If the Cranfield paradigm got \abr{ai} to crawl, the Manchester paradigm got it to run.\footnote{Query whether we want \abr{ai} to be moving too quickly; see Chapter~\ref{ch:sci_fi}.}
+I'm spending this time on these silly trivia games because I think
+they tell us something important about how to evaluate \abr{ai}.
 %
-Because this chapter is introducing the Manchester paradigm---which prioritizes probing
-intelligence through designed questions---we will keep the Cranfield
-discussion light here and focus on why the Manchester framing matters
-for evaluation.
+We can't always sit down and have a conversation with an \abr{ai}
+\textit{a la} the Turing Test (Chapter~\ref{ch:turing}), so we need to
+have an automatic evaluation that feels more like the Cranfield
+paradigm's reusable test collections (Chapter~\ref{ch:ir}).
+%
+The problem with Cranfield test sets---as we will see in
+Chapter~\ref{ch:datasets} in detail with Google's Natural
+Questions---is that naturalistic questions from real users can't probe like the \emph{Turing Test}.
+%
+Thus, the Manchester paradigm tries to take the best of both worlds:
+reusable settings for \abr{ai} evaluation to probe how capable
+\abr{ai} is efficiently without a human in the loop.
+
+\section{Two British University Towns Alike in Question Answering}
+\label{sec:manchester:name} 
+
+If the Cranfield paradigm got
+\abr{ai} to crawl, the Manchester paradigm got it to
+run.\footnote{Query whether we want \abr{ai} to be moving too quickly;
+  see Chapter~\ref{ch:sci_fi}.}
+%
+Because this chapter is introducing the Manchester paradigm---which
+prioritizes probing intelligence through carefully tailored questions---we
+will keep the Cranfield discussion light here and focus on why the
+Manchester framing matters for evaluation.
 
 \subsection{Why the Name Manchester}
 \label{sec:manchester:why-name}
@@ -47,17 +63,13 @@ Sphinx riddle tradition underscores questions that test the answerer more than
 they inform the asker (Chapter~\ref{ch:civilization}).
 In Greek myth, the Sphinx asks everyone who enters the city a riddle that is
 explicitly designed to test the answerer~\cite{renger-13}. The point of the
-riddle is not information seeking; it is to teach and reveal understanding.
-This aspect of question answering connects to the Socratic method, where
-questions guide the answerer to insight~\cite{trepanier-17}. The Manchester
-paradigm adopts this stance: questions are instruments for teaching and
-probing, not just for retrieving facts.
-
-We talked about all of these aspects before, but I reiterate them to
-drive the point home.  Sometimes we ask questions not becuase we want
-to know the answer but because we want to achieve something by asking
-the question: to test to see if someone is worthy or to teach someone
-by forcing them to work their way through to an answer.
+riddle is not information seeking: the Sphinx does not need to know what creature finishes its life on three legs.
+%
+Rather, the Sphinx's riddle is meant to highlight the three phases of \OE{}dipus's life: in youth he cursed, in adulthood he suffered the consequences, and in his blind dottage he dispensed advice that nobody listened to at Colonus.
+% JBG(todo): I did this from memory, check and add citations
+We also covered in a previous chapter how targetd questions awaken
+understanding via the Socratic method, where questions guide the
+answerer to insight~\cite{trepanier-17}.
 
 \paragraph{To Compare: Granada Studios and \textit{University Challenge}}
 Manchester's Granada Studios created a quiz show called
@@ -66,17 +78,19 @@ Manchester's Granada Studios created a quiz show called
 The host knows the answer, so the the goal not to satisfy a
 user's information need.  Instead, the goal is to see whether which four students---the ones from Balliol College or Sheffield---are smarter.
 %
-In the united states, this unique competition is called \quizbowl{}, and it has unique properties that I think can help inform the development and evaluation of \abr{ai}.
+In the united states, this unique competition is called \quizbowl{}, and it has unique properties that inform the development and evaluation of \abr{ai}.
 %
-In this chapter, we'll talk about how the philosophy of \quizbowl{} can inform the authoring of individual questions.
+This chapter talks about how the philosophy of \quizbowl{} can inform
+the authoring of individual questions.
 %
-Later, in Chapter~\ref{ch:leaderboards}, I discuss how the philosophy of \quizbowl{} tournaments can improve \abr{ai} evaluation.
+Later, in Chapter~\ref{ch:leaderboards}, I discuss how the philosophy
+of \quizbowl{} tournaments can improve \abr{ai} evaluation.
 
 \paragraph{To Probe: The Turing Test}
+
 Alan Turing was in Manchester when he proposed his imitation game~\citep{manchester-turing-25}, which reframes intelligence as a question-driven
-evaluation  (Chapter~\ref{ch:turing}). Rather than define intelligence,
-Turing proposes an indistinguishability test~\citep{Turing-95}: a computer is intelligent when it can answer questions as well as a human.
-%
+evaluation  (Chapter~\ref{ch:turing}).
+% 
 But the judge asking the questions epitomizes the Manchester paradigm: devising questions that---given the skills shown and topics discussed---are most likely to trip up a computer.
 %
 This need to expose an answerer's weaknesses also shapes the craft of
@@ -88,20 +102,35 @@ evaluations \textit{a la} Cranfield; instead it makes explicit that
 some datasets and leaderboards are better understood as tests of
 competence rather than proxies for user satisfaction.
 
+Having already covered ancient Greece's connection to the Manchester
+paradigm, we will first turn to Manchester's University Challenge
+before returning to the legacy of the probing questions from the
+Turing Test.
+
 \section{University Challenge: A Manchester Template for Evaluating Intelligence}
 \label{sec:manchester:tournaments}
 
-What makes \textit{University Challenge} unique compared to other quiz shows is that it rewards knowledge rather
-than luck or speed. Second, good evaluation requires
-good questions. Crafting such questions is a skill, and it is one that the
-trivia community has refined for decades, starting with the unique format of \textit{University Challenge}.
+What makes \textit{University Challenge} unique compared to other quiz
+shows is that it rewards knowledge rather than luck or speed.
+% jbg(todo): I think we had a little bit more on the history of
+% University Challenge / Granada studios in the Manchester paradigm
+% paper (with citations).  Grab that in or regenerate more of a
+% history so that it is at least as detailed as what we say about
+% College Bowl.
+% jbg(todo, meta): Make sure OpenAI has access to relevant paper repo
+%
+Second, good evaluation requires good questions. Crafting such
+questions is a skill, and it is one that the trivia community has
+refined for decades, starting with the unique format of
+\textit{University Challenge}.
 
 \label{sec:manchester:qb}
 
 \subsection{\quizbowl{} Lineage and the \textit{University Challenge} Link}
 \label{sec:manchester:qb-lineage}
 
-My North American readers will at this point be shouting that I have failed to mention Don Reid.
+My North American readers will at this point be shouting that I have
+failed to mention Don Reid.
 %
 After returning from World War II, Reid drew on \abr{uso}
 morale-building activities to develop the format with its first host,
@@ -123,72 +152,93 @@ answerers rather than to serve a user. More importantly, their
 questions are designed to discriminate who knows the most by having
 players ``buzz in'' to signal that they know the answer.
 
-That history matters because the format for comparing answerers was
+From these beginnings as television shows on opposite sides of the
+Atlantic spawned a massive community of people who write questions,
+play on those questions, and watch others play on those questions.
+%
+As I mention in the introduction (Chapter~\ref{ch:introduction}), I
+count myself as part of this community: it's where I met my wife, and
+it provides much of my social network today.
+
+One of the reasons I wanted to write this book is so that I could share this history with \abr{ai} community.
+%
+The format for comparing answerers was
 developed by people trying to make a good game, long before it became
-an evaluation task for \abr{ai}.  The lessons for machine question
-answering lie in the details: when players can interrupt, how clues
-are ordered, and how writers make the competition fair.  I turn to
-those details next.
+an evaluation task for \abr{ai}.
+%
+And despite my best efforts, these lessons have not been fully adopted by the \abr{ai} community.
+%
+Despite the complicated structure of these questions, I think there
+are valuable insights from the details: when players can interrupt,
+how clues are ordered, and how writers make the competition fair.  I
+turn to those details next.
 
 \subsection{Discriminative Questions and Incremental Evidence}
 \label{sec:manchester:qb-discriminative}
 
-\quizbowl{}'s defining property is interruptibility: questions are read aloud and
-can be answered at any time. Each word is a chance to demonstrate knowledge.
-This makes \quizbowl{} maximally discriminative, rewarding knowledge rather than
-buzzer speed or luck. It is also a better model for evaluating \abr{qa} than
-formats where answers are only permitted after the question is fully read.
-%
-Another example is the American \abr{tv} show \jeopardy{}, whose buzzer
-rules matter for Watson's match against human champions
-(Chapter~\ref{ch:watson}).
-
-The easiest way to explain \quizbowl{} is with an example question.
-\question{With Leo Szilard, he invented a doubly-eponymous refrigerator with no moving parts. He did not take interaction with neighbors into account when formulating his theory of heat capacity, so Debye adjusted the theory for low temperatures. His summation convention automatically sums repeated indices in tensor products. His name is attached to the A and B coefficients for spontaneous and stimulated emission, the subject of one of his multiple groundbreaking 1905 papers. He further developed the model of statistics sent to him by Bose to describe particles with integer spin. For 10 points, who is this German physicist best known for formulating the special and general theories of relativity?}
-
-
-You might be scared off by how long the questions are, but in real
-\qb{} tournaments they are not finished because the questions are
-\emph{interruptible}.
 
 \paragraph{Interruptible}
 
-A moderator reads a question. Once someone knows the answer, they use a
+\quizbowl{}'s defining property is interruptibility: questions are read aloud and
+can be answered at any time. Each word is a chance to demonstrate knowledge.
+This makes \quizbowl{} maximally discriminative, rewarding knowledge rather than
+buzzer speed or luck.
+%
+Once someone knows the answer, they use a
 signaling device to ``\emph{buzz in}.'' If the player who buzzed is right, they
 get points; otherwise, they lose points and the question continues for the
 other team.
 
-Not all trivia games with buzzers have this property. In \jeopardy{}, the
-buzzer is not live until the question has been read in its entirety. Ken
-Jennings explains the consequence in a \textit{Planet Money} interview:
-\begin{quote}
-{\bf Jennings:} The buzzer is not live until Alex finishes reading the
-    question. And if you buzz in before your buzzer goes live, \emph{you
-    actually lock yourself out for a fraction of a second}. So the big mistake
-    on the show is people who are all adrenalized and are buzzing too quickly,
-    too eagerly. \\
-{\bf Malone:} \abr{ok}. To some degree, \jeopardy{} is kind of a video game,
-and a \emph{crappy video game where it's, like, light goes on, press button}---that's it. \\
-{\bf Jennings:} (Laughter) Yeah. \\
-\end{quote}
-\jeopardy{}'s buzzers are a gimmick to ensure good television; \qb{} buzzers
-discriminate knowledge (Section~\ref{sec:discriminative}). Similarly, while
-\triviaqa{}~\citep{joshi-17} is written by knowledgeable writers, the questions
-are not pyramidal.
+Not all trivia games with buzzers have this property: we'll talk about
+the criticism Ken Jennings offered of the \jeopardy{} buzzer
+system~\cite[he first earned his buzzer callouses playing \quizbowl{}
+at Brigham Young University in Provo, Utah]{jennings-06}.
+%
+But unless the questions are esquisitely designed, you'll end up with
+a test of reflexes, knowledgeable players will simply buzz when they
+believe they have a greater than fifty percent chance of answering the
+question correctly.
+%
+This is not just a bad test of intelligence (since it relies on
+reflexes) but also bad television.
+%
+Thus, the questions used in \textit{University Challenge} are \textbf{pyramidal}.
 
 \paragraph{Pyramidal}
 \label{sec:manchester:pyramidality}
 
-The goal of a \quizbowl{} game is to discriminate who knows more about a topic: the smarter team should on average get the question right.
+The goal of a question is to discriminate who knows more about a
+topic: the smarter team should on average get the question right.
 %
-\quizbowl{} questions do a better job than ``stand alone'' questions
+\textit{University Challenge} questions do a better job than ``stand alone'' questions
 because discrimination happens \emph{within} a question: after every
 word, an answerer must decide if they know enough to answer. \qb{}
 questions are arranged to be maximally \emph{pyramidal}: questions
 begin with hard clues that require deep understanding and proceed to
 more accessible clues.
 
-\jbgcomment{Connect to example question and talk through how they're discriminative going from harder to easier}
+\begin{figure}
+\question{With Leo Szilard, he invented a doubly-eponymous refrigerator with no moving parts. He did not take interaction with neighbors into account when formulating his theory of heat capacity, so Debye adjusted the theory for low temperatures. His summation convention automatically sums repeated indices in tensor products. His name is attached to the A and B coefficients for spontaneous and stimulated emission, the subject of one of his multiple groundbreaking 1905 papers. He further developed the model of statistics sent to him by Bose to describe particles with integer spin. For 10 points, who is this German physicist best known for formulating the special and general theories of relativity?}
+
+\caption{An example \quizbowl{} question: the clues go from difficult
+  to easy.  When the player (listener) knows the answer, they can buzz
+  in to signal that they want to answer.  This procedure helps better
+  evaluate who knows more about a subject, as every word helps
+  discriminate who knows more about a topic.}
+
+\label{fig:ex-qb}
+\end{figure}
+
+You might be scared off by how long the questions like the one in
+Figure~\ref{fig:ex-qb} are, but in real \qb{} tournaments they are not
+finished because the questions are \emph{interruptible}.
+%
+While few people know about the refrigerator Einstein designed (even
+physicts), most practicing physicists do know about his summation
+convention, and those familiar with the history of science probably
+know about his 1905 \textit{annus mirabilis} that lead to his Nobel
+prize.  Finally, just about everyone knows about his connection to the
+theory of relativity.
 
 \subsection{Adjudication and Protests as Quality Control}
 \label{sec:manchester:qb-adjudication}
@@ -200,6 +250,8 @@ and fair evaluation. Their rules are designed to avoid ambiguity and to make
 answer expectations explicit (e.g., when a day and month are required). This
 aligns with modern critiques of ambiguity in \abr{qa} datasets.
 
+% todo(jbg): Add ACF cite
+
 The community also developed protest and adjudication norms that recognize
 legitimate answer variants. That is directly relevant to machine \abr{qa}:
 accepting only one surface form (e.g., ``Timothy Donald Cook'' but not ``Tim
@@ -207,10 +259,16 @@ Cook'') is both unfair and counterproductive. As we discuss in
 Section~\ref{sec:manchester:craft}, answer correctness is often about
 equivalence, not exact matching.
 
-For example, a \jeopardy{} contestant was initially ruled incorrect for
-answering \underline{endoscope} to ``Your surgeon could choose to take a look
-inside you with this type of fiber-optic instrument.'' After a protest and
-review, judges ruled the response acceptable because \underline{endoscope} is a
+For example, whe I appeared on \jeopardy{}, I was initially ruled
+incorrect for answering \underline{endoscope} to \question{Your
+  surgeon could choose to take a look inside you with this type of
+  fiber-optic instrument.}  I didn't have to do anything: a ``player
+advocate'' (a staple of California gameshows after the cheating
+scandals of the 1950s that we discuss in
+Chapter~\ref{ch:leaderboards}) jumped into action, and the issue was raised to a group of on call judges off site.\footnote{I haven't been able to find a source to support this, but I think this is to not just keep the filming studio less crowded but also to prevent sublt biases from affecting the judges: they only hear the candidate answer.}
+\jbgcomment{Ping Clair McNair for her take on this %jbg(todo)}
+}
+After, judges ruled the response acceptable because \underline{endoscope} is a
 more general term that includes \underline{laparoscope}.\footnote{\url{http://www.j-archive.com/showgame.php?game_id=6112}}
 This is not a pedantic exception; it is a model of quality control that
 acknowledges legitimate equivalence.
@@ -241,9 +299,9 @@ focus on challenging quantitative reasoning. One of the trivia experts
 consulted in \citet{wallace-19} crafted a question that tripped up neural
 \abr{qa} by embedding the phrase ``this author opens Crime and Punishment'' into
 a question; the top system confidently answers \underline{Fyodor Dostoyevski}.
-However, that phrase was in a longer question ``The narrator in \textit{Cogwheels}
+However, that phrase was in a longer question \question{The narrator in \textit{Cogwheels}
 by this author opens \textit{Crime and Punishment} to find it has become
-\textit{The Brothers Karamazov}''. Again, this shows the inventiveness and
+\textit{The Brothers Karamazov}}. Again, this shows the inventiveness and
 linguistic dexterity of the trivia community.
 
 A counterargument is that real-life questions---e.g., on Yahoo!
