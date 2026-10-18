@@ -109,15 +109,14 @@ As Section~\ref{sec:methods:preferences} discusses, people can prefer different 
 
 Naively you could just take the top answer, or you could look at the top answers and decide whether this set was something you could be proud of.  For example, if there were two high-scoring contradictory answers, you might not choose to answer at all.  This is basically where we were around 2020.  As anyone who has gone down a Wikipedia hole knows, sometimes you need several pieces of information to fully answer a question.
 
-Section~\ref{sec:formats:multihop} introduced this setting as multihop question answering.  These questions are designed to take multiple steps---or hops---to get to the right answer.  HotpotQA~\citep{Yang2018HotpotQAAD} is a widely used dataset for multihop questions. In theory you need to ``hop'' from one Wikipedia page to another to find the answer.  In this example, to find the city Facebook launched in, you need to ``hop'' to the page on Harvard.
+\section{Following Multiple Pieces of Evidence}
+\label{sec:methods:multihop}
 
-The way the HotpotQA dataset was authored was that the authors showed two linked Wikipedia pages and asked crowdworkers to write a question that required information from both pages to answer.
-
-Multihop questions also appear in my favorite question answering format, \quizbowl{}.  But the great thing about \quizbowl{} is that if you can't solve the early multihop clues, then you can get the question at the end with clues that don't require multihop reasoning.  This makes it, despite its inherent complexity, a more accessible format for long-term \abr{qa} research.
+Section~\ref{sec:formats:multihop} introduced questions that require multiple pieces of evidence; here I work through how a reader can connect them.
 
 Let's work through trying to solve them, using Wikipedia paragraphs as our source documents.  And hopefully this will show you how hard the problem is.
 
-Consider the Lorenzo Lotto clue from Section~\ref{sec:formats:multihop}.  The question is: ``A Lorenzo Lotto painting of this woman includes a cartouche showing her response to an accusation.''  Okay, so let's see what turns up with a search of Wikipedia.  ``Cartouche'' is a very high \tfidf{} word, so let's see what Wikipedia has to say about Lotto and cartouches:
+Consider a Lorenzo Lotto clue.  The question is: ``A Lorenzo Lotto painting of this woman includes a cartouche showing her response to an accusation.''  Okay, so let's see what turns up with a search of Wikipedia.  ``Cartouche'' is a very high \tfidf{} word, so let's see what Wikipedia has to say about Lotto and cartouches:
 \begin{itemize}
 \item \evidence{The San Giacomo dell'Orio Altarpiece is signed and dated on the cartouche hanging at the throne's base.}
 
@@ -143,6 +142,46 @@ But we don't know the answer, which needs to be two countries!  What's this Moss
 
 % AUTHOR: Add the relevant evidence passages from the slides.
 
+\subsection{Learning to Find the Next Hop}
+
+How do systems actually gather the evidence for these multihop questions?  As you can imagine, this requires finding multiple pieces of evidence.  Let’s first talk about different strategies for gathering the evidence: you can follow structured links, you can generate real text queries, or you can generate vector-based queries.
+
+Let’s first talk about following structured links.  This is probably the most obvious and is probably the most similar to what you’d do if you as a human typed in a query, found a page, and then clicked on the link that got you a little bit closer to what you thought the answer would be.  Of course, knowing which link to explore takes a little trial and error.  We did something like this in 2020 with a model called DELFT, and this paper from Chen et al. explores different ways of following links: following a link on the Wikipedia page or resolving a coreference chain … which is a lot like the examples that we showed in Section~\ref{sec:methods:multihop} (for example, getting the answer to Susanah and the Elders, requires figuring out who “her” is).  Then my former student Chen Zhao followed up our work with a collaboration with Microsoft called TransformerXH.  This seems like the most popular approach.
+
+But sometimes you can’t find a link that easily.  There could be a different strategy that you could use to solve a multihop question.  If you typed into the Wikipedia search bar to get the first query, why not just type a new query?  This is the approach taken by Qi et al with the wonderfully named model “Golden Retriever”.  It learns how to formulate queries \emph{conditioned} on the original query, evidence you got from the first query, to get to the next piece of evidence.  For example here, to solve this question it explicitly creates the query “Armada author” to figure out that it was written by Ernest Cline.
+
+One nice thing this about this is that these approaches are pretty interpretable: knowing what searches and evidence led to the answer lets a user inspect the chain to know if it’s good or not.  This paper from Inoue et al. goes even further by doing abstractive summarization to create sentences that find the minimal information that’s sufficient for answering the question.  So then for the question “Charlie Rowe plays Billy Costa in a film based on what novel?” you get this nice abstracted explainer that says “Charlie Rowe plays Billy Costa in the Golden Compass.  The Golden Compass is a film based on the novel Northern Lights.”  Pretty good!
+
+But do you actually need to put your fingers on the keyboard to get to the evidence?  We saw with DPR that you can actually do better with vector-based queries.  So why create an explicit string when it’s just going to get turned into a vector anyway?  That’s the approach of Xiong et al who just directly optimize these vector queries.
+
+The challenge is that all of these approaches need to be trained somehow.  Like for any machine learning problem, you need training data.  Existing techniques for solving this use the explicit correct hops from datasets like MultiHop.  But could we do this in datasets like quiz bowl were the evidence is not annotated?  
+
+Let’s think this through and see where it breaks down.  You take your original question, turn it into a vector, get some search results, and then from that you generate a new vector query and you get some results.  
+
+The first challenge is how do you know if a piece of evidence is good or not?  This is something that my former student Chen Zhao looked at in an EMNLP paper from 2021.
+
+The Windsor example in Section~\ref{sec:methods:reading} showed why containing the answer string is not enough: the passage must support the answer to this question.
+
+Let’s go over this with another example.  Let’s say we want to answer the question “What state does Sang-Wook Cheong work as a materials scientist?”.  We get our second hop query after the first hop says he works at Rutgers.  The second hop needs to tell us the Rutgers is in New Jersey.  We can always say that everything without “New Jersey” isn’t a good piece of evidence.  In addition, anything that has the “New Jersey” but doesn’t actually answer the question isn’t a good piece of evidence: like this thing about Fountains of Wayne, which is also in New Jersey.  And things that answer the question and look like an answer to the question we keep.
+
+This now forms a cycle: start with \emph{some} IR-based QA model, gather some evidence, label it as we just talked about, and retrain a reader, and more importantly a retriever.  Then start the cycle again.  And you can also train a reranker to squeeze out a few more points.
+
+So let’s see if this actually works.  Compared to traditional IR, trained models that use the explicit evidence from HotPotQA for fully supervised training like Transformer XH from MSR can do much better, getting the answer in the top 10 results 90\% of the time.  We can get almost the same results without those annotations, suggesting our approach not just works, but it needs strictly less data.
+
+Nonetheless, it’s still well short of the creativity and the depth that motivated, smart humans can.  In other words, it still well short of our goal of automating Dan Russell.  And even within the limited world of HotPotQA, there’s some recent work showing that models are taking shortcuts to get to the answer and not creating complete reasoning chains.
+
+Jiang and Bansal show that there are reasoning shortcuts that models can take.  For example, in this document, if you have the question “What was the father of Kasper Schmeichel voted to be by the IFFHS in 1992”.  First, let’s take a moment to stare at the odd phrasing: you wouldn’t get this in a Manchester paradigm question.  But you can grab the answer just in a single document.  Jiang and Bansal create new documents that force true multihop reasoning: I’d rather create better questions rather than manufacture evidence to make the problem harder.  But nonetheless, it shows the limitations of HotPotQA.
+
+Similarly, Trivedi et al. create a metric called “DiRe” for “Disconnected Reasoning” to measure whether a system gets the wrong answer when you remove relevant evidence.  A good MultiHop dataset should be difficult enough to not allow this sort of cheating.  In other words, this is a metric to show how often the issues that Jiang and Bansal expose show up.
+
+All of these open questions make multihop question answering one of the most exciting areas for QA research at the moment.  Because the answers are still short (mostly factoid), it doesn’t have the same issues that make long form QA evaluation so fiendishly difficult, but the modeling challenges are still real.  And now that there are approaches that get beyond the requirements of gold evidence, we can move beyond datasets with gold evidence labels.
+
+And I think we have a lot to learn from humans here—explicitly incorporating human strategies for solving multihop challenges to synthesize vector queries, following links, or synthesizing raw text queries.
+
+And this can be paired with some of the fancy machine learning tools that we have like reinforcement learning for uncovering the best actions given sparse feedback … could this get us better models from more complicated but more lightly annotated datasets?
+
+And then perhaps we better address the “Joy of Search” problems in a hybrid cooperation between humans and computers: where computers and humans could join hands and hop together.
+
 \section{From Open Books to Closed Books}
 \label{sec:methods:generation}
 But around 2020, we started moving away from ``open book'' exams, where a computer had to find the answer in Wikipedia to ``closed book'' exams where the models had to memorize the answers.  This was a big change: In SQuAD, you get the passage in front of you with the answer in front of you.  You just need to highlight it.  Open domain \abr{qa} with machine reading is a little bit harder, but you need to find the answer in Wikipedia.  You still have access to Wikipedia.
@@ -160,14 +199,11 @@ The first reason to prefer retrieval-based open book \abr{qa} is that if you tru
 
 And here's where I can't back up my guess, but I think that generation will struggle with less common answers.  If you have a large enough pool of documents, you can focus your model on generalization rather than memorizing the long tail of millions of possible answers.
 
-But that large pool of documents in open book \abr{qa} comes at a cost!  The closed book assumption can be much more space efficient.  But these models, as we've seen, can do more than just answer one-off questions.  The goal of having intelligent computers is a part of both the foundation of artificial intelligence in the form of the Turing Test and science fiction.
+But that large pool of documents in open book \abr{qa} comes at a cost!  The closed book assumption can be much more space efficient.  But these models, as we've seen, can do more than just answer one-off questions.  
 
 % AUTHOR: Identify the scene at https://youtu.be/SD7IKOrFv_E?t=96 before adapting it for the book.
 
-But you don't interact with these computers through a command line or a search prompt.  You talk to the computer!  And the computer remembers what you say, it has situational context to understand, resolve ambiguities, and place your questions in context.
-This doesn't look a lot like the existing question answering settings that we've discussed before.
-
-And it can go in the other direction too!  Let's say that the way we generated the reference data was quite a bit worse than what an ``optimal'' conversation partner could do.  Let's say that your system does something better than the reference.  Perhaps it asks which Georgia you mean.  That's even better!
+Section~\ref{sec:formats:conversation} explained why a useful conversation can depart from a reference answer, for example by asking which Georgia the user means.
 
 To get to this ``ideal'' state of answering questions by a computer, there are at least two challenges.  The first is how to measure whether the response was a good one and the second is responding appropriately given the situational context of a conversation.  As I write this in \currentyear{}, these remain open questions.
 
@@ -255,7 +291,7 @@ Given this, how do you get to a good answer?
 
 Pushing back against a flawed question isn't the only case where you need to plan before you answer.  Generating intermediate reasoning is often called ``chain of thought''~\citep{wei-22}, and it can build the scaffolding of an answer before you get the true answer.  For example, this can help address the multihop questions we saw in Section~\ref{sec:formats:multihop}.
 
-Before the language model generates a final answer to the question \question{A mechanic was arrested in one of these two countries for using women's underwear soaked in invisible ink to pass secrets to the other.}, it creates an intermediate scratchpad:
+For the Egypt/Israel question in Section~\ref{sec:methods:multihop}, an intermediate scratchpad could connect the evidence before giving the final answer:
 \begin{quote}
 To answer this question, I need to figure out both countries.  Mossad is associated with Israel, and the arrest took place in Cairo, which is in Egypt.  These two pieces of evidence point to ``Israel and Egypt''.
 \end{quote}
