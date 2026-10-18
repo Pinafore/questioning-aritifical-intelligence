@@ -287,13 +287,16 @@ diverse, has uniform difficulty, and is without repeats.
 Trivia questions are fake: the asker already knows the answer. But they are no
 more fake than a course's final exam, which---like leaderboards---is designed
 to test knowledge. Experts know when questions are ambiguous
-(Section~\ref{sec:manchester:ambiguity}); while ``what play has a character
-whose father is dead'' could be \textit{Hamlet}, \textit{Antigone}, or
-\textit{Proof}, a good writer's knowledge avoids the ambiguity. When authors
+(Section~\ref{sec:manchester:ambiguity}); while \question{what play has a character
+whose father is dead} could be \textit{Hamlet}, \textit{Antigone}, or
+\textit{Proof} (among others I am not thinking of), a good writer's knowledge avoids the ambiguity. When authors
 omit these cues, the question is derided as a ``hose''~\citep{2013-eltinge},
 which robs the tournament of fun (Section~\ref{sec:fun}).
 
-One of the benefits of contrived formats is a focus on specific phenomena.
+This is not just an academic concern: Natural questions, which we discuss in Chapter~\ref{}, had this property: it had these ambiguout questions and arbirarily selected one of the possible answers as correct.  This arbitrary reward not only is scientifically bad (you don't know which \abr{ai} is the smartest) it also is potentially injecting cultural biases into our \abr{ai}s (when in doubt, name the American play).
+
+
+One of the benefits of contrived formats is a focus on specific phenonomena that are difficult for players, whether they are human or computer.
 \citet{dua-19} exclude questions an existing \abr{mrqa} system could answer to
 focus on challenging quantitative reasoning. One of the trivia experts
 consulted in \citet{wallace-19} crafted a question that tripped up neural
@@ -303,6 +306,16 @@ However, that phrase was in a longer question \question{The narrator in \textit{
 by this author opens \textit{Crime and Punishment} to find it has become
 \textit{The Brothers Karamazov}}. Again, this shows the inventiveness and
 linguistic dexterity of the trivia community.
+
+In the \abr{ai} community, these are called adversarial examples.  It was hard for me to track down the first use of this term, but I think it was Biggio
+%todo(jbg): check this
+Who looked at examples from \abr{mnist},\footnote{The original creators of \abr{mnist} were of course from \abr{nist}, the progenitors of the Cranfield paradigm outlined in the previous chapter: yet another example of creating reusable test collections for improving \abr{ai}, in this case computer vision.} a famous dataset that was based on postal codes gathered from \abr{us} mail.
+%
+They found slight tweaks to the images that could trip up classifiers trained on the rest of the \abr{mnist} dataset.
+
+However, my favorite example of an adversarial example was a real-life 3D-printed turtle from Kevin Kwok (Figure~\ref{}).\footnote{Because this is a chapter about the joy of human question answering including \qb{}, I would be remiss if I didn't mention Kevin's connection to \qb{}.  Back in 2011, Brianna Satinoff and I created a place people could play questions online. We used it to collect data on how well humans could answer questions.  After we got the data we needed, we took the site down.  Kevin created a (much snazzier) version called Protobowl that has endured for a decade.  We collaborated on using his data to see how a \abr{ai} \qb{} player could adjust their buzzing strategy.}
+%todo(jbg): Add picture
+
 
 A counterargument is that real-life questions---e.g., on Yahoo!
 Questions~\citep{szpektor-13}, Quora~\citep{iyer-17} or web
