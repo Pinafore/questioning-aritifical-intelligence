@@ -565,6 +565,51 @@ model and advocate for \irt{}.
 Implicit in nearly all leaderboard evaluations is ranking models by a
 statistic such as the average accuracy.
 As we show in \S\ref{ch:isicle:exp}, na\"ive rankings are noisier than \irt{} rankings.
+\section{Learning Which Answers People Prefer}
+\label{sec:leaderboards:preferences}
+\label{sec:methods:preferences}
+
+Chapter~\ref{ch:methods} raised a problem: an answer can differ from the reference and still be useful, so let's turn from modeling correct responses to modeling human preferences.
+
+\subsection{From Item Responses to Pairwise Preferences}
+
+So we need to train the models to answer long-form questions better.  Let's say that we have examples of model outputs.  So let's say that we have three outputs: a human prefers 1 over 2 over 3.  We can then look at all pairs of examples: 1 is better than 2, 2 is better than 3, 1 is better than 3.  For all of the pairs, we have one winner and one loser.
+
+We want the policy to produce answers people prefer.  To learn those preferences, a reward model assigns a score to each answer, and training encourages it to score the preferred answer above the rejected answer.
+
+The sigmoid from the simplest \abr{irt} model returns here: instead of subtracting item difficulty from subject skill, we subtract one response's reward score from the other's~\citep{hunter-bradley-terry-04}.
+\begin{equation}
+  P(y_a \succ y_b \mid x) = \sigma\bigl(r(x,y_a)-r(x,y_b)\bigr).
+  \label{eq:leaderboards:preference}
+\end{equation}
+Here $x$ is the prompt, $y_a$ and $y_b$ are candidate responses, $r$ is a learned reward score, and $\sigma$ is the sigmoid; the predicted event is a preference between responses, rather than a correct answer to an item.
+
+If the preferred answer's score is much higher, that probability approaches one; if its score is much lower, the probability approaches zero.  This is an old idea: reinforcement-learning papers often call it the Bradley--Terry model.
+
+David Hunter reviews this history~\citep{hunter-bradley-terry-04}, but this goes back at least to Zermelo in the twenties, and it's been rediscovered in multiple fields.  The basic idea is that there are two things that are being compared on some scalar continuum and you need to decide yes/no or which is better.  If you work through the math, you end up putting it through a logistic function: comparing your skill to a question, comparing a legislator's ideology to a piece of proposed legislation, or comparing two chess players.  Or in this case, two responses from a model!
+
+\subsection{From Preferences to Training}
+\label{sec:leaderboards:rlhf}
+
+Anyhow, now that we have this reward function that captures the preferences from humans, we still have another problem: we don't want our policy to \emph{just} chase these preferences.  We still want it to be a good language model.  So the objective that we actually optimize is: maximizing the learned reward minus a penalty that prevents us from getting too far away from the original language model.
+
+Writing the answering policy as $\pi$ and its starting point as $\pi_{\mathrm{ref}}$, and averaging over training prompts $x$, a schematic objective is
+\begin{equation}
+  \max_{\pi}\;\mathbb{E}_{x}\left[
+    \mathbb{E}_{y\sim\pi(\cdot\mid x)} r(x,y)
+    - \eta D_{\mathrm{KL}}\!\left(\pi(\cdot\mid x)\,\Vert\,\pi_{\mathrm{ref}}(\cdot\mid x)\right)
+  \right].
+  \label{eq:leaderboards:rlhf}
+\end{equation}
+The coefficient $\eta$ controls the penalty for moving away from the reference policy: if it is zero, we just chase the learned reward; increasing it places more weight on staying close to the starting model~\citep{ouyang-22}.
+
+For intuition, think about the $D_{\mathrm{KL}}$ term as a distance function: it's zero if these two things are the same, it gets bigger if they're not.  Again, there are some details here that we won't get into.  This is because these policies are language models.  Their output is a distribution over language.  So you need a comparison over distributions, so this is actually an information-theoretic divergence called the Kullback--Leibler divergence (hence the \abr{kl}).  It measures divergence between probability distributions rather than distance between points.
+
+There is still a practical problem: we cannot ask a human to rate every answer generated during training.  In reinforcement learning from human feedback~\citep{ouyang-22}, a learned reward model estimates human preferences for new outputs, while a value function helps estimate expected future reward during policy training.  This lets training use human judgments beyond the particular answers people rated.
+% AUTHOR: Optional: supply alignment-dataset examples from the lecture.
+
+The preference model turns judgments into a training signal; I now return to the separate question of how reliably an evaluation ranks the resulting systems.
+
 \section{IRT for Leaderboards}
 \label{ch:isicle:exp}
 

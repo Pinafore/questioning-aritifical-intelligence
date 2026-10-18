@@ -7,7 +7,7 @@ figures, equations, or a Transformer tutorial.
 
 ## Citations needing identification or confirmation
 
-- The specific Dagan and Socher sources for the AI-completeness attributions.
+- Dagan and Glickman (2004) is now confirmed and cited for the common entailment framework; see the 2026-10-18 follow-up in chapters-7-9-citation-review.md. McCann et al. (2018), supplied for Socher, is now cited for casting ten NLP tasks as QA; the unsupported AI-completeness attribution was removed.
 - The paper intended for training mathematical reasoning with intermediate
   rewards/verifiers. Wei et al. (2022) supports chain-of-thought prompting;
   it does not establish the subsequent training claim.
@@ -21,8 +21,7 @@ figures, equations, or a Transformer tutorial.
 - Start/end probabilities for the now-supplied Windsor example, if retaining
   the proposed scored-span illustration. Do not invent model probabilities.
 - The presidential-embedding figure and additional Cairo/Mossad evidence passages.
-- The preference-ranking figure if desired, reward/KL objective, and any
-  Transformer overview or alignment-dataset examples.
+- The preference-ranking figure and alignment-dataset examples, if desired. Encoder and decoder explanations are now adapted from the shared lecture scripts; the schematic reward/KL objective is in Chapter 10.
 - The Egypt/Israel scratchpad now uses the existing Cairo/Mossad evidence;
   the unsupported border assumption and unnecessary identity placeholder are gone.
 - Identify the science-fiction scene in the commented YouTube link.
@@ -103,3 +102,13 @@ was removed. No model scores have been invented.
 Maternal-health source: https://aclanthology.org/2024.naacl-long.403/, Figure 1.
 The script's “only way” antibody claim was removed; the revised passage describes
 the paper's response and preserves the separate SPOLIN citation for the analogy.
+
+
+## Encoder/decoder/RLHF reorganization (2026-10-18)
+
+- Chapter 7 now owns retrieval and the Transformer encoder. Adapted queries/keys/values, softmax, heads, layers, position information, and CLS from the author's “Lecture Scripts” Google Doc (BERT discussion around “What are keys, values, and queries?”). Retained `sec:methods:deep-retrieval` as a compatibility alias beside `sec:formats:deep-retrieval`.
+- Chapter 9 now owns the decoder. Adapted “What BERT Can’t Do: The Decoder” from the same document: causal masking, cross-attention, vocabulary prediction, teacher forcing, and exposure bias. Omitted slide-dependent diagrams and the script's incorrect implication that grammatical gender follows natural sex. Added brief connections to QA and supervised instruction tuning.
+- Chapter 10 now owns Bradley–Terry preference modeling and RLHF, after Ranking and Comparing Subjects and before the empirical IRT study. Retained `sec:methods:preferences` as a compatibility alias. The RLHF coefficient is eta to avoid confusion with the IRT feasibility parameter lambda. The equation is explicitly a schematic reward-minus-KL objective, not a transcription of the full InstructGPT objective.
+- Source: https://docs.google.com/document/d/1QayGOfemBnVmTgzcdOtYrdXWcenO58n5QB5bFFlYOA0/edit . Read via a browser export; the shared document itself was not edited.
+- Existing citations reused: Vaswani et al. (2017), Devlin et al. (2019), Karpukhin et al. (2020), Hunter (2004), and Ouyang et al. (2022). No new bibliography entries in this reorganization.
+- The earlier duplicate Lotto/Egypt/Apu issue is resolved by the preceding deduplication pass. Remaining missing figures, scored spans, scene identification, and process-reward attribution remain author follow-ups.

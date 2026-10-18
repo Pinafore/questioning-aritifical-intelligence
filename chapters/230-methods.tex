@@ -1,81 +1,7 @@
 
 Chapter~\ref{ch:ir} introduced the Cranfield paradigm: finding the document that best matches what you're looking for.  It also showed how ``good old-fashioned'' \abr{ai} systems use rules and logic to answer questions about specific domains.  But in \currentyear{}, ``\abr{ai} answering questions'' probably brings neural systems to mind: the systems that reply at the top of a search page or answer in a chat window.
 
-In this chapter, I trace the recent history of neural question answering, from finding answers in documents to generating the kinds of answers people want.  This history mirrors the development of large language models: going from predicting the next word to learning to follow instructions.  I refer back to the formats in Chapter~\ref{ch:formats} and the datasets in Chapter~\ref{ch:datasets} as they become relevant.
-
-\section{Retrieving Evidence}
-
-The general framework for answering a question has two steps: an
-information retrieval system finds evidence, and a reader uses that
-evidence to find the answer.
-
-I now turn to how deep learning can improve the retrieval step.
-The idea is called ``deep retrieval'': learn to turn both queries and
-evidence into vectors that help find the answer.
-
-Recall the sparse vectors with weights for individual words from
-Section~\ref{sec:ir:tf-idf}.  For now, how those weights are set is
-less important than the dimensionality and what kinds of things can
-be matched: the weights could come from \tfidf{}, \abr{bm25}, or
-just raw word counts.
-
-Sparse word vectors can have tens or hundreds of thousands of dimensions.  English has many words, especially when a vocabulary includes rare names such as ``the Treaty of Westphalia'', ``Uluru'', and ``Murasaki''.  Sparse representations avoid storing a weight for every dimension, but the vocabulary still determines what can match.
-
-Algorithms developed by Maryland's David Mount and his collaborators support approximate nearest-neighbor search~\citep{arya-98}.  Exact search is possible, but it can become expensive as the number of dimensions grows.
-
-If searching these high-dimensional representations is expensive, why keep them around?  ``Min-Wise Independent Permutations''~\citep{broder-98} studies compact signatures for sets that let us estimate their similarity.  The broader idea of locality-sensitive hashing is to make similar objects more likely to share a hash value, so comparisons need not examine every object.
-
-Min-wise hashing grew out of work on the search engine AltaVista.  I remember locality-sensitive hashing becoming popular when I was a graduate student; Moses Charikar was a professor at Princeton then.  These representations offered faster computations with less memory.
-
-\section{A Vector in a Haystack}
-\label{sec:methods:deep-retrieval}
-
-Why bring up algorithms from the turn of the century in a discussion of neural retrieval?  Algorithms for comparing and searching vectors can also work with representations created by neural networks.  The goal is still to create representations suited to the task.
-
-But what I really want to talk about is how these representations can be not just faster but can also be better!  Can we create representations tailor-made for a task like question answering?
-
-Neural networks let us learn those representations.  But first, why might we want them?  Sometimes \tfidf{} is enough: ``Hall--H\'eroult process'' is a useful clue for finding information about smelting aluminum.  Other clues, such as ``Who said to be or not to be?'', consist of common words.  Adding $n$-gram dimensions could help, but it would expand the vocabulary even further.
-
-Even worse, sometimes people asking questions, particularly in the Manchester paradigm (Chapter~\ref{ch:manchester}), can be tricky!  If the question is about Luebeck, a city that was part of the Hanseatic League, the question writer might be tricky and say something like ``a city on the Trave that was a member of a confederation of Baltic cities'' instead of mentioning the Hanseatic League by name.
-
-A neural network can learn representations for both questions and evidence passages.  Training pushes ``Who said to be or not to be?'' toward passages containing ``Hamlet'', and the clue about the Trave toward passages about Luebeck.  Frameworks such as PyTorch make it possible to train both encoders together; \abr{bert}~\citep{devlin-19} is one choice for the encoder.
-
-Back in 2015, my collaborators and I used deep averaging networks to represent \quizbowl{} questions~\citep{iyyer-15}.  In a two-dimensional projection of questions about \abr{us} presidents, the representations progress clockwise from the founding fathers through the nineteenth and twentieth centuries.
-% AUTHOR: Restore the presidential-embedding projection from the lecture slides.
-
-The dot product from Equation~\ref{eq:ir:dot-product} also scores learned
-question and passage vectors in \abr{dpr}~\citep{karpukhin-20}; inside a
-Transformer, attention uses scaled query--key dot products, converts them
-to weights with a softmax, and takes a weighted sum of the corresponding
-value vectors~\citep{vaswani-17}.
-
-In 2019 and 2020, three papers developed neural retrieval for question answering: \abr{orqa} (Open-Retrieval Question Answering)~\citep{lee-19}, \abr{realm} (Retrieval-Augmented Language Model Pre-Training)~\citep{guu-20}, and \abr{dpr} (Dense Passage Retrieval)~\citep{karpukhin-20}.
-
-\abr{orqa} shows that learned retrieval can beat an off-the-shelf retrieval system on questions from users seeking information, although \abr{bm25} remains competitive when question writers already know the answer.
-
-\abr{realm} changes pretraining to mask spans likely to be answers.  Where \abr{bert} selects 15\% of tokens for its masked-language-model objective, \abr{realm} targets named entities and dates.  Consider this passage: ``During this conflict, Celia S\'anchez created a `farmer's militia' in order to supply troops, and worked with Frank Pa\'is in order to create a task force.''
-
-This could be part of a \quizbowl{} question or a Wikipedia passage.  For pretraining, it is simply raw text.  Masking the names makes the model recover the kinds of information questions often ask for: people, places, organizations, and dates.
-
-\abr{dpr} also examines how to choose negative training examples: passages that should not be retrieved for a question.
-
-Suppose a training batch contains four questions, each with a positive passage.  For the second question, its own passage is the positive example, while the other questions' passages provide in-batch negatives.  This reuses the passages already encoded for the batch.
-
-\abr{dpr} also uses hard negatives: passages that a \abr{bm25} retriever ranks highly but that do not contain the answer.
-
-These hard negatives improve retrieval in the experiments reported by \citet{karpukhin-20}.
-
-These models learn to connect questions with evidence even when their words differ.  I think there is still plenty to explore in what those representations can capture.
-
-How does dense retrieval fit with extracting answer spans?  Instead of indexing entire documents, the retriever can encode passages, such as Wikipedia paragraphs, that a reader can examine for an answer (Section~\ref{sec:methods:reading}).
-
-The same kind of encoder can therefore support both steps: retrieving a promising passage and locating an answer within it.
-
-Dense retrieval also opens up other kinds of input, which I return to in Section~\ref{sec:methods:multimodal}.
-
-Dense passage retrieval lets you find the answer to a question like ``how was the monkey king born''.  But since we're doing the lookup in an arbitrary vector space, we could train our question encoder to take input in any language: all that matters is that the resulting vector space lines up.  But then why does it even have to be text?  We can encode any object as a vector, so why not answer questions with an image?
-
-I started with the cost of representing a large vocabulary and ended with representations that could connect text and images.  So perhaps a picture encoding is worth a thousand words.
+Chapter~\ref{ch:formats} introduced dense retrieval and the Transformer encoder; here I turn from representing evidence to extracting and generating answers, with the decoder as the technical centerpiece and human-feedback training reserved for Chapter~\ref{ch:leaderboards}.
 
 \section{Machine Reading: Extracting Answers from Text}
 \label{sec:methods:reading}
@@ -88,7 +14,7 @@ Consider these three versions of the same question:
 \item ``when did the royal family adopt the name windsor'' --- \answer{in 1917}
 \end{itemize}
 
-The retrieval step in Section~\ref{sec:methods:deep-retrieval} provides passages for the reader to examine.
+The retrieval step in Section~\ref{sec:formats:deep-retrieval} provides passages for the reader to examine.
 
 Natural Questions provides Wikipedia pages found through Google's search engine.  An open-domain system must retrieve its own evidence, but the reader's job remains the same: find an answer in the passages it receives.
 
@@ -104,7 +30,7 @@ So let's go back to the Windsor questions.  We know that the answer is \answer{1
 
 The highlighted year matches the answer string, but the passage describes bombing, not the royal family's adoption of the name Windsor.  A system could therefore return the right string for the wrong reason.  The hope is that training gives higher scores to spans supported by the surrounding evidence and lower scores to these spurious matches.\footnote{But what if there is no good answer?  A reader may return the best-looking span anyway, answering a question such as ``When did Leonardo da Vinci paint the Sistine Chapel?'' with ``between 1508 and 1512''.}
 
-As Section~\ref{sec:methods:preferences} discusses, people can prefer different answers to the same question---but for a while, this seemed to work fairly well.  Google would ``call out'' the answers to obvious questions without forcing you to click through to the underlying page, and it used its world-class information retrieval to find a page that might contain the answer, extract a span with that answer from the page, and then provide that answer.  Going back to our running example, a system would score all the start and stop positions, and we could rank all of the possibilities in order of their scores.
+As Section~\ref{sec:leaderboards:preferences} discusses, people can prefer different answers to the same question---but for a while, this seemed to work fairly well.  Google would ``call out'' the answers to obvious questions without forcing you to click through to the underlying page, and it used its world-class information retrieval to find a page that might contain the answer, extract a span with that answer from the page, and then provide that answer.  Going back to our running example, a system would score all the start and stop positions, and we could rank all of the possibilities in order of their scores.
 % AUTHOR: Supply the scored answer-span example.
 
 Naively you could just take the top answer, or you could look at the top answers and decide whether this set was something you could be proud of.  For example, if there were two high-scoring contradictory answers, you might not choose to answer at all.  This is basically where we were around 2020.  As anyone who has gone down a Wikipedia hole knows, sometimes you need several pieces of information to fully answer a question.
@@ -182,6 +108,39 @@ And this can be paired with some of the fancy machine learning tools that we hav
 
 And then perhaps we better address the “Joy of Search” problems in a hybrid cooperation between humans and computers: where computers and humans could join hands and hop together.
 
+\section{What an Encoder Cannot Do: The Decoder}
+\label{sec:methods:decoder}
+
+Remember what \abr{bert} stands for: Bidirectional Encoder Representations from Transformers.  The encoder in Section~\ref{sec:formats:encoder} gives us representations that we can use to retrieve evidence or mark an answer span.  But to generate an answer, we need a way to turn representations into a sequence of output tokens.
+
+The original Transformer has an encoder on the left and a decoder on the right~\citep{vaswani-17}.  In translation, the encoder represents the source sentence and the decoder produces a sentence in another language.  For question answering, the input can instead contain a question and evidence, and the output is the answer.
+
+\subsection{Looking Left Before Writing the Next Token}
+
+Let's use the translation example from my lecture: ``This song is stuck in my head''.  The encoder can inspect the entire English sentence before the decoder starts producing German.  The decoder, however, doesn't yet have a German sentence to inspect!  It starts with a beginning-of-sequence token, produces an output token, adds that token to its context, and keeps going until it produces an end marker.
+
+The decoder's self-attention therefore has a different rule from the encoder's: each position can attend only to itself and earlier positions in the decoder input.  This causal mask prevents it from looking at future output tokens.  During training, the input is shifted so that a position must predict the next token without seeing that token's answer.
+
+In an encoder--decoder Transformer, a second attention operation connects the two sequences.  The queries come from the decoder's representations, while the keys and values come from the encoder's output.  This is cross-attention: the partial German translation asks what it needs from the English sentence.  The same weighted lookup from Equation~\ref{eq:formats:attention} applies, but its queries and keys now come from different sequences.
+
+For example, selecting a German article requires information about the noun, not just the English word ``this''.  The decoder can attend to the contextual representation of ``song'' while deciding how to begin.  As with the encoder, attention heads and feed-forward transformations are stacked in layers.
+
+At the top, a linear layer projects the decoder's representation into a vector with one score for each vocabulary token.  A softmax turns those scores into a distribution over the next token.  Choose a token, append it, and repeat.  That's how a collection of vectors becomes an answer.
+
+\subsection{Training with the Answer in Front of You}
+
+Training introduces a complication: mistakes can compound.  If the decoder makes the wrong choice early in a translation, later choices must work with that mistake.  Do we tell it that the whole sentence was wrong, even if it got the first word right?
+
+Teacher forcing gives the model the reference prefix when predicting each next token.  Even if its prediction at one position is wrong, the next training prediction gets the correct preceding tokens.  In a Transformer, the causal mask lets us compute these predictions for all positions in parallel, rather than correcting a generated sentence one word at a time.
+
+At generation time there is no teacher to supply that reference prefix.  The decoder must continue from its own outputs, including its mistakes.  This difference between training and generation is often called exposure bias.  It also brings us back to the problem of references: a continuation can differ from the training answer without being wrong.
+
+\subsection{From Continuing Text to Answering Questions}
+
+A decoder-only language model uses causal self-attention over a sequence containing the prompt and the generated continuation; it does not require a separate encoder or an encoder--decoder cross-attention block.  In either arrangement, the output is still a next-token distribution.
+
+But predicting the next token doesn't by itself specify the interaction we want.  Given ``List of presidents who were born in Virginia'', a text continuation could be ``List of presidents who were born in New York'' instead of an answer.  Supervised instruction tuning trains on examples of prompts and desired responses, using the same next-token objective on the response~\citep{ouyang-22}.  Chapter~\ref{ch:leaderboards} goes further: it explains how comparisons between responses become rewards for training through \abr{rlhf}.
+
 \section{From Open Books to Closed Books}
 \label{sec:methods:generation}
 But around 2020, we started moving away from ``open book'' exams, where a computer had to find the answer in Wikipedia to ``closed book'' exams where the models had to memorize the answers.  This was a big change: In SQuAD, you get the passage in front of you with the answer in front of you.  You just need to highlight it.  Open domain \abr{qa} with machine reading is a little bit harder, but you need to find the answer in Wikipedia.  You still have access to Wikipedia.
@@ -224,8 +183,7 @@ Just because you answer differently from the reference doesn't mean that it's wr
 \textbf{Apu:} Slavery it is, sir.
 \end{quote}
 
-% AUTHOR: Confirm the sources for the Dagan and Socher AI-completeness attributions below.
-Like the examiner, an evaluator may prefer a shorter answer because it is easier to score.   There are many ways to answer ``What was the cause of the American Civil War''.  Everything that Apu said was correct, and there are many ways to phrase what he said.  Detecting all the things that are semantically equivalent to that is itself an \abr{ai}-complete problem, as Ido Dagan argues.\footnote{And Richard Socher argued the same thing about question answering.}  As the discussion of \abr{eli5} in Section~\ref{sec:formats:long-answers} illustrates, we have examples of what makes for a good answer if the answers are supposed to be long: e.g., someone masterfully ``explaining like I'm five'' \question{why things go bad more quickly when you open a food container}.
+Like the examiner, an evaluator may prefer a shorter answer because it is easier to score.   There are many ways to answer ``What was the cause of the American Civil War''.  Everything that Apu said was correct, and there are many ways to phrase what he said.  This problem of recognizing meaning across different wordings motivates \citet{dagan-glickman-04} to propose textual entailment as a common framework for semantic inference across \abr{nlp} applications.\footnote{\citet{mccann-18-decathlon}, including Richard Socher, cast ten different \abr{nlp} tasks as question answering over a context.}  As the discussion of \abr{eli5} in Section~\ref{sec:formats:long-answers} illustrates, we have examples of what makes for a good answer if the answers are supposed to be long: e.g., someone masterfully ``explaining like I'm five'' \question{why things go bad more quickly when you open a food container}.
 
 % https://www.reddit.com/r/explainlikeimfive/comments/1fumo1i/eli5_how_do_things_expire_once_you_open_them/?share_id=i52WEl4Yg5-56USkz0EhS&utm_content=1&utm_medium=android_app&utm_name=androidcss&utm_source=share&utm_term=1
 
@@ -245,39 +203,12 @@ The longest subsequence is the longest chain of words that are in the reference 
 
 However, \abr{rouge} can reward the wrong things.  \citet{krishna-21} show that a system can score well on \abr{eli5} without grounding its answers in retrieved evidence.  Repeating the question or copying a training answer can also earn misleadingly high scores.  Their analysis finds substantial overlap between training and validation questions, so memorization can masquerade as generalization.
 
-\section{Learning Which Answers People Prefer}
-\label{sec:methods:preferences}
-
-This makes it hard to prove that your snazzy new algorithm is actually good.  So what's the answer? Asking people what they think is the better answer.  This ends up being how we trained modern \abr{ai} systems, so let's talk about how they work a little bit more.  Building a modern \abr{ai} system roughly has two phases: pretraining and posttraining.  In pretraining, you are learning to output the next word.  Mathematically, this is very similar to the logistic regression system that we talked about in Section~\ref{sec:watson:logistic-regression}.  The difference is that the inputs to the systems are the embeddings that we talked about in Section~\ref{sec:methods:deep-retrieval}: vectors that are learned to best represent the word in context.
-
-\jbgcomment{If we don't have Transformer overview anywhere, could go here}
-
-But just predicting the next word is not all that useful for these models: it doesn't actually follow instructions.  If you say something like ``List of presidents who were born in Virginia'', an algorithm that just predicts the next word would do things like ``List of presidents who were born in New York''.  While as we discuss in Chapter~\ref{ch:watson}, you can form questions into ``fill in the blank'' settings like the \jeopardy{}-style questions we covered earlier, it doesn't work for more complicated questions.
-
-So we need to train the models to answer long-form questions better.  Let's say that we have examples of model outputs.  So let's say that we have three outputs: a human prefers 1 over 2 over 3.  We can then look at all pairs of examples: 1 is better than 2, 2 is better than 3, 1 is better than 3.  For all of the pairs, we have one winner and one loser.
-
-We want the policy to produce answers people prefer.  To learn those preferences, a reward model assigns a score to each answer, and training encourages it to score the preferred answer above the rejected answer.
-
-A logistic function turns the difference between the two reward scores into a preference probability.  Recall its shape from Figure~\ref{fig:watson:sigmoid}: it gives an output between zero and one, and an input of zero gives 0.5.
-
-If the preferred answer's score is much higher, that probability approaches one; if its score is much lower, the probability approaches zero.  This is an old idea: reinforcement-learning papers often call it the Bradley--Terry model.
-
-David Hunter reviews this history~\citep{hunter-bradley-terry-04}, but this goes back at least to Zermelo in the twenties, and it's been rediscovered in multiple fields.  The basic idea is that there are two things that are being compared on some scalar continuum and you need to decide yes/no or which is better.  If you work through the math, you end up putting it through a logistic function: comparing your skill to a question, comparing a legislator's ideology to a piece of proposed legislation, or comparing two chess players.  Or in this case, two responses from a model!
-
-Anyhow, now that we have this reward function that captures the preferences from humans, we still have another problem: we don't want our policy to \emph{just} chase these preferences.  We still want it to be a good language model.  So the objective that we actually optimize is: maximizing the learned reward minus a penalty that prevents us from getting too far away from the original language model.
-
-% AUTHOR: Supply the reward-plus-divergence objective from the lecture.
-In that objective, $\lambda$ is a parameter that says how important it is to stay close to the old language model.  If it's zero, we just chase the preference reward.  The bigger it is, the less important the preference information is.
-
-For intuition, think about the $D_{\mathrm{KL}}$ term as a distance function: it's zero if these two things are the same, it gets bigger if they're not.  Again, there are some details here that we won't get into.  This is because these policies are language models.  Their output is a distribution over language.  So you need a comparison over distributions, so this is actually an information-theoretic divergence called the Kullback--Leibler divergence (hence the \abr{kl}).  It measures divergence between probability distributions rather than distance between points.
-
-There is still a practical problem: we cannot ask a human to rate every answer generated during training.  In reinforcement learning from human feedback~\citep{ouyang-22}, a learned reward model estimates human preferences for new outputs, while a value function helps estimate expected future reward during policy training.  This lets training use human judgments beyond the particular answers people rated.
-% AUTHOR: Confirm the intended RLHF account; the script conflated the reward model and value function. Supply alignment-dataset examples if wanted.
+Chapter~\ref{ch:leaderboards} takes up an alternative to reference overlap: asking people which answer they prefer, modeling those judgments, and using them to train the system.
 
 \section{But That Assumes a Good Question}
 \label{sec:methods:presuppositions}
 
-All of this breaks down, however, when the question is problematic.  For example, some questions that tripped up early \abr{qa} systems were ``When did Leonardo paint the Sistine Chapel'' or ``Is the king of France bald''.  These questions contain what are called ``false presuppositions'': Michelangelo painted the Sistine Chapel, and France no longer has a king.  Because a reward model can learn what looks like a good answer to familiar questions, and those questions look like legitimate questions, it can encourage answers that accept the false presuppositions and blithely answer.
+Even a fluent generated answer can be unhelpful when the question is problematic.  For example, some questions that tripped up early \abr{qa} systems were ``When did Leonardo paint the Sistine Chapel'' or ``Is the king of France bald''.  These questions contain what are called ``false presuppositions'': Michelangelo painted the Sistine Chapel, and France no longer has a king.  A model can treat these as familiar-looking questions, accept their false presuppositions, and blithely answer.
 
 You might think that these questions are unrealistic, but questions with hidden assumptions are common in the medical domain.
 For example, \citet{srikanth-24-pregnant} examine the question ``Can I breastfeed my baby when I am ill?''  A model can go along with a question's assumptions---like an improv actor saying ``yes and''~\citep{cho-20-spolin}---but a helpful answer may need to challenge them.  In the paper's example, the fuller answer addresses the belief that all illnesses pass through breast milk and explains that antibodies in breast milk can help protect the baby.
@@ -297,7 +228,7 @@ To answer this question, I need to figure out both countries.  Mossad is associa
 \end{quote}
 
 % AUTHOR: Which process-reward or verifier paper supports the following training claim? Wei et al. supports prompting, not this training method.
-This can also help answer mathematical questions, which often have intermediate steps.  Given examples of ``worked through'' answers to questions, the same value-function techniques that we saw in Section~\ref{sec:methods:preferences} can estimate what makes for a good chain-of-thought solution to a question.
+This can also help answer mathematical questions, which often have intermediate steps.  Given examples of ``worked through'' answers to questions, value-function techniques related to those introduced in Section~\ref{sec:leaderboards:rlhf} can estimate what makes for a good chain-of-thought solution to a question.
 
 \section{But What About Non-Text?}
 \label{sec:methods:multimodal}

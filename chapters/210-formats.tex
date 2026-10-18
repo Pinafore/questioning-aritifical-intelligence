@@ -1,5 +1,101 @@
 \label{chapter:formats}
 
+A standalone question and a short answer are only one way to organize question answering: this chapter follows the evidence through multiple hops, conversations, images, and sound, starting with the encoders that let us retrieve it.
+
+
+\section{Retrieving Evidence}
+
+The general framework for answering a question has two steps: an
+information retrieval system finds evidence, and a reader uses that
+evidence to find the answer.
+
+Deep learning can improve the retrieval step.
+The idea is called ``deep retrieval'': learn to turn both queries and
+evidence into vectors that help find the answer.
+
+Recall the sparse vectors with weights for individual words from
+Section~\ref{sec:ir:tf-idf}.  For now, how those weights are set is
+less important than the dimensionality and what kinds of things can
+be matched: the weights could come from \tfidf{}, \abr{bm25}, or
+just raw word counts.
+
+Sparse word vectors can have tens or hundreds of thousands of dimensions.  English has many words, especially when a vocabulary includes rare names such as ``the Treaty of Westphalia'', ``Uluru'', and ``Murasaki''.  Sparse representations avoid storing a weight for every dimension, but the vocabulary still determines what can match.
+
+Algorithms developed by Maryland's David Mount and his collaborators support approximate nearest-neighbor search~\citep{arya-98}.  Exact search is possible, but it can become expensive as the number of dimensions grows.
+
+If searching these high-dimensional representations is expensive, why keep them around?  ``Min-Wise Independent Permutations''~\citep{broder-98} studies compact signatures for sets that let us estimate their similarity.  The broader idea of locality-sensitive hashing is to make similar objects more likely to share a hash value, so comparisons need not examine every object.
+
+Min-wise hashing grew out of work on the search engine AltaVista.  I remember locality-sensitive hashing becoming popular when I was a graduate student; Moses Charikar was a professor at Princeton then.  These representations offered faster computations with less memory.
+
+\subsection{A Vector in a Haystack}
+\label{sec:formats:deep-retrieval}
+\label{sec:methods:deep-retrieval}
+
+Why bring up algorithms from the turn of the century in a discussion of neural retrieval?  Algorithms for comparing and searching vectors can also work with representations created by neural networks.  The goal is still to create representations suited to the task.
+
+But what I really want to talk about is how these representations can be not just faster but can also be better!  Can we create representations tailor-made for a task like question answering?
+
+Neural networks let us learn those representations.  But first, why might we want them?  Sometimes \tfidf{} is enough: ``Hall--H\'eroult process'' is a useful clue for finding information about smelting aluminum.  Other clues, such as ``Who said to be or not to be?'', consist of common words.  Adding $n$-gram dimensions could help, but it would expand the vocabulary even further.
+
+Even worse, sometimes people asking questions, particularly in the Manchester paradigm (Chapter~\ref{ch:manchester}), can be tricky!  If the question is about Luebeck, a city that was part of the Hanseatic League, the question writer might be tricky and say something like ``a city on the Trave that was a member of a confederation of Baltic cities'' instead of mentioning the Hanseatic League by name.
+
+A neural network can learn representations for both questions and evidence passages.  Training pushes ``Who said to be or not to be?'' toward passages containing ``Hamlet'', and the clue about the Trave toward passages about Luebeck.  Frameworks such as PyTorch make it possible to train both encoders together; \abr{bert}~\citep{devlin-19} is one choice for the encoder.
+
+Back in 2015, my collaborators and I used deep averaging networks to represent \quizbowl{} questions~\citep{iyyer-15}.  In a two-dimensional projection of questions about \abr{us} presidents, the representations progress clockwise from the founding fathers through the nineteenth and twentieth centuries.
+% AUTHOR: Restore the presidential-embedding projection from the lecture slides.
+
+\subsection{Inside a Transformer Encoder}
+\label{sec:formats:encoder}
+
+But how does an encoder turn words into these vectors?  \abr{bert} stands for Bidirectional Encoder Representations from Transformers~\citep{devlin-19}.  Start with an embedding for each word piece and information about its position.  The encoder transforms those initial vectors into representations that incorporate the surrounding context.
+
+The building block is attention~\citep{vaswani-17}.  One way to think about it is a lookup table: each key is associated with a value, and a query tells you what to look for.  Here the queries, keys, and values are all vectors, created by learned linear transformations of the token representations.  In self-attention, all three come from the same sequence.
+
+Recall the dot product from Equation~\ref{eq:ir:dot-product}.  For each token's query, the encoder computes a dot product with each key, scales the scores, and applies a softmax to turn them into weights that sum to one.  Rather than selecting one entry in the table, it takes a weighted sum of the values:
+\begin{equation}
+  \operatorname{Attention}(Q,K,V)
+  = \operatorname{softmax}\left(\frac{QK^{\mathsf{T}}}{\sqrt{d_k}}\right)V.
+  \label{eq:formats:attention}
+\end{equation}
+The rows of $Q$, $K$, and $V$ contain the queries, keys, and values; $d_k$ is the dimension of a key.  The softmax operates across the keys for each query.  The result is a new representation for each token, assembled from the information it attends to.
+
+But this doesn't happen just once.  Multiple attention heads have their own learned projections, so they can combine information in different ways.  Their outputs are concatenated and projected back into the model's representation space.  A feed-forward network then transforms each token's representation; residual connections and normalization help carry information through the layers.  Stack these layers, and you have a Transformer encoder.
+
+The ``bidirectional'' part matters: a token can attend to context on either side.  And because attention by itself doesn't tell you which token came first, the position information matters too.  We don't have to carry all the information from the beginning of a sentence through a succession of intervening words before connecting it to the end.
+
+The encoder gives us a representation for every token, but retrieval needs a vector for the question or passage as a whole.  In \abr{bert}, a special \texttt{[CLS]} token provides a place to gather information for sequence-level tasks; \abr{dpr} uses its final representation as the retrieval vector~\citep{karpukhin-20}.  Training must still make those vectors useful for matching questions to evidence.  A contextual representation alone is not a retrieval system!
+
+\subsection{Learning to Retrieve}
+
+The same dot product can now score whole question and passage vectors in \abr{dpr}, rather than tokens inside an attention layer.
+
+In 2019 and 2020, three papers developed neural retrieval for question answering: \abr{orqa} (Open-Retrieval Question Answering)~\citep{lee-19}, \abr{realm} (Retrieval-Augmented Language Model Pre-Training)~\citep{guu-20}, and \abr{dpr} (Dense Passage Retrieval)~\citep{karpukhin-20}.
+
+\abr{orqa} shows that learned retrieval can beat an off-the-shelf retrieval system on questions from users seeking information, although \abr{bm25} remains competitive when question writers already know the answer.
+
+\abr{realm} changes pretraining to mask spans likely to be answers.  Where \abr{bert} selects 15\% of tokens for its masked-language-model objective, \abr{realm} targets named entities and dates.  Consider this passage: ``During this conflict, Celia S\'anchez created a `farmer's militia' in order to supply troops, and worked with Frank Pa\'is in order to create a task force.''
+
+This could be part of a \quizbowl{} question or a Wikipedia passage.  For pretraining, it is simply raw text.  Masking the names makes the model recover the kinds of information questions often ask for: people, places, organizations, and dates.
+
+\abr{dpr} also examines how to choose negative training examples: passages that should not be retrieved for a question.
+
+Suppose a training batch contains four questions, each with a positive passage.  For the second question, its own passage is the positive example, while the other questions' passages provide in-batch negatives.  This reuses the passages already encoded for the batch.
+
+\abr{dpr} also uses hard negatives: passages that a \abr{bm25} retriever ranks highly but that do not contain the answer.
+
+These hard negatives improve retrieval in the experiments reported by \citet{karpukhin-20}.
+
+These models learn to connect questions with evidence even when their words differ.  I think there is still plenty to explore in what those representations can capture.
+
+How does dense retrieval fit with extracting answer spans?  Instead of indexing entire documents, the retriever can encode passages, such as Wikipedia paragraphs, that a reader can examine for an answer (Section~\ref{sec:methods:reading}).
+
+The same kind of encoder can therefore support both steps: retrieving a promising passage and locating an answer within it.
+
+Dense retrieval also opens up other kinds of input, which I return to in Section~\ref{sec:formats:multimodal}.
+
+Dense passage retrieval lets you find the answer to a question like ``how was the monkey king born''.  But since we're doing the lookup in an arbitrary vector space, we could train our question encoder to take input in any language: all that matters is that the resulting vector space lines up.  But then why does it even have to be text?  We can encode any object as a vector, so why not answer questions with an image?
+
+I started with the cost of representing a large vocabulary and ended with representations that could connect text and images.  So perhaps a picture encoding is worth a thousand words.
 
 \section{Multihop QA}
 \label{sec:formats:multihop}
@@ -51,7 +147,7 @@ But it sits in the liminal space between Manchester and Cranfield.  The question
 
 For human question answering competitions, there are clearer rules about how to write “good” multihop questions: you typically don’t go down the information gradient.  In other words, you don’t hop from more well known entities to lesser known entities.  From what I’ve seen in, say, Natural Questions, this often seems to be the case in Cranfield questions, since questions are likely going to be about the things that are less well known: this was the case in my Mandalorian example, going from Cobb Vanth to Timothy Oliphant to Santa Clarita Diet.  This is often violated in HotPotQA, which offends my sense of question aesthetics … but does it make any difference in training systems?  Who knows!  
 
-Likewise, when you use multihop strategies in pyramidal questions, you should solve the multihop through the judicious use of coreference.  We outlined this process in a 2015 paper that explicitly linked the mentions to the underlying entities but not, alas, to the evidence that solved the knowledge required for the references.  And that, it seems, is what the community really wanted.  That and less complicated questions!
+Likewise, when you use multihop strategies in pyramidal questions, you should solve the multihop through the judicious use of coreference.  We outlined this process in a 2015 paper~\citep{Guha-15} that explicitly linked the mentions to the underlying entities but not, alas, to the evidence that solved the knowledge required for the references.  And that, it seems, is what the community really wanted.  That and less complicated questions!
 
 There are other question answering datasets out there, and we’ll talk about them eventually.  But I wanted to start with these “machine reading” datasets because it shows both the promise of these approaches: they can answer tons of exciting questions just from looking at raw text.  And the chasm between human and machine ability.  There is no way a computer can come anywhere close to a semi-skilled human’s ability to answer the “Joy of Search” questions we started this video about.  
 
@@ -131,7 +227,7 @@ Despite these beautiful rules and style guidelines, the questions aren’t as be
 
 So now we have examples of questions and good answers.  But we can’t just test whether the two strings are equal or not … so how do you know if the output of a system is good or not?
 
-Section~\ref{sec:methods:long-answers} explains \abr{rouge} and its limitations, and Section~\ref{sec:methods:preferences} turns to learning from human judgments.
+Section~\ref{sec:methods:long-answers} explains \abr{rouge} and its limitations, and Section~\ref{sec:leaderboards:preferences} turns to learning from human judgments.
 
 \section{Multimodal}
 \label{sec:formats:multimodal}

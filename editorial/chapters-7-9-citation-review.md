@@ -38,5 +38,11 @@ Chapter 7, Multihop QA: *HotpotQA: A Dataset for Diverse, Explainable Multi-hop 
 ## Still needs author identification
 
 - The potentially separate “Chen et al.” link-following paper beside DELFT.
-- The “Guha et al. 2015” annotation paper in the retained Chapter 8 HotpotQA summary. No guessed citation inserted.
-- Earlier unresolved methods citations (Dagan/Socher, Hinton, process rewards/verifiers) remain tracked in `methods-review.md`; no new proposals for those in this batch.
+- Guha identification resolved below.
+- Hinton and process rewards/verifiers remain unresolved in `methods-review.md`; Dagan/Socher follow-up is below.
+
+## Author-supplied follow-up: Guha, McCann/Socher, and Dagan
+
+- **Inserted, Chapters 7 and 8:** [Removing the Training Wheels: A Coreference Dataset that Entertains Humans and Challenges Computers](https://aclanthology.org/N15-1117/) (2015), **Anupam Guha, Mohit Iyyer, Danny Bouman, Jordan Boyd-Graber**. Recovered `Guha-15` from pinafore-papers/bib/jbg.bib. Chapter 8 now distinguishes coreference annotation from supporting-evidence annotation.
+- **Inserted, Chapter 9, Long Answers footnote:** [The Natural Language Decathlon: Multitask Learning as Question Answering](https://arxiv.org/abs/1806.08730) (2018), **Bryan McCann, Nitish Shirish Keskar, Caiming Xiong, Richard Socher**. Added `mccann-18-decathlon`. The footnote now states the demonstrated formulation of ten NLP tasks as QA, rather than attributing an AI-completeness result.
+- **Inserted after author confirmation, Chapter 9, Long Answers:** [Probabilistic Textual Entailment: Generic Applied Modeling of Language Variability](https://www2.denizyuret.com/bib/dagan/dagan_glickman_pascal_2004.pdf) (2004), **Ido Dagan and Oren Glickman**. Sections 1–2 propose a common entailment framework for semantic inferences in QA, retrieval, extraction, summarization, and reference resolution. This supports “Dagan and Glickman propose textual entailment as a common framework for semantic inference across NLP applications,” not a formal claim that all NLP reduces to entailment or that equivalence is AI-complete. Added `dagan-glickman-04` and a narrowly phrased attribution; removed the resolved author comment.

@@ -116,8 +116,9 @@
       },
       {
         "label": "formats",
-        "summary": "How do you ask a question: text, picture, or conversation?  We review the different forms question answering can take and what complexities that can introduce.",
+        "summary": "How do you ask a question: text, picture, or conversation?  Dense retrieval and Transformer encoders provide the technical foundation for exploring how these formats represent and connect evidence.",
         "sections": [
+  {"label": "encoder", "title": "Dense Retrieval and the Transformer Encoder", "summary": "Builds from dot-product similarity to contextual token representations, multi-head self-attention, and learned question and passage vectors."},
   {
     "label": "task",
     "title": "Task vs. Format",
@@ -171,11 +172,11 @@
       }, 
       {
         "label": "methods",
-        "summary": "Having discussed how we create datasets that can teach computers how to answer questions, we now explore how those datasets can train modern computer methods.",
+        "summary": "Having introduced encoders and datasets, we now turn to extracting answers and generating them with Transformer decoders, from causal attention and teacher forcing to instruction tuning.",
         "sections": [
           {"label": "kb", "title": "Modern Knowledge", "summary": "How we can turn natural language queries into actionable queries in databases."},
           {"label": "mr", "title": "Johnny 5 Can't Read", "summary": "However, putting information in a database is difficult and time-consuming\\dots not all information is in a database (indeed, some information defies strict database schemas).  Thus, we need to teach computers how to ``read'': where computers find information in a large text corpus and then extract the answer from it."},
-          {"label": "deep-retrieval", "title": "A Vector in a Haystack", "summary": "As deep learning became practical, the field has moved from representing text with discrete words to continuous vectors.  This is also the case for question answering.  These representations can help us find relevant answers to questions."},
+          {"label": "decoder", "title": "What an Encoder Cannot Do: The Decoder", "summary": "Causal attention, cross-attention, vocabulary prediction, and teacher forcing explain how representations become generated answers; preference modeling and RLHF follow in the leaderboards chapter."},
             {"label": "generation", "title": "We Couldn't Find an Answer, so we had to Generate One", "summary": "The deep learning revolution not just helps us find answers but to generate them.  These approaches offer both promise and peril: we can synthesize much richer information, make stuff up, encourage these agents to align to our wishes using RLHF, but it's now harder to tell if an answer is any good."},
 	              {"label": "rag", "title": "A Tawdry Rag", "summary": "Generation and retrieval are not a dichotomy, however: sometimes you can do a web search and then think about the process to better answer a question.  This approach---called \\abr{rag}---helps systems stay up to date and grounded in reality."}
         ]
@@ -184,6 +185,7 @@
         "label": "leaderboards",
         "summary": "How do we know how smart a machine is?  Like a human, we typically give it a test; the difference is that tests for computers are called `leaderboards'. Leaderboards have pros and cons, but some of the methods used to analyze human standardized tests can help us understand \\abr{ai}: in particular, item response theory, which can help make deciding the smartest computer more efficient.  Previously published as \\citet{Rodriguez-21:leaderboards} and \\citet{Gor-24}.",
           "sections": [
+              {"label": "preferences", "title": "From Measurement to Human-Feedback Training", "summary": "Connects IRT to Bradley-Terry preference comparisons and explains how a learned reward and a divergence penalty train an answering policy through RLHF."},
               {"label": "cheat", "title":"When 21 questions are worthless", "summary": "We compare how a trivia cheating scandal extends to AI leaderboards.  Questions have been memorized, the question askers offer tells and signals so that a Clever Hans can still answer the question without understanding, and exams don't necessarily measure what they claim to."},
       	      {"label": "hype", "title": "The Hype and Confusion of Leaderboards", "summary": "When a new model comes out, there is usually a hullaballoo about how it's the `best ever'.  But how do you know?  This is a job for a leaderboard, but these aren't always up to the task."},
 	      {"label": "zermelo", "title": "The Balance Between Skill and Difficulty", "summary": "In the 1920s, Ernst Zermelo came up with a formula to determine, given a chess tournament who was the best player.  This formula, building on logistic regression, became the foundation for understanding not just Elo rankings but political ideology and students' skill when taking the SAT. It also gave birth to the Bradley-Terry models needed for RLHF."},
