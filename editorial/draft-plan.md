@@ -71,3 +71,10 @@ generate blurbs, compile with bibliography and index, resolve errors and warning
 and inspect the rendered book. Review all chapter transitions, factual support,
 duplication, technical prerequisites, and length/depth balance. Do not treat a
 clean source scan as proof that the editor draft is ready.
+
+
+## Diagrams when adapting lecture scripts
+
+Author instruction (2026-10-18): when an explanation adapted from a lecture script needs a diagram, flag it explicitly so the author and editor can recover the figure from the slides. Add a local LaTeX AUTHOR comment stating what the diagram should show and, when known, the source lecture or example. Do not silently replace a necessary visual explanation with prose.
+
+Current candidates from the encoder/decoder adaptation: query–key–value attention and multiple heads in Chapter 7; causal masking versus encoder attention, and encoder–decoder cross-attention in Chapter 9. Review these with the author before retrieving or recreating figures.

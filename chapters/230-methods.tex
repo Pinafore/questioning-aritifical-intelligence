@@ -110,6 +110,7 @@ And then perhaps we better address the “Joy of Search” problems in a hybrid 
 
 \section{What an Encoder Cannot Do: The Decoder}
 \label{sec:methods:decoder}
+% AUTHOR: Diagram needed: contrast bidirectional encoder attention with causal decoder attention, then show cross-attention between encoder output and decoder states. Recover from the slides for "What BERT Can't Do: The Decoder"; the script references Vaswani and Mark Riedl diagrams.
 
 Remember what \abr{bert} stands for: Bidirectional Encoder Representations from Transformers.  The encoder in Section~\ref{sec:formats:encoder} gives us representations that we can use to retrieve evidence or mark an answer span.  But to generate an answer, we need a way to turn representations into a sequence of output tokens.
 

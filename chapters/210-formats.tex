@@ -46,6 +46,7 @@ Back in 2015, my collaborators and I used deep averaging networks to represent \
 
 \subsection{Inside a Transformer Encoder}
 \label{sec:formats:encoder}
+% AUTHOR: Diagram needed: query/key/value weighted lookup and how heads form an encoder layer. Recover from the BERT/Transformer lecture slides accompanying the shared Lecture Scripts.
 
 But how does an encoder turn words into these vectors?  \abr{bert} stands for Bidirectional Encoder Representations from Transformers~\citep{devlin-19}.  Start with an embedding for each word piece and information about its position.  The encoder transforms those initial vectors into representations that incorporate the surrounding context.
 
