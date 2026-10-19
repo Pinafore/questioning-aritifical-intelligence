@@ -273,6 +273,43 @@ more general term that includes \underline{laparoscope}.\footnote{\url{http://ww
 This is not a pedantic exception; it is a model of quality control that
 acknowledges legitimate equivalence.
 
+
+In high school and college national competitions and game shows,
+if low-level staff cannot resolve the issue by throwing out a single
+question or accepting minor variations (\underline{America} instead of
+\underline{\abr{usa}}), the low-level staff contacts the tournament
+director.
+The tournament director, who has a deeper knowledge of rules and questions, often decide the issue.
+If not, the protest goes
+through an adjudication process designed to minimize
+bias:\footnote{\smallurl{https://www.naqt.com/rules/\#protest}}
+write the summary of the dispute,
+get all parties to agree to the summary,
+and then hand the decision off to mutually agreed experts from the tournament's phone tree.
+The substance of the disagreement is communicated (without identities), and the experts apply the rules and decide.
+
+Consider what happened 
+when a particularly inept \jeopardy{} contestant\footnote{\smallurl{http://www.j-archive.com/showgame.php?game_id=6112}} did not answer \underline{laproscope} to ``Your surgeon could choose to take a look inside you with this type of fiber-optic instrument''.
+Since the van Doren scandal~\citep{freedman-97}, every television trivia contestant has an advocate assigned from an
+auditing company.
+In this case, the advocate initiated a process that went to a panel of judges who then
+ruled that \underline{endoscope} (a more general term) was also correct.
+
+The need for a similar process seems to have been well-recognized
+in the earliest days of \qa{} system bake-offs such as \abr{trec-qa}, and \citet{voorhees-08} notes that
+\begin{quote}
+    [d]ifferent \abr{qa} runs very seldom return exactly the same [answer], and it is quite difficult to determine automatically whether the difference [\dots] is significant.
+\end{quote} 
+In stark contrast to this, \qa{} datasets typically provide only a single
+string or, at best, a short list of strings. A correct answer then means
+\emph{exactly} matching these strings or having a high token overlap
+\fone{}. That framing treats answer equivalence as string similarity, but
+humans routinely accept paraphrases, aliases, and answers with the right level
+of specificity. The experiments we and others have run make the same point at a
+high level: exact matching underestimates correctness, while purely semantic
+matching can overestimate it. In other words, answer equivalence is not a
+single number; it is a set of rules and adjudications that depend on context.
+
 \paragraph{Well-Edited}
 
 \qb{} questions are created in phases. First, the \emph{author} selects the
@@ -296,17 +333,6 @@ which robs the tournament of fun (Section~\ref{sec:fun}).
 This is not just an academic concern: Natural Questions, which we discuss in Section~\ref{sec:nq:problems}, had this property: it had these ambiguout questions and arbirarily selected one of the possible answers as correct.  This arbitrary reward not only is scientifically bad (you don't know which \abr{ai} is the smartest) it also is potentially injecting cultural biases into our \abr{ai}s (when in doubt, name the American play).
 
 
-One of the benefits of contrived formats is a focus on specific phenonomena that are difficult for players, whether they are human or computer.
-\citet{dua-19} exclude questions an existing \abr{mrqa} system could answer to
-focus on challenging quantitative reasoning. One of the trivia experts
-consulted in \citet{wallace-19} crafted a question that tripped up neural
-\abr{qa} by embedding the phrase ``this author opens Crime and Punishment'' into
-a question; the top system confidently answers \underline{Fyodor Dostoyevski}.
-However, that phrase was in a longer question \question{The narrator in \textit{Cogwheels}
-by this author opens \textit{Crime and Punishment} to find it has become
-\textit{The Brothers Karamazov}}. Again, this shows the inventiveness and
-linguistic dexterity of the trivia community.
-
 In the \abr{ai} community, these are called adversarial examples.
 An early example is \citet{biggio-13}, who showed how to modify inputs
 at test time to fool classifiers, including an illustration using
@@ -329,7 +355,47 @@ turtle from Kevin Kwok and his collaborators~\citep{athalye-18}
   on using its data to see how an \abr{ai} \qb{} player could adjust its
   buzzing strategy to its opponent~\citep{he-16}.}
 
-I got into the business of writing adversarial questions when our \abr{ai} system beat Ken Jennings in 2015.  I knew how baddly our system sucked, and I knew how smart Ken is.
+I got into the business of writing adversarial questions when our \abr{ai} system beat Ken Jennings in 2015 in a quiz bowl match.
+%
+Ken Jennings is now the host of the trivia show \jeopardy{} and one of the most successful \abr{qa} players of all time: he was the first to win 74 games in a row on the show, he decisevly won a ``\abr{goat}''(The Greatest of All Time) tournament, and also was a dominant quiz bowl player in his day.
+%
+This pedigree is also why he was chosen to face off against Watson, as we detail in the next chapter.
+%
+I knew how baddly our system sucked, and I knew how smart Ken is.
+%
+It was not smarter than Ken Jennings, but it was able to beat him by rote memorization and mechanical speed.
+
+The questions were to blame.  
+%
+Even thouhg the questions were written in the \qb{} style, they did not actually follow the pyramidal structure. 
+%
+If computers \emph{and} humans were answering the questions, the clues should be ordered in decreasing difficulty for both players.
+%
+This was clearly not the case: we had obscure but easily looked up places in the first lines, quotes from poems, and math problems copy pasted from Wikipedia examples.
+%
+They were truly difficult for humans, but trivial for computers.
+
+Taking a cue from the vision community, we wanted to think about how we could write questions that were actually pyramidal for both.
+%
+One problem is that creating a visual adversarial example is easy: you can just tweak a few pixels: increase the red here, decrease the blue there, etc.
+%
+These are easy to create because they are just tweaking the input that are imperceptible to a human.
+%
+However, you can't make these slight changes to a word: while pixels are continuous, words are discrete.
+
+
+
+One of the benefits of contrived formats is a focus on specific phenonomena that are difficult for players, whether they are human or computer.
+\citet{dua-19} exclude questions an existing \abr{mrqa} system could answer to
+focus on challenging quantitative reasoning. One of the trivia experts
+consulted in \citet{wallace-19} crafted a question that tripped up neural
+\abr{qa} by embedding the phrase ``this author opens Crime and Punishment'' into
+a question; the top system confidently answers \underline{Fyodor Dostoyevski}.
+However, that phrase was in a longer question \question{The narrator in \textit{Cogwheels}
+by this author opens \textit{Crime and Punishment} to find it has become
+\textit{The Brothers Karamazov}}. Again, this shows the inventiveness and
+linguistic dexterity of the trivia community.
+
 
 \begin{figure}
   \centering
@@ -367,27 +433,6 @@ pyramidal structure complicates\footnote{But does not necessarily preclude, as
     This is the smallest counting number which is the radius of a sphere whose volume is an integer multiple of $\pi$. It is also the number of distinct real solutions to the equation $x^7-19x^5=0$. This number also gives the ratio between the volumes of a cylinder and a cone with the same heights and radii. Give this number equal to the log base four of sixty-four.
 \end{quote}} some questions (e.g., what is log base four of sixty-four).
 
-\subsection{The Case for Yearly Blind Test Sets}
-\label{sec:manchester:qb-blind}
-
-National Academic Quiz Tournaments (\abr{naqt}) professionalized these norms
-and scaled them to large tournaments. Their goal is not only to write
-questions, but to create efficient systems for determining which of many teams
-knows the most. That requires both a discriminative format and a rigorous
-answer-acceptability process.
-
-Machine \abr{qa} has not yet matched this standard. Human competitions are
-replenished continuously with new questions written and edited by domain
-experts, while \abr{qa} leaderboards often reuse stale data written by
-crowdworkers or harvested from the web. Even dynamic datasets such as
-Dynabench, or our own TrickMe interface, are small compared to the tens of
-thousands of questions written each year for human tournaments.
-
-The natural remedy is a yearly blind test set. Systems should be evaluated once
-on a fresh, hidden test set; then the questions and answers should be revealed,
-and protests should be allowed. This would move \abr{qa} leaderboards closer to
-the standards of human competitions and reduce the leakage problems discussed
-earlier.
 
 \section{The Craft of Question Writing}
 \label{sec:manchester:craft}
@@ -403,50 +448,6 @@ Similarly, data collected from the wild
 such as Natural Questions~\citep{kwiatkowski-19} or AmazonQA~\citep{gupta-19} by design have vast variations in quality.
 In the previous section, we focused on how datasets as a whole should be structured.
 Now, we focus on how specific \emph{questions} should be structured to make the dataset as valuable as possible.
-
-
-\subsection{Avoiding ambiguity and assumptions}
-\label{sec:manchester:ambiguity}
-
-Ambiguity in questions not only frustrates answerers who resolve the ambiguity `incorrectly'.
-Ambiguity also frustrates the goal of using questions to assess knowledge.
-Thus, the \abr{us} Department of Transportation explicitly bans ambiguous questions from exams for flight instructors~\citep{dot-08}; and the trivia community has likewise developed rules and norms that prevent ambiguity.
-While this is true in many contexts, examples are rife in format called \qb{}~\citep{boyd-graber-12}, whose very long questions\footnote{Like \jeopardy{}, they are not syntactically questions but still are designed to elicit knowledge-based responses; for consistency, we still call them questions.} showcase trivia writers' tactics.
-For example, \qb{} author Zhu Ying (writing for the 2005 \abr{parfait} tournament) asks participants to identify a fictional character while warning against possible confusion [emphasis added]:
-\begin{quote}
- He's {\bf not Sherlock Holmes}, but his address is 221B. He's {\bf not the Janitor on Scrubs}, but his father is played by R. Lee Ermy. [\dots] For ten points, name this misanthropic, crippled, Vicodin-dependent central character of a FOX medical drama. \\
-{\bf ANSWER:} Gregory \underline{House}, MD
-\end{quote}
-
-In contrast, \qa{} datasets often contain ambiguous and
-under-specified questions.
-While this sometimes reflects real world complexities such as actual
-under-specified or ill-formed search
-queries~\citep{faruqui-18,kwiatkowski-19}, ignoring this ambiguity is
-problematic.
-As a concrete example, Natural Questions~\citep{kwiatkowski-19} answers ``what year did the us hockey team win the Olympics'' with \underline{1960} and \underline{1980}, ignoring the \abr{us} women's team, which won in 1998 and 2018, and further assuming the query is about \emph{ice} rather than \emph{field} hockey (also an Olympic event).
-Natural Questions associates a page about the United States men's national ice hockey team, arbitrarily removing the ambiguity \textit{post hoc}.
-However, this does not resolve the ambiguity, which persists in the original question: information retrieval arbitrarily provides one of many interpretations.
-True to their name, Natural Questions are often under-specified when users ask a question online.
-
-The problem is neither that such questions exist nor that machine
-reading \abr{qa} considers questions given an associated context.
-The problem is that tasks do not explicitly acknowledge the original
-ambiguity and gloss over the implicit assumptions in the data.
-This introduces potential noise and bias (i.e., giving a bonus to systems that make
-the same assumptions as the dataset) in leaderboard rankings. 
-At best, these will become part of
-the measurement error of datasets (no dataset is perfect). 
-At worst, they will recapitulate the biases that went into the creation of the datasets.
-Then, the community will implicitly equate the biases with correctness: you get high scores if you 
-adopt this set of assumptions.
-These enter into real-world systems, further perpetuating the bias.
-Playtesting can reveal these issues (Section~\ref{sec:fun}), as implicit assumptions 
-can rob a player of correctly answered questions.
-If you wanted to answer \underline{2014} to ``when did Michigan last win the championship''---when the Michigan State Spartans won the Women's Cross Country championship---and you cannot because you chose the wrong school, the wrong sport, and the wrong gender,
-you would complain as a player; researchers instead discover latent assumptions that creep into the data.\footnote{Where to draw the line is a matter of judgment; computers---which lack common sense---might find questions ambiguous where humans would not.}
-
-It is worth emphasizing that this is not a purely hypothetical problem. For example, Open Domain Retrieval Question Answering~\citep{lee-19} deliberately avoids providing a reference context for the question in its framing but, in re-purposing data such as Natural Questions, opaquely relies on it for the gold answers.
 
 \subsection{Avoiding superficial evaluations}
 
@@ -472,41 +473,6 @@ Despite these conventions, no pre-defined set of answers is perfect,
 and every worthwhile trivia competition has a process for adjudicating
 answers.
 
-In high school and college national competitions and game shows,
-if low-level staff cannot resolve the issue by throwing out a single
-question or accepting minor variations (\underline{America} instead of
-\underline{\abr{usa}}), the low-level staff contacts the tournament
-director.
-The tournament director, who has a deeper knowledge of rules and questions, often decide the issue.
-If not, the protest goes
-through an adjudication process designed to minimize
-bias:\footnote{\smallurl{https://www.naqt.com/rules/\#protest}}
-write the summary of the dispute,
-get all parties to agree to the summary,
-and then hand the decision off to mutually agreed experts from the tournament's phone tree.
-The substance of the disagreement is communicated (without identities), and the experts apply the rules and decide.
-
-Consider what happened 
-when a particularly inept \jeopardy{} contestant\footnote{\smallurl{http://www.j-archive.com/showgame.php?game_id=6112}} did not answer \underline{laproscope} to ``Your surgeon could choose to take a look inside you with this type of fiber-optic instrument''.
-Since the van Doren scandal~\citep{freedman-97}, every television trivia contestant has an advocate assigned from an
-auditing company.
-In this case, the advocate initiated a process that went to a panel of judges who then
-ruled that \underline{endoscope} (a more general term) was also correct.
-
-The need for a similar process seems to have been well-recognized
-in the earliest days of \qa{} system bake-offs such as \abr{trec-qa}, and \citet{voorhees-08} notes that
-\begin{quote}
-    [d]ifferent \abr{qa} runs very seldom return exactly the same [answer], and it is quite difficult to determine automatically whether the difference [\dots] is significant.
-\end{quote} 
-In stark contrast to this, \qa{} datasets typically provide only a single
-string or, at best, a short list of strings. A correct answer then means
-\emph{exactly} matching these strings or having a high token overlap
-\fone{}. That framing treats answer equivalence as string similarity, but
-humans routinely accept paraphrases, aliases, and answers with the right level
-of specificity. The experiments we and others have run make the same point at a
-high level: exact matching underestimates correctness, while purely semantic
-matching can overestimate it. In other words, answer equivalence is not a
-single number; it is a set of rules and adjudications that depend on context.
 
 There is a practical reason the community clings to exact match: it is fast,
 transparent, and easy to reproduce. But it also bakes in a narrow view of

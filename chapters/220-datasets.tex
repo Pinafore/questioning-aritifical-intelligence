@@ -186,6 +186,52 @@ And to be clear, that’s not what happens if you ask this to ChatGPT … it doe
 
 But we can build such a system—again, my DMs are open—Natural Questions are still the best we have.
 
+
+
+\subsection{Avoiding ambiguity and assumptions}
+\label{sec:manchester:ambiguity}
+
+Ambiguity in questions not only frustrates answerers who resolve the ambiguity `incorrectly'.
+Ambiguity also frustrates the goal of using questions to assess knowledge.
+Thus, the \abr{us} Department of Transportation explicitly bans ambiguous questions from exams for flight instructors~\citep{dot-08}; and the trivia community has likewise developed rules and norms that prevent ambiguity.
+While this is true in many contexts, examples are rife in format called \qb{}~\citep{boyd-graber-12}, whose very long questions\footnote{Like \jeopardy{}, they are not syntactically questions but still are designed to elicit knowledge-based responses; for consistency, we still call them questions.} showcase trivia writers' tactics.
+For example, \qb{} author Zhu Ying (writing for the 2005 \abr{parfait} tournament) asks participants to identify a fictional character while warning against possible confusion [emphasis added]:
+\begin{quote}
+ He's {\bf not Sherlock Holmes}, but his address is 221B. He's {\bf not the Janitor on Scrubs}, but his father is played by R. Lee Ermy. [\dots] For ten points, name this misanthropic, crippled, Vicodin-dependent central character of a FOX medical drama. \\
+{\bf ANSWER:} Gregory \underline{House}, MD
+\end{quote}
+
+In contrast, \qa{} datasets often contain ambiguous and
+under-specified questions.
+While this sometimes reflects real world complexities such as actual
+under-specified or ill-formed search
+queries~\citep{faruqui-18,kwiatkowski-19}, ignoring this ambiguity is
+problematic.
+As a concrete example, Natural Questions~\citep{kwiatkowski-19} answers ``what year did the us hockey team win the Olympics'' with \underline{1960} and \underline{1980}, ignoring the \abr{us} women's team, which won in 1998 and 2018, and further assuming the query is about \emph{ice} rather than \emph{field} hockey (also an Olympic event).
+Natural Questions associates a page about the United States men's national ice hockey team, arbitrarily removing the ambiguity \textit{post hoc}.
+However, this does not resolve the ambiguity, which persists in the original question: information retrieval arbitrarily provides one of many interpretations.
+True to their name, Natural Questions are often under-specified when users ask a question online.
+
+The problem is neither that such questions exist nor that machine
+reading \abr{qa} considers questions given an associated context.
+The problem is that tasks do not explicitly acknowledge the original
+ambiguity and gloss over the implicit assumptions in the data.
+This introduces potential noise and bias (i.e., giving a bonus to systems that make
+the same assumptions as the dataset) in leaderboard rankings. 
+At best, these will become part of
+the measurement error of datasets (no dataset is perfect). 
+At worst, they will recapitulate the biases that went into the creation of the datasets.
+Then, the community will implicitly equate the biases with correctness: you get high scores if you 
+adopt this set of assumptions.
+These enter into real-world systems, further perpetuating the bias.
+Playtesting can reveal these issues (Section~\ref{sec:fun}), as implicit assumptions 
+can rob a player of correctly answered questions.
+If you wanted to answer \underline{2014} to ``when did Michigan last win the championship''---when the Michigan State Spartans won the Women's Cross Country championship---and you cannot because you chose the wrong school, the wrong sport, and the wrong gender,
+you would complain as a player; researchers instead discover latent assumptions that creep into the data.\footnote{Where to draw the line is a matter of judgment; computers---which lack common sense---might find questions ambiguous where humans would not.}
+
+It is worth emphasizing that this is not a purely hypothetical problem. For example, Open Domain Retrieval Question Answering~\citep{lee-19} deliberately avoids providing a reference context for the question in its framing but, in re-purposing data such as Natural Questions, opaquely relies on it for the gold answers.
+
+
 \section{Is \abr{iid} the Right Choice of Data?}
 \label{sec:nq:iid}
 

@@ -1,1 +1,23 @@
 
+
+\subsection{The Case for Yearly Blind Test Sets}
+\label{sec:manchester:qb-blind}
+
+National Academic Quiz Tournaments (\abr{naqt}) professionalized these norms
+and scaled them to large tournaments. Their goal is not only to write
+questions, but to create efficient systems for determining which of many teams
+knows the most. That requires both a discriminative format and a rigorous
+answer-acceptability process.
+
+Machine \abr{qa} has not yet matched this standard. Human competitions are
+replenished continuously with new questions written and edited by domain
+experts, while \abr{qa} leaderboards often reuse stale data written by
+crowdworkers or harvested from the web. Even dynamic datasets such as
+Dynabench, or our own TrickMe interface, are small compared to the tens of
+thousands of questions written each year for human tournaments.
+
+The natural remedy is a yearly blind test set. Systems should be evaluated once
+on a fresh, hidden test set; then the questions and answers should be revealed,
+and protests should be allowed. This would move \abr{qa} leaderboards closer to
+the standards of human competitions and reduce the leakage problems discussed
+earlier.
