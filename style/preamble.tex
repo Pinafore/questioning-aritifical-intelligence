@@ -80,6 +80,9 @@
                 \@latex@warning
                 {Citation `\@citeb' on page \thepage \space undefined}}%
             {\@cite@ofmt{\csname b@\@citeb\endcsname}}}}{#1}}
+\AtBeginDocument{%
+  \xpatchcmd{\@setref}{\bfseries}{\missingreference}{}{}%
+}
 \makeatother
 
 \newcommand{\rotlabel}[1]{%

@@ -1,8 +1,10 @@
 
 
 The history of artificial intelligence begins in many ways with a
-question answering game called the Turing Test.  This idea came out of the research of a
-researcher at the University of Manchester named Alan Turing.
+question answering game called the Turing Test.
+%
+This idea came from Alan Turing, a researcher at the University of
+Manchester.
 %
 But the history is much deeper than that; there are spies,
 misrepresentations, deceptions, and attempting to unmask pretenders.
@@ -34,26 +36,26 @@ underneath his name, Figure~\ref{fig:turing:bench}).
 While now the story is well known, at the time it was one of the
 world's most closely kept secrets.
 %
-\jbgcomment{Check spelling / add cite}
 To prevent the Germans from knowing that Turing (and the rest of the
 Bletchley Park team) had cracked the code, the British fabricated
 alternate explanations of how they gathered valuable intelligence.
 %
-At one level they attributed the intelligence to a British-run spy
-ring in German called `Boniface', and then was called
-`Ultra'~\citep{gilbert-15}.
-% Footnote 1653 
+At one level, they attributed the intelligence to a British-run spy
+ring in Germany called `Boniface'; the intelligence itself was
+code-named `Ultra'~\citep{gilbert-15}.
+% Footnote 1653
 %
 For example the British engineered a flyover by a
 reconnaissance plane to ``spot'' a German ship as an alternate
 explanation for how the British knew to attack them~\citep{wilcox-01}.
 
-Turing's life is incredible.  Beyond saving thousands of lives
-by breaking German codes, Turing hypothesized what a computer could
-do.
+Turing's life is incredible.
 %
-His abstraction of a Turing machine is the field's definition of what
-it means to know what a computer can do.
+Beyond saving thousands of lives by breaking German codes, Turing
+hypothesized what a computer could do.
+%
+His abstraction of a Turing machine gives the field a formal yardstick
+for what computers can do.
 %
 If a problem can be solved on a theoretical Turing machine, we call it
 ``computable''; any computer made using standard logic\footnote{E.g.,
@@ -64,7 +66,7 @@ the problem.\footnote{Assuming you have sufficient memory and time.}
 \section{The Imitation Game}
 \label{sec:turing:imitation}
 
-In addition to the deception that the British government did to hide
+In addition to the deception that the British government used to hide
 Turing's work, Turing himself had to deceive the British government
 about his own life.
 %
@@ -96,8 +98,9 @@ Books such as Andrew Hodges's \textit{Alan Turing: The Enigma}~\citep{hodges-83}
 and films such as \textit{The Imitation Game}~\citep{tyldum-14} have been devoted
 to his codebreaking and his bittersweet personal life.
 %
-But Turing is also a game designer.  Quoting from Bishop’s
-description:
+But Turing is also a game designer.
+%
+Quoting from \citet{bishop-10-imitation-game}'s description:
 \begin{quote}
   Turing called for a human interrogator (C) to hold a conversation
   with a male and female respondent (A and B) with whom the
@@ -109,14 +112,14 @@ description:
 
 This too is a deceptive exercise: the man must lie to win the game.
 %
-The key to correctly deciding the genders of
-the players is more about determining which player lacks key knowledge
-about the experience of being a man or a woman.\footnote{What makes
-  the Turing Test more poignant is that in a country where homosexuality is illegal, every
-  interaction of Turing is dangerous: Turing is pretending to be something that
-  he is not but has to present himself as if he were a heterosexual
+The key to correctly deciding the genders of the players is determining
+which player lacks key knowledge about the experience of being a man or a
+woman.\footnote{What makes the Turing Test more poignant is that in a
+  country where homosexuality is illegal, every interaction of Turing is
+  dangerous: Turing is pretending to be something that he is not but has
+  to present himself as if he were a heterosexual
   man.  Every conversation is a possible interrogation to see if he can
-  ``pass''.  There's no evidence evidence to suggest that this was an
+  ``pass''.  There's no evidence to suggest that this was an
   inspiration for his first Turing Test, however.}
 
 This is hard because there are lots of ``tells'' that can expose
@@ -130,24 +133,23 @@ And while an impostor can read many accounts to get an idea of what
 someone has said about these topics, simply parroting these stories does not
 equate to understanding.
 %
-This is analogous to the current \abr{ai}s: these models have effectively read 
+This is analogous to the current \abr{ai}s: these models have effectively read
 all of the
 Internet, and the challenge is to measure whether all of that ingested
 knowledge can fuel an incipient intelligence.
 
 \section{The Second Turing Test}
 
-With that being said, lets turn this back to \abr{ai}.
+With that being said, let's turn this back to \abr{ai}.
 %
 Turing then thought,
 \emph{let’s replace the man with a computer}.
 %
 In other words, the computer is doing the deception.
 %
-If
-the interrogator cannot determine whether the entity on the other end
-of the teletype is a human or a machine (even when they're both
-claiming to be a machine), then the machine has displayed something that looks like
+If the interrogator cannot determine whether the entity on the other end
+of the teletype is a human or a machine (even when they're both claiming
+to be a machine), then the machine has displayed something that looks like
 intelligence.
 
 Why do we need this silly game?
@@ -161,13 +163,12 @@ answering questions about any topic is a general enough test of
 intelligence that it would require something of equivalent
 intelligence to a human to win the game.
 
-To recap, to have a Turing test, you need \textbf{A Skilled
+To recap, to have a Turing Test, you need \textbf{A Skilled
   Interrogator}, \textbf{An Unrestricted Domain}, and \textbf{Knowledge
   that You're Playing the Game}.
 %
-As we'll see in a second, many of the times have claimed that the
-Turing Test has been past fail because one of these ingredients has
-been lacking.
+As we'll see in a second, many claims that the Turing Test has been
+passed fail because one of these ingredients has been lacking.
 
 
 \subsection{No, the Turing Test has not been Solved}
@@ -176,36 +177,40 @@ been lacking.
 
 But I want to emphasize not just the broad strokes of the Turing Test,
 but why we need to think critically about things that call themselves
-the Turing test.  Also, it’s more fun than talking abstractly about
-the Turing test.
+the Turing Test.
+%
+Also, it’s more fun than talking abstractly about the Turing Test.
 
 Let’s start with \abr{parry}, a system designed by Kenneth Mark Colby
-to simulate a paranoid schizophrenic~\citep{Colby-81}.  And when you connected
-psychiatrists to either real patients or \abr{parry}, they couldn’t
-tell the difference.  So here the problem is the judges.  Not because
-they aren’t experts--they are--but because their backgrounds prevent
-them from being effective judges.
-
-Psychiatrists are doctors bound by the hippocratic oath: they cannot
-ask probing, in-depth questions that might harm a patient.  So, thus,
-this really isn’t a Turing test.
+to simulate a paranoid schizophrenic~\citep{Colby-81}.
 %
-The interrogators weren't unchained to truly ask whatever questions
-they needed to ask.
+When you connected psychiatrists to either real patients or \abr{parry},
+they couldn’t tell the difference.
+%
+So here the problem is the judges: not because they aren’t experts--they
+are--but because their backgrounds prevent them from being effective
+judges.
+
+Psychiatrists are doctors bound by the Hippocratic oath: they cannot
+ask probing, in-depth questions that might harm a patient.
+%
+Thus, this really isn’t a Turing Test.
+%
+The interrogators weren't free to ask whatever questions they needed to
+ask.
 
 Stu Shieber has a great take on this problem; I’d encourage you to
 read the whole thing.
 %
-Rather, instead of a ``take'', it's more of a ``takedown'' of a competition 
-called the Loebner
-prize that purports to implement the Turing Test.
+Instead of a ``take'', it's more of a ``takedown'' of a competition
+called the Loebner prize that purports to implement the Turing Test.
 %
-This was a part of a more general trend of over-promising what \abr{ai}
+This was part of a more general trend of over-promising what \abr{ai}
 can do but under-delivering even in 1991.
 %
-One of the conditions of the Loebner prise was that the judges could
-not ask tricky questions or use guile and significantly limited the
-time judges could interact with a program.
+One of the conditions of the Loebner prize was that the judges could not
+ask tricky questions or use guile; the competition also significantly
+limited the time judges could interact with a program.
 
 Taken together, \citet{shieber-94} contends
 \begin{quote}
@@ -220,7 +225,7 @@ prize committee is even a coherent one.
 \end{quote}
 
 
-Another example that some people claim is an example of \abr{ai} passing the
+Another system sometimes claimed as an example of \abr{ai} passing the
 Turing Test is Google Duplex: in Google's 2018 demonstration, the system
 calls a restaurant to make a reservation~\citep{leviathan-18-duplex}.\footnote{Google's
   announcement includes recordings of the restaurant call and a hair salon
@@ -237,7 +242,7 @@ computer: they're there to book a table.
 The supposed judge doesn't know they're a judge!
 
 As I write this in \currentyear{}, a reader of this chapter might think:
-so many people are fooled by \abr{ai} online.  
+so many people are fooled by \abr{ai} online.
 %
 And there's scientific
 evidence that distinguishing human from machine content is difficult:
@@ -333,7 +338,7 @@ The questions we ask, and the freedom to keep asking them, matter.
   \rowcolors{2}{gray!10}{white}
 \begin{tabular}{p{0.3cm}p{3.05cm}p{3.05cm}p{3.05cm}}
 \toprule
-& 
+&
 \textbf{Original Imitation Game} &
 \textbf{First Turing Test} &
 \textbf{Second Turing Test} \\
@@ -362,7 +367,7 @@ Respond in a way that is indistinguishable from the human participant, so that t
   Turing Test is conventionally what people mean when people talk
   about \emph{The} Turing Test.  However, I agree with
   \citet{Sterrett-00}'s take that the \textbf{First Turing Test} is
-  implied by Turing's proposal, and in many ways make more sense.}
+  implied by Turing's proposal, and in many ways makes more sense.}
 \label{table:turing:tests}
 \end{table}
 
@@ -380,15 +385,15 @@ of his eponymous test (Table~\ref{table:turing:tests}).\footnote{This is an argu
 There are actually two ways of interpreting ``replace the man with a
 computer'' in the Imitation Game.
 %
-A more literal interpretation would be a computer and a man would both
-compete who could best impersonate a woman.
+A more literal interpretation would have a computer and a man both
+compete to see who could best impersonate a woman.
 
 Sterrett argues that this is a more fair test because it puts the
-human and the man in a more similar role: they are both pretending to
-be something they are not.
+computer and the man in a more similar role: they are both pretending
+to be something they are not.
 %
 \jbgcomment{check cite}
-\citet{Sterrett-00} says that a dullard in the Second Turing test must do nothing more
+\citet{Sterrett-00} says that a dullard in the Second Turing Test must do nothing more
 than answer questions honestly; there's no skill involved.
 %
 As we argue in Chapter~\ref{ch:leaderboards}, we are often interested
@@ -402,21 +407,21 @@ success.\footnote{While I am also a fan of this interpretation of the
 be a woman.}
 
 What I like about this opportunity for comparison is that it requires
-humans and computers to explicitly use theory of mind~\citep{gopnik-88}: 
+humans and computers to explicitly use theory of mind~\citep{gopnik-88}:
 they must create a fictitious persona that will be probed by the
-interogator and also craft responses in a way that will elicit the
+interrogator and also craft responses in a way that will elicit the
 correct responses from the interrogator.\footnote{If asking questions
   about gender is off-putting, you could easily replace this with an
   American pretending to be a Brit; the same principles apply.}
 
 But why should we put deception on such a high pedestal?
 %
-A cynic would that all humans lie, so we we want to have an \abr{ai}
-that can do cognitively difficult tasks, it should also be able to lie as well
-as a human.
+A cynic would say that all humans lie, so if we want to have an \abr{ai}
+that can do cognitively difficult tasks, it should also be able to lie as
+well as a human.
 %
 \citet{hendricksen-24} argues that children learning to lie is a
-good outcome, lying shows that the have mastered important skills:
+good outcome: lying shows that they have mastered important skills:
 knowing what others know (the aforementioned ``theory of mind''),
 navigating social interactions (``self control''), and being able to
 convey the veracity of your statements to others (``presentation'').
@@ -427,7 +432,7 @@ the truth.
 And this is what makes Sterrett's argument attractive from a
 measurement perspective.
 %
-When a computer impersonating to be a woman is pitted against a man
+When a computer impersonating a woman is pitted against a man
 attempting to answer as a woman, we can look at their relative success
 rates.
 %
@@ -443,7 +448,7 @@ the popular coverage surrounding its publication in
   paper, it reinforces this false narrative of overselling \abr{ai}.}
 
 
-Diplomacy is a seven-player game set at the eve of Word War I, and
+Diplomacy is a seven-player game set on the eve of World War I, and
 each player takes the role of one of the great powers of Europe.
 %
 The goal is to take over the entire map through skillfully moving
@@ -451,8 +456,8 @@ fleets and armies across the map.
 %
 It's hard to best the \textit{Times}'s description of the game~\citep{fox-13}:
 \begin{quote}
-What emerges from these sessions, which govern the moves on the board, 
-is a world of quicksilver alliances\dots  
+What emerges from these sessions, which govern the moves on the board,
+is a world of quicksilver alliances\dots
 Foe is friend and friend is foe, and it is seldom possible to tell the two apart.
 \end{quote}
 
@@ -506,19 +511,21 @@ indefatigable and can outscore the weak humans.
 %
 Does that mean that it has mastered baseball?
 %
-I think most people would argue that no, there’s more to baseball than hitting dingers: you need to run, catch, throw a ball, pitch curveballs and sliders. 
+I think most people would argue that no, there’s more to baseball than
+hitting dingers: you need to run, catch, throw a ball, pitch curveballs,
+and sliders.
 
-It’s the same with Diplomacy: to master Diplomacy, you need to be able to detect lies 
-and imminent betrayal, from other players.
+It’s the same with Diplomacy: to master Diplomacy, you need to be able to
+detect lies and imminent betrayal from other players.
 %
-And I’d also say as a sometime amateur player of Diplomacy, you need to \emph{execute} 
-betrayal as well. 
+And I’d also say as a sometime amateur player of Diplomacy, you need to
+\emph{execute} betrayal as well.
 %
-This was also the conclusion of the excellent \textit{Economist} write up of \abr{cicero}, 
-although I disagree with its assessment that another game 
+This was also the conclusion of the excellent \textit{Economist} write-up
+of \abr{cicero}, although I disagree with its assessment that another game
 ``has fallen''~\citep{economist2022cicero}:
 \begin{quote}
-Seasoned Diplomacy players will, though, want to know something else: has it 
+Seasoned Diplomacy players will, though, want to know something else: has it
 learned how to stab? Stabbing—saying one thing and doing another (especially, attacking a current ally) is seen by many as Diplomacy’s defining feature. But, though Cicero did ``strategically withhold information from players in gameplay'', it did not actually stab any of its opponents. Perhaps it was this final lack of Machiavellian ruthlessness which explains why it was only in the top 10\%, and not victor ludorum.
 \end{quote}
 
@@ -532,17 +539,18 @@ was told that a machine might be among them.
 Fooling an unsuspecting opponent is not the same as surviving
 questioning by an interrogator who knows that deception is the point.
 
-As is common with understanding \abr{ai} claims, if you focus the
+As is common when trying to understand \abr{ai} claims, if you focus the
 evaluation on what you care about, a different story emerges.
 %
-Thus, my student Joy Wongkamjan~\citep{Wongkamjan-24} tried to answer was Cicero
-a persuasive and deceptive negotiator, or because it was simply
-an exceptionally strong tactical player?
+Thus, my student Joy Wongkamjan~\citep{Wongkamjan-24} asked whether
+\abr{cicero} was a persuasive and deceptive negotiator, or whether it was
+simply an exceptionally strong tactical player.
 %
-Across two dozen games and more than 200 hours of human play, Cicero does indeed win against human opponents---often decisively---but
-that its language falls short of the social intelligence implied by
-popular coverage: other humans can reliably detect \abr{cicero},
-\abr{cicero} is less persuasive than humans, and humans players trust
+Across two dozen games and more than 200 hours of human play, \abr{cicero}
+does indeed win against human opponents---often decisively---but its
+language falls short of the social intelligence implied by popular
+coverage: other humans can reliably detect \abr{cicero}, \abr{cicero} is
+less persuasive than humans, and human players trust
 \abr{cicero} less than humans even though \abr{cicero} lies less than
 humans.
 
@@ -563,44 +571,47 @@ meant to probe.
 \label{sec:turing:test}
 
 So let’s be true to the spirit of Turing’s idea of a parlor game.
+%
 Let’s make it visible to the public, let’s refine the rules and the
-judges to make it more realistic and more fun.  By putting these games
-in the public view and letting judges learn the best strategies for
-discerning humans from computers, both sides can become worthier
-adversaries.
+judges to make it more realistic and more fun.
+%
+By putting these games in the public view and letting judges learn the
+best strategies for discerning humans from computers, both sides can
+become worthier adversaries.
 
 
 And although few people are running Turing Test experiments
 today,\footnote{And even those who are running them are doing it as a
   one-off; as far as I know, no major company has a Turing Test
-  division.} it
+  division.} they
 helps motivate the kind of skills we want to see in our \abr{ai}s and
 what it would take to scientifically measure those skills.
 %
-It also helps it easier to understand why asking the right questions
-in the right way are so important: we won't have a valid evaluation (Chapter~\ref{ch:leaderboards}) if
-the judge is not effective.
+They also make it easier to understand why asking the right questions in
+the right way is so important: we won't have a valid evaluation
+(Chapter~\ref{ch:leaderboards}) if the judge is not effective.
 %
-And from a public interest perspective,  I think putting this slow advance of ever more capable computers
-answering trickier questions should be out in front of the public.
+And from a public interest perspective, I think this slow advance of ever
+more capable computers answering trickier questions should happen in
+front of the public.
 %
 Not just to keep the interrogators honest but to also keep the
 companies and interests that sell \abr{ai} honest, as deception is not
 just a part of the Turing Test, it's an unfortunate part of our
 increasingly \abr{ai}-infused reality (Chapter~\ref{ch:sci_fi}).
 %
-The public should know not just how to avoid \abr{ai} scams but to
-know the limits of AI, and this is a fine way to make
-that public.
+The public should know not just how to avoid \abr{ai} scams but also the
+limits of \abr{ai}, and this is a fine way to make those limits public.
 %
 But on the other side of the coin, it is also worthwhile
-for the public to know when AI has really advance\dots the public has a
-right to know how computers react to challenging scenarios.  Better to
-see them first played out for fun in a game than in high-stakes
+for the public to know when \abr{ai} has really advanced\dots the public
+has a right to know how computers react to challenging scenarios.
+%
+Better to see them first played out for fun in a game than in high-stakes
 transactions, a doctor’s office, or a courtroom.
 
 But above all, this only works if we have good questions, so if we
-believe that the Turing test really is the holy grail of \abr{ai}, we
+believe that the Turing Test really is the holy grail of \abr{ai}, we
 as humans need to know how to ask the right questions and computers
 need to be able to answer any question that’s thrown at them.
 %
