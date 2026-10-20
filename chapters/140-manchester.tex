@@ -71,18 +71,22 @@ riddle is not information seeking: the Sphinx does not need to know what creatur
 %
 Rather, the Sphinx's riddle is meant to highlight the three phases of \OE{}dipus's life: in youth he cursed, in adulthood he suffered the consequences, and in his blind dottage he dispensed advice that nobody listened to at Colonus.
 % JBG(todo): I did this from memory, check and add citations
-We also covered in a previous chapter how targetd questions awaken
+We also covered in a previous chapter how targeted questions awaken
 understanding via the Socratic method, where questions guide the
 answerer to insight~\cite{trepanier-17}.
 
 \paragraph{To Compare: Granada Studios and \textit{University Challenge}}
 Manchester's Granada Studios created a quiz show called
-\textit{University Challenge}~\citep{taylor_mcnulty_meek,baber-15}.
+\textit{University Challenge}, whose format and history make it a useful
+template for competitive question answering~\citep{taylor_mcnulty_meek}. For
+the broader lineage connecting \textit{University Challenge}, \textit{College
+Bowl}, and \quizbowl{}, see \citet{baber-15}.
 %
-The host knows the answer, so the the goal not to satisfy a
-user's information need.  Instead, the goal is to see whether which four students---the ones from Balliol College or Sheffield---are smarter.
+The host knows the answer, so the goal is not to satisfy a
+user's information need. Instead, the goal is to see which four students---the
+ones from Balliol College or Sheffield---are smarter.
 %
-In the united states, this unique competition is called \quizbowl{}, and it has unique properties that inform the development and evaluation of \abr{ai}.
+In the United States, this unique competition is called \quizbowl{}, and it has unique properties that inform the development and evaluation of \abr{ai}.
 %
 This chapter talks about how the philosophy of \quizbowl{} can inform
 the authoring of individual questions.
@@ -197,7 +201,7 @@ the criticism Ken Jennings offered of the \jeopardy{} buzzer
 system~\cite[he first earned his buzzer callouses playing \quizbowl{}
 at Brigham Young University in Provo, Utah]{jennings-06}.
 %
-But unless the questions are esquisitely designed, you'll end up with
+But unless the questions are exquisitely designed, you'll end up with
 a test of reflexes, knowledgeable players will simply buzz when they
 believe they have a greater than fifty percent chance of answering the
 question correctly.
@@ -237,7 +241,7 @@ Figure~\ref{fig:ex-qb} are, but in real \qb{} tournaments they are not
 finished because the questions are \emph{interruptible}.
 %
 While few people know about the refrigerator Einstein designed (even
-physicts), most practicing physicists do know about his summation
+physicists), most practicing physicists do know about his summation
 convention, and those familiar with the history of science probably
 know about his 1905 \textit{annus mirabilis} that lead to his Nobel
 prize.  Finally, just about everyone knows about his connection to the
@@ -274,7 +278,7 @@ incorrect for answering \underline{endoscope} to \question{Your
   fiber-optic instrument.}  I didn't have to do anything: a ``player
 advocate'' (a staple of California gameshows after the cheating
 scandals of the 1950s that we discuss in
-Chapter~\ref{ch:leaderboards}) jumped into action, and the issue was raised to a group of on call judges off site.\footnote{I haven't been able to find a source to support this, but I think this is to not just keep the filming studio less crowded but also to prevent sublt biases from affecting the judges: they only hear the candidate answer.}
+Chapter~\ref{ch:leaderboards}) jumped into action, and the issue was raised to a group of on-call judges off site.\footnote{I haven't been able to find a source to support this, but I think this is to not just keep the filming studio less crowded but also to prevent subtle biases from affecting the judges: they only hear the candidate answer.}
 \jbgcomment{Ping Clair McNair for her take on this %jbg(todo)}
 }
 After, judges ruled the response acceptable because \underline{endoscope} is a
@@ -324,20 +328,49 @@ diverse, has uniform difficulty, and is without repeats.
 \paragraph{Unnatural}
 \label{sec:manchester:unnatural}
 
-Trivia questions are fake: the asker already knows the answer. But they are no
+Trivia questions are fake: the asker already knows the answer.
+ But they are no
 more fake than a course's final exam, which---like leaderboards---is designed
-to test knowledge. Experts know when questions are ambiguous
-(Section~\ref{sec:manchester:ambiguity}); while \question{what play has a character
-whose father is dead} could be \textit{Hamlet}, \textit{Antigone}, or
+to test knowledge.
+%
+Because experts know when questions are ambiguous, they won't ask questions like \question{what play has a character
+whose father is dead}.
+The answer could be \textit{Hamlet}, \textit{Antigone}, or
 \textit{Proof} (among others I am not thinking of), a good writer's knowledge avoids the ambiguity. When authors
 omit these cues, the question is derided as a ``hose''~\citep{2013-eltinge},
 which robs the tournament of fun (Section~\ref{sec:fun}).
 
-This is not just an academic concern: Natural Questions, which we discuss in Section~\ref{sec:nq:problems}, had this property: it had these ambiguout questions and arbirarily selected one of the possible answers as correct.  This arbitrary reward not only is scientifically bad (you don't know which \abr{ai} is the smartest) it also is potentially injecting cultural biases into our \abr{ai}s (when in doubt, name the American play).
+This is not just an academic concern: Natural Questions, which we discuss in Section~\ref{sec:nq:problems}, had this property: it had ambiguous questions and arbitrarily selected one of the possible answers as correct.
+%
+This arbitrary reward not only is scientifically bad (you don't know which \abr{ai} is the smartest) it also is potentially injecting cultural biases into our \abr{ai}s (when in doubt, name the American play).
 
 
-In the \abr{ai} community, these are called adversarial examples.
-An early example is \citet{biggio-13}, who showed how to modify inputs
+\paragraph{Complicated}
+
+\qb{} is more complex than other datasets. Unlike other datasets where you just
+need to decide \emph{what} to answer, in \qb{} you also need to choose
+\emph{when} to answer the question.\footnote{This complex methodology can be an
+  advantage. The underlying mechanisms of systems that can play \qb{} (e.g.,
+  reinforcement learning) share properties with other tasks, such as
+  simultaneous translation for both feature-based systems~\citep{grissom:he:boyd-graber:morgan-2014}
+  and neural models~\citep{ma-etal-2019-stacl},
+  human incremental processing in psycholinguistic theory~\citep{levy-08}
+  and empirical reading behavior~\citep{levy-11}, and opponent
+  modeling~\citep{he-16}.}
+While this improves the dataset's discrimination, it can hurt popularity
+because you cannot copy/paste code from other \abr{qa} tasks. The cumbersome
+pyramidal structure complicates\footnote{But does not necessarily preclude, as
+  the Illinois High School Scholastic Bowl Coaches Association shows:
+\begin{quote}
+    This is the smallest counting number which is the radius of a sphere whose volume is an integer multiple of $\pi$. It is also the number of distinct real solutions to the equation $x^7-19x^5=0$. This number also gives the ratio between the volumes of a cylinder and a cone with the same heights and radii. Give this number equal to the log base four of sixty-four.
+\end{quote}} some questions (e.g., what is log base four of sixty-four).
+
+
+\section{Specifically Testing Computer Ability}
+
+While the Manchester Paradigm is inspired by human-derived tests,
+in the \abr{ai} community, questions that specifically test computer ability are called adversarial examples.
+An early example\footnote{Though they don't use the term ``adversarial''} is \citet{biggio-13}, who showed how to modify inputs
 at test time to fool classifiers, including an illustration using
 \abr{mnist} handwritten digits (Figure~\ref{fig:manchester:biggio-mnist}).\footnote{\abr{mnist} was built from
   \abr{nist}'s handwritten-digit collections, another connection to the
@@ -381,17 +414,17 @@ turtle from Kevin Kwok and his collaborators~\citep{athalye-18}
 
 I got into the business of writing adversarial questions when our \abr{ai} system beat Ken Jennings in 2015 in a quiz bowl match.
 %
-Ken Jennings is now the host of the trivia show \jeopardy{} and one of the most successful \abr{qa} players of all time: he was the first to win 74 games in a row on the show, he decisevly won a ``\abr{goat}''(The Greatest of All Time) tournament, and also was a dominant quiz bowl player in his day.
+Ken Jennings is now the host of the trivia show \jeopardy{} and one of the most successful \abr{qa} players of all time: he was the first to win 74 games in a row on the show, he decisively won a ``\abr{goat}'' (The Greatest of All Time) tournament, and also was a dominant quiz bowl player in his day.
 %
 This pedigree is also why he was chosen to face off against Watson, as we detail in the next chapter.
 %
-I knew how baddly our system sucked, and I knew how smart Ken is.
+I knew how badly our system sucked, and I knew how smart Ken is.
 %
 It was not smarter than Ken Jennings, but it was able to beat him by rote memorization and mechanical speed.
 
 The questions were to blame.  
 %
-Even thouhg the questions were written in the \qb{} style, they did not actually follow the pyramidal structure. 
+Even though the questions were written in the \qb{} style, they did not actually follow the pyramidal structure.
 %
 If computers \emph{and} humans were answering the questions, the clues should be ordered in decreasing difficulty for both players.
 %
@@ -415,10 +448,12 @@ top guesses in another, and saw highlighted ``evidence'' for why the model
 preferred those answers. If the model found the right answer too early, the
 author could rewrite the clue, replace a stock phrase, or push the giveaway
 later. The target was not gibberish that merely broke a classifier; it was a
-normal, playable \qb{} question that remained fair to humans while delaying or
-defeating the machine. Dynabench later generalized this model-in-the-loop
-pattern into a platform for dynamic data collection across tasks
-(Figure~\ref{fig:manchester:dynabench-interface}).
+normal, playable \qb{} question that remained fair to humans---i.e., respecting the norms of the Manchester Paradigm---while delaying or
+defeating the machine.
+%
+Dynabench from Facebook (now Meta) later generalized this model-in-the-loop
+pattern into a platform for dynamic data collection across tasks well beyond \qb{}
+(Figure~\ref{fig:manchester:dynabench-interface}) and made it much more professional.
 
 \begin{figure}[tbp]
   \centering
@@ -447,7 +482,7 @@ And because \qb{} questions are efficient: each clue helps determine ability, yo
 One of the trivia experts
 consulted in \citet{wallace-19} crafted a question that tripped up neural
 \abr{qa} by embedding the phrase ``this author opens Crime and Punishment'' into
-a question; the top system confidently answers \underline{Fyodor Dostoyevski}.\footnote{I wanted to say a little about the process of publishing this work and Eric, the brilliant student who worked on this.  He worked on this in early 2018 and presented it at the Student Research Workshop during the summer of 2018.  It got rejected from \abr{emnlp} that year because he incorporated too much of the \abr{emnlp} submission into the workshop version.  So the top-tier publication seems like it happened later than the work actually did (2017--2018).  Nevertheless, this was the first human in the loop adversarial system to come out.  Eric Wallace went on to a PhD at Berkeley, where he built an awesome crossword playing system and then to OpenAI, where he gave the BlackHat postmorterm on the OpenAI system that hacked Huggingface.}
+a question; the top system confidently answers \underline{Fyodor Dostoyevski}.\footnote{I wanted to say a little about the process of publishing this work and Eric, the brilliant student who worked on this.  He worked on this in early 2018 and presented it at the Student Research Workshop during the summer of 2018.  It got rejected from \abr{emnlp} that year because he incorporated too much of the \abr{emnlp} submission into the workshop version.  So the top-tier publication seems like it happened later than the work actually did (2017--2018).  Nevertheless, this was the first human in the loop adversarial system to come out.  Eric Wallace went on to a PhD at Berkeley, where he built an awesome crossword playing system and then to OpenAI, where he gave the BlackHat postmortem on the OpenAI system that hacked Huggingface.}
 However, that phrase was in a longer question \question{The narrator in \textit{Cogwheels}
 by this author opens \textit{Crime and Punishment} to find it has become
 \textit{The Brothers Karamazov}}.
@@ -456,18 +491,20 @@ Again, this shows the inventiveness and
 linguistic dexterity of the trivia community.
 
 Of course, TrickMe was not the only way to turn adversarial evaluation into a
-data-collection interface. \abr{fever}2 and Fool Me Twice used shared-task and
-game-like settings to build adversarial fact-verification and entailment
-examples; Beat the \abr{ai} and Adversarial \abr{nli} put models in the loop for
-reading comprehension and natural language inference; Adversarial \abr{vqa}
-extended the idea to vision-and-language questions; and later systems explored
-synthetic amplification of human-written adversaries and human--\abr{ai} hybrid
-attack construction~\citep{thorne-19,Eisenschlos-21,bartolo2020beat,nie2019adversarial,adversarialvqa,bartolo2021improving,you-lowd-2022-towards}.
-Dynabench packaged this model-in-the-loop pattern as reusable infrastructure,
-and \abr{advqa} later asks whether the resulting questions remain truly
-adversarial as models improve over
-time~\citep{kiela2021dynabench,sung-etal-2025-benchmark}.
-One of the benefits of contrived formats is a focus on specific phenonomena that are difficult for players, whether they are human or computer.
+data-collection interface. \abr{fever}2 built adversarial fact-verification
+examples through a shared task~\citep{thorne-19}, while Fool Me Twice used a
+game-like setting for adversarial entailment~\citep{Eisenschlos-21}. Beat the
+\abr{ai} put models in the loop for reading comprehension~\citep{bartolo2020beat},
+and Adversarial \abr{nli} did the same for natural language
+inference~\citep{nie2019adversarial}. Adversarial \abr{vqa} extended the idea
+to vision-and-language questions~\citep{adversarialvqa}; later systems explored
+synthetic amplification of human-written adversaries~\citep{bartolo2021improving}
+and human--\abr{ai} hybrid attack construction~\citep{you-lowd-2022-towards}.
+Dynabench packaged this model-in-the-loop pattern as reusable infrastructure
+across tasks~\citep{kiela2021dynabench}. \abr{advqa} later asks whether the
+resulting questions remain truly adversarial as models improve over
+time~\citep{sung-etal-2025-benchmark}.
+One of the benefits of contrived formats is a focus on specific phenomena that are difficult for players, whether they are human or computer.
 \citet{dua-19} exclude questions an existing \abr{mrqa} system could answer to
 focus on challenging quantitative reasoning.
 
@@ -486,28 +523,10 @@ search~\citep{kwiatkowski-19}---ignore the craft of question writing. Real
 humans react to unclear questions with confusion or divergent answers,
 explicitly answering with how they interpreted the original question (``I
 assume you meant\dots'').
-% TODO (jbg): Forward point to where we cover this in
-Given real-world applications must cope with this
-noise, our systems must cope with it too. However, addressing the real world
-cannot happen by glossing over its complexity.
-
-\paragraph{Complicated}
-
-\qb{} is more complex than other datasets. Unlike other datasets where you just
-need to decide \emph{what} to answer, in \qb{} you also need to choose
-\emph{when} to answer the question.\footnote{This complex methodology can be an
-  advantage. The underlying mechanisms of systems that can play \qb{} (e.g.,
-  reinforcement learning) share properties with other tasks, such as
-  simultaneous translation~\citep{grissom:he:boyd-graber:morgan-2014,ma-etal-2019-stacl},
-  human incremental processing~\citep{levy-08,levy-11}, and opponent
-  modeling~\citep{he-16}.}
-While this improves the dataset's discrimination, it can hurt popularity
-because you cannot copy/paste code from other \abr{qa} tasks. The cumbersome
-pyramidal structure complicates\footnote{But does not necessarily preclude, as
-  the Illinois High School Scholastic Bowl Coaches Association shows:
-\begin{quote}
-    This is the smallest counting number which is the radius of a sphere whose volume is an integer multiple of $\pi$. It is also the number of distinct real solutions to the equation $x^7-19x^5=0$. This number also gives the ratio between the volumes of a cylinder and a cone with the same heights and radii. Give this number equal to the log base four of sixty-four.
-\end{quote}} some questions (e.g., what is log base four of sixty-four).
+The later discussion of Natural Questions shows why this matters for real user
+queries (Section~\ref{sec:nq:problems}). Given real-world applications must
+cope with this noise, our systems must cope with it too. However, addressing
+the real world cannot happen by glossing over its complexity.
 
 
 \section{The Craft of Question Writing}
@@ -534,28 +553,55 @@ delineate acceptable and unacceptable answers.
 %
 And when there's confusion, there's a process to adjudicate it.
 
-This is in contrast to \abr{ai} evaluations, where a desire to keep evaluations simple can produce misleading results by using either exact match or multiple choice evaluations.
+This is again consistent with the theme of this chapter: how to make a mass market Turing Test.
 %
-Exact match is is when an answer is viewed as correct when it \emph{exactly} matches something in the reference set of answers.  
+In a real Turing test, if there's confusion about the question or its answer, you'd resolve it through careful negotiation (which would also show the intelligence of the answerer).
 %
-So if the reference answer is \answer{aluminium}, it would rule ``al'' (the chemical symbol), ``aluminum'' (the \abr{us} spelling), and ``alluminum'' (a mispelling) just as wrong as ``potato''.
+My favorite example of this Manchester paradigm exchange is when the
+bridgekeeper---much like the Sphinx---asks travelers to answer questions or be
+thrown into the abyss~\citep{monty-python-holy-grail}.
+\begin{quote}\small
+  \begin{tabular}{@{}p{0.22\textwidth}p{0.72\textwidth}@{}}
+  Bridgekeeper: & What's the air-speed velocity of an unladen swallow? \\
+  Arthur: & What do you mean? An African or European swallow? \\
+  Bridgekeeper: & Huh? I don't know that! \\
+  \end{tabular}
+\end{quote}
+Here, it's played for laughs as the questioner is shown to be unworthy and plunges to his death, but this dynamic shows that questions are not always perfect, and a smart answerer can show their own intelligence by questioning the question.
+
+Unfortunately, the Cranfield paradigm's emphasis on \emph{reusable} collections---you can test the same property with many different systems and variants of a system---doesn't allow for nuanced discussions like that.
 %
-exact match consistently underestimates correctness, while
-embedding-based or \abr{llm}-based judges can overestimate it, especially on
-short or factual answers~\citep{bulian2022tomayto}.
-% jbg(todo): Should these be cited ,kamalloo-etal-2023-evaluating,wang2023evaluating
-The most reliable evaluations align with human judgments but are too expensive
-to use everywhere~\citep{verga2024replacingjudgesjuriesevaluating,kim2024prometheus}.
+So the Manchester paradigm instead uses carefully crafted questions that avoid ambiguity (the original question should specify what kind of swallow) and also allow for all acceptable answers to be counted as correct.
+
+This is in contrast to most \abr{ai} evaluations, where a desire to keep evaluations simple can produce misleading results by using either exact match or multiple choice evaluations.
+%
+Exact match is when an answer is viewed as correct when it \emph{exactly} matches something in the reference set of answers.
+%
+So if the reference answer is \answer{aluminium}, it would rule ``al'' (the chemical symbol), ``aluminum'' (the \abr{us} spelling), and ``alluminum'' (a misspelling) just as wrong as ``potato''.
+%
+Exact match consistently underestimates correctness in these settings~\citep{bulian2022tomayto}.
+Open-domain \abr{qa} evaluation becomes more complicated once systems produce
+free-form answers~\citep{kamalloo-etal-2023-evaluating}. More generally,
+automatic open-\abr{qa} metrics can overestimate correctness on short or factual
+answers~\citep{wang2023evaluating}.
+Panel-based judges can make automatic evaluation more robust~\citep{verga2024replacingjudgesjuriesevaluating},
+and trained judge models can make rubric-based evaluation cheaper to
+apply~\citep{kim2024prometheus}; neither removes the need to define the
+correctness rubric.
 That is why importing Manchester-style rules is so useful: they give us a
 shared definition of correctness even when the metric is imperfect.
 
 There is a practical reason the community clings to exact match: it is fast,
 transparent, and easy to reproduce. But it also bakes in a narrow view of
 correctness that modern \abr{qa} systems regularly violate by producing valid
-paraphrases or more specific answers.\footnote{There is increasingly ``\abr{llm}-as-a-judge'' for correctness evaluation, where an \abr{llm} is given the answer key and the candidate answer and asked to make a decision~\citep{zheng2023judging}, but automatic judges have their own
-failure modes: length and style preferences, self-preference, demographic or
-positional biases, and task-specific behavior that does not always transfer
-cleanly~\citep{li2023alpacaeval,xu-etal-2024-pride,ye2024justice,huang2024empirical}.  
+paraphrases or more specific answers.\footnote{There is increasingly
+``\abr{llm}-as-a-judge'' for correctness evaluation, where an \abr{llm} is given
+the answer key and the candidate answer and asked to make a
+decision~\citep{zheng2023judging}. But automatic judges have their own failure
+modes: length and style preferences~\citep{li2023alpacaeval},
+self-preference~\citep{xu-etal-2024-pride}, demographic or positional
+biases~\citep{ye2024justice}, and task-specific behavior that does not always
+transfer cleanly~\citep{huang2024empirical}.
 %
 %We don't discuss them here in depth because we haven't covered the required models yet, but they can and should be guided by the kinds of Manchester guidelines we lay out here.
 }
@@ -571,15 +617,18 @@ In addition to the obvious issue---there's a much higher chance of randomly gues
 Sometimes the wrong answers give the game away. If one option is much more
 specific, uses a different register, or is the only choice that matches the
 dataset's usual answer style, a system may not need the question at all:
-if you show only the choices but not the question, models can often still answer the question~\citep{Balepur2024ArtifactsOA,richardson2020does}. Sometimes
+if you show only the choices but not the question, models can often still
+answer the question~\citep{Balepur2024ArtifactsOA}. Partial-input probes expose
+the same general problem in \abr{qa}: systems can exploit fragments of the input
+instead of solving the intended task~\citep{richardson2020does}. Sometimes
 the same item changes difficulty when the options move around; putting the
 answer first instead of third should be irrelevant, but \abr{llm} predictions
 can shift substantially under option reordering~\citep{pezeshkpour2023large}.
 
-Of course, humans exploit the format too; there's a whole test prep industry to coach 
-the ivy-league bound how to ``ace the test''~\cite{}: a student might cross out two absurd
+Of course, humans exploit the format too; there is a whole test-prep industry
+to coach college applicants on how to ``ace the test''. A student might cross out two absurd
 distractors, recognize a familiar-looking phrase in the remaining pair, and pick
-correctly without being able to write the answer in free response~\citep{mckenna2019multiple}.  Nor is a distractor always
+correctly without being able to write the answer in free response~\citep{mckenna2019multiple}. Nor is a distractor always
 cleanly wrong. Commonsense options can be plausible under a different reading of
 the question, and users sometimes judge a distractor to be the most plausible
 answer~\citep{Palta2024PlausiblyPQ}. Even when a model picks the right option,
@@ -610,9 +659,10 @@ answers.
 
 
 
-Rules from \abr{naqt} and
-\textit{Jeopardy!} formalize when aliases are acceptable, when specificity is
-required, and when extra detail is disqualifying~\citep{naqt_correctness,carberry_jeopardy_casebook}.
+\abr{naqt} formalizes when aliases are acceptable, when specificity is
+required, and when extra detail is disqualifying~\citep{naqt_correctness}.
+\textit{Jeopardy!} has developed a similar case law for judging responses on
+air~\citep{carberry_jeopardy_casebook}.
 These rubrics make explicit the judgments that automated evaluations leave
 implicit, and they highlight why correctness is about interpretation, not just
 overlap.
@@ -659,13 +709,13 @@ answer \textit{\uline{Europe}} is incorrect if the given \refer{} answer is
 intended answer.
 
 
-\begin{table}[t] % This specifies that the table should appear at the top of the page
+\begin{table}[t]
 \centering
-\tiny
-\renewcommand{\arraystretch}{1.5} % Increase row spacing
-\begin{tabular}{p{2cm}p{4.8cm}} % Adjust the column widths to fit one column of the page
-\hline
-\textbf{Rule} & \textbf{Description} \\ \hline
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}p{0.24\textwidth}p{0.70\textwidth}@{}}
+\toprule
+\textbf{Rule} & \textbf{Description} \\ \midrule
 $R_1$: Entity-aliasing & Widely recognized aliases, pseudonyms that are commonly associated with referred answer entities are acceptable. \\ 
 $R_2$: Numerical information & Exact dates, years, numerical values are required unless the question specifically asks for approximations. \\ 
 $R_3$: Less details & The answer provides less detail but should include the essential and correct information required by the question (specificity level 1). \\
@@ -673,7 +723,7 @@ $R_4$: More details & The answer contains additional information that does not c
 $R_5$: Semantic equivalence & A high degree of word overlap does not establish equivalence. The answer must be contextually and semantically accurate. \\
 $R_6$: Irrelevant information & Any irrelevant or inaccurate description related to the question should be considered incorrect. \\
 $R_7$: Other possible answers & The response is correct but not in the initially provided list. \\
-\hline
+\bottomrule
 \end{tabular}
 \caption{The correctness of a \can{} answer can be traced and categorized to
   one or more of the above rules. We adopt the rules from \abr{naqt} modified
@@ -691,7 +741,8 @@ Our goal is not to minimize the achievements of strong systems or the value of
 quantitative evaluations. The point is more modest: \emph{blind automation} is
 not enough to distinguish between systems on a leaderboard. If we want
 evaluations that reward knowledge rather than artifacts, we need to borrow the
-adjudication mindset of the trivia community.
+adjudication mindset of the trivia community: carefully written questions,
+explicit answer rules, and a way to challenge mistakes.
 
 
 This suggestion is not novel: \citet{voorhees-00} accept automatic
@@ -703,58 +754,22 @@ runs'' have not been found yet.  We are not aware of any change on
 this front---if anything, we seem to have become more insensitive as a
 community to just how limited our current evaluations are.
 
-\subsection{Focus on the bubble}
+\section{The Questions that have Trained \abr{ai}}
+\label{sec:manchester:forwardpoint}
 
-While every question should be perfect, time and resources are limited.  
-Thus, authors and editors of tournaments ``focus on the bubble'', where the ``bubble'' are the questions most likely to discriminate between top teams at the tournament.
-These questions are thoroughly playtested, vetted, and edited.
-Only after these questions have been perfected will the other questions undergo the same level of polish.
-
-For computers, the same logic applies.  
-Authors should ensure that these discriminative questions are correct, free of ambiguity, and unimpeachable.
-However, as far as we can tell, the authors of \qa{} datasets do not give any special attention to these questions.
-
-Unlike a human trivia tournament, however---with finite patience of the participants---this does not mean that you should necessarily remove all of the easy or hard questions from your dataset.
-This could inadvertently lead to systems unable to answer simple questions like ``who is buried in Grant's tomb?''~\cite[Chapter 7]{dwan-00}.
-Instead, focus more resources on the bubble.
-
-\section{Ignore the Distinction at Your Peril}
-\label{sec:manchester:distinction}
-
-\paragraph{How Adversarial Is Too Much?}
+The Manchester paradigm gives us a lens for reading the \abr{qa} datasets that
+come next. We can ask whether a dataset is discriminative, whether it represents
+real user needs, and whether its scoring rules reflect the kind of knowledge we
+actually want systems to have.
 %
-Common ground has its limits. That there is not a strict dichotomy between
-Manchester and Cranfield can mask the importance of distinguishing motivations.
-Some robustness proposals test models on inputs users would not make, or on
-challenging but unnatural adversarial questions~\citep{Feng-18,jia2017adversarial,wallace-19,bartolo2020beat,kiela2021dynabench}.
-These tests can be valuable for probing capabilities, but they do not directly
-improve the user experience in the short term. The Manchester paradigm
-welcomes these probes; the Cranfield paradigm will often ignore them. If we do
-not state which goal we are pursuing, we risk building datasets that satisfy
-neither.
-
-\paragraph{Users Are the Customers}
+Those questions will help us spot datasets that are the worst of both worlds:
+not discriminative and not representative of real users' needs. They also point
+to the opportunity for future research: build evaluations that keep the
+reusability of Cranfield, the probing spirit of Turing, and the adjudication
+norms of Manchester.
 %
-The transition from Manchester-style spectacle to Cranfield-style product is
-hard. \abr{ibm} Watson's \jeopardy{} victory was a tour de force of the
-Manchester paradigm, but turning that success into a user-facing product was
-much more difficult~\citep{chu2002piquant,deutscher-21,jennings2011ibm}. The
-same tension shows up in dataset design. \squad{} questions were written by
-people who knew the answers, but the data do not follow Manchester-style
-question-writing norms; the result was a proliferation of shortcuts and
-artifacts that later analyses exposed~\citep{weissenborn-17}. In
-contrast, Manchester-oriented benchmarks such as the Winograd challenge
-explicitly try to avoid cheap tricks~\citep{levesque2014behavior}. The point is
-not that one paradigm is superior, but that each requires different care.
-
-\paragraph{Comparisons Require Fewer Questions}
-%
-Competitions are designed to discriminate between answerers quickly. The world
-accepted that Watson was better than Ken Jennings and Brad Rutter after 122
-answers because the format is optimized to separate abilities. Cranfield-style
-leaderboards, in contrast, require thousands of questions and still may not
-have enough statistical power to meaningfully rank systems~\citep{card2020power,Rodriguez-21:leaderboards}.
-This is another place where answer equivalence matters: if your evaluation
-cannot recognize legitimate variants, you need more data to compensate for the
-noise. The Manchester paradigm forces us to confront this issue directly by
-building questions and evaluations that make discriminations clear.
+With that frame in place, we can turn to systems. The next chapter starts with
+\textit{Watson}, an early state-of-the-art system that defeated Ken Jennings and
+Brad Rutter on the American quiz show \jeopardy{}. Its success was one of the
+first public harbingers of the \abr{ai} revolution, but it also shows why the
+questions, scoring rules, and game format matter as much as the model itself.

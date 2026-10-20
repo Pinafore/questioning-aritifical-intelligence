@@ -1,5 +1,18 @@
 
 
+\paragraph{Comparisons Require Fewer Questions}
+%
+Competitions are designed to discriminate between answerers quickly. The world
+accepted that Watson was better than Ken Jennings and Brad Rutter after 122
+answers because the format is optimized to separate abilities. Cranfield-style
+leaderboards, in contrast, require thousands of questions and still may not
+have enough statistical power to meaningfully rank systems~\citep{card2020power,Rodriguez-21:leaderboards}.
+This is another place where answer equivalence matters: if your evaluation
+cannot recognize legitimate variants, you need more data to compensate for the
+noise. The Manchester paradigm forces us to confront this issue directly by
+building questions and evaluations that make discriminations clear.
+
+
 In a previous video, I talked about how questions created modern civilization:
 the use of exams to select civil servants.  Compared to the alternative that
 preceded them, I think these tests were an unmitigated good.
@@ -409,8 +422,7 @@ lambda=1, but it gets squished down as lambda gets smaller and smaller.  If
 lambda=½, then no matter how smart you are, it’s basically a coin flip whether
 you can answer the question.
 
-\section{A Generative Story for Leaderboards}
-\label{ch:isicle:lead}
+\section{Item Response: Standardization's Mathematical Foundation}
 
 \begin{figure}[t]
   \centering
@@ -535,8 +547,6 @@ With \name{}'s leaderboard \irt{} model introduced, we next discuss
 how leaderboard \subj{}s are statistically compared and alternative
 methods---such as using \irt{} parameters---to evaluate whether two
 models are truly different.
-\section{Ranking and Comparing Subjects}
-\label{ch:isicle:compare}
 
 
 Fundamentally, the objective of comparative evaluations like
@@ -565,6 +575,8 @@ model and advocate for \irt{}.
 Implicit in nearly all leaderboard evaluations is ranking models by a
 statistic such as the average accuracy.
 As we show in \S\ref{ch:isicle:exp}, na\"ive rankings are noisier than \irt{} rankings.
+
+
 \section{Learning Which Answers People Prefer}
 \label{sec:leaderboards:preferences}
 \label{sec:methods:preferences}
@@ -927,54 +939,6 @@ This could identify bad \itms{} in evaluation sets for removal.
     }
     \label{fig:example-error}
 \end{figure*}
-\section{A Re-Imagined Leaderboard Dashboard}
-\label{ch:isicle:vis}
-\prtodoi{Move to separate demo paper}
-
-Basing a new leaderboard on \irt{} models has another significant benefit: as they are purposefully interpretable, they are very useful for visualizing leaderboard data.
-The final component of this work is a demonstration---based on \squad{}---of components that a re-imagined leaderboard may have.\footnote{
-    The visualization doubles as my course project for CMSC734: Information Visualization.
-}
-Our proposed visualization has three main components: (1) an improved model listing, (2) a model-centric view, (3) an example-centric view.
-
-The majority of leaderboards list only one ranking metric or list multiple while only ordering models by a primary metric.
-However, multiple factors---including multiple metrics---should be integrated such as model size and efficiency~\citep{strubell2019energy}.
-This presents a challenge: how should all these be visualized?
-In our proposed model listing, while there would be a default ranking, our visualization would support ranking by any metric or combinations of rankings while showing the influence of each as in the parallel axis plots in LineUp~\citep{gratzl2013lineup}.
-
-\begin{figure}[ht]
-    \centering
-%    \includegraphics[width=.25\columnwidth]{figures/leaderboard/end_error_compare}
-    \caption{
-        A proof-of-concept visualization that compares two models---a \bert{} and \ir{} retrieval system---by visualizing which examples model agree or disagree on.
-        We propose extending this to incorporate more than two models.
-    }
-    \label{fig:pair}
-\end{figure}
-
-Similarly to Manifold~\citep{zhang2019manifold}, the goal of the model-centric view is to understand the differences---based on predictions---between models.
-An initial approach (Figure~\ref{fig:pair}) compares how pairs of models differ, but could be extended to support multiple models by enhancing the underlying software.
-Another approach to a model-centric views instead attempts at characterizing the performance along partitions of the data~\citep{liu2018answer}.
-For example, \citet{arendt2020crosscheck} propose faceted histograms as a way to ``un-aggregate'' metrics to inspect \qa{} accuracy by factors like question type and confidence.
-In addition to visualizing which instances pairs of models agree as in Manifold, we propose integrating \irt{} parameters to better identify instances that have a larger influence over the output ranking.
-
-A dominant approach to inspecting models examines their performance on individual examples or partitions of examples sharing a trait~\citep{wadhwa2018compare}.
-In addition to domain-relevant traits, we can guide example sample selection with \irt{} which makes it more likely to identify important issues over random sampling~\citep{wadhwa2018compare} while still combining careful specification of error types~\citep{wu2019errudite}.
-Similarly, visualizations can use the multidimensional \irt{} parameters for clustering which can also be combined with domain-specific attributes like question type or topic.
-
-A major advantage of our approach---embedding these comparisons in leaderboards---is that model developers can compare the outputs of many models on individual or small sets of examples.
-While there are numerous tools for comparing models, error analysis, and related tasks, they face the headwinds of convincing practitioners that they are worthwhile time investments.
-Instead, we aim to provide real benefits of leaderboard-wide analysis without incurring up-front time commitment from practitioners.
-Although this does require commitment from task organizers, we believe that the trade-off of inherently improving the evaluation while providing practitioners with ``shiny tools'' is well worth it.
-\section{Related Work}
-\label{ch:isicle:rel}
-
-\name{} draws together two primary threads: we use \irt{} to
-understand datasets, which has been applied to other \abr{nlp} tasks,
-and apply it to improving leaderboards.
-Finally, we explore how the insights of \irt{} can improve not just
-the analysis of test sets but to improve the \emph{construction} of
-test sets.
 
 \paragraph{\textbf{\abr{irt} in \abr{nlp}}}
 \irt{} is gaining traction in machine learning
@@ -1067,48 +1031,6 @@ As we discuss further in the next section, \name{}'s application of
 \irt{} can further be improved by adopting interpretable extensions of
 these models.
 
-
-\section{Conclusion}
-\label{ch:isicle:conc}
-
-This paper advocates incorporating decades of research in crafting education tests to improve how we evaluate the capabilities of \abr{nlp} models.
-We propose and validate an alternate \irt{} ranking method for leaderboard evaluations, show it can guide annotation, detect annotation error, and naturally partition evaluation data.
-Just as educators moved from classical testing to \irt{}, the \nlp{} community should consider future evaluations with \irt{}.
-
-
-\subsection{Limitations}
-Although there is much to gain through \irt{} evaluation, there are limitations which make it hard to implement.
-First, it requires access to item-level responses for all examples for all \subjs{} which are often only available to organizers.
-Second, \citet{urbano2016reliability} notes that sampling mutually exclusive subsets has drawbacks---samples are not entirely independent.
-Lastly, our work is a proof of concept using \squad{} 2.0 as a test bed and our results may not generalize.
-
-\section{Future Work}
-\label{ch:isicle:future}
-
-We see a few directions for future work.
-First, this paper is intended to validate \irt{} and its usefulness as an active part of the leaderboard lifecycle; the natural next step is to implement it in a leaderboard.
-Second, our \irt{} models do not incorporate the \itm{} content (e.g., example text) to predict responses, but in principle could; Bayesian models with metadata~\citep{card2018meta} and ideal point models from political science~\citep{poole1985spatial} that incorporate bills and speeches do exactly this~\citep{gerrish2011text,nguyen:boyd-graber:resnik:miler-2015,kraft2016vote}.
-Analogously, \irt{} for leaderboards can and should also incorporate text from passages, questions, and answers to better model what makes questions difficult.
-Such a model can also predict which characteristics would create discriminating or difficult \itms{}.
-Lastly, multidimensional \irt{} models to evaluate multiple skills could aid multi-task or multi-metric leaderboards like \abr{mrqa}~\citep{fisch2019mrqa} and Dynaboard~\citep{ma2021dynaboard}.
-\section*{Acknowledgements}
-
-For their work on early iterations of leaderboard visualizations, we thank Jacob Bremerman and Wei Wei Chi.
-For insightful discussions and ideas we thank Shi Feng, Doug Oard, João Sedoc, Mike Wu, and Patrick Lewis.
-We thank Peter Rankel for recommendations on statistical testing methods.
-For discussion and feedback on visualizations, we thank Leo Zhicheng Liu, Calvin Bao, and classmates in \abr{umd}'s Fall 2020 ``Information Visualization'' course.
-For suggestions on topic modeling, we thank Philip Resnik and Maria Antoniak.
-For feedback on prior versions of this paper, we thank our anonymous \abr{acl} reviewers and members of the \abr{umd} \abr{clip} lab.
-Boyd-Graber and Rodriguez's work at \abr{umd} were supported by \abr{nsf} Grant \abr{iis}-1822494.
-The views and conclusions contained herein are those of the authors and should not be interpreted as necessarily representing the official policies, either expressed or implied, of the sponsor.
-The U.S. Government is authorized to reproduce and distribute reprints for governmental purposes notwithstanding any copyright annotation therein.
-\section{SQuAD Item Examples}
-\label{ch:isicle:apx:examples}
-
-Figures~\ref{fig:ex-disc-neg}, \ref{fig:ex-feas}, \ref{fig:ex-reasonable}, and \ref{fig:ex-tricky} show previously discussed \squad{} examples (\S\ref{ch:isicle:interp}) in full.
-% The \squad{} annotations from Figure~\ref{fig:example-error} are included in supplementary materials and at \projecturl{}.
-On the same page, we provide a web interface for inspecting the parameters of the \irt{} models.
-Figure~\ref{fig:lambda-dist} shows the feasibility distribution corresponding to Figure~\ref{fig:irt-dist}.
 
 
 \begin{figure*}[t]
@@ -1210,252 +1132,4 @@ Figure~\ref{fig:lambda-dist} shows the feasibility distribution corresponding to
 
 
 
-
-
-\section{Logistic Regression Features}
-\label{ch:isicle:apx:features}
-
-The linear model (\S\ref{ch:isicle:irt-accurate}) includes features based on \itm{} \abr{id}s, \subj{} \abr{id}s, textual features of the question, context, and answer, and topic model features.
-Table~\ref{tab:vw-features} lists the feature names from Figure~\ref{fig:vw-ablation} with descriptions of each.
-When \irt{} features or the statistics features are used, they include interaction terms with themselves.
-
-\begin{table}[t]
-  \centering
-  \small
-      \begin{tabular}{lp{.6\linewidth}}
-    \toprule
-    Feature                  & Description                                                                                                    \\
-    \midrule
-    All                      & All the features                                                                                               \\
-    \irt{}                   & \irt{} values for \diff{}, \discability{}, feasibility, and ability                                            \\
-    Item \abr{id}            & The item's \abr{id}                                                                                            \\
-    Subject \abr{id}         & The subject's \abr{id}                                                                                         \\
-    Question                 & Question words                                                                                                 \\
-    Context                  & Context words                                                                                                  \\
-    Stats                    & Question \& context lengths; answerability, answer position \& length; difficulty from~\citet{Sugawara2017-bm} \\
-    Subject \& Item \abr{id} & Item and Subject \abr{id}                                                                                      \\
-    Topics 1K                & Topic weights of question words                                                                                \\
-    Title                    & Wikipedia page title words                                                                                     \\
-    Baseline                 & No features, majority class baseline                                                                           \\
-    \bottomrule
-  \end{tabular}
-  \caption{
-    The linear model integrates a variety of features to determine which are most predictive of a \subj{} responding correctly to an \itm{}.
-  }
-  \label{tab:vw-features}
-\end{table}
-
-\section{IRT Model Type Correlation}
-\label{apx:irt-self-corr}
-
-Although each \irt{} model differs in expressiveness, they should---in general---produce similar results.
-This is confirmed by computing the Kendall's rank correlation between the \subj{} abilities and \itm{} difficulties (Table~\ref{tab:irt-subj-corr}).
-
-\begin{table}[t]
-  \centering
-  \small
-      \begin{tabular}{lrrr}
-    \toprule
-    Ability & \pl{3}  & \pl{2}  & \pl{1}  \\
-    \midrule
-    \pl{3}  & $1.00$  & $0.947$ & $0.895$ \\
-    \pl{2}  & $0.947$ & $1.00$  & $0.907$ \\
-    \pl{1}  & $0.895$ & $0.907$ & $1.00$  \\
-    \bottomrule
-  \end{tabular}
-  \caption{
-    Table entries are Kendall's $\tau$ rank correlation of \irt{} \subj{} ability between rows and columns.
-    Generally, the models agree on the ranking with the \pl{3}~and \pl{2}~having the strongest correlation.
-  }
-  \label{tab:irt-subj-corr}
-\end{table}
-\section{Ranking Stability Experiments}
-\label{ch:isicle:apx:rank-stability}
-
-Here we provide further details for the ranking stability experiments (\S\ref{ch:isicle:irt-compare}).
-First, we filter from the $161$ \subjs{} that have development set scores to the $115$ that also have test set scores.\footnote{
-  The \squad{} organizers curate the test set \subjs{} to avoid overfit, garbage, or duplicate submissions.
-}
-In our simulation, we run $10$ trials for every sample size; sample size begins at $100$ and with steps of $100$.
-In addition to these, we also run trials for sample sizes 25, 50, and 75.
-Since each sample can be no larger than half the dataset, we stop at half the dataset.
-
-\subsection{Development and Test Set Correlations}
-\begin{table}[t]
-  \centering
-  \small
-      \begin{tabular}{lrrrr}
-    \toprule
-    {}                      & EM$_{\text{dev}}$ & EM$_{\text{test}}$ & Ability$_{\text{dev}}$ & Ability$_{\text{test}}$ \\
-    \midrule
-    EM$_{\text{dev}}$       & $1.00$            & $0.953$            & $0.954$                & $0.931$                 \\
-    EM$_{\text{test}}$      & $0.953$           & $1.00$             & $0.944$                & $0.947$                 \\
-    Ability$_{\text{dev}}$  & $0.954$           & $0.944$            & $1.00$                 & $0.950$                 \\
-    Ability$_{\text{test}}$ & $0.931$           & $0.947$            & $0.950$                & $1.00$                  \\
-    \bottomrule
-  \end{tabular}
-  \caption{
-    Entries are Kendall's rank correlation between rows and columns.
-    Scores are \squad{} Exact Match (EM) and \pl{2}~ability.
-  }
-  \label{tab:rank-corr}
-\end{table}
-
-Table \ref{tab:rank-corr} uses a \pl{2}~model since we noticed that in comparison~\pl{3}~overfit the data, yielding worse results.
-The correlations with the full data are all strong, but not the same.
-We conclude that---at least on \squad{}---\irt{} rankings are modestly more reliable than classical rankings.
-
-\subsection{Statistical Significance of Difference in Kendall Tau Coefficients}
-While Figure~\ref{fig:stability} shows a consistent difference in correlation between ranking methods, it is unclear whether this difference is statistically significant.
-We estimate the statistical significance of the difference through bootstrap sampling~\citep{efron1994bootstrap}.
-
-Since the null case is no difference in correlation coefficients, we seek a symmetric sampling distribution centered at zero that represents a realistic density function.
-Each ranking stability experiment\footnote{One experiment for development sample to development sample and one for development sample to test set.} trial results in two lists of number pairs.
-The lists correspond to \subj{} scores on two datasets;\footnote{
-  In the first experiment, development set samples; in the second, a development set sample and the full test set.
-} each number pair is the \subj{}'s accuracy and \irt{} score.
-To create the bootstrap distribution, we (1) sample with replacement pairs from one list, (2) compute the correlation between the resampled ranking and unused ranking when using accuracy versus \irt{} score, and (3) compute and store the \irt{} correlation score minus the accuracy correlation score.
-We repeat this process 1000 times for each of the 10 trials in the original experiment and aggregate all the differences to build the bootstrap distribution.
-For each sample size we compute the empirical P-Value on each trial which we show in box and whisker plots (Figure~\ref{fig:rank_sig}).
-
-\begin{figure*}[t]
-  \centering
-%   \includegraphics[width=\textwidth]{ranking_stability_significance}
-  \caption{
-    P-values of the rank correlation difference for each sample size and trial in Figure~\ref{fig:stability}.
-    The inherent noise in dev set sampling makes inferring significance difficult (left); test set driven results (right) are more significant.
-  }
-  \label{fig:rank_sig}
-\end{figure*}
-
-
-\section{The IRT Statistical Test}
-\label{ch:isicle:irt-test}
-
-The \irt{} test differs in two substantial ways from other tests: (1) it does not assume that \itms{} are equally informative and (2) it does assume that the informativeness of \itms{} is a function of the \subj{}'s skill $\theta_j$.
-In the literature, this is closely connected to \iemph{reliability}~\citep{sutcliffe1992pragmatics} and each \itm{} provides information about the location of $\theta_j$; as we accumulate more evidence for the location of $\theta_j$ the error of estimation decreases.
-It is a well known result in \irt{} that standard error of estimate (\abr{see}) $\sigma(\hat{\theta}|\theta)$ varies with respect to the agent location parameter $\theta$~\citep[p.~30]{theory2013ayala} and is connected to the Fisher information
-\begin{equation}
-  I_i(\theta)=\frac{(p_i')^2}{p_i(1-p_i)}
-\end{equation}
-of each item.
-For a 2PL model, information
-\begin{equation}
-  I_i(\theta)=\gamma^2p_i(1-p_i)
-\end{equation}
-is maximized when $p_i=(1-p_i)$.
-Since Fisher information is additive, the information of the evaluation set is maximal when \itms{} have a $50\%$ chance of being responded to correctly.
-As derived by~\citet[p.~102]{theory2013ayala}, the standard error of estimation
-\begin{equation}
-  \text{SEE}(\theta)=\sqrt{\frac{1}{\sum_i I_i(\theta)}}.
-\end{equation}
-is computed by accumulating the information gained from each \itm{}.
-Given two \subjs{} $X$ and $Y$, one can use the probability distribution of score differences
-\begin{equation}
-  N(\theta_Y-\theta_X, \text{SEE}(\theta_X)^2+\text{SEE}(\theta_Y)^2)
-\end{equation}
-to compute the probability that the difference in skill is greater than two standard errors which corresponds to an $\alpha\le .05$ significance level.
-
-\section{Multidimensional IRT Clustering}
-\label{ch:isicle:clustering}
-
-While we achieve strong held-out accuracy with 10 dimensional \irt{} (\pl{m}), we had limited success in interpreting parameters.
-We use \abr{tsne}\footnote{
-  We use openTSNE~\citep{policar2019tsne} with default parameters.
-} plots overlayed with features like \itm{} accuracy, the question's Wikipedia page, if the question was answerable, length of questions, and topic model weights.
-Of these, \itm{} accuracy and answerability showed the most obvious patterns (Figure~\ref{fig:tsne-squad}).
-
-\begin{figure}[t]
-  \centering
-%   \includegraphics[width=\columnwidth]{squad_tsne}
-  \caption{
-    In \squad{}, \abr{tsne} shows a relationship between mean exact match (\itm{} accuracy) and answerability with respect to multidimensional \diff{} and \discability{}.
-  }
-  \label{fig:tsne-squad}
-\end{figure}
-
-We repeated this approach with the multi-task question answering shared task \abr{mrqa}~\citep{fisch2019mrqa}.
-However, instead of using 10 dimensions we use 6 to match the number of development set tasks in \abr{mrqa}.
-Although questions in NarrativeQA standout (Figure~\ref{fig:tsne-mrqa}), there is not a discernible pattern amongst the other tasks.
-We leave more sophisticated methods for making multidimensional \irt{} models interpretable to future work.
-
-\begin{figure}[t]
-  \centering
-%   \includegraphics[width=\columnwidth]{mrqa_tsne}
-  \caption{
-    In \abr{mrqa}, \abr{tsne} shows a relationship between whether the task is NarrativeQA with respect to multidimensional \diff{} and \discability{}.
-  }
-  \label{fig:tsne-mrqa}
-\end{figure}
-
-
-
-\section{Reproducibility Checklist}
-
-Here we provide reproducibility details to complement our source code (\href{https://irt.pedro.ai}{https://irt.pedro.ai}).
-
-\subsection{Software and Parameters}
-
-All \irt{} models are implemented in PyTorch~\citep{pytorch2019} and Pyro~\citep{bingham2018pyro}.
-Linear models are trained with Vowpal Wabbit~\citep{Agarwal2014ARE}.
-The topic model that generates features for the linear model uses Mallet~\citep{mallet}.
-
-The number of \irt{} model parameters is proportional to the number of \subjs{} $m$ and the number of \itms{} $n$.
-The \pl{1}~has one parameter per \subj{} and one per \itm{}.
-The \pl{2}~has one parameter per \subj{} and two per \itm{}.
-The \pl{3}~has one parameter per \subj{} and three per \itm{}.
-The \pl{m}~has ten parameters per \subj{} and thirty per \itm{}.
-
-\subsection{Hyperparameters}
-
-We did not invest significant effort in hyper-parameter tuning the \irt{} models and instead used the defaults in the py-irt software\footnote{\href{https://github.com/jplalor/py-irt}{github.com/jplalor/py-irt}} provided by~\citet{lalor2019latent}.
-The \pl{1}, \pl{2}, and \pl{3}~models were trained for 1000 epochs with no early stopping conditions and a learning rate of $0.1$ with \abr{adam}~\citep{Kingma2014AdamAM}.
-The \pl{m}~model was trained for 2500 epochs and used 10 dimensions.
-
-In the linear model, we used a Hyperopt-based~\citep{bergstra2013hyperopt} tool provided by Vowpal Wabbit\footnote{
-  \href{https://github.com/VowpalWabbit/vowpal_wabbit}{github.com/VowpalWabbit/vowpal\_wabbit}
-} for hyper parameter search.
-For each \abr{lm}, the tool spent 20 iterations optimizing the learning rate, L2 regularization, and number of bits against the logistic loss function.
-The learning rate was searched from 0.001 to 10 with loguniform sampling, L2 regularization from $1e-8$ to 1, and bits from 20 to 23 as categorical variables.
-
-The topic model that generated features for the linear model used mallet, and we followed the recommendations of the software to set hyper parameters.\footnote{
-  \href{http://mallet.cs.umass.edu/topics.php}{mallet.cs.umass.edu/topics.php}
-}
-Specifically, we used an optimization interval of 10, removed stop words, trained for 1000 iterations, and used a document-topic threshold of 0.05.
-Each document was comprised of the Wikipedia page title and the question text.
-
-\subsection{Computational Resources}
-
-The majority of experiments were conducted on a single workstation with an Intel i7-7700K \abr{cpu}, $47$\abr{gb} of \abr{ram}, and an Nvidia 1080Ti.
-The average runtime for the \pl{3}~model on \abr{cpu} is 113 seconds with a standard deviation of 2.31 over 5 trials.
-The average runtime of the \pl{m}~model on \abr{gpu} is 110 seconds with a standard deviation of 0.5 over 5 trials.
-
-Since each ranking stability experiment required (\S\ref{ch:isicle:stable}) re-training an \pl{3}~model on each subset, we parallelized this experiment on a \abr{cpu} cluster where each trial received two \abr{cpu} cores and 16\abr{gb} of \abr{ram}.
-In total, this included 520 trials which corresponds to twice that many trained \irt{} models since one model is trained on each subset of the data.
-
-
-
-
-\section{Adversarial Questions}
-\label{sec:leaderboards:adversarial}
-
-Ambiguity can be something we deliberately build into an evaluation.
-We first learned about Terry Winograd and \abr{shrdlu} in
-Chapter~\ref{ch:ir}; the Winograd Schema Challenge turns the problem of
-interpreting language into a test of commonsense reasoning~\citep{levesque-12}.
-A schema pairs sentences in which a small change reverses who a pronoun
-refers to.  Consider the classic example:
-\begin{quote}
-The city councilmen refused the demonstrators a permit because they
-[feared/advocated] violence.
-\end{quote}
-With ``feared'', the intended referent of ``they'' is the councilmen;
-with ``advocated'', it is the demonstrators.  Most of the words stay the
-same, but the appropriate answer changes.  Unlike Abbott and Costello,
-the evaluator makes the intended distinction explicit: the system must
-respond to the change in meaning, rather than give the same plausible
-answer to both versions.
-
-\section{Human--Computer Cooperation}
-\label{sec:leaderboards:cooperation}
 

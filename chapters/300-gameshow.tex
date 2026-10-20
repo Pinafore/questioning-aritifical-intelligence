@@ -36,3 +36,33 @@ trusted.
 Adopting this for \abr{mrqa} would require creating a new, smaller test
 set every year.
 However, this would gradually refine the annotations and process. xxzxzzzxzxzxxzxs 
+
+
+
+\paragraph{How Adversarial Is Too Much?}
+%
+Common ground has its limits. That there is not a strict dichotomy between
+Manchester and Cranfield can mask the importance of distinguishing motivations.
+Some robustness proposals test models on inputs users would not make, or on
+challenging but unnatural adversarial questions~\citep{Feng-18,jia2017adversarial,wallace-19,bartolo2020beat,kiela2021dynabench}.
+These tests can be valuable for probing capabilities, but they do not directly
+improve the user experience in the short term. The Manchester paradigm
+welcomes these probes; the Cranfield paradigm will often ignore them. If we do
+not state which goal we are pursuing, we risk building datasets that satisfy
+neither.
+
+\subsection{Focus on the bubble}
+
+While every question should be perfect, time and resources are limited.  
+Thus, authors and editors of tournaments ``focus on the bubble'', where the ``bubble'' are the questions most likely to discriminate between top teams at the tournament.
+These questions are thoroughly playtested, vetted, and edited.
+Only after these questions have been perfected will the other questions undergo the same level of polish.
+
+For computers, the same logic applies.  
+Authors should ensure that these discriminative questions are correct, free of ambiguity, and unimpeachable.
+However, as far as we can tell, the authors of \qa{} datasets do not give any special attention to these questions.
+
+Unlike a human trivia tournament, however---with finite patience of the participants---this does not mean that you should necessarily remove all of the easy or hard questions from your dataset.
+This could inadvertently lead to systems unable to answer simple questions like ``who is buried in Grant's tomb?''~\cite[Chapter 7]{dwan-00}.
+Instead, focus more resources on the bubble.
+

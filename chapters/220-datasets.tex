@@ -231,6 +231,26 @@ you would complain as a player; researchers instead discover latent assumptions 
 
 It is worth emphasizing that this is not a purely hypothetical problem. For example, Open Domain Retrieval Question Answering~\citep{lee-19} deliberately avoids providing a reference context for the question in its framing but, in re-purposing data such as Natural Questions, opaquely relies on it for the gold answers.
 
+\section{Adversarial Questions}
+\label{sec:leaderboards:adversarial}
+
+Ambiguity can be something we deliberately build into an evaluation.
+We first learned about Terry Winograd and \abr{shrdlu} in
+Chapter~\ref{ch:ir}; the Winograd Schema Challenge turns the problem of
+interpreting language into a test of commonsense reasoning~\citep{levesque-12}.
+A schema pairs sentences in which a small change reverses who a pronoun
+refers to.  Consider the classic example:
+\begin{quote}
+The city councilmen refused the demonstrators a permit because they
+[feared/advocated] violence.
+\end{quote}
+With ``feared'', the intended referent of ``they'' is the councilmen;
+with ``advocated'', it is the demonstrators.  Most of the words stay the
+same, but the appropriate answer changes.  Unlike Abbott and Costello,
+the evaluator makes the intended distinction explicit: the system must
+respond to the change in meaning, rather than give the same plausible
+answer to both versions.
+
 
 \section{Is \abr{iid} the Right Choice of Data?}
 \label{sec:nq:iid}
