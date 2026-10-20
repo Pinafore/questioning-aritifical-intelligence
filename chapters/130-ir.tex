@@ -1,28 +1,31 @@
 
 \label{chapter:cranfield}
 
-When I first started my career lecturing about search engines and how to build them, the then
-ubiquitous portals to the Internet---\textit{Bing}, \textit{Yahoo!},
-\textit{Baidu}, or \textit{Ask Jeeves}---seemed like a fundamental law of science.
+When I first started my career lecturing about search engines and how to
+build them, the then ubiquitous portals to the Internet---\textit{Bing},
+\textit{Yahoo!}, \textit{Baidu}, or \textit{Ask Jeeves}---seemed like a
+fundamental law of science.
 %
 With the onslaught of \abr{ai}, they almost seem antiquated\dots my
 parents use \textit{Google}, but I use Grok.
 %
-But it wasn’t always like that.  Just as there was a time before \abr{ai}, there was 
-also a time before search
+But it wasn’t always like that.
+%
+Just as there was a time before \abr{ai}, there was also a time before search
 engines, and although there’s a certain charm to card catalogs, that’s
 not an effective way to find information.
 %
 But that was essentially the world before search engines: you had to
-find what you wanted from a list or index that a human (usually a librarian) painstaikingly curated for you.
+find what you wanted from a list or index that a human (usually a
+librarian) painstakingly curated for you.
 
-This chapter will give that history 
-and how it made the twentieth century Internet possible.
+This chapter will tell that history and explain how it made the
+twentieth-century Internet possible.
 %
-That's a bigger story, but for the purposes of this book about question answering, 
-this is one of the first times that scientifically struggled with the question 
-of taking a question like \question{who is on first?} and algorithmically deciding if it 
-has been answered correctly.
+That's a bigger story, but for the purposes of this book about question
+answering, this is one of the first moments when researchers grappled
+scientifically with taking a question like \question{who is on first?}
+and algorithmically deciding whether it has been answered correctly.
 %
 A shorthand for this struggle and the new frontiers of information science
 that it opened up is called the \textit{Cranfield Paradigm}.
@@ -36,15 +39,20 @@ In the next chapter, we'll contrast it with the \textit{Manchester Paradigm}.
 \section{Cleverdon's Clever Collection}
 \label{sec:ir:cranfield}
 
-The story of the Cranfield Paradigm begins in 1967 with Cyril Cleverdon at Cranfield University
-in England: which has an airport right on campus.\footnote{My students
+The story of the Cranfield Paradigm begins in 1967 with Cyril Cleverdon
+at Cranfield University in England, which has an airport right on
+campus.\footnote{My students
 at the University of Maryland have to walk a whole fifteen minutes
 to get to the oldest continuously operated airport in the world.}
 %
-The University was the heart of British aviation research.
+The university was the heart of British aviation research.
 %
-Cyril Cleverdon was in charge of their library there.  And he was
-into computers.  He wanted to see if he could measure how good the answers provided by an index were.
+Cyril Cleverdon was in charge of their library there.
+%
+And he was into computers.
+%
+He wanted to see if he could measure how good the answers provided by
+an index were.
 
 \begin{figure}
   \includegraphics[width=\textwidth]{figures/external/Cranfield_Airport_by_Thomas_Nugent}
@@ -75,46 +83,64 @@ on).\footnote{In this case, they also helpfully told you that
 But if you’re younger and a computer scientist, you probably think of
 an index as a lookup table of every darn word possible.
 %
-The reason you think that is because of the Cranfield experiments.
+The reason is the Cranfield experiments.
 %
 His claim, which was quite controversial at the time, was that you
 could look up documents based on the words in the document.
 %
-You didn’t need laboriously curated indices you could use a machine,
+You didn’t need laboriously curated indices; you could use a machine,
 an engine if you will, to search through them.
 %
 The claim was that the Universal Decimal Classification, a facet
-classification, and alphabetical subject catalog, and a unigram index
+classification, an alphabetical subject catalog, and a unigram index
 were roughly comparable~\citep{CLEVERDON-67}.
 
 Before we analyze this, just a reminder of how a search engine query
-is evaluated. 
+is evaluated.
 %
-A user walks up to a terminal in the library, types in a query like\footnote{At the time, comptuers couldn't process grammatical questions; later chapters will discuss how we overcame that hurdle.}
+A user walks up to a terminal in the library and types in a query like\footnote{At
+  the time, computers couldn't process grammatical questions; later
+  chapters will discuss how we overcame that hurdle.}
 \question{Vaudeville Comedy Baseball}.
 %
-Then, it provided some results.  The search worked if most of the results were \textbf{relevant}: i.e., the user saw those results and said, ``yes, that's what I'm looking for''.
+Then, the system provided some results.
+%
+The search worked if most of the results were \textbf{relevant}: i.e.,
+the user saw those results and said, ``yes, that's what I'm looking
+for''.
 
 This might seem like old hat to you today, but it was revolutionary at the
-time.  To evaluate a system’s ability to search a dataset, you take
+time.
+%
+To evaluate a system’s ability to search a dataset, you take
 some queries from users and then find the truly relevant documents to
-that query.  Then, given a system’s results, you compute how well the system
+that query.
+%
+Then, given a system’s results, you compute how well the system
 delivered those relevant results to a user.
 
 \section{Is it Better to Find All the Good Things or for Everything Found to be Good?}
 \label{sec:ir:precision-recall}
 
-There are two ways to measure the quality of those results: precision and recall~\citet{keen-66}.
+There are two ways to measure the quality of those results: precision and
+recall, following \citet{keen-66}.
 %
-But to fully define these concepts, let's get a little bit more formal and provide sizes to the stuff our system found.
+But to fully define these concepts, let's get a little bit more formal
+and provide sizes to the stuff our system found.
 %
-First let's consider---given a query---how many answers you
+First, let's consider---given a query---how many answers you
 retrieved.
 %
 Some of those were relevant to the query and gave you information you
-wanted.  Let's say there are $A$ of those.  But others were not
-relevant, these are distractions that you still have to wade
-through.  Let's say there are $B$ of those.
+wanted.
+%
+Let's say there are $A$ of those.
+%
+But others were not
+relevant; these are distractions that you still have to wade
+through.
+%
+Let's say there are $B$ of those.
 
 \begin{table}
 \centering
@@ -122,18 +148,18 @@ through.  Let's say there are $B$ of those.
 \toprule
  & \textbf{Relevant} & \textbf{Non-relevant} & \textbf{Total} \\
 \midrule
-\textbf{Retrieved} 
-    & $A_q$ 
-    & $B_q$ 
+\textbf{Retrieved}
+    & $A_q$
+    & $B_q$
     & $A_q + B_q$ \\
-\textbf{Not Retrieved} 
-    & $C_q$ 
-    & $D_q$ 
+\textbf{Not Retrieved}
+    & $C_q$
+    & $D_q$
     & $C_q + D_q$ \\
 \midrule
-\textbf{Total} 
-    & $A_q + C_q$ 
-    & $B_q + D_q$ 
+\textbf{Total}
+    & $A_q + C_q$
+    & $B_q + D_q$
     & $A_q + B_q + C_q + D_q$ \\
 \bottomrule
 \end{tabular}
@@ -153,7 +179,7 @@ But let's consider how many of the relevant answers you did find:
 $A_q$.  It would be better if $A_q$ were \emph{all} the relevant
 documents, of which there are $A_q$ and $C_q$.
 %
-This is called the recall:
+This is called recall:
 \begin{equation}
   \mbox{recall}(q) = \frac{A_q}{A_q + C_q}.
 \end{equation}
@@ -204,18 +230,26 @@ With a reusable test collection, you could turn the crank on your
 retrieval system without pesky humans getting in the way.  Just check
 whether the red box finds the relevant documents!
 
-But not everybody was convinced.  The Cranfield paradigm is making a lot of assumptions here: 
-first, if a document is relevant, it’s equally relevant: everything is equally relevant: showing you my explanation of topic modeling is as good as a video from Siraj Raval.
-The users’ information needs are static; the answer to the question
-``who is the president of the united states'' never changes (Nixon is
+But not everybody was convinced.
+%
+The Cranfield paradigm makes a lot of assumptions here.
+%
+First, if a document is relevant, it’s relevant in the same way and to
+the same degree as every other relevant document: showing you my
+explanation of topic modeling is as good as a video from Siraj Raval.
+Second, users’ information needs are static; the answer to the question
+``who is the president of the United States'' never changes (Nixon is
 still president, right?).
 %
-Finally, the Cranfield paradigm assumes that somebody, somehow can
+Finally, the Cranfield paradigm assumes that somebody, somehow, can
 find the right answer from thousands or millions of documents.
 
-In addition to these specific issues, the more general issues we discuss in Chapter~\ref{ch:datasets} started even in these early days.  
+In addition to these specific issues, the more general issues we discuss
+in Chapter~\ref{ch:datasets} started even in these early days.
 %
-For example, if you had a confusing or ambiguous question, the set of relevant documents would be arbitrarily fixed, and could then encourage suboptimal patterns such as thinking ``Who'' was a proper noun.
+For example, if you had a confusing or ambiguous question, the set of
+relevant documents would be arbitrarily fixed, and could then encourage
+suboptimal patterns such as thinking ``Who'' was a proper noun.
 
 The academic community at the time was skeptical.  There’s no way
 these newfangled search engines could be better than a trained
@@ -233,7 +267,7 @@ And Cuadra does have some good quotes, he correctly warns us:
 not to what was important, but to what was measurable. This is a surefire
 approach to a certain kind of respectability, which information
 scientists now desire as much as psychologists did then, but it risks
-losing the baby with the bathwater. 
+losing the baby with the bathwater.
 \end{quote}
 
 Despite all those flaws, the assumptions---on average---mostly hold.
@@ -280,35 +314,40 @@ E.g., if the question is:
 then the words that appear most commonly are going to be more important.
 %
 In this case, that would be ``Lincoln''\dots but another seemingly
-important is ``the'' since it also appears just as often.
+important word is ``the'', since it also appears just as often.
 
 The great intuition of Sp\"arck Jones is that while you and I know that
 ``the'' is unimportant, and you could make a list of such unimportant
-term (often called a ``stop'' list in the lingo), that list is going
+terms (often called a ``stop'' list in the lingo), that list is going
 to be brittle.
 %
 For example, ``resolved'' is an unimportant term in legislative
 contexts.
 %
-The thing that ties together unimportant term is that they appear in
+The thing that ties together unimportant terms is that they appear in
 many different questions.
 
 Mathematically, you want to downweight terms that appear in many
-documents.  Sp\"arck Jones motivated inverse document frequency as
+documents.
+%
+Sp\"arck Jones motivated this idea through term
+specificity~\citep{sparck1972statistical}:
 \begin{quote}
 [placing] greater emphasis on the value of a term as a means
-of distinguishing one document from another than on its value as an indication of the content of the document itself
+of distinguishing one document from another than on its value as an
+indication of the content of the document itself
 \end{quote}
 %
 In other words, you want to combine the term frequency (this term is
-important to the document: it appears often) with the
-inverse document frequency (this term is important overall: it only appears in a few places).
+important to the document: it appears often) with the inverse document
+frequency (this term is important overall: it only appears in a few
+places).
 %
-The most common way to do this~\citep[there are countless combinations with
-funny names like \abrcamel{bm}{25}]{robertson-09}; the details are important in
-practice but not for understanding the theory.
+There are countless combinations with funny names like \abrcamel{bm}{25};
+the details are important in practice but not for understanding the
+theory~\citep{robertson-09}.
 %
-The most common way to do this is to weight a term~$w$ in document~$d$
+A common version is to weight a term~$w$ in document~$d$
 as number of times~$w$ is in document~$d$ relative to the total number
 of terms in~$d$, and inversely by the number of documents the word~$w$
 appears in~$N_d$.
@@ -357,7 +396,7 @@ appear in many different documents.
 
 %jbg(todo): Consider adding a figure to illustrate the dot product
 
-These took the theoretical insights of the original
+These methods took the theoretical insights of the original
 Cranfield experiments and made them into something that could actually
 work.  Again, this was revolutionary: as a result the British
 Computing Society named their annual award for researchers in this
@@ -441,7 +480,7 @@ the specification is
 Place = ?
  Team = Red Sox
 Month = July
-  Day = 7 
+  Day = 7
 \end{verbatim}
 and then it finds all of the corresponding records where the Red Sox
 played a game on July 7 and uses that to construct an answer.
@@ -503,7 +542,7 @@ is that it also has something that looks like
 an \abr{ir} component, although it’s explicitly
 %
 looking for documents tagged with a particular
-topic, unlike doing something like tf-idf
+topic, unlike doing something like \tfidf{}
 %
 retrieval.
 
@@ -526,7 +565,7 @@ A mistake on a Linotype machine could leave a peculiar trace in print.
 There was no backspace to undo a cast slug, so an operator could mark a
 spoiled line by mashing their hand down the first two columns of keys: ETAOIN SHRDLU.
 Those letters warned that human intervention was needed to keep garbage
-out of the finished page.  
+out of the finished page.
 %
 Fredric Brown borrowed them for a story about
 a Linotype machine that becomes self-aware by understanding the material
@@ -562,11 +601,11 @@ early seventies were not as advanced as they are today.
 
 Clarification is part of answering a question in this world.  If
 \abr{shrdlu} cannot tell which object you mean, it can ask a follow-up
-question~\citep{winograd-71}.  
+question~\citep{winograd-71}.
 %
 Instead of repeating ``Who!'' at an
 increasingly frustrated Costello, a useful conversation partner can check
-which interpretation is intended. 
+which interpretation is intended.
 %
 That changes what we should reward:
 sometimes the appropriate response is another question, a point I return
@@ -647,10 +686,13 @@ to give up on evaluation.  Cleverdon's goal as a librarian was to help
 people find information; a good evaluation should keep us accountable
 to that goal.
 
-But what if Costello's question about Abbott's team wasn't seeking information
-but checking how well Abbott knew his players or how well Abbott managed the team.
+But what if Costello's question about Abbott's team wasn't seeking
+information but checking how well Abbott knew his players or how well
+Abbott managed the team?
 %
-Motivated by mythology and the Turing test, the next chapter ponders when questions themselves become a deliberate
-instrument for testing what someone knows.  Who asks them, what they mean,
-and what makes an answer acceptable will matter just as much as how we
-compute the score.
+Motivated by mythology and the Turing Test, the next chapter asks when
+questions themselves become deliberate instruments for testing what
+someone knows.
+%
+Who asks them, what they mean, and what makes an answer acceptable will
+matter just as much as how we compute the score.

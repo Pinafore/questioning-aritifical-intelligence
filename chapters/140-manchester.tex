@@ -10,7 +10,9 @@ little as I make a case for why it's a good name.
 This chapter first explains why we picked the name---symmetry with
 Cranfield and a nod to question answering mythology we mentioned in
 Chapter~\ref{ch:civilization}---and argues why the Manchester paradigm is often more
-effective than the Cranfield paradigm. This will matter for the
+effective than the Cranfield paradigm. 
+%
+This will matter for the
 serious business of leaderboards (Chapter~\ref{ch:leaderboards}). But
 until then, this chapter spends time on fun, silly trivia games played
 by college nerds and the complicated rules they have made up over the
@@ -30,7 +32,7 @@ Questions---is that naturalistic questions from real users can't probe like the 
 %
 Thus, the Manchester paradigm tries to take the best of both worlds:
 reusable settings for \abr{ai} evaluation to probe how capable
-\abr{ai} is efficiently without a human in the loop.
+\abr{ai} is efficiently without a human in the loop for every computer system we want to evaluate.
 %
 Can you get something close to a Turing Test on the cheap?  
 %
@@ -54,7 +56,7 @@ Manchester framing matters for evaluation.
 
 We choose ``Manchester'' for symmetry with ``Cranfield'', they're both
 British university towns.  But there are many British towns and cities
-with universities.  Pedro Rodriguez and I picked Manchester because
+with universities.  Pedro Rodriguez and I picked Manchester for the name of this paradigm because
 Manchester also connects to three strands of question answering
 history: teaching, comparing, and probing.
 %
@@ -69,30 +71,12 @@ In Greek myth, the Sphinx asks everyone who enters the city a riddle that is
 explicitly designed to test the answerer~\cite{renger-13}. The point of the
 riddle is not information seeking: the Sphinx does not need to know what creature finishes its life on three legs.
 %
-Rather, the Sphinx's riddle is meant to highlight the three phases of \OE{}dipus's life: in youth he cursed, in adulthood he suffered the consequences, and in his blind dottage he dispensed advice that nobody listened to at Colonus.
-% JBG(todo): I did this from memory, check and add citations
+Rather, the Sphinx's riddle is meant to highlight the three phases of \OE{}dipus's life: in youth he cursed, in adulthood he suffered the consequences, and in his blind dottage airs his grievances at Colonus~\cite{rado-62}.
+% 
 We also covered in a previous chapter how targeted questions awaken
 understanding via the Socratic method, where questions guide the
 answerer to insight~\cite{trepanier-17}.
 
-\paragraph{To Compare: Granada Studios and \textit{University Challenge}}
-Manchester's Granada Studios created a quiz show called
-\textit{University Challenge}, whose format and history make it a useful
-template for competitive question answering~\citep{taylor_mcnulty_meek}. For
-the broader lineage connecting \textit{University Challenge}, \textit{College
-Bowl}, and \quizbowl{}, see \citet{baber-15}.
-%
-The host knows the answer, so the goal is not to satisfy a
-user's information need. Instead, the goal is to see which four students---the
-ones from Balliol College or Sheffield---are smarter.
-%
-In the United States, this unique competition is called \quizbowl{}, and it has unique properties that inform the development and evaluation of \abr{ai}.
-%
-This chapter talks about how the philosophy of \quizbowl{} can inform
-the authoring of individual questions.
-%
-Later, in Chapter~\ref{ch:leaderboards}, I discuss how the philosophy
-of \quizbowl{} tournaments can improve \abr{ai} evaluation.
 
 \paragraph{To Probe: The Turing Test}
 
@@ -104,16 +88,29 @@ But the judge asking the questions epitomizes the Manchester paradigm: devising 
 This need to expose an answerer's weaknesses also shapes the craft of
 question writing (Section~\ref{sec:manchester:craft}).
 
-To recap, the Manchester paradigm emphasizes questions designed to
+While the Manchester paradigm emphasizes questions designed to
 probe for specific capabilities. This does not replace user-centered
 evaluations \textit{a la} Cranfield; instead it makes explicit that
 some datasets and leaderboards are better understood as tests of
 competence rather than proxies for user satisfaction.
 
-Having already covered ancient Greece's connection to the Manchester
-paradigm, we will first turn to Manchester's University Challenge
-before returning to the legacy of the probing questions from the
-Turing Test.
+\paragraph{To Compare: Granada Studios and \textit{University Challenge}}
+Manchester's Granada Studios created a quiz show called
+\textit{University Challenge}, whose format and history make it a useful
+template for competitive question answering and establishing the career of
+Bamber Gascoigne~\citep{taylor_mcnulty_meek}. 
+%
+The host knows the answer, so the goal is not to satisfy a
+user's information need. Instead, the goal is to see which four students---the
+ones from Balliol College or Sheffield---are smarter.
+%
+In the United States, this unique competition is called \quizbowl{}, and it has unique properties that inform the development and evaluation of \abr{ai}.
+%
+Having already talked about Manchester's connections to mythology and to Turing, this chapter focuses on how the philosophy of \quizbowl{}---as epitomized by Manchester's \textit{University Challenge}---can inform
+the authoring of individual questions.
+%
+Later, in Chapter~\ref{ch:leaderboards}, I discuss how the philosophy
+of \quizbowl{} tournaments can improve \abr{ai} evaluation.
 
 \section{University Challenge: A Manchester Template for Evaluating Intelligence}
 \label{sec:manchester:tournaments}
@@ -151,8 +148,10 @@ to ad lib while Tinker caught up with the unfamiliar scoring
 system~\citep{baber-15}.
 
 \textit{College Bowl} shares a family resemblance\footnote{And like all families, there's
-  some drama here about who came up with the idea first.  I think that
-  Don Reid deserves the credit, but I'm foregrounding Manchester to
+  some drama here about who came up with the idea first: Granada studios copied
+  it---initially without permission---into what became the \abr{uk}
+  cultural touchstone \textit{University
+      Challenge}~\citep{taylor_mcnulty_meek}.  Don Reid deserves the credit, but I'm foregrounding Manchester to
   emphasize the links with Turing.} with \textit{University
   Challenge}: both are competitive, knowledge-centered formats in
 which the asker already knows the answer, and the goal is to compare
@@ -184,8 +183,8 @@ turn to those details next.
 \subsection{Discriminative Questions and Incremental Evidence}
 \label{sec:manchester:qb-discriminative}
 
-\paragraph{Interruptible}
-
+\paragraph{Interruptible.}
+%
 \quizbowl{}'s defining property is interruptibility: questions are read aloud and
 can be answered at any time. Each word is a chance to demonstrate knowledge.
 This makes \quizbowl{} maximally discriminative, rewarding knowledge rather than
@@ -211,9 +210,9 @@ reflexes) but also bad television.
 %
 Thus, the questions used in \textit{University Challenge} are \textbf{pyramidal}.
 
-\paragraph{Pyramidal}
+\paragraph{Pyramidal.}
 \label{sec:manchester:pyramidality}
-
+%
 The goal of a question is to discriminate who knows more about a
 topic: the smarter team should on average get the question right.
 %
@@ -300,7 +299,6 @@ write the summary of the dispute,
 get all parties to agree to the summary,
 and then hand the decision off to mutually agreed experts from the tournament's phone tree.
 The substance of the disagreement is communicated (without identities), and the experts apply the rules and decide.
-
 
 The need for a similar process seems to have been well-recognized
 in the earliest days of \qa{} system bake-offs such as \abr{trec-qa}, and \citet{voorhees-08} notes that
@@ -440,7 +438,9 @@ These are easy to create because they are just tweaking the input that are imper
 %
 However, you can't make these slight changes to a word: while pixels are continuous, words are discrete.
 
-So we made the writing process interactive. In TrickMe, a \qb{} author
+So we made the writing process interactive. 
+%
+In Eric Wallace's TrickMe, a \qb{} author
 picked an answer and drafted a tossup while the system continually answered
 alongside them~\citep{wallace-19} (Figure~\ref{fig:manchester:trickme-interface}).
 The author wrote the question in one part of the interface, watched the model's
@@ -561,7 +561,7 @@ My favorite example of this Manchester paradigm exchange is when the
 bridgekeeper---much like the Sphinx---asks travelers to answer questions or be
 thrown into the abyss~\citep{monty-python-holy-grail}.
 \begin{quote}\small
-  \begin{tabular}{@{}p{0.22\textwidth}p{0.72\textwidth}@{}}
+  \begin{tabular}{rp{0.72\textwidth}}
   Bridgekeeper: & What's the air-speed velocity of an unladen swallow? \\
   Arthur: & What do you mean? An African or European swallow? \\
   Bridgekeeper: & Huh? I don't know that! \\
