@@ -1,16 +1,22 @@
 
 We begin the ``modern'' age of computer question answering and the rise of
 \abr{ai} with \watson{}: an \abr{ibm}-built \abr{ai} that could play the
-American game show \jeopardyf{}
+American game show \jeopardyf{}.
 
 It's been over a decade since \watson{} appeared on \abr{tv}, but the
-passage of time has not dulled the luster of this 
-revolutionary \textit{tour de force}.  This chapter will talk about how it changed my life, how it
+passage of time has not dulled the luster of this revolutionary
+\textit{tour de force}.
+%
+This chapter will talk about how it changed my life, how it
 changed the way the public thought about \abr{ai}, and how its technology
 paved the way for ``modern'' \abr{ai} as exemplified by \mm{}s like \abr{gpt}.
 
-But this isn't a love letter to \watson{}.  For all the fame and glory it won, the
-\watson{} story isn't without problems.  Indeed, this chapter will make the
+But this isn't a love letter to \watson{}.
+%
+For all the fame and glory it won, the \watson{} story isn't without
+problems.
+%
+Indeed, this chapter will make the
 argument that the game was subtly rigged in a way that set back research on
 \abr{ai}.
 
@@ -21,18 +27,21 @@ argument that the game was subtly rigged in a way that set back research on
 symbolize progress on \abr{ai}.
 %
 \abr{ibm} (International Business Machines) is a New York-based technology
-company that was synonymous with computing for much of the twentieth century .
+company that was synonymous with computing for much of the twentieth century.
 
 
 
 It had previously wowed the world by creating ``Deep Blue'', a chess-playing
-computer that in 1997 defeated Gary Kasparov, who was widely considered the best chess
-player of the time~\citep{hsu-02}.
+computer that in 1997 defeated Gary Kasparov, who was widely considered the
+best chess player of the time~\citep{hsu-02}.
 
-Google/DeepMind had a similar ambition when they created AlphaGo. In a similar vein to DeepBlue, in 2016 AlphaGo defeated Lee Sedol, who was widely considered the best Go player of the time~\citep{koch-16}.
+Google/DeepMind had a similar ambition when they created AlphaGo.
+%
+In a similar vein to Deep Blue, in 2016 AlphaGo defeated Lee Sedol,
+who was widely considered the best Go player of the time~\citep{koch-16}.
 %
 Other \abr{ai} grand challenges include those issued by funding agencies like
-the United States' Defense Advance Projects Research Administration
+the United States' Defense Advanced Research Projects Agency
 (\abr{darpa}) to build autonomous cars that can drive a hundred miles
 in the Mojave, although the best team just managed over seven miles~\citep{patterson-05}.
 %
@@ -44,13 +53,13 @@ It's hard to imagine an alternate world where these grand challenges did not
 happen, but I don't think it's an exaggeration to say that these grand challenges
 did indeed change the world.  
 %
-After his defeat, Gary Kasparov took a ``if you can't beat them, join them''
+After his defeat, Gary Kasparov took an ``if you can't beat them, join them''
 approach and then began arguing for Centaur Chess: humans and computers
 playing chess together (this works for question answering too, as we discuss
-in Section~\ref{sec:leaderboards:cooperation}).
+in Chapter~\ref{ch:leaderboards}).
 %
-Likewise, the best Go players became more creative and novel moves by 
-incorporating computer-like play into their play style~\citep{shin-25}.
+Likewise, the best Go players became more creative, incorporating
+novel computer-like moves into their play style~\citep{shin-25}.
 %
 And two decades after \abr{darpa}'s autonomous grand challenge, we now have
 self-driving cars on the street in several \abr{us} cities.
@@ -60,7 +69,7 @@ So what made \jeopardy{} the right pick for this grand challenge?
 
 \subsection{What \jeopardy{} is and How it Works}
 
-\jeopardy{} is a gameshow created by Merv Griffin that debuted in
+\jeopardy{} is a game show created by Merv Griffin that debuted in
 1967~\citep{griffin-03}.
 %
 Its big gimmick is that the player responses are given in the form of
@@ -115,20 +124,21 @@ I was very skeptical.
 By the time that \watson{} came to fruition, I had moved to the
 University of Maryland.
 %
-Then, my scepticism turned to jealousy.
+Then, my skepticism turned to jealousy.
 %
 I watched, along with the rest of the world, one of the greatest
 achievements of \abr{ai} unfold in front of me.
 %
-What was I doing wasting my time working on language models~\citep{boyd-graber-10:linguistic} if trivia games were
-also legitimate research?
+What was I doing wasting my time working on language
+models~\citep{boyd-graber-10:linguistic} if trivia games were also
+legitimate research?
 
 Let me be clear that the technical triumphs are indisputable (and, in
 my opinion, under-appreciated).
 %
 From the work on wagering to synthesizing multiple information sources,
-Watson~\citep{ferruci-10} was from top to bottom a top-notch well-oiled
-machine.
+Watson~\citep{ferruci-10} was from top to bottom a top-notch,
+well-oiled machine.
 %
 And it computed all of this in real time---something that wasn't
 strictly necessary but still impressive.
@@ -136,32 +146,32 @@ strictly necessary but still impressive.
 \section{How Watson Works}
 
 While ``neural'' question answering (which we'll discuss in future
-chapter) is the big thing these days, Watson firmly belonged to the
+chapters) is the big thing these days, Watson firmly belonged to the
 \emph{statistical} age.
 %
-To understand some of how Watson works, its helpful to review some of
+To understand some of how Watson works, it's helpful to review some of
 the work that came before Watson that helped inspire it.
 
 \subsection{Rule-based Question Answering}
 
 Before the statistical age of \abr{qa} was the \emph{rule-based}
 age: systems that were impressive on individual questions about
-baseball or geology but that failed miserably as soon as it saw a question
+baseball or geology but that failed miserably as soon as they saw a question
 that was unexpected in terms of the domain.
 
 One of the guiding principles of the statistical age was ``the
 unreasonable effectiveness of big data'', and this required scaling 
 approaches to web-scale data.
 %
-The first things that people tried was scaling up the ``good,
+The first things that people tried were scaling up the ``good,
 old-fashioned'' approaches that defined the rule-based systems (Section~\ref{sec:ir:gofai-qa}).
 %
 Probably the most prominent system in this category is Start from Boris Katz
 at \textsc{mit}.  This system first launched in 1993.
 %
 Like many of the systems in
-this era, it takes an approach that’s somewhat similar to to the old-fashioned AI
-approaches: parse the query with a [IY: with a what? something missing here, or it should just be "parse the query"] and look it up in a knowledge base.
+this era, it takes an approach that is somewhat similar to old-fashioned
+\abr{ai} approaches: parse the query and look it up in a knowledge base.
 %
 For example, given the question:\footnote{This is an impressive/complicated question
     because David O. Selznick removed the first director (George Cukor) to
@@ -170,15 +180,15 @@ For example, given the question:\footnote{This is an impressive/complicated ques
 %
 \question{Who directed \emph{Gone with the Wind}?}
 %
-Becomes the lookup~\citep{katz-02}
+becomes the lookup~\citep{katz-02}
 \begin{verbatim}
 (get "imdb-movie" "Gone with the Wind (1939)"
                   "DIRECTOR") =>
     ("George Cukor" "Victor Fleming" "Sam Wood"))
 \end{verbatim}
 %
-Some of these can be looked up directly in datasets, but \textsc{start}
-further builds on the systems like \textsc{lunar} and
+Some of these questions can be looked up directly in datasets, but
+\textsc{start} further builds on systems like \textsc{lunar} and
 \textsc{baseball} we talked about in previous chapters.
 %
 While those systems also need to turn the raw text of questions into a structured
@@ -190,7 +200,7 @@ Internet to find answers is clearly a huge influence on the subject of this
 chapter---\watson{}---and later, Dense Passage
 Retrieval~(Section~\ref{sec:methods:deep-retrieval}).
 
-\subsection{Transforming Questions to find the Answer}
+\subsection{Transforming Questions to Find the Answer}
 In the next chapters about neural language models, we will discuss how new
 models \emph{transform} questions into numbers (vectors) to find or generate
 the answer.
@@ -198,7 +208,8 @@ the answer.
 But before we get there, it is useful to talk about how we can transform
 questions into text that can better find the answer.
 %
-We begin with the Question Answering using Statistical Models~\citep[\abr{qasm}]{radev-01}.
+We begin with Question Answering using Statistical
+Models~\citep[\abr{qasm}]{radev-01}.
 
 One way of thinking about question answering is as a translation
 problem: questions are asked in one language but the answers are found in
@@ -211,8 +222,8 @@ In Section~\ref{sec:leaderboards:cheat}, we'll talk about the cheating scandal
 around the American game show \textit{21}, where Charles van Doren got
 the answers in advance.
 %
-Part of the mythology of \jeopardy{} is that Merv Griffen said in response to said scandal, why
-don’t we just give them the answers?
+Part of the mythology of \jeopardy{} is that Merv Griffin responded to
+that scandal by asking, why don't we just give them the answers?
 %
 So you have clues like \question{During WWII this computer scientist \& code
   breaker converted his money into silver \& buried it; he never found his
@@ -221,13 +232,15 @@ So you have clues like \question{During WWII this computer scientist \& code
 The correct response, which is phrased as a question, is
 ``Who is Alan Turing?''
 %
-In other words, the central conceit of \jeopardy{} is that it converts questions
-into answers. Then, the contestants need to give a response to that answer
+In other words, the central conceit of \jeopardy{} is that it converts
+questions into answers.
+%
+Then, the contestants need to give a response to that answer
 in the form of a question.
 
-What \abr{qasm} is doing is doing the reverse: it has a model that
-tries to turn questions into the search string that could find the
-answer to the question (we'll see modern versions of this when we talk about
+What \abr{qasm} does is the reverse: it has a model that tries to turn
+questions into the search string that could find the answer to the
+question (we'll see modern versions of this when we talk about
 multihop question answering in Chapter~\ref{ch:formats}).
 %
 \abr{qasm} can apply plenty of transformations: swapping words,
@@ -244,9 +257,10 @@ are doing something similar, except they’re generating the query in a
 continuous dense vector space
 (Section~\ref{sec:methods:deep-retrieval}).
 %
-Doing it with real words like \abr{qasm} is more interpretable: a human could
-understand what’s going on, while a vector query is inscrutable it seems to
-work better.
+Doing it with real words like \abr{qasm} is more interpretable: a human
+could understand what's going on.
+%
+A vector query is more inscrutable, but it seems to work better.
 
 But how does this allow \watson{} to answer questions?
 %
@@ -317,7 +331,9 @@ other.
 Now how does the buzzer know to use this information?
 %
 There are many little pieces that could go into thinking that a guess is good
-or not.  These pieces of evidences are called features.
+or not.
+%
+These pieces of evidence are called features.
 %
 While features aren’t
 always active, when they are, they provide evidence of whether a guess is
@@ -332,22 +348,39 @@ E.g., if you have a category \texttt{``Ten''-letter words}, then the clue
 would have many possible answers that might score highly if you didn't take
 the category into account: e.g., \answer{goalie}.
 %
-But the category has two pieces of information. First, the answer should be ten
+But the category has two pieces of information.
+%
+First, the answer should be ten
 letters long; \answer{goalie} fails but \answer{goalkeeper} fits.
 %
 In addition, the quoted part of the category tells the buzzer that it
 should give a low score to any guess that doesn't have ``ten'' in it.
 
 In a computer programming language, this could simply be an if statement: if
-ASCII character 34 is in this string, return 1.  But just knowing that there’s
-a quote in the category does’t tell you which clues to favor.  You would need
-to make the the feature more specific.
-
-Let’s go to a question that I got while I was on \jeopardy{}  This demonstrates
-that such features aren’t just a category-specific phenomenon, but can appear in individual clues as well.  In a quite normal category about
+ASCII character 34 is in this string, return 1.
+%
+But just knowing that there's a quote in the category doesn't tell you
+which clues to favor.
+%
+You would need to make the feature more specific.
+Let's go to a question that I got while I was on \jeopardy{}.
+%
+This demonstrates that such features aren't just a category-specific
+phenomenon, but can appear in individual clues as well.
+%
+In a quite normal category about
 geography, this clue came up:
 \question{``G.I.'' hope you know that 0 degrees latitude \& 180 degrees longitude is just east of this group, part of Kiribati}
-Notice that ``G.I.'' is in quotation marks.  This is a signal that the correct response will start with G.I., in this case the correct response is ``Gilbert\footnote{Named of course for Johnny Gilbert, ``the voice of \jeopardy{}''.  Actually not, it’s far more confusing than that: it was named by a German admiral---Adam Johann von Krusenstern---who led the first Russian circumnavigation of the globe.  Krusenstern recognized that the British Captain Thomas Gilbert had described each of the islands individually and applied the the name to the group of islands.}
+Notice that ``G.I.'' is in quotation marks.
+%
+This is a signal that the correct response will start with G.I.; in
+this case, the correct response is ``Gilbert\footnote{Named of course
+for Johnny Gilbert, ``the voice of \jeopardy{}''.  Actually not, it's
+far more confusing than that: it was named by a German admiral---Adam
+Johann von Krusenstern---who led the first Russian circumnavigation of
+the globe.  Krusenstern recognized that the British Captain Thomas
+Gilbert had described each of the islands individually and applied the
+name to the group of islands.}
 Islands''.
 %
 So perhaps we need to have multiple features to capture whether our answer is
@@ -364,20 +397,29 @@ have been something like this:
         feature matches a multiword guess.
 \end{itemize*}
 
-What made \watson{} such a \textit{tour de force} is that humans had to generate each of these features.
+What made \watson{} such a \textit{tour de force} is that humans had
+to generate each of these features.
 %
-This generation is not a one and done process. It’s very rare to get the features right the first time around. For instance, maybe the system got
+This generation is not a one-and-done process.
+%
+It's very rare to get the features right the first time around.
+%
+For instance, maybe the system got
 confused when somebody has a quote from literature and you need to
 make sure that doesn’t get counted or add a new feature to handle that
 case.  
 %
-Therefoore, if you are building a system to answer such questions, you must look at things the system is still getting wrong and
-add a new feature to correct the error.  This is the same process that
-Watson used to build its statistical system.  
+Therefore, if you are building a system to answer such questions, you
+must look at things the system is still getting wrong and add a new
+feature to correct the error.
+%
+This is the same process that Watson used to build its statistical system.
 
 This statistical approach has some advantages over the neural approach
 we'll see in the next chapter: it is easy to understand why a system
-is doing what it is.  And it's easy to fix problems as they pop up.
+is doing what it is.
+%
+And it's easy to fix problems as they pop up.
 
 Let's see how this might happen.
 %
@@ -389,9 +431,13 @@ Often, this is straightforward in the category name: \textbf{Starts
 %
 So you might have a feature that matches that exactly.
 %
-But then you discover that this feature misses \textbf{Crossword Clues
-  ``P''}, and you can check that the feature didn't fire for that
-example and generalize that category. [IY comment: I am not sure what this means. How does a start with L clue go off for Crossword Clues P?]
+But then you discover that the feature misses a category like
+\textbf{Crossword Clues ``P''}, where the quoted letter again
+constrains the response rather than naming the category itself.
+%
+You can check that the quoted-letter feature did not fire for that
+example and generalize it beyond categories that literally begin with
+\textbf{Starts with}.
 
 The category that I feared the most was anagrams: where you need to
 rearrange the letters in the clue to get to the answer.
@@ -413,11 +459,13 @@ So you would want a feature that would check for consistency with
 previous correct responses in the category.
 
 And for ``normal'' clues, generating a guess looks a lot like the
-reformulations that we saw in QASM: [IY note: this is not in this chapter or the intro, make sure it's ok here]
+reformulations that we saw in \abr{qasm}:
 
 \question{In May 1898 Portugal celebrated the 400th anniversary of
   this explorer's arrival in India}
-A 400\textsuperscript{th} anniversary of 1898 gets rewritten to May 1498, India gets transformed into Kappad, and then you can find something with the correct response: \answer{Vasco de Gama}.
+A 400\textsuperscript{th} anniversary of 1898 gets rewritten to May
+1498, India gets transformed into Kappad, and then you can find
+something with the correct response: \answer{Vasco da Gama}.
 
 So the first phase of the Watson pipeline is to---in parallel---generate all
 sorts of guesses based on different interpretations of the question.  Some try
@@ -431,8 +479,9 @@ different subsystems to get to the right answer.
 \subsection{Deciding When to Trust a Guess: Which Features Matter?}
 \label{sec:watson:logistic-regression}
 
-From the above approaches, you generate dozens of possible guesses.  How do you know which---if
-any—to select?
+From the above approaches, you generate dozens of possible guesses.
+%
+How do you know which---if any---to select?
 %
 Combining inputs to predict a value is often called a regression
 problem, and when the prediction is a binary decision, this is called
@@ -774,7 +823,7 @@ rewarded.
 
 \newcommand{\watsonvspace}{\vspace{.06cm}}
 
-First, lets see how these features translate into a probability:
+First, let's see how these features translate into a probability:
 \begin{align}
   \pi_i & = \sigma \left(\explain{\abr{ir}}{2 \cdot 0.1} + \explain{Category}{1\cdot 0.2}+\explain{\abr{kb}}{0.1\cdot 2}+ \explain{Prev}{0.005 \cdot 40} - \explain{bias}{0.8}
           \right) \\
@@ -899,11 +948,11 @@ And lest you think this is an artifice of the skilled writers of \jeopardy{},
 this also appears in more ``natural'' questions like those people ask Google
 (Section~\ref{sec:datasets:nq}).
 
-And part of what made Watson a good \jeopardy{} Player is that it would learn
+And part of what made Watson a good \jeopardy{} player is that it would learn
 as it explored the category.
 %
-After getting a couple of months wrong, Watson
-can learn that all of the answers should be a month. [IY: what does getting a couple of months wrong mean?]
+After seeing that earlier correct responses in a category were months,
+Watson could learn that later responses should probably be months too.
 %
 While we don't know details of this implementation, we can
 imagine that there is a feature that suggests whether the clue is consistent
@@ -923,14 +972,18 @@ category are consistent with that type''.
 One thing that made \watson{} particularly groundbreaking was that it not only
 computed raw accuracy, but also compared itself against human performance.
 %
-This chart shows how Watson progressed in different iterations of the system,
-inching up to the cloud of \jeopardy{} champions.  Ken Jennings is in red there,
-still clearly dominating even the final version of Watson. [IY comment: I don't see this chart]
+Its internal evaluation tracked how different versions of the system
+inched toward the cloud of \jeopardy{} champions.
 %
-This comparison is even more important today (Chapter~\ref{ch:leaderboards}) as people claim that \abr{ai}s
-have super-human, but the lessons of \watson{} can
-help inform how we we can judge whether these judgements are fair and
-reasonable.
+Ken Jennings still dominated even the late versions, which matters
+because Watson's public win can make the comparison look cleaner than
+it was.
+%
+This comparison is even more important today (Chapter~\ref{ch:leaderboards})
+as people claim that \abr{ai}s have superhuman performance.
+%
+The lessons of \watson{} can help us judge whether those judgments are
+fair and reasonable.
 %
 So was the \watson{} match ``the real deal''?
 
@@ -951,8 +1004,8 @@ together makes this an unfair competition.
 This is a problem!  First, it's a problem scientifically because we
 want to have fair comparisons of human vs. computer intelligence.
 %
-More importantly, I want to have my turn having my question answering
-robots sit opposite against trivia whizzes (Chapter~\ref{ch:gameshow}),
+More importantly, I want to have my turn having my question-answering
+robots sit opposite trivia whizzes (Chapter~\ref{ch:gameshow}),
 and I can't do that if everybody thinks that Watson's spin
 on \jeopardy{} settled the issue (and it hasn't).
 
@@ -968,17 +1021,15 @@ and skip ahead to Section~\ref{sec:watson:human-buzzing}.
 
 \subsection{The Pool of Questions}
 
-\jbgcomment{Citation needed}
-
 Part of the agreement between \jeopardy{} and \abr{ibm} was that the
-competition would take place on normal, written questions.
+competition would take place on normal, written questions~\citep{jennings2011ibm}.
 %
 In the media coverage of the competition, this focused on avoiding
 video and picture daily doubles (fairly reasonable, but we'll discuss
 how multimedia questions might be more fun in Section~\ref{sec:formats:multimodal}).
 %
-However, this causes two problems: the questions are too easy and do
-not necessarily challenge computers. [IY comment: these seem like the same problem to me]
+However, this causes one central problem: the questions were normal for
+television, not targeted to the places where computers were weak.
 
 So what makes up ``normal'' questions?
 %
@@ -1025,10 +1076,12 @@ Instead, it all came down to the buzzer.
 \subsection{John Henry vs. the Buzzing Machine}
 \label{sec:watson:human-buzzing}
 
-Unlike \qb{} (Section~\ref{sec:manchester:qb}), while \jeopardy{} also uses
-signaling devices, these only work \emph{once the question has been
-  read in its entirety}; Ken Jennings (also a former \qb{} player while he was a student at
-\abr{byu}) himself explains it on a \textit{Planet Money}
+Unlike \qb{} (Section~\ref{sec:manchester:qb}), \jeopardy{} signaling
+devices work only \emph{once the question has been read in its
+entirety}.
+%
+Ken Jennings (also a former \qb{} player while he was a student at
+\abr{byu}) explains this on a \textit{Planet Money}
 interview~\citep{malone-19}:
 \begin{quote}
 {\bf Jennings:} The buzzer is
@@ -1053,11 +1106,10 @@ probability of being right and buzzes in if it's above that threshold
 In contrast, humans have to either guess when it is safe to buzz or
 wait for a light to turn on.
 
-\jbgcomment{citation needed for gurus}
-
-\jeopardy{} gurus explicitly advise new players not to wait for the light---your puny human reflexes are too slow.
+\jeopardy{} gurus explicitly advise new players not to wait for the
+light---your puny human reflexes are too slow~\citep{jennings-06}.
 %
-Indeed, one of Ken Jenning's strengths was his uncanny ability to
+Indeed, one of Ken Jennings's strengths was his uncanny ability to
 internalize the cadence of Alex's voice and when a tech would
 activate the buzzer~\citep{jennings-06}.
 %
@@ -1093,14 +1145,14 @@ used a very similar clue that aired as we were recording:
 %
 The correct response is of course \answer{Sue Grafton}.
 %
-For poorly read contestant like myself, only studying previous clues
+For a poorly read contestant like myself, only studying previous clues
 allowed us to get the answer right.
 %
 I've never read a Grafton book, but I know she writes mystery books and
 has titles of the form \textit{``A'' is for Alibi} (and that's the
 only title I can think without looking at Wikipedia).
 
-For Watson, this is ``memorization'' is trivial: a single letter
+For Watson, this ``memorization'' is trivial: a single letter
 implies that the answer is \underline{Grafton}.
 %
 But just like you should not think that I'm smart for getting lucky to
@@ -1108,8 +1160,12 @@ have seen a reused clue, you should not praise Watson for finding
 near-repeat questions.
 %
 And it's not just trivia games: Google's dataset of questions (which
-I'll discuss further in Section~\ref{sec:datasets:nq}) have
-many identical questions~\citep{lewis-21}, which makes it an imperfect yardstick. [IY comment: I don't understand what this is conveying in the context of this book]
+I'll discuss further in Section~\ref{sec:datasets:nq}) has many
+identical questions~\citep{lewis-21}.
+%
+If a benchmark rewards systems for recognizing near-duplicates, it can
+overstate the kind of general question answering ability we actually
+care about measuring.
 %
 Moreover, Watson can also store the entirety of Wikipedia, easily
 looking up capitals, authors, etc.
@@ -1118,7 +1174,7 @@ Indeed, when a computer can find \emph{an exact quote} (as was in my
 final \jeopardy{} clue), the question becomes even easier.
 %
 Then the computer just needs to find the appropriate article that
-contains the quote and then just find whatever entity is mostly likely
+contains the quote and then just find whatever entity is most likely
 to be a \jeopardy{} answer.
 
 Where systems like Watson struggle are on computation, matching novels
@@ -1126,8 +1182,9 @@ and movies to plots, combining multiple clues, lateral thinking, and
 wordplay~\citep{kaushik-18}.
 % IY: I deleted the next 3 paragraphs bc I think this one made the point, and I was not sure what they were saying
 
-In other words, the ``difficulty'' of \jeopardy{}
-questions on the board were calibrated for humans; they do not apply to computers.
+In other words, the ``difficulty'' of \jeopardy{} questions on the
+board was calibrated for humans; it does not apply cleanly to
+computers.
 %
 We talk about how Facebook/Meta dealt with this problem in
 Section~\ref{sec:leaderboards:adversarial}: tell the authors what's hard for a computer.
@@ -1140,8 +1197,9 @@ Section~\ref{sec:leaderboards:adversarial}: tell the authors what's hard for a c
 Given the ``too easy'' questions and the buzzer, what does this
 actually mean for gameplay?
 %
-You might think this is the scenario: a question comes in, and Watson has the choice of answering it or not:
-it can win every race to the buzzer if it wants.
+You might think this is the scenario: a question comes in, and Watson
+has the choice of answering it or not because it can win every race to
+the buzzer if it wants.
 %
 Then, of the things it cannot answer, Ken and Brad fight over the
 scraps.
@@ -1149,7 +1207,7 @@ scraps.
 Thus, for a computer to win this competition, it needs only to be able
 to answer a third of the questions correctly.
 
-Now, the \jeopardy{} nerds reading the book (I love you all), will
+Now, the \jeopardy{} nerds reading the book (I love you all) will
 point out that this isn't the case, because the clues are not weighted
 equally: some are worth more than others.
 %
@@ -1204,7 +1262,7 @@ Ken would sometimes do a little hunting for the Daily Double against a
 particularly formidable opponent, but he would normally be
 well-behaved so as not to upset the powers that be.
 %
-\watson{}, however, was a soulless machine; and having a machine on the
+\watson{}, however, was a soulless machine, and having a machine on the
 stage was so exciting that
 nobody faulted its strategy.
 %
@@ -1244,15 +1302,19 @@ superhuman in their intelligence.
 We've seen claims that computers are smoking lawyers in the
 \abr{lsat}~\citep{malik-24} or are better than radiologists in reading X-rays~\citep{bellamy-22}.
 %
-\watson{} was just the beginning of the story, as since then we've seen both a
+\watson{} was just the beginning of the story: since then, we've seen both a
 tremendous improvement in the technologies that drive \abr{ai} (we review
-these advances in Chapter~\ref{sec:methods:generation}) and a greater
-interest in measuring how smart these models are.
+these advances in Chapter~\ref{ch:methods}, especially
+Section~\ref{sec:methods:generation}) and a greater interest in
+measuring how smart these models are.
 %
 \watson{} was just the beginning of the story, in both respects.
 
 
-In the next chapters, we go beyond the methods that \watson{} used to the
-modern \abr{qa} has \emph{actually} reached possible parity with humans and
-how to actually measure how far \abr{ai} has come since Ken Jennings lost to
-\watson{}\ (Chapter~\ref{ch:leaderboards}).
+In the next chapters, we go beyond the methods that \watson{} used and
+ask whether modern \abr{qa} has \emph{actually} reached parity with
+humans.
+%
+We also turn to the harder measurement question: how to judge how far
+\abr{ai} has come since Ken Jennings lost to \watson{}
+(Chapter~\ref{ch:leaderboards}).
