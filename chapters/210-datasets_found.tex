@@ -1,103 +1,313 @@
 \label{chapter:nq}
 
-\section{What Question Datasets are There?}
+In the chapter on the Cranfield Paradigm (Chapter~\ref{}), we argued
+that reusable test collections were the life blood of research: it
+lets you know when you've made an advance, facilitating the process of
+standing on the shoulders of giants.
+%
+This chapter will outline the question answering datasets that emerged
+that enabled the rapid progress of question answering algorithms.
 
-My goal with this video is to give an overview of the kinds of question answering datasets that are out there, contrast them, and give my opinion about which is the best one.
+However, I don't want to just uncritically give a listing of all the
+datasets that have come out.
+%
+There are \emph{a lot} of them.
 
-First, let me start off by saying what we're not talking about!  There are many question answering datasets out there that are essentially logic problems or SQL query lookups and we're not going to talk about them.  That's a very valid form of question answering and it essentially corresponds to a form of parsing where you have some text and you need to turn that into a logical form or an SQL statement.  If you parse it correctly, you get the answer.
+In addition to not being a complete listing, I will also be critical
+of datasets, mostly through the lens we developed in the chapter on
+the Manchester Paradigm (Chapter~\ref{}).
+%
+Again, I as my friends in the research community to not take this too
+harshly.
+%
+And some of these flaws took a while to figure out, and I'm writing
+this with the advantage of hindsight!
+%
+So the selection of datasets will also reflect what I think makes for
+the best narrative about what we know about how to make a good
+dataset.
 
-Instead, we're going to talk about more open-ended question answering that’s often called “machine reading” question answering for reasons that will be clear in a second.  In these question answering datasets, you need to make sense of a large body of text to answer questions.  Moreover, you usually need to be able to answer questions about just about anything, not just a narrow set of topics.
+Because I'm ordering the story chronologically, the broad trend that
+we'll observe is that the amazing tour-de-force of \textit{Watson}
+created a renewed interest in Question Answering, there was an
+explosion of of datasets trying many things, and the resulting
+consensus was to adopt the Manchester paradigm once question answering
+was extensively used to benchmark \abr{ai}.
 
-We'll talk about models for answering these questions later, but for the moment think about the kinds of things that your model would need to do to answer the question.  In many cases, it will be exactly the same kind of thing you would need to do to answer the question: find a document that contains the answer, read through the document to find the answer, and then convey that answer.
+But we also need to discuss what \emph{is} a question answering dataset for the purposes of this chapter.
+%
+There are many question answering datasets out there that are
+essentially logic problems or SQL query lookups on a limited domain
+and we're not going to talk about them.
+% todo(jbg): Add some examples
+%
+That's a very valid line of research and it essentially
+corresponds to a form of parsing where you have some text and you need
+to turn that into a logical form or an SQL statement.  If you parse it
+correctly, you get the answer.\footnote{You will see questions like this in other datasets we discuss; this is not a contradiction!  Rather, if your dataset is only about asking Geography questions from a list of \abr{us} states, that dataset would not be included here.  However, if you could have a question about the second largest city in Louisiana alongside computing the nagles of a triangle, that's fine.}
 
-Okay, back to the datasets.  Rather than just listing them off, I’m going to try to organize the datasets based on: how much information you have to answer the question and how complicated the answer is.  Let’s say that we can write this as a two dimensional plot with provided information as the x axis and answer complexity as the y axis.  I’ll roughly go chronologically through time.
+Instead, inspired by the breadth of topics admitted by the Manchester paradigm exemplar the Turing Test, we want to consider any question that can be exprssed in natural language.
+%
+This contains all of the ambiguity, complications, and the complexity we covered in the Manchester chapter.
+%
+In addition to the language component, it also requires a lot of knowledge.
+%
+In these question answering datasets, you need to make sense of a
+large body of text to answer questions.  Moreover, you usually need to
+be able to answer questions about just about anything, not just a
+narrow set of topics.
 
-In another video, there’s another important dimension: who’s writing the question and for what purpose, but I think that’s so important that I want to focus on it by itself.  So if you’re interested in that, check out the Cranfield vs. Manchester discussion linked in the description. 
+\section{The first \abr{qa} Datasets}
+
+Instead, we're going to talk about more open-ended question answering
+that’s often called “machine reading” question answering for reasons
+that will be clear in a second.
+%
+Despite the organization of the book, these datasets developed
+alongside algorithms for question answering.
+%
+The shape of these datasets heavily constrained what algorithms could
+be successful at answering them.
+%
+We'll describe how these algorithms work more in the next chapter, but the rough outline is that they take a question in as input, find a document that may answer the question, and then highlight the exact phrase that answers the question within that document.
+
+
+Okay, back to the datasets.  Rather than just listing them off, I’m
+going to try to organize the datasets based on: how much information
+you have to answer the question and how complicated the answer is.
+Let’s say that we can write this as a two dimensional plot with
+provided information as the $x$ axis and answer complexity as the $y$
+axis.  I’ll roughly go chronologically through time.
+
+And then we will put in outline whether the dataset marks a Manchester
+or Cranfield dataset.  Several of the early datasets are neighter.
+Rather, they are created by novices, so I will mark each datasets'
+position with an icon: a question mark for information-seeking
+Cranfield questions, a buzzer for Manchester questions, and a
+pawn\footnote{I use a pawn, the simplest chess piece, to mark the
+relative lack of sophistication of the hard working people who put the
+dataset together and as a nod to Mechanical Turk.  The original
+Mechanical Turk was a sham machine that could purportedly play chess
+but actually had a human of diminutive stature inside.  Amazon created
+a platform of that name to provide both the technical infrastructure
+and the marketplace to find people who could complete tasks that
+required human intelligence. } for the novices.
+% TODO(jbg): finalize novice symbol.  It could be dunce cap triangle,
+% pawn for Mechanical Turk, or something else.
+
+% TODO(jbg): Add this figure if it still makes sense
 
 \section{TREC QA}
 
-Let’s start with the most simple example of a question answering dataset: you get a question as input and you need to produce a short answer.  This is often called factoid QA.  The prototypical example of this is TREC QA.  This is a super old school dataset, but important to remember, as it set the form of everything that came after.
+Let’s start with the most simple example of a question answering
+dataset: you get a question as input and you need to produce a short
+answer.  This is often called factoid QA.  The prototypical example of
+this is TREC QA.  This is a super old school dataset, but important to
+remember, as it set the form of everything that came after.
 
-The actual dataset is tiny: only a couple hundred questions.  And the official evaluation process seems impossible by today’s standards: you had professional annotators judge whether a system provided the right answer.  While every other dataset we’ll talk about has more automatic evaluations, this is probably the best way to do it, at least for some trickier answers.
+The actual dataset is tiny: only a couple hundred questions.  And the
+official evaluation process seems impossible by today’s standards: you
+had professional annotators judge whether a system provided the right
+answer.  While every other dataset we’ll talk about has more automatic
+evaluations, this is probably the best way to do it, at least for some
+trickier answers.
 
-This is our first QA dataset, so let’s put this onto the board here.  Let’s now go into the modern age!
+This is our first QA dataset, so let’s put this onto the board here.
+Let’s now go into the modern age!
 
 \section{CNN / Daily Mail}
 
-One of the first machine reading data sets was the CNN / Daily Mail data set from Karl Moritz Hermann and company.  Here you have a bunch of news articles.  This dataset started the trend of conditioning a question on a document: in this case a news article.  They asked you to answer questions about those news articles.  For example, “who reached the Cricket World Cup”.  Somewhere in the document was the answer “New Zealand” but you need to find that.
+One of the first machine reading data sets was the CNN / Daily Mail
+data set from Karl Moritz Hermann and company.  Here you have a bunch
+of news articles.  This dataset started the trend of conditioning a
+question on a document: in this case a news article.  They asked you
+to answer questions about those news articles.  For example, “who
+reached the Cricket World Cup”.  Somewhere in the document was the
+answer “New Zealand” but you need to find that.
 
-One thing that is controversial is that you didn’t actually find the string “New Zealand” but rather an anonymized symbol.  This meant that you couldn’t just have a language model memorize all the answers (which is even more of a problem now that it was back then).  However, this had another drawback!  Because there weren’t that many symbols, the task was essentially a multiple-choice question: you identified the entities in the paragraph and then you picked which one was correct.  Despite this problem and and that introduced a little bit of noise to the problem, you can see the influence of this question answering dataset on the rest of the field, particularly on “the next big thing”: SQuAD.
+One thing that is controversial is that you didn’t actually find the
+string “New Zealand” but rather an anonymized symbol.  This meant that
+you couldn’t just have a language model memorize all the answers
+(which is even more of a problem now that it was back then).  However,
+this had another drawback!  Because there weren’t that many symbols,
+the task was essentially a multiple-choice question: you identified
+the entities in the paragraph and then you picked which one was
+correct.  Despite this problem and and that introduced a little bit of
+noise to the problem, you can see the influence of this question
+answering dataset on the rest of the field, particularly on “the next
+big thing”: SQuAD.
 
 \section{SQuAD}
 
-The Stanford question answering dataset has become the gold standard.  While it might not be the best dataset, it’s the most popular.  If you don't report results on SQuAD, you need to explain why.  This 2016 dataset set helped popularized the modern upsurge of question answering.  These questions use paragraphs from Wikipedia ask crowd workers to write questions about that paragraph.  The questions are intended to have an answer that is a span within that Wikipedia paragraph.  One way of thinking about this is that a span is a contiguous span of characters: you highlight that span to give the answer.
+The Stanford question answering dataset has become the gold standard.
+While it might not be the best dataset, it’s the most popular.  If you
+don't report results on SQuAD, you need to explain why.  This 2016
+dataset set helped popularized the modern upsurge of question
+answering.  These questions use paragraphs from Wikipedia ask crowd
+workers to write questions about that paragraph.  The questions are
+intended to have an answer that is a span within that Wikipedia
+paragraph.  One way of thinking about this is that a span is a
+contiguous span of characters: you highlight that span to give the
+answer.
 
-This is a very large data set so it doesn't have many of the problems of the smaller data sets that we've talked about before. The downside of this is that these crowd workers can often be reverse engineered there are tricks and cheats that they use to create questions.  For example, if a question asks “when”, then all a QA system really has to do is find the thing that is being asked about and then find the closest thing that looks like a date nearby.  In other words, the machine learning algorithms are essentially reverse engineering those annotators rather than solving the intrinsic problem.
+This is a very large data set so it doesn't have many of the problems
+of the smaller data sets that we've talked about before. The downside
+of this is that these crowd workers can often be reverse engineered
+there are tricks and cheats that they use to create questions.  For
+example, if a question asks “when”, then all a QA system really has to
+do is find the thing that is being asked about and then find the
+closest thing that looks like a date nearby.  In other words, the
+machine learning algorithms are essentially reverse engineering those
+annotators rather than solving the intrinsic problem.
 
-The real reason, in my opinion, that squad has become the gold standard is that it has a very well trafficked leaderboard where people can submit their systems and to see how they stack up against the rest of the world.  Because the answers are spans within the original document this reduces the task to multiple-choice much like the Daily Mail/CNN data set that we talked before.  Thus, it doesn't allow answers that are latent in the text that aren’t a fixed span.  For example, if the question is “What states share the Delmarva peninsula with Maryland” and the Wikipedia page has “The Delmarva peninsula is made up of Deleware, Maryland, and Virginia”, it can’t answer “Delaware and Virigina” because there’s a pesky Maryland in the middle!
+The real reason, in my opinion, that squad became the gold
+standard is that it has a very well trafficked leaderboard where
+people can submit their systems and to see how they stack up against
+the rest of the world.  Because the answers are spans within the
+original document this reduces the task to multiple-choice much like
+the Daily Mail/CNN data set that we talked before.  Thus, it doesn't
+allow answers that are latent in the text that aren’t a fixed span.
+For example, if the question is “What states share the Delmarva
+peninsula with Maryland” and the Wikipedia page has “The Delmarva
+peninsula is made up of Deleware, Maryland, and Virginia”, it can’t
+answer “Delaware and Virigina” because there’s a pesky Maryland in the
+middle!
 
-One thing that really grinds my gears about SQuAD is that the SQuAD dataset provides a “human upper bound” (and to be clear this is not the fault of the people who designed SQuAD but from people who misinterpret what they did) but there less well informed news organizations or promoters of research that mischaracterize what it means to be near the human bound.  It also mischaracterizes what it means to “read” a document.  If machine learning systems are getting close to this human bound it doesn't mean that computers are reading better than humans.  Rather, it means that computers are doing a better job of highlighting particular passages better than underpaid crowd workers.  I’ll talk more about what I think is a fair human comparison in a moment.
+\section{The Problem with Crowdworkers}
 
-So putting this on the chart, I’m going to put SQuAD a little bit above CNN/DailyMail.  They’re both implicitly multiple choice, but there are more spans than entities, so answering SQuAD questions is a little more difficult.
+% Todo (jbg): Check if Dailymail dataset used crowdworkers
+
+One thing that really grinds my gears about SQuAD is that the SQuAD
+dataset provides a “human upper bound” (and to be clear this is not
+the fault of the people who designed SQuAD but from people who
+misinterpret what they did) but there less well informed news
+organizations or promoters of research that mischaracterize what it
+means to be near the human bound.  It also mischaracterizes what it
+means to “read” a document.  If machine learning systems are getting
+close to this human bound it doesn't mean that computers are reading
+better than humans.  Rather, it means that computers are doing a
+better job of highlighting particular passages better than underpaid
+crowd workers.  I lay out my full theory of what would make for a fun and fair human computer--\abr{ai} game show in Chapter~\ref{}.
+
+So putting this on the chart, I’m going to put SQuAD a little bit
+above CNN/DailyMail.  They’re both implicitly multiple choice, but
+there are more spans than entities, so answering SQuAD questions is a
+little more difficult.
 
 \section{Search Engines: The Source of Natural Questions}
 
-One criticism of SQuAD questions is that their questions are unnatural.  They’re written by crowdworkers paid to write artificial questions.  Two datasets that use “real” questions are MS Marco and Natural Questions.  They’re both somewhat similar, so I’ll mostly talk about Natural Questions, which is newer as a stand-in for both.  These questions are harder than SQuAD and Trec questions!  That’s because the questions come from people using search engines.  These people don’t always know what they’re asking about (that’s why their using a search engine after all), so sometimes they have false assumptions, ambiguities, and other problems.  
+One criticism of SQuAD questions is that their questions are
+unnatural.  They’re written by crowdworkers paid to write artificial
+questions.  Two datasets that use “real” questions are MS Marco and
+Natural Questions.  They’re both somewhat similar, so I’ll mostly talk
+about Natural Questions, which is newer as a stand-in for both.  These
+questions are harder than SQuAD and Trec questions!  That’s because
+the questions come from people using search engines.  These people
+don’t always know what they’re asking about (that’s why their using a
+search engine after all), so sometimes they have false assumptions,
+ambiguities, and other problems.
 
 Another facet of these datasets that make the questions harder is that
-search engines have trained people over years to answer questions
+search engines---built on the techniques we discussed in Chapter~\ref{ch:ir}---trained people over years to answer questions
 themselves by finding webpages.  Nobody gets good answers when they
 type in a question like “what is the last capital in Western Europe to
-be invaded by a foreign army” so if you type that into Google you
+be captured by a Muslim force”\footnote{The answer is XXX, but to figure that out, you are essentially doing a multi-hop query (which we discuss in Chapter~\ref{ch:formats}), so a human trying to answer this question would decompose it into multiple separate queries.  Now, however, with \abr{ai}, you often \emph{will} get answers to these sorts of questions, although you shouldn't always trust them. } so if you type that into Google you
 likely will not get an answer to that question directly.  Instead,
 you’ll piece together multiple queries to answer your question.
 
-In other words, the failure of search engines to answer questions over the last couple of decades limits the usefulness of the kinds of questions that you can get from search engines today.  
+In other words, the failure of search engines to answer questions over
+the last couple of decades limits the usefulness of the kinds of
+questions that you can get from search engines today.
 
+So how does Natural Questions find the answers to these questions?
+They find Wikipedia given the question as a search string: an
+information retrieval problem!  They then have annotators validate
+that this is a good search result and then have the annotators
+highlight the answer string.  Now this isn’t perfect.
 
+Here are some examples where I disagree with some of the implicit
+assumptions that get made in the NQ dataset.  For example, it assumes
+that when you’re asking about “Michigan”, you’re asking about the
+“university of michigan football team”, when you’re asking about
+“hockey”, you’re asking about “men’s ice hockey”, and when you’re
+asking about “supreme court” you’re asking about the “indian supreme
+court”.
 
-So how does Natural Questions find the answers to these questions?  They find Wikipedia given the question as a search string: an information retrieval problem!  They then have annotators validate that this is a good search result and then have the annotators highlight the answer string.  Now this isn’t perfect.  
+As we put these datasets up on the chart, I want to make a distinction
+between the “Traditional” and “Open” interpretations of natural
+questions.  While initial natural questions was treated as a
+SQuAD-like dataset, recent interpretations have not assumed that you
+know which Wikipedia page had the answer: you also need to do the IR
+component as well.  This is what we did in the EfficientQA competition
+(link in the description): you can see how I made the human
+vs. computer comparison a little more fair.
 
-Here are some examples where I disagree with some of the implicit assumptions that get made in the NQ dataset.  For example, it assumes that when you’re asking about “Michigan”, you’re asking about the “university of michigan football team”, when you’re asking about “hockey”, you’re asking about “men’s ice hockey”, and when you’re asking about “supreme court” you’re asking about the “indian supreme court”.  
+Obviously, the open interpretation makes it much harder to find the
+answer.
 
-As we put these datasets up on the chart, I want to make a distinction between the “Traditional” and “Open” interpretations of natural questions.  While initial natural questions was treated as a SQuAD-like dataset, recent interpretations have not assumed that you know which Wikipedia page had the answer: you also need to do the IR component as well.  This is what we did in the EfficientQA competition (link in the description): you can see how I made the human vs. computer comparison a little more fair.
-
-Obviously, the open interpretation makes it much harder to find the answer.
-
-
-Moving on … You know who’s better than underpaid crowd workers or random people on the Internet?  Professional trivia writers.  And a number of datasets use questions harvested from them.
+Moving on … You know who’s better than underpaid crowd workers or
+random people on the Internet?  Professional trivia writers.  And a
+number of datasets use questions harvested from them.
 
 Let’s talk about three of them: SearchQA, TriviaQA, and Quiz Bowl.
 
-SearchQA and TriviaQA actually look a lot like Natural Questions, but instead of the queries coming from random people on the internet, they come from professional writers.  Researchers go out and find pages given the query, highlight the answers.  I’m not going to dwell too much on these datasets because the copyright is a little murky.
+SearchQA and TriviaQA actually look a lot like Natural Questions, but
+instead of the queries coming from random people on the internet, they
+come from professional writers.  Researchers go out and find pages
+given the query, highlight the answers.  I’m not going to dwell too
+much on these datasets because the copyright is a little murky.
 
-Instead, let's now turn to my hobby horse: quiz bowl, which is probably best known as an NBC game show in the US called “college bowl” and “University Challenge” in the UK.  And played by thousands of trivia nerds every weekend, particularly at the high school and college level.  And unlike SearchQA and TriviaQA, there’s an explicit community consensus that old quiz bowl questions are public domain.  So as a result we get a lot of free data from experts. These are not crowd workers: these are people who are passionate about human question answering, and we're using their expertise and their experience to improve computer question answering.
+Instead, let's now turn to my hobby horse: quiz bowl, which is
+probably best known as an NBC game show in the US called “college
+bowl” and “University Challenge” in the UK.  And played by thousands
+of trivia nerds every weekend, particularly at the high school and
+college level.  And unlike SearchQA and TriviaQA, there’s an explicit
+community consensus that old quiz bowl questions are public domain.
+So as a result we get a lot of free data from experts. These are not
+crowd workers: these are people who are passionate about human
+question answering, and we're using their expertise and their
+experience to improve computer question answering.
 
-This is the gold standard in human question answering (i.e., trivia tournaments), and my goal is to make it more popular than it currently is for computer question answering.  What’s different about quiz bowl is that there isn’t just one question that you need to answer.  Instead, there are multiple clues that you could use to answer the question.  
+This is the gold standard in human question answering (i.e., trivia
+tournaments), and my goal is to make it more popular than it currently
+is for computer question answering.  What’s different about quiz bowl
+is that there isn’t just one question that you need to answer.
+Instead, there are multiple clues that you could use to answer the
+question.
 
-This is hard to explain, so let’s see an example.  As I read it, think about when you know the answer to the question.  What clue gave it away?
+This is hard to explain, so let’s see an example.  As I read it, think
+about when you know the answer to the question.  What clue gave it
+away?
 
-While passing through this state, the 6th Massachusetts
-suffered the first Union casualties of the Civil War while
-suppressing riots that began at its President Street
-Station. The Lincoln administration rejected a ruling by
-Roger Taney that a citizen of this state could not
-be held without habeas corpus in the case Ex Parte
-Merryman. After capturing a copy of Robert E. Lee’s
-Special Order 191, George McClellan fought a battle in
-this state that ended the first Confederate invasion of
-the North and led to the announcement of the
-Emancipation Proclamation. For 10 points, the Battle of
-Antietam was fought in what border state where federal
-troops blocked secessionist efforts in Baltimore?
+\question{While passing through this state, the 6th Massachusetts suffered the
+first Union casualties of the Civil War while suppressing riots that
+began at its President Street Station. The Lincoln administration
+rejected a ruling by Roger Taney that a citizen of this state could
+not be held without habeas corpus in the case Ex Parte Merryman. After
+capturing a copy of Robert E. Lee’s Special Order 191, George
+McClellan fought a battle in this state that ended the first
+Confederate invasion of the North and led to the announcement of the
+Emancipation Proclamation. For 10 points, the Battle of Antietam was
+fought in what border state where federal troops blocked secessionist
+efforts in Baltimore?}
 
 
 
-The clues are presented one by one until someone can answer the question with the great state of Maryland. Because this is a competition, whoever can answer the question faster (on harder clues) usually knows more about the topic.  Because this is a trivia game, the goal is to give more points to the smarter player.  Quiz bowl does this really well!  Better than some other fun to watch knowledge competitions.
+The clues are presented one by one until someone can answer the
+question with the great state of Maryland. Because this is a
+competition, whoever can answer the question faster (on harder clues)
+usually knows more about the topic.  Because this is a trivia game,
+the goal is to give more points to the smarter player.  Quiz bowl does
+this really well!  Better than some other fun to watch knowledge
+competitions.
 
-The downside is that sometimes what's difficult for a human isn't difficult for a computer and—just like squad—there sometimes easily solved questions that are intended to be difficult (for humans) but aren't actually difficult (for computers).  
+The downside is that sometimes what's difficult for a human isn't
+difficult for a computer and—just like squad—there sometimes easily
+solved questions that are intended to be difficult (for humans) but
+aren't actually difficult (for computers).
 
-For example, in one of the early competitions we had with humans, a computer could easily recognize a painting from a description. 
+For example, in one of the early competitions we had with humans, a
+computer could easily recognize a painting from a description.
 
 But computers struggle with simple language, 
 
@@ -485,11 +695,12 @@ Instead of writing more questions, they use pyramidality (Section~\ref{sec:pyram
 \end{figure*}
 \label{ch:adversarial}
 
-\section{Adversarial Questions}
+\section{How the Manchester Paradigm Naturally Follows Natural Questions for \abr{ai} Evaluation}
 \label{sec:adversarial:adversarial}
 
 
-\section{Human--Computer Cooperation}
-\label{sec:adversarial:cooperation}
+% Humanity's last exam
 
+% GradQA
 
+% MMLU
