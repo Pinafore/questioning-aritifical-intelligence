@@ -1,13 +1,43 @@
+
+% Retrieval-based Question Answering
+% Encoders and multimodal
+
 \label{chapter:formats}
 
-A standalone question and a short answer are only one way to organize question answering: this chapter follows the evidence through multiple hops, conversations, images, and sound, starting with the encoders that let us retrieve it.
+Chapter~\ref{ch:ir} introduced the Cranfield paradigm: finding the
+document that best matches what you're looking for.  It also showed
+how ``good old-fashioned'' \abr{ai} systems use rules and logic to
+answer questions about specific domains.
+%
+Much of question answering was built on information retrieval: given a
+question, you want to find the Wikipedia page or other information
+source that answers the question.
 
+However, in the 2010s, retrieval was reinvented by new neural
+techniques that revolutionized not just question answering but
+computer science more broadly.
+%
+The more modern approaches that we will discuss in
+Chapter~\ref{ch:llm} were built on the approaches we introduce in this
+chapter, in part because of the pressures outlined in this chapter
+that lead the development of modern \abr{ai} models.
 
-\section{Retrieving Evidence}
+% TODO(jbg): Outline the entire chapter
+
+\section{Machine Reading}
 
 The general framework for answering a question has two steps: an
 information retrieval system finds evidence, and a reader uses that
 evidence to find the answer.
+
+Machine reading uses retrieved evidence to find an answer.  Natural Questions~\citep{kwiatkowski-19}, introduced in Section~\ref{sec:datasets:nq}, supplies questions, Wikipedia pages, and annotated answers.
+Consider these three versions of the same question:
+\begin{itemize}
+\item ``when was the name windsor adopted by the royal family'' --- \answer{1917}
+\item ``when did the royal family take the name windsor'' --- \answer{1917}
+\item ``when did the royal family adopt the name windsor'' --- \answer{in 1917}
+\end{itemize}
+
 
 Deep learning can improve the retrieval step.
 The idea is called ``deep retrieval'': learn to turn both queries and

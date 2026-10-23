@@ -1,0 +1,11 @@
+
+I thought that I had an organization scheme for chapters 7,8,9, but
+now I'm not sure.
+
+I think part of the problem is that the first method I want to talk
+about is MR, but that needs NQ.  So should I talk about all datasets?
+
+Okay, let's try this organization:
+
+
+Datasets: 
