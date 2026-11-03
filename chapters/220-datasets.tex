@@ -6,9 +6,29 @@ My goal with this chapter is to give an overview of the kinds of
 question answering datasets that are out there, contrast them, and
 give my opinion about which is the best one.
 
-First, let me start off by saying what we're not talking about!  There are many question answering datasets out there that are essentially logic problems or SQL query lookups and we're not going to talk about them.  That's a very valid form of question answering and it essentially corresponds to a form of parsing where you have some text and you need to turn that into a logical form or an SQL statement.  If you parse it correctly, you get the answer.
+First, let me start off by saying what we're not talking about!  There
+are many question answering datasets out there that are essentially
+logic problems or \abr{sql} query lookups and we're not going to talk
+about them.
+%
+That's a very valid form of question answering and it essentially
+corresponds to a form of parsing where you have some text and you need
+to turn that into a logical form or an \abr{sql}
+statement.\footnote{This is a departure from the approach in
+  Chapter~\ref{}: systems like \abr{lunar} essentially are this
+  system.  While this system is important historically, the difference
+ }
+%
+If you parse it correctly, you get the answer.
 
-Instead, we're going to talk about more open-ended question answering that’s often called “machine reading” question answering for reasons that will be clear in a second.  In these question answering datasets, you need to make sense of a large body of text to answer questions.  Moreover, you usually need to be able to answer questions about just about anything, not just a narrow set of topics.
+Instead, our jumping off point is going to be a more open-ended setup
+that’s often called “machine reading” question answering.
+%
+I'm not a huge fan of the name for reasons that I will go into in the next chapter.
+that will be clear in a second.  In these question answering datasets,
+you need to make sense of a large body of text to answer questions.
+Moreover, you usually need to be able to answer questions about just
+about anything, not just a narrow set of topics.
 
 We'll talk about models for answering these questions later, but for the moment think about the kinds of things that your model would need to do to answer the question.  In many cases, it will be exactly the same kind of thing you would need to do to answer the question: find a document that contains the answer, read through the document to find the answer, and then convey that answer.
 
