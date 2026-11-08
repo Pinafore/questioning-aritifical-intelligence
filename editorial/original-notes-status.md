@@ -46,7 +46,7 @@ Checked against the original pasted notes and current source on 2026-09-21.
 
 - Done in source: detailed BLEU/ROUGE explanation and critique now reside in
   `230-methods.tex`, under `sec:methods:long-answers`.
-- `210-formats.tex` retains the dataset discussion and points forward to that
+- `220-formats.tex` retains the dataset discussion and points forward to that
   section and `sec:methods:preferences`.
 - Corrected the Conan example to three matching bigrams out of twenty (0.15).
   Its seven-token longest common subsequence, precision 7/17, and recall 7/21

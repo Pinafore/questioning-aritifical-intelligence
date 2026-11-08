@@ -164,6 +164,84 @@ But the key idea is that the questions can be interrupted, meaning that part of 
 
 In that 2020 paper I mentioned before, Ben Boerschinger and I argued that you want question answering datasets to be maximally discriminative. 
 
+\section{Leaderboards as Tournaments}
+\label{sec:discriminative}
+
+Running a reusable evaluation looks a lot like running a tournament.
+First, someone writes or buys questions by a deadline. Then, they advertise:
+who wrote the questions, what subjects are covered, and why people should try
+to answer them. Next, they keep the questions secure until test time, collect
+answers from participants, and declare a winner. Afterward, people use the
+questions to train for future tournaments. These have natural analogs to
+crowdsourcing questions, writing a paper, advertising a leaderboard, and
+releasing training data.
+%
+Trivia writers cannot help researchers form hypotheses or write a paper, but
+they can teach us how to run a fun, well-calibrated, and discriminative
+tournament.
+
+Assume that you have picked a metric (or a set of metrics) that captures what
+you care about. A leaderboard based on this metric can rack up citations as
+people chase the top spot. But your leaderboard is only useful if it is
+{\bf discriminative}: the best system reliably wins. Manchester-style questions
+make each question do more work: clues are ordered so that strong answerers can
+separate themselves early, while weaker answerers still get a chance later.
+Chapter~\ref{ch:datasets} returns to this idea for modern \abr{qa} datasets,
+where annotation error, overly easy examples, and non-discriminative test sets
+make leaderboards less informative.
+
+Like \abr{qa} leaderboards, trivia tournaments usually need to decide on a
+single winner, but they explicitly recognize that there are more interesting
+comparisons. A tournament may recognize different backgrounds or resources:
+high school, small school, undergraduates~\citep{naqt-eligibility}. Similarly,
+leaderboards can reflect training time or resource requirements, rather than
+pretending that a single score tells the whole story. Tournaments also give
+specific awards, such as highest score without incorrect answers. Again, there
+are obvious leaderboard analogs that would go beyond a single number.
+
+\subsection{Playtesting Leaderboards}
+\label{sec:fun}
+
+Many authors use crowdworkers to establish human accuracy~\citep{rajpurkar-16,choi-18}.
+However, they are not the only humans who should answer a dataset's questions.
+So should the dataset's creators.
+%
+In the trivia world, this is called a {\bf play test}: get in the shoes of
+someone \emph{answering} the questions. If you find them boring, repetitive, or
+uninteresting, so will crowdworkers. If you can find shortcuts to answer
+questions~\citep{rondeau-18,kaushik-18}, so will a computer.
+
+Of course, fun is relative, and any dataset is bound to contain errors.
+However, playtesting is an easy way to find systematic problems: unfair, unfun
+playtests make for ineffective leaderboards. Eating your own dog food can help
+diagnose artifacts, scoring issues, or other shortcomings early in the process.
+
+The deeper issues when creating a \abr{qa} task are: i) have you designed a
+task that is internally consistent, ii) supported by a scoring metric that
+matches your goals, iii) using gold annotations that reward those who do the
+task well? Imagine someone who loves answering the questions your task poses:
+would they have fun on your task? This is the foundation of
+Gamification~\citep{ahn-06}, which can create quality data from users motivated
+by fun rather than pay. Even if you pay crowdworkers, unfun questions may
+undermine your dataset goals.
+
+\subsection{Adversarial Leaderboard Data}
+\label{sec:leaderboards:adversarial}
+
+If a leaderboard has stopped separating systems, one response is to collect new
+examples that target current systems' weaknesses. Adversarial data collection
+turns the leaderboard into an ongoing tournament: authors see what the current
+field can answer, then write examples that expose the frontier. This is the
+leaderboard-level version of the Manchester idea that questions should probe
+ability, not merely confirm that systems can solve yesterday's artifacts.
+
+That does not mean adversarial data should be inscrutable or unfair to humans.
+The useful target is a question that remains meaningful and answerable while
+forcing systems to demonstrate a missing capability. Platforms such as
+Dynabench and the TrickMe interface point in this direction by putting models
+in the authoring loop; the leaderboard then becomes a process for continually
+discovering which examples still matter.
+
 
 The \qa{} community is obsessed with evaluation.
 Schools, companies, and newspapers hail new \abr{sota}s and topping

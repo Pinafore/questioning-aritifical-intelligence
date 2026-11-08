@@ -13,8 +13,8 @@ for definitive verification. This is an inventory, not an editorial-readiness ce
 | 4 | chapters/130-ir.tex | 4,245 |
 | 5 | chapters/140-manchester.tex | 5,049 |
 | 6 | chapters/200-watson.tex | 8,572 |
-| 7 | chapters/210-formats.tex | 10,138 |
-| 8 | chapters/220-datasets.tex | 10,440 |
+| 7 | chapters/210-datasets.tex | 10,440 |
+| 8 | chapters/220-formats.tex | 10,138 |
 | 9 | chapters/230-methods.tex | 5,443 |
 | 10 | chapters/240-leaderboards.tex | 12,043 |
 | 11 | chapters/250-bad.tex | 19 |
@@ -24,7 +24,7 @@ for definitive verification. This is an inventory, not an editorial-readiness ce
 ## Unresolved source references
 
 - `chapters/140-manchester.tex`: `\ref{tab:more_ae_examples}`
-- `chapters/220-datasets.tex`: `\ref{sec:synthetic-discriminative}`
+- `chapters/210-datasets.tex`: `\ref{sec:synthetic-discriminative}`
 - `chapters/310-sci_fi.tex`: `\ref{}`
 
 ## Citation keys absent from bibliography
