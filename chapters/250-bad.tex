@@ -1,2 +1,41 @@
 
 This chapter discusses how questions can be imperfect and how both humans and computers deal with those imperfect questions.
+
+
+
+
+But instead, I want to focus on linguistic phenomena that \emph{causes} a question to \emph{become} unanswerable.  
+%
+This line of research began with what has come to be known as as ``the lightbulb paper'' from the title \question{Which linguist invented the lightbulb}, 
+%
+which highlights the problem: there’s a well-defined answer to the question \question{who invented the first commercially successful light bulb}, 
+%
+but it sure as heck wasn’t a linguist\dots answering that question would perhaps not be useful to a user.
+
+There are two takeaways here: First that many early \abr{qa} systems accepted questions like \question{When did Pablo Picasso paint the Mona Lisa} and answer 1503, hundreds of years before Picasso was born.\footnote{Because he didn't paint it.}
+%
+Second, that many of the unanswerable questions in Natural Questions are unanswerable because of these phenomena.  
+%
+And it’s not just Natural Questions: Yu et al~\citep{} showed that this also shows up on Reddit.  It’s an important problem!
+
+But we don’t actually know \emph{why} a particular natural question is unanswerable.  
+%
+Is it because Wikipedia lacks the information, because there’s a false assumption, because there’s actually dispute about the canonical answer to a question, or because it’s a matter of taste / opinion?  
+%
+Because Natural Questions was focused on factual \abr{qa} (a reasonable position at the time), we don’t have a single comprehensive dataset to address all of these issues (the numbers here are just for a small sample of \abr{nq}).
+
+
+
+Yogesh Raut’s recreational thinking podcast is an example of this interrogation process: they spend several minutes interrogating individual questions, figuring out possibilities, and then justifying the answer.
+%
+So for example, if the question comes in: \underline{What linguist invented the lightbulb}, you might have an interaction that goes like this:
+%
+``Um, actually, most of the people credited with the development of the lightbulb were chemists, physicists, or engineers''
+%
+``Okay, smartbutt, who made the first lightbulb''
+
+“Well, do you mean created the first electric light (Humphry Davy), the first filament inside a vacuum tube (Jospeh Swan), the first metal filament in a vacuum tube (Warren de la Rue), or the first commercially successful lightbulb with those properties (Thomas Edison)?”
+
+“Hmm … I guess I meant who got the credit for it”
+
+“Then that would be Thomas Edison”

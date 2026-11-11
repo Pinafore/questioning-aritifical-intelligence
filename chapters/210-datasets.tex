@@ -147,7 +147,7 @@ One of the first machine reading data sets was the \abr{cnn} / Daily Mail data s
 %
 This dataset started the trend of conditioning a question on a single document: in this case a news article.  
 %
-They asked you to answer questions about those news articles.  For example, “who reached the Cricket World Cup”.  Somewhere in the document was the answer \answer{New Zealand} but you need to find that.
+They asked you to answer questions about those news articles.  For example, \question{who reached the Cricket World Cup}.  Somewhere in the document was the answer \answer{New Zealand} but you need to find that.
 
 One thing that is controversial is that you didn’t actually find the string \answer{New Zealand} but rather an anonymized symbol.
 %
@@ -169,7 +169,7 @@ The Stanford question answering dataset (\squad{} for short) became the gold sta
 %
 While it might not be the best dataset, it was the most popular for the longest; while it was supplanted by Natural Questions (we'll cover it in depth shortly), \squad{}'s reign was longer.
 %
-If you didn't report results on SQuAD, you needed to explain why.
+If you didn't report results on \squad{}, you needed to explain why.
 %
 Not only did this dataset popularize ``machine reading'', it arguable made \abr{qa} an academic subfield, and that subfield established the evaluations that made modern \llm{} evaluation (and thus the underlying models chasing those metrics) possible.  
 %
@@ -212,21 +212,12 @@ Thus, it doesn't allow answers that are latent in the text that aren’t a fixed
 For example, if the question is \question{What states share the Delmarva peninsula with Maryland} and the Wikipedia page has 
 \evidence{The Delmarva peninsula is made up of Deleware, Maryland, and Virginia}, it can’t answer \answer{Delaware and Virigina} because there’s a pesky Maryland in the middle!
 
-\section{The Problem with Crowdworkers}
 
-% Todo (jbg): Get the offending headline
 
-One thing that really grinds my gears about SQuAD is that the SQuAD dataset provides a ``human upper bound''
-(and to be clear this is not the fault of the people who designed SQuAD but from people who misinterpret what they did) 
-but there less well informed news organizations or promoters of research that mischaracterize what it means to be near the human bound.  It also mischaracterizes what it means to “read” a document.  
+So putting this on the chart, I’m going to put SQuAD a little bit above CNN/DailyMail.
 %
-If machine learning systems are getting close to this human bound it doesn't mean that computers are reading better than humans.  
-%
-Rather, it means that computers are doing a better job of highlighting particular passages better than underpaid crowd workers.  
-%
-As you can guess from the Watson chapter (Chapter~\ref{}), this offends my sense of fair play.  I lay out my full theory of what would make for a fun and fair human computer--\abr{ai} game show in Chapter~\ref{}.
+They’re both implicitly multiple choice, but there are more spans than entities, so answering SQuAD questions is a little more difficult.
 
-So putting this on the chart, I’m going to put SQuAD a little bit above CNN/DailyMail.  They’re both implicitly multiple choice, but there are more spans than entities, so answering SQuAD questions is a little more difficult.
 
 \section{Search Engines: The Source of Natural Questions}
 \label{sec:datasets:nq}
@@ -235,9 +226,9 @@ One criticism of SQuAD questions is that their questions are unnatural.  They’
 %
 They’re both somewhat similar, so I’ll mostly talk about Natural Questions, which is newer, as a stand-in for both.  
 %
-These questions are harder than SQuAD and Trec questions!  That’s because the questions come from people using search engines.
+These questions are harder than \squad{} and Trec questions!  That’s because the questions come from people using search engines.
 %
-These people don’t always know what they’re asking about (that’s why their using a search engine after all), so sometimes they have false assumptions, ambiguities, and other problems.  
+These people don’t always know what they’re asking about (that’s why their using a search engine after all), so sometimes they have false assumptions, ambiguities, and other problems (Chapter~\ref{}).  
 
 Another facet of these datasets that make the questions harder is that
 search engines---built on the techniques we discussed in
@@ -256,7 +247,7 @@ you type that into Google you likely will not get an answer to that
 question directly.  Instead, you’ll piece together multiple queries to
 answer your question.
 
-In other words, the failure of search engines to answer questions over the last couple of decades limited the usefulness of the kinds of questions that you can get from search engines today.  
+In other words, the failure of search engines to answer questions over the last couple of decades limited the usefulness of the kinds of questions that Google could get from its users in 2018.  
 
 So how does Natural Questions find the answers to these questions?
 %
@@ -264,22 +255,27 @@ They find Wikipedia given the question as a search string: an information retrie
 %
 They then have annotators validate that this is a good search result and then have the annotators highlight the answer string.  Now this isn’t perfect.  
 
-Here are some examples where I disagree with some of the implicit assumptions that get made in the NQ dataset.  For example, it assumes that when you’re asking about “Michigan”, you’re asking about the “university of michigan football team”, when you’re asking about “hockey”, you’re asking about “men’s ice hockey”, and when you’re asking about “supreme court” you’re asking about the “indian supreme court”.  
+Here are some examples where I disagree with some of the implicit assumptions that get made in the NQ dataset.  
+%
+For example, it assumes that when you’re asking about ``Michigan'', you’re asking about the ``university of michigan football team'', when you’re asking about ``hockey'', you’re asking about ``men’s ice hockey'', and when you’re asking about ``supreme court'' you’re asking about the ``indian supreme court''.  
+%
+This is a byproduct of now the \abr{nq} dataset was created: the queries are too short (the users are trained to type only keywords), and the \abr{ir} system did an arbitrary disambiguation.
+%
+We'll talk more about how this might be problematic as we consider \abr{nq}'s long-term legacy.
 
-As we put these datasets up on the chart, I want to make a distinction between the “Traditional” and “Open” interpretations of natural questions.  
+% TODO(jbg): Add the figure about going back and forth
+
+% As we put these datasets up on the chart, I want to make a distinction between the ``Traditional'' and ``Open'' interpretations of natural questions.  
 %
-While initial natural questions was treated as a SQuAD-like dataset, recent interpretations have not assumed that you know which Wikipedia page had the answer: you also need to do the IR component as well.  
+% While initial natural questions was treated as a SQuAD-like dataset, recent interpretations have not assumed that you know which Wikipedia page had the answer: you also need to do the \abr{ir} component as well.  
 %
-This is what we did in the EfficientQA competition (link in the description): you can see how I made the human vs. computer comparison a little more fair.
-%
-Obviously, the open interpretation makes it much harder to find the answer.
 
 \section{Early Manchester Datasets}
 
-Moving on … You know who’s better than underpaid crowd workers or random people on the Internet?  Professional trivia writers.  And a number of datasets use questions harvested from them.
+As you might guess, from the Manchester chapter, I think that trivia writers would do a better job of writing questions to train question answering systems than either crowdworkers or users (\textit{a la} the Cranfield paradigm).
 %
 Let’s talk about three of them: SearchQA, TriviaQA, and \abr{qanta}.
-
+%
 SearchQA and TriviaQA actually look a lot like Natural Questions, but instead of the queries coming from random people on the internet, they come from professional writers.  
 %
 Researchers go out and find pages given the query, highlight the answers.  
@@ -296,123 +292,32 @@ So as a result we get a lot of free data from experts. These are not crowd worke
 
 This is the gold standard in human question answering (i.e., trivia tournaments), and my goal is to make it more popular than it currently is for computer question answering.  
 %
-What’s different about quiz bowl is that there isn’t just one question that you need to answer.  Instead, there are multiple clues that you could use to answer the question.  
-
-Let's look at another example to compare more concretely with the other datasets we looked at in this chapter.
-\question{While passing through this state, the 6th Massachusetts
-suffered the first Union casualties of the Civil War while
-suppressing riots that began at its President Street
-Station. The Lincoln administration rejected a ruling by
-Roger Taney that a citizen of this state could not
-be held without habeas corpus in the case Ex Parte
-Merryman. After capturing a copy of Robert E. Lee’s
-Special Order 191, George McClellan fought a battle in
-this state that ended the first Confederate invasion of
-the North and led to the announcement of the
-Emancipation Proclamation. For 10 points, the Battle of
-Antietam was fought in what border state where federal
-troops blocked secessionist efforts in Baltimore?}
-
-The clues are presented one by one until someone can answer the question with the great state of \answer{Maryland}.
+I first made the case that we should be using these questions in 2012, and we called the resulting dataset \abr{qanta}, for Question Answering is Not a Trivial Activity.\footnote{In our first paper, it was originally called Question Answering using Neural 
+% TODO(jbg): Look up original acronym from paper with mohit
+}  
 %
-Because this is a competition, whoever can answer the question faster (on harder clues) usually knows more about the topic.  
+I've already made the case why I think this is a good idea in this book, so I won't repeat it here, but I want to talk about the historical context a little bit more.
+
+At the time, I hadn't thought about the Manchester and Cranfield distinction, so I only described what the dataset was like.
 %
-Because this is a trivia game, the goal is to give more points to the smarter player.
-
-One of the reasons that I’m a big fan of this competition is that it lends itself to comparisons. 
+I thought that its charms would be enough to get people to work on it.  
 %
-Let’s say you have two competitors A and B. What if we try to compare them on normal questions like from natural questions? 
+That failed.  Other datasets were obviously much more popular.  
 %
-If both get the question right or wrong, you don’t learn anything. 
+Part of it was because our rinkydink Maryland team didn't have the ad budget of Google.  Part of it was that the format was too complex.  And a big part of it was that I didn't make my case well.
+
+I've now spent years thinking about this, and I built up this Manchester / Cranfield distinction because of it.
 %
-You only learn something if one gets it right and the other gets it wrong.
+And I think this gives us a way to look at the differences between the datasets discussed in this chapter.
 %
-Human question writers learned really early on that it’s really hard to get the level of difficulty just right: even with fancy statistics (Chapter~\ref{ch:leaderboards}), you need hundreds of questions to reliably rank people in competitive exams.
+We can't use Manchester or Cranfield to the exclusion of the other, and this also helps explain why crowdsourced datasets are increasingly falling out of favor.
 
-So this is why the human trivia community turned to quiz bowl.
-%
-Instead of just getting one piece of information per question, you now potentially get a signal from every word in the question. 
-%
-Because the questions are packed to the gills with clues that go from super difficult to to almost painfully easy, after each clue you get information about how much A and B knows. 
-%
-Thus, it lends itself to human-computer competition or comparing computer systems.
-
-Another reason that I like quiz bowl is that there are multiple ways to approach it computationally. Because the answers are usually entities, you can take a straight information retrieval approach: what’s being talked about in this question? Or you can take a more machine reading approach. Both work well!
-
-Okay, that’s enough about quiz bowl. Let’s put it on the board: the answer structure is about the same as NQ, but the question structure is very complicated.
-
-\paragraph{Users Are the Customers}
-%
-The transition from Manchester-style spectacle to Cranfield-style
-product is hard. \abr{ibm} Watson's \jeopardy{} victory was a tour de
-force of the Manchester paradigm, but turning that success into a
-user-facing product was much more difficult~\citep{chu2002piquant,
-deutscher-21,jennings2011ibm}. The same tension shows up in dataset
-design. \squad{} questions were written by people who knew the
-answers, but the data do not follow Manchester-style question-writing
-norms; the result was a proliferation of shortcuts and artifacts that
-later analyses exposed~\citep{weissenborn-17}. In contrast,
-Manchester-oriented benchmarks such as the Winograd challenge
-explicitly try to avoid cheap tricks~\citep{levesque2014behavior}. The
-point is not that one paradigm is superior, but that each requires
-different care.
-
-\jbgcomment{Work on this chapter in conjunction with iid draft}
-
-\section{Natural Questions Five Years Later}
-\label{sec:nq:problems}
-
-It’s been five years since Natural Questions came out.  It’s hard to overstate its impact on Question Answering (QA).  Perhaps only second to SQuAD.  SQuAD introduced the extractive format, but SQuAD was “fake” … Natural Questions had true complexity and verisimilitude: people ask crazy questions, some of the questions were unanswerable, and the answers were tied to Wikipedia pages.  And it has yet to be eclipsed … and perhaps it never will.  
-
-Part of the reason that this will probably never happen again is that Natural Questions has two very unique characteristics: questions from real users expensively verified by expensive annotators.  While it’s possible that we might get something like this again in part—UW folks crawled Google n-grams to extract the questions, we paid QuizBowlers to find passages to answer questions—getting them both at once is probably not going to happen again.  But I’d love to be proved wrong!  I’ll end the video with how I’d build a QA dataset with infinite resources.
-
-However, Natural Questions aren’t perfect.  Sewon Min and company created AmbigQA that showed some of the questions in Natural Questions were ambiguous.  Here are some examples that Ben and I talked about in our 2020 paper (and I talked about at more length in the QA datasets lecture, link in the description).  There are multiple interpretations to these questions, but Natural Questions only says that one of them is correct.  
-
-How is the “correct” interpretation chosen in the original Natural Questions paper?  The annotators saw search results from an information retrieval system, and if they found an answer there, they called it the correct answer.  So whatever process biases search results toward English-speaking judges, men’s sports, or flagship universities gets recapitulated in Natural Questions.
-
-Another development is the realization that not all questions are valid and shouldn’t be answered.  There are multiple aspects of this: appropriately calibrating your QA system to abstain when it doesn’t know the answer for example.  Natural Questions actually does a pretty good job of supporting this by having unanswerable questions.
-
-But instead, I want to focus on linguistic phenomena that \emph{causes} a question to \emph{become} unanswerable.  This line of research began with what has come to be known as as “the lightbulb paper” from the title “Which linguist invented the lightbulb”, which highlights the problem: there’s a well-defined answer to the question “who invented the first commercially successful light bulb”, but it sure as heck wasn’t a linguist … answering that question would perhaps not be useful to a user.
-
-There are two takeaways here: First that many QA systems tend to roll with questions like “When did Pablo Picasso paint the Mona Lisa” and answer 1503, hundreds of years before Picasso was born.  Second, that many of the unanswerable questions in Natural Questions are unanswerable because of these phenomena.  And it’s not just Natural Questions: Yu et al showed that this also shows up on Reddit.  It’s an important problem!
-
-But we don’t actually know \emph{why} a particular natural question is unanswerable.  Is it because Wikipedia lacks the information, because there’s a false assumption, because there’s actually dispute about the canonical answer to a question, or because it’s a matter of taste / opinion?  Because Natural Questions was focused on factual QA (a reasonable position five years ago), we don’t have a single comprehensive dataset to address all of these issues (the numbers here are just for a small sample of NQ).
-
-And perhaps we don’t need that any more.  With RLHF, we can just mix a bunch of datasets together.  Perhaps we don’t need a monolithic QA training dataset to rule them all.  We just need robust evaluation protocols (which can be much smaller). 
-
-And this is, again, a weakness of Natural Questions … it’s not a great evaluation set.  Lewis et al. discovered that many QA datasets, including Natural Questions, have a huge overlap between the training set and the testing set.  I’m a Professor, so let’s put this in a classroom context: this is like giving out two thirds of the answers and one third of the questions as a study guide before the test.  Now, it’s a great sanity check that systems can answer those questions, but that means that only a third of the questions are part of a functional test set.  Add that to the problems of ambiguity, and far less of the test set is actually usable, making it difficult to know if we’re making progress on the dataset.
-
-This is something that the trivia community has known for a while.  You can’t reuse clues!  For important test sets (like national trivia tournaments), you need to make sure that you’re finding new, interesting clues that haven’t been used before (or at least for a while).  This is why we’ve always used the flagship national trivia tournaments as our test sets for quiz bowl.
-
-So that’s all I have about the problems of Natural Questions.  But I want to make it clear that \emph{Natural Questions remains a great resource}.  It hasn’t been matched.  I still use it.  I’m jealous of the people who got to build it.  But it’s important to know the limitations.  Is there anything I got wrong, anything I missed?  If so, let me know in the comments.
-
-Now, for all of the reasons I talked about before, it probably will never be done again.  Nobody is crazy enough to do it.  But how would I do it if someone were foolish enough to give me the resources to create the next iteration of something like it?
-
-Back in the early 2000s, there was a QA service called Aardvark.  The idea was that it would connect up real humans with topics those smart humans could answer questions about.  Question comes in and it gets routed to that person.  That was a great idea but before it’s time.  What you’d do today is build up a large collection of these people (and pay them well), a question from a major search engine comes in … we try to detect if the computer can answer it directly.  If yes, we answer it, if not, we farm it out to the experts.  We’ve trained the experts to interrogate the question askers to remove ambiguities, false presuppositions, etc.  To create a “clean” version of the question and then a strong reference answer supported by relevant information.
-
-Yogesh Raut’s recreational thinking podcast is an example of this interrogation process: they spend several minutes interrogating individual questions, figuring out possibilities, and then justifying the answer.
-
-So for example, if the question comes in: “What linguist invented the lightbulb”, you might have an interaction that goes like this:
-
-“Um, actually, most of the people credited with the development of the lightbulb were chemists, physicists, or engineers”
-
-“Okay, smartbutt, who made the first lightbulb”
-
-“Well, do you mean created the first electric light (Humphry Davy), the first filament inside a vacuum tube (Jospeh Swan), the first metal filament in a vacuum tube (Warren de la Rue), or the first commercially successful lightbulb with those properties (Thomas Edison)?”
-
-“Hmm … I guess I meant who got the credit for it”
-
-“Then that would be Thomas Edison”
-
-And to be clear, that’s not what happens if you ask this to ChatGPT … it doesn’t really probe the user’s intent but tries to do some correction (not invented by a linguist) and provide the answer to the most likely question.  But still erases all of the people whose work Edison built on.
-
-But we can build such a system—again, my DMs are open—Natural Questions are still the best we have.
-
-\section{Is \abr{iid} the Right Choice of Data?}
+\subsection{The Problem with Crowdworkers}
 \label{sec:nq:iid}
+% Todo (jbg): Get the offending headline
 
 Creating new machine learning systems requires data.  These data need to come
-from somewhere, and NLP systems are no different!  If you were to ask a
+from somewhere, and \abr{nlp} systems are no different!  If you were to ask a
 statistician, they would tell you get a sample from an \iid{} distribution:
 independent and identically distributed.  Independent means that example
 $x_{n}$ does not depend on on any of the previous examples 1 to n-1, indeed,
@@ -424,167 +329,227 @@ I’m going to argue is that this has always been a problem for our NLP
 datasets, that it’s getting worse with the advent of muppet Models, and that
 we need to address the problem head on going forward.
 
-\subsection{The Ghost of NLP Data Past}
+In Chapter~\ref{ch:manchester}, I introduced the idea of \emph{adversarial} datasets.  
+%
+One of the biggest complaints about adversarial datasets is that they are not \textit{iid}.
+%
+Sam Bowman outlined this in the ``Case Against Underclaiming''~\cite{}: adversarial data give too negative a picture of what \abr{ai} can do, since the examples are chosen based on models' current capabilities.
+%
+As we discuss in Chapter~\ref{ch:leaderboards}, I think this is fair, because an absolute number is meaningless, relative numbers make more sense.  And specific datasets highlight skills in targeted domains.
+%
+We also saw this in the case of the Turing Test: Sterrett argues that we should compare computer deception to human deception.
 
-One of the biggest sources of NLP data are crowdworkers.  These are not iid!  Crowdworkers are not representative of the global population: by definition they have access to a computer, they’re typically younger, and they’re focused in particular geographic areas.
+One of the biggest sources of \abr{nlp} data are crowdworkers, Sam Bowman's first claim to fame was creating the Stanford Natural Language Inference dataset using crowdworkers.
+%
+These are not \textit{iid}!
+%
+Crowdworkers are not representative of the global population~\cite{}: by definition they have access to a computer, they’re typically younger, and they’re focused in particular geographic areas.
+%
+And even if you restrict to US Crowdworkers (because nobody has virtual private networks or virtual credit cards), this distribution does not match the overall \abr{us} population.
 
-And even if you restrict to US Crowdworkers (because nobody has virtual private networks or virtual credit cards), this distribution does not match the overall US population.
+And beyond the underlying distribution issue, there’s a quality issue.  
+%
+Crowdsourced data often has “shortcuts” that allow systems to “cheat”.  We’ve seen this for:
+Entailment: systems can detect whether a claim is true or not just by looking at the premise or the hypothesis (when you should really need both). 
+%
+Grurangan et al show that crowdworkers use the same tricks to create examples: “at least” is often entailed, irrelevant information is often neutral, and negation is often contradicted.  
+%
+Poliak et al showed that you can get pretty high accuracy by ignoring the premise and characterized the “tells” that often appeared in the data. 
+%
+And we had our own paper that even when the premise is required, it doesn’t require deep reasoning~\cite{}.
+%
+For fact checking: like with entailment, some logical operators like negations are more likely associated with refutation.  We talked about this in our adversarial fact checking paper, Fool Me Twice~\cite{}.
+%
+And we already talked about how Weissenborn et al.\ showed that you can look at the passage and find the first thing that could possibly fit the answer type: ``When'' finds the year, ``who'' finds a person, ``where'' finds a place, etc.  
 
-And beyond the underlying distribution issue, there’s a quality issue.  Crowdsourced data often has “shortcuts” that allow systems to “cheat”.  We’ve seen this for:
-Entailment: systems can detect whether a claim is true or not just by looking at the premise or the hypothesis (when you should really need both).  Grurangan et al show that crowdworkers use the same tricks to create examples: “at least” is often entailed, irrelevant information is often neutral, and negation is often contradicted.  Poliak et al showed that you can get pretty high accuracy by ignoring the premise and characterized the “tells” that often appeared in the data. And we had our own paper that even when the premise is required, it doesn’t require deep reasoning.
-For fact checking: like with entailment, some logical operators like negations are more likely associated with refutation.  We talked about this in our adversarial fact checking paper, Fool Me Twice.
-and for question answering: for datasets like SQuAD, the answer selection process often didn’t need deep understanding of the source context as described by Weissenborn et al.  Look at the passage and find the first thing that could possibly fit the answer type: When finds the year, who finds a person, where finds a place, etc.  
+\subsection{Users Are the Customers: Why Manchester isn't the Right Answer All the Time}
 
-This is because crowdworkers had to look at a passage and generate a question that could be answered by that passage.  The questions didn’t require that much reasoning because the Crowdworkers wanted to get done as quickly as possible.
+Speaking of question answering, natural questions claim to be ``natural''\dots these are the data from real users, this actually is \textit{iid} right?
+%
+And I think the answer is no!  This is because all language is a negotiation—a give and take between two parties—and Google is a part of that negotiation. 
+%
+Especially in the smartphone era, there's a particular kind of wierdo who uses Android (more associated with Google), not everyone has a smartphone, and not everybody uses Google for answering questions.
+%
+And even among those using Google, you may not use Google for everything and you might be embarassed to ask Google specific questions.
 
-Speaking of question answering, natural questions claim to be “natural” … these are the data from real users, this actually is iid right?  And I think the answer is no!  This is because all language is a negotiation—a give and take between two parties—and Google is a part of that negotiation. 
+Apart from who uses Google, Google itself affects the questions it gets.
+%
+Google is a fantastic tool, but it has its strengths and weaknesses.  
+%
+It’s really good at looking up who played role X in movie Y.  
+%
+IMDB (and other structured knowledge bases) make answering this kind of question easy … so people know that if they ask this kind of question from Google they’re likely to get a good answer.  
+%
+In general, if I can clearly specify entity X and a relationship f(X) that’s going to appear in some KB, then I’m going to get a great answer.
 
-Now, Google is a fantastic tool, but it has its strengths and weaknesses.  It’s really good at looking up who played role X in movie Y.  IMDB (and other structured knowledge bases) make answering this kind of question easy … so people know that if they ask this kind of question from Google they’re likely to get a good answer.  In general, if I can clearly specify entity X and a relationship f(X) that’s going to appear in some KB, then I’m going to get a great answer.
+So this means that people are more likely to ask this kind of question.  
+%
+But longer questions are just harder to answer.  
+%
+People want to get answers to their questions, so Google has trained users over the last 25 years to ask the kinds of things it can answer (and the average length of queries is going up!).  
+%
+But at the end of the day, the kinds of questions that Google isn’t so good at are not going to be asked so they’re not going to be a part of the dataset.  
+%
+And that means that it won’t be part of the all important natural questions leaderboard.  Which means that people will ignore the questions that Google isn’t already good at.
 
-So this means that people are more likely to ask this kind of question.  But longer questions just harder to answer.  People want to get answers to their questions, so Google has trained users over the last 25 years to ask the kinds of things it can answer (and the average length of queries is going up!).  But at the end of the day, the kinds of questions that Google isn’t so good at are not going to be asked so they’re not going to be a part of the dataset.  And that means that it won’t be part of the all important natural questions leaderboard.  Which means that people will ignore the questions that Google isn’t already good at.
+Now, Jordan, aren’t you just being a meanie by picking on Natural Questions?  
+%
+Your favorite QA dataset that you keep pushing down everybody’s throat—quiz bowl—ain’t iid either.  
 
-Now, Jordan, aren’t you just being a meanie by picking on Natural Questions?  Your favorite QA dataset that you keep pushing down everybody’s throat—quiz bowl—ain’t iid either.  
+And that’s absolutely right!  I like these crazy quiz bowl questions where the distribution has been chosen by hand to reflect the undergraduate curriculum at American Universities. 
+%
+This also isn’t \textit{iid}, but I think specifying the distribution and being able to defend it is a good thing!
 
-And that’s absolutely right!  I like these crazy quiz bowl questions where the distribution has been chosen by hand to reflect the undergraduate curriculum at American Universities.  This also isn’t iid, but I think specifying the distribution and being able to defend it is a good thing!
+And in addition to the “kinds” of questions in Natural Questions, Google has trained users to ask questions in a particular way: instead of asking \question{who is Amal Alamuddin’s husband}, people type “Amal Alamuddin husband” because Google started as a search engine that ignored function words.  So this also affects what gets into natural questions: Google has trained people to write terse queries, NQ subselects from that, and that becomes the leaderboard.
 
-And in addition to the “kinds” of questions in Natural Questions, Google has trained users to ask questions in a particular way: instead of asking “who is Amal Alamuddin’s husband”, people type “Amal Alamuddin husband” because Google started as a search engine that ignored function words.  So this also affects what gets into natural questions: Google has trained people to write terse queries, NQ subselects from that, and that becomes the leaderboard.
-
-From a socio-technical perspective, Google is to the turn of the century like muppet models are to today [link in the description if you don’t know why I call things like GPT Muppet Models].  People are learning how to skillfully prompt muppet models, muppet models are impersonating humans on crowdworking platforms (another reason that datasets from crowdworkers aren’t iid), people are using them to help write their essays (which will in turn be used to train the next generation of muppet models when those essays get posted on the web).  
+From a socio-technical perspective, Google is to the turn of the century like muppet models are to today [link in the description if you don’t know why I call things like GPT Muppet Models].  
+%
+People are learning how to skillfully prompt muppet models, muppet models are impersonating humans on crowdworking platforms (another reason that datasets from crowdworkers aren’t iid), people are using them to help write their essays (which will in turn be used to train the next generation of muppet models when those essays get posted on the web).  
 
 So what does this mean?  
+%
+Okay, so I’m going to get on my soapbox for a bit … we need to embrace the interaction between users and systems.  
+%
+And that means something like adversarial examples (Chapter~\ref{ch:manchester}), and it is true that the accuracy numbers are going to be lower than “normal” datasets. 
+%
+But I think that this makes a category error!  There’s no such thing as a normal, \textit{iid} dataset. 
+%
+All datasets have their own pathologies, and you cannot readily compare \squad{} numbers to \abr{nq} numbers: there are fundamentally different underlying distributions and data collection practices.
+%
+The same thing is true for my beloved quiz bowl format.
 
-Okay, so I’m going to get on my soapbox for a bit … we need to embrace the interaction between users and systems.  And that means something like adversarial examples which we’ll talk about later in later lectures … link to a lecture if you’re impatient.  But the basic idea is that you have humans and models interact with each other to create examples that “push the frontier” of what’s possible.
+And I think this is a healthy development.  
+%
+Rather than obsessing about rank on a leaderboard and the single floating point number with your accuracy that comes out, we should focus on what are the abilities (and weaknesses) of models.  
+%
+And accepting that there is no such thing as the \textit{iid} bunny bringing you a basket of nicely distributed questions will help us get there faster.
 
-Sam Bowman in his paper about the dangers of underclaiming … if you do research on adversarial data, the accuracy numbers are going to be lower than “normal” datasets.  But I think that this makes a category error!  There’s no such thing as a normal, iid dataset.  All datasets have their own pathologies, and you cannot readily compare SQuAD numbers to NQ numbers: there are fundamentally different underlying distributions and data collection practices.  The same thing is true for my beloved quiz bowl format.
+Likewise, it's dangerous to ignore distributions when you compare models or compare models with humans.
+%
+One thing that really grinds my gears about \squad{} is that the \squad{} dataset provides a ``human upper bound''
+(and to be clear this is not the fault of the people who designed \squad{} but from people who misinterpret what they did) 
+but there less well informed news organizations or promoters of research that mischaracterize what it means to be near the human bound.  It also mischaracterizes what it means to ``read'' a document.  
+%
+If machine learning systems are getting close to this human bound it doesn't mean that computers are reading better than humans.  
+%
+Rather, it means that computers are doing a better job of highlighting particular passages better than underpaid crowd workers.  
+%
+As you can guess from the Watson chapter (Chapter~\ref{}), this offends my sense of fair play.  I lay out my full theory of what would make for a fun and fair human computer--\abr{ai} game show in Chapter~\ref{}.
+%
+For this, I think the Manchester paradigm is the much better choice.
 
-And I think this is a healthy development.  Rather than obsessing about rank on a leaderboard and the single floating point number with your accuracy that comes out, we should focus on what are the abilities (and weaknesses) of models.  And accepting that there is no such thing as the iid language bunny bringing you a basket of nicely distributed questions will help us get there faster.
+That said, the transition from Manchester-style spectacle to Cranfield-style
+product is hard. \abr{ibm} Watson's \jeopardy{} victory was a tour de
+force of the Manchester paradigm, but turning that success into a
+user-facing product was much more difficult~\citep{chu2002piquant,
+deutscher-21,jennings2011ibm}. The same tension shows up in dataset
+design. \squad{} questions were written by people who knew the
+answers, but the data do not follow Manchester-style question-writing
+norms; the result was a proliferation of shortcuts and artifacts that
+later analyses exposed~\citep{weissenborn-17}. In contrast,
+Manchester-oriented benchmarks such as the Winograd challenge
+explicitly try to avoid cheap tricks~\citep{levesque2014behavior}. 
 
-\section{Dataset Quality as Tournament Design}
-
-Manchester-style tournament design gives us a useful vocabulary for looking at
-the datasets in this chapter. The point is not to make every dataset into a
-trivia game, but to ask whether it is fun to answer, discriminative, and
-supported by a scoring metric that rewards the behavior we actually care about.
-
-Many authors use crowdworkers to establish human accuracy~\citep{rajpurkar-16,choi-18}.
-However, they are not the only humans who should answer a dataset's questions.
-So should the dataset's creators. In the trivia world, this is called a {\bf
-play test}: get in the shoes of someone \emph{answering} the questions. If you
-find them boring, repetitive, or uninteresting, so will crowdworkers. If you can
-find shortcuts to answer questions~\citep{rondeau-18,kaushik-18}, so will a
-computer.
-
-Concretely, \citet{weissenborn-17} catalog artifacts in \squad{}~\citep{rajpurkar-18},
-the most popular \abr{qa} leaderboard. If you see a list like ``Along with
-Canada and the United Kingdom, what country\dots'', you can ignore the rest of
-the question and just type Ctrl+F~\citep{yuan-19,russell-20} to find the third
-country---\underline{Australia} in this case---that appears with ``Canada and
-the \abr{uk}''. Other times, a \squad{} playtest would reveal frustrating
-questions that are i) answerable given the information but not with a direct
-span,\footnote{A source paragraph says ``In [Commonwealth countries]\dots the
-term is generally restricted to\dots Private education in North America covers
-the whole gamut\dots''; thus, ``What is the term private school restricted to
-in the US?'' has the information needed but not as a span.}
-ii) answerable only given facts beyond the given paragraph,\footnote{A source
-paragraph says ``Sculptors [in the collection include] Nicholas Stone, Caius
-Gabriel Cibber, [...], \underline{Thomas Brock}, Alfred Gilbert, [...] and Eric
-Gill'', i.e., a list of names; thus, the question ``Which British sculptor
-whose work includes the Queen Victoria memorial in front of Buckingham Palace
-is included in the V\&A collection?'' should be unanswerable in \squad{}.}
-iii) unintentionally embedded in a discourse, resulting in arbitrary correct
-answers,\footnote{A question ``Who \emph{else} did Luther use violent rhetoric
-towards?'' has the gold answer ``writings condemning the Jews and in diatribes
-against \underline{Turks}''.} iv) or non-questions.
-
-\searchqa{}~\citep{dunn-17}, derived from \jeopardy{}, shows the same problem
-from the answer side. It asks ``An article that he wrote about his riverboat
-days was eventually expanded into \textit{Life on the Mississippi}.'' The
-apprentice and newspaper writer who wrote the article is named Samuel Langhorne
-Clemens, but the reference answer is his later pen name, \underline{Mark
-Twain}. Most \qa{} evaluation metrics would count \underline{Samuel Clemens} as
-incorrect. In a real game of \jeopardy{}, this would not be an issue: the
-adjudication process would recognize the intended person.
-
-Answering questions requires multiple skills: identifying answer
-mentions~\citep{hermann-15}, naming the answer~\citep{yih-15}, abstaining when
-necessary~\citep{rajpurkar-18}, and justifying an answer~\citep{fever-18}. In
-\qa{}, the emphasis on \abr{sota} and leaderboards has focused attention on
-single automatically computable metrics---systems tend to be compared by their
-`\squad{} score' or their `\abr{nq} score', as if this were all there is to say
-about their relative capabilities. Tournaments also give specific awards (e.g.,
-highest score without incorrect answers). Again, there are obvious leaderboard
-analogs that would go beyond a single number. In \squad{} 2.0~\citep{rajpurkar-18},
-abstaining contributes the same to the overall \fone{} as a fully correct
-answer, obscuring whether a system is more precise or an effective abstainer.
-If the task recognizes both abilities as important, reporting a single score
-risks implicitly prioritizing one balance of the two.
-
-There are many ways questions might not be discriminative. If every system gets
-a question right (e.g., abstain on non-questions like ``asdf'' or correctly
-answer ``What is the capital of Poland?''), the dataset does not separate
-participants. Similarly, if every system flubs ``what is the oldest
-north-facing kosher restaurant'', it is not discriminative.
-\citet{sugawara-18} call these questions ``easy'' and ``hard''; we instead
-argue for a three-way distinction.
-
-In between easy questions (system answers correctly with probability 1.0) and
-hard (probability 0.0), questions with probabilities nearer to 0.5 are more
-interesting. Taking a cue from Vygotsky's proximal development theory of human
-learning~\citep{chaiklin-03}, these discriminative questions---rather than the
-easy or the hard ones---should most improve \abr{qa} systems.
-These Goldilocks\footnote{In a British folktale first recorded by Robert
-Southey, the character Goldilocks finds three beds: one too hard, one not hard
-enough, and one ``just right''.} questions (not random noise) decide who tops
-the leaderboard. Unfortunately, existing datasets have many easy questions.
-\citet{sugawara-20} find that ablations like shuffling word
-order~\citep{Feng-18}, shuffling sentences, or only offering the most similar
-sentence do not impair systems. Newer datasets such as \abr{drop}~\citep{dua-19}
-and HellaSwag~\citep{zellers-19} are harder for the systems they were designed
-to test; because Goldilocks is a moving target, I argue for annual evaluations
-in Section~\ref{sec:manchester:qb-blind}.
-
-Sometimes there are fewer Goldilocks questions not by choice, but by chance: a
-dataset becomes less discriminative through annotation error. All datasets have
-some annotation error; if this annotation error is concentrated on the
-Goldilocks questions, the dataset will be less useful. As we write this in
-2020, humans and computers sometimes struggle on the same questions.
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=1.0\linewidth]{figures/datasets/error_and_difficulty}
-    \caption{Two datasets with $0.16$ annotation error: the top, however, better discriminates \abr{qa} ability.  In the good dataset (top), most questions are challenging but not impossible.  In the bad dataset (bottom), there are more trivial or impossible questions \emph{and} annotation error is concentrated on the challenging, discriminative questions.  Thus, a smaller fraction of questions decide who sits atop the leaderboard, requiring a larger test set.}
-    \label{fig:error-and-difficulty}
-\end{figure}
-
-Figure~\ref{fig:error-and-difficulty} shows two datasets of the same size with
-the same annotation error. However, they have different difficulty
-\emph{distributions} and \emph{correlation} of annotation error and difficulty.
-The dataset that has more discriminative questions and consistent annotator
-error has fewer questions that do not discriminate the winner of the
-leaderboard. We call this the effective dataset proportion~$\rho$ (higher is
-better). Figure~\ref{fig:how-big} shows the test set size required to reliably
-discriminate systems for different $\rho$, based on a simulation
-(Appendix~\ref{sec:synthetic-discriminative}).
-
-At this point, you may despair about how big a dataset you need.\footnote{Using
-a more sophisticated simulation approach, the \abr{trec} 2002 \abr{qa} test
-set~\citep{voorhees-03} could not discriminate systems with less than a seven
-absolute score point difference.} The same terror besets trivia tournament
-organizers. Instead of writing more questions, they use pyramidality
-(Section~\ref{sec:manchester:pyramidality}) to make every question count.
-
-\begin{figure*}[t!]
-    \begin{center}
-    \includegraphics[width=1.0\linewidth]{figures/datasets/test_set}
-    \end{center}
-    \caption{
-    How much test data do you need to discriminate two systems with 95\% confidence?  This depends on both the difference in accuracy between the systems ($x$ axis) and the average accuracy of the systems (closer to 50\% is harder).  Test set creators do not have much control over those.  They do have control, however, over how many questions are discriminative.  If all questions are discriminative (right), you only need 2500 questions, but if three quarters of your questions are too easy, too hard, or have annotation errors (left), you'll need 15000.}
-    \label{fig:how-big}
-\end{figure*}
-
-\section{What if there's no one right answer?}
+The
+point is not that one paradigm is superior, but that each requires
+different care.
+%
+Cranfield data are still necessary because the data distribution of uninformed users in the Cranfield paradigm is categorically different from the hyper-informed nerds in the Manchester paradigm.  
+%
+You ideally need to master both distributions.
+%
+This is the most enduring lesson of the \abr{nq} dataset years after its release.  Even though it too has fallen by the wayside as newer datasets came to the fore, it still offers important lessons about how real people ask questions, how systems trained on those imperfect questions can go wrong, and what we can do about it.
 
 
-RLHF datasets
+\section{Natural Questions Five Years Later}
+\label{sec:nq:problems}
 
-Personalization datasets
+Natural Questions came out in 2019.  It’s hard to overstate its impact on Question Answering (QA).  Perhaps only second to SQuAD.  
+%
+\squad{} introduced the extractive format, but \squad{} was “fake” … Natural Questions had true complexity and verisimilitude: people ask crazy questions, some of the questions were unanswerable, and the answers were tied to Wikipedia pages. 
+%
+And it has yet to be eclipsed … and perhaps it never will.  
+
+Part of the reason that this will probably never happen again is that Natural Questions has two very unique characteristics: questions from real users expensively verified by expensive annotators.  
+%
+While it’s possible that we might get something like this again in part---\abr{uw} folks crawled Google $n$-grams to extract questions~\cite{}, we paid QuizBowlers to find passages to answer questions~\cite{}---getting them both at once is probably not going to happen again.  
+%
+But I’d love to be proved wrong! 
+
+However, Natural Questions aren’t perfect.  
+%
+Sewon Min and company created \camelabr{Ambig}{qa}~\cite{} that showed some of the questions in Natural Questions were ambiguous.
+%
+Here are some examples that Ben and I talked about in our 2020 paper (and I talked about at more length in the QA datasets lecture, link in the description).  
+%
+There are multiple interpretations to these questions, but Natural Questions only says that one of them is correct.  
+
+How is the “correct” interpretation chosen in the original Natural Questions paper? 
+%
+The annotators saw search results from an information retrieval system, and if they found an answer there, they called it the correct answer.  
+%
+So whatever process biases search results toward English-speaking judges, men’s sports, or flagship universities gets recapitulated in Natural Questions.
+
+Another development is the realization that not all questions are valid and shouldn’t be answered.  
+%
+There are multiple aspects of this: appropriately calibrating your \abf{qa} system to abstain when it doesn’t know the answer for example.  
+%
+Natural Questions actually does a pretty good job of supporting this by having unanswerable questions, but it doesn't give a template for \emph{how} to push back against a bad question.
+
+And perhaps we don’t need that any more.
+%
+As we will see in Chapter~\ref{}, increasingly \abr{ai} models are created from a melange of smaller datasets.
+%
+Perhaps we don’t need a single monolithic \abr{qa} training dataset to rule them all.  
+%
+We just need robust evaluation protocols (which can be much smaller). 
+
+And this is, again, a weakness of Natural Questions\dots it’s not a great evaluation set. 
+%
+I already shared my annoyances with comparisons between human and computer ability on \squad{}.
+%
+When I was at Google, I tried to create a human--computer competition that was fair in 2020 using \abr{nq}.
+%
+% I wanted to give the agents---either human or computer---answering the questions comparable information.
+%
+We called this \camelabr{Efficient}{qa}, and the goal was to see what was the smallest question asnwering system that could work on \abr{nq} questions.
+%
+Patrick Lewis, the first author of the winning system, took advantage of duplicate information in the dataset (many of the questions were asked again and again) and created a tiny system only dozens of megabytes that clearly won the competition.  It also presaged many of the issues people discovered with \abr{nq}.
+%
+% To create an equivalence between humans and computers, we let humans answer the questions without seeing any resources 
+% Obviously, the open interpretation makes it much harder to find the answer.
+
+
+Lewis et al. discovered that many QA datasets, including Natural Questions, have a huge overlap between the training set and the testing set. 
+%
+I’m a Professor, so let’s put this in a classroom context: this is like giving out two thirds of the answers and one third of the questions as a study guide before the test.  
+%
+Now, it’s a great sanity check that systems can answer those questions, but that means that only a third of the questions are part of a functional test set.  
+%
+Add that to the problems of ambiguity, and far less of the test set is actually usable, making it difficult to know if we’re making progress on the dataset.
+
+This is something that the trivia community has known for a while.  
+%
+You can’t reuse clues!  For important test sets (like national trivia tournaments), you need to make sure that you’re finding new, interesting clues that haven’t been used before (or at least for a while).  
+%
+This is why we’ve always used the flagship national trivia tournaments as our test sets for quiz bowl.
+
+I want to make it clear that \emph{Natural Questions remains a great resource}.  It hasn’t been matched.  I still use it.  I’m jealous of the people who got to build it.  But it’s important to know the limitations. 
+
+Now, for all of the reasons I talked about before, it probably will never be done again.  Nobody is crazy enough to do it. 
+%
+But how would I do it if someone were foolish enough to give me the resources to create the next iteration of something like it?
+
+Back in the early 2000s, there was a QA service called Aardvark.  
+%
+The idea was that it would connect up real humans with topics those smart humans could answer questions about.  Question comes in and it gets routed to that person.  
+%
+That was a great idea but before it’s time.  What you’d do today is build up a large collection of these people (and pay them well), a question from a major search engine comes in\dots we try to detect if the computer can answer it directly.  
+%
+If yes, we answer it, if not, we farm it out to the experts.  We’ve trained the experts to interrogate the question askers to remove ambiguities, false presuppositions, etc.  
+%
+To create a “clean” version of the question and then a strong reference answer supported by relevant information.
+
+And to be clear, that’s not what happens if you ask this to ChatGPT\dots it doesn’t really probe the user’s intent but tries to do some correction (not invented by a linguist) and provide the answer to the most likely question.  
+%
+But still erases all of the people whose work Edison built on.

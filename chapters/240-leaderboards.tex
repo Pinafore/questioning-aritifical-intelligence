@@ -1,4 +1,126 @@
 
+\section{Dataset Quality as Tournament Design}
+
+Manchester-style tournament design gives us a useful vocabulary for looking at
+the datasets in this chapter. The point is not to make every dataset into a
+trivia game, but to ask whether it is fun to answer, discriminative, and
+supported by a scoring metric that rewards the behavior we actually care about.
+
+Many authors use crowdworkers to establish human accuracy~\citep{rajpurkar-16,choi-18}.
+However, they are not the only humans who should answer a dataset's questions.
+So should the dataset's creators. In the trivia world, this is called a {\bf
+play test}: get in the shoes of someone \emph{answering} the questions. If you
+find them boring, repetitive, or uninteresting, so will crowdworkers. If you can
+find shortcuts to answer questions~\citep{rondeau-18,kaushik-18}, so will a
+computer.
+
+Concretely, \citet{weissenborn-17} catalog artifacts in \squad{}~\citep{rajpurkar-18},
+the most popular \abr{qa} leaderboard. If you see a list like ``Along with
+Canada and the United Kingdom, what country\dots'', you can ignore the rest of
+the question and just type Ctrl+F~\citep{yuan-19,russell-20} to find the third
+country---\underline{Australia} in this case---that appears with ``Canada and
+the \abr{uk}''. Other times, a \squad{} playtest would reveal frustrating
+questions that are i) answerable given the information but not with a direct
+span,\footnote{A source paragraph says ``In [Commonwealth countries]\dots the
+term is generally restricted to\dots Private education in North America covers
+the whole gamut\dots''; thus, ``What is the term private school restricted to
+in the US?'' has the information needed but not as a span.}
+ii) answerable only given facts beyond the given paragraph,\footnote{A source
+paragraph says ``Sculptors [in the collection include] Nicholas Stone, Caius
+Gabriel Cibber, [...], \underline{Thomas Brock}, Alfred Gilbert, [...] and Eric
+Gill'', i.e., a list of names; thus, the question ``Which British sculptor
+whose work includes the Queen Victoria memorial in front of Buckingham Palace
+is included in the V\&A collection?'' should be unanswerable in \squad{}.}
+iii) unintentionally embedded in a discourse, resulting in arbitrary correct
+answers,\footnote{A question ``Who \emph{else} did Luther use violent rhetoric
+towards?'' has the gold answer ``writings condemning the Jews and in diatribes
+against \underline{Turks}''.} iv) or non-questions.
+
+\searchqa{}~\citep{dunn-17}, derived from \jeopardy{}, shows the same problem
+from the answer side. It asks ``An article that he wrote about his riverboat
+days was eventually expanded into \textit{Life on the Mississippi}.'' The
+apprentice and newspaper writer who wrote the article is named Samuel Langhorne
+Clemens, but the reference answer is his later pen name, \underline{Mark
+Twain}. Most \qa{} evaluation metrics would count \underline{Samuel Clemens} as
+incorrect. In a real game of \jeopardy{}, this would not be an issue: the
+adjudication process would recognize the intended person.
+
+Answering questions requires multiple skills: identifying answer
+mentions~\citep{hermann-15}, naming the answer~\citep{yih-15}, abstaining when
+necessary~\citep{rajpurkar-18}, and justifying an answer~\citep{fever-18}. In
+\qa{}, the emphasis on \abr{sota} and leaderboards has focused attention on
+single automatically computable metrics---systems tend to be compared by their
+`\squad{} score' or their `\abr{nq} score', as if this were all there is to say
+about their relative capabilities. Tournaments also give specific awards (e.g.,
+highest score without incorrect answers). Again, there are obvious leaderboard
+analogs that would go beyond a single number. In \squad{} 2.0~\citep{rajpurkar-18},
+abstaining contributes the same to the overall \fone{} as a fully correct
+answer, obscuring whether a system is more precise or an effective abstainer.
+If the task recognizes both abilities as important, reporting a single score
+risks implicitly prioritizing one balance of the two.
+
+There are many ways questions might not be discriminative. If every system gets
+a question right (e.g., abstain on non-questions like ``asdf'' or correctly
+answer ``What is the capital of Poland?''), the dataset does not separate
+participants. Similarly, if every system flubs ``what is the oldest
+north-facing kosher restaurant'', it is not discriminative.
+\citet{sugawara-18} call these questions ``easy'' and ``hard''; we instead
+argue for a three-way distinction.
+
+In between easy questions (system answers correctly with probability 1.0) and
+hard (probability 0.0), questions with probabilities nearer to 0.5 are more
+interesting. Taking a cue from Vygotsky's proximal development theory of human
+learning~\citep{chaiklin-03}, these discriminative questions---rather than the
+easy or the hard ones---should most improve \abr{qa} systems.
+These Goldilocks\footnote{In a British folktale first recorded by Robert
+Southey, the character Goldilocks finds three beds: one too hard, one not hard
+enough, and one ``just right''.} questions (not random noise) decide who tops
+the leaderboard. Unfortunately, existing datasets have many easy questions.
+\citet{sugawara-20} find that ablations like shuffling word
+order~\citep{Feng-18}, shuffling sentences, or only offering the most similar
+sentence do not impair systems. Newer datasets such as \abr{drop}~\citep{dua-19}
+and HellaSwag~\citep{zellers-19} are harder for the systems they were designed
+to test; because Goldilocks is a moving target, I argue for annual evaluations
+in Section~\ref{sec:manchester:qb-blind}.
+
+Sometimes there are fewer Goldilocks questions not by choice, but by chance: a
+dataset becomes less discriminative through annotation error. All datasets have
+some annotation error; if this annotation error is concentrated on the
+Goldilocks questions, the dataset will be less useful. As we write this in
+2020, humans and computers sometimes struggle on the same questions.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=1.0\linewidth]{figures/datasets/error_and_difficulty}
+    \caption{Two datasets with $0.16$ annotation error: the top, however, better discriminates \abr{qa} ability.  In the good dataset (top), most questions are challenging but not impossible.  In the bad dataset (bottom), there are more trivial or impossible questions \emph{and} annotation error is concentrated on the challenging, discriminative questions.  Thus, a smaller fraction of questions decide who sits atop the leaderboard, requiring a larger test set.}
+    \label{fig:error-and-difficulty}
+\end{figure}
+
+Figure~\ref{fig:error-and-difficulty} shows two datasets of the same size with
+the same annotation error. However, they have different difficulty
+\emph{distributions} and \emph{correlation} of annotation error and difficulty.
+The dataset that has more discriminative questions and consistent annotator
+error has fewer questions that do not discriminate the winner of the
+leaderboard. We call this the effective dataset proportion~$\rho$ (higher is
+better). Figure~\ref{fig:how-big} shows the test set size required to reliably
+discriminate systems for different $\rho$, based on a simulation
+(Appendix~\ref{sec:synthetic-discriminative}).
+
+At this point, you may despair about how big a dataset you need.\footnote{Using
+a more sophisticated simulation approach, the \abr{trec} 2002 \abr{qa} test
+set~\citep{voorhees-03} could not discriminate systems with less than a seven
+absolute score point difference.} The same terror besets trivia tournament
+organizers. Instead of writing more questions, they use pyramidality
+(Section~\ref{sec:manchester:pyramidality}) to make every question count.
+
+\begin{figure*}[t!]
+    \begin{center}
+    \includegraphics[width=1.0\linewidth]{figures/datasets/test_set}
+    \end{center}
+    \caption{
+    How much test data do you need to discriminate two systems with 95\% confidence?  This depends on both the difference in accuracy between the systems ($x$ axis) and the average accuracy of the systems (closer to 50\% is harder).  Test set creators do not have much control over those.  They do have control, however, over how many questions are discriminative.  If all questions are discriminative (right), you only need 2500 questions, but if three quarters of your questions are too easy, too hard, or have annotation errors (left), you'll need 15000.}
+    \label{fig:how-big}
+\end{figure*}
 
 \paragraph{Comparisons Require Fewer Questions}
 %
