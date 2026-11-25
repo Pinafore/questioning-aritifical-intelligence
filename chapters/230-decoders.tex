@@ -1,0 +1,44 @@
+Chapter~\ref{ch:ir} introduced the Cranfield paradigm: finding the
+document that best matches what you're looking for.  It also showed
+how ``good old-fashioned'' \abr{ai} systems use rules and logic to
+answer questions about specific domains.
+%
+Much of question answering was built on information retrieval: given a
+question, you want to find the Wikipedia page or other information
+source that answers the question.
+
+However, in the 2010s, retrieval was reinvented by new neural
+techniques that revolutionized not just question answering but
+computer science more broadly.
+%
+You may have heard of these models like \camelabr{Chat}{gpt} or \abr{bert}.
+%
+The ``T'' in both of these models stands for ``transformer'', the core technology that we'll discuss in this chapter and the next.
+%
+Because this is an important distinction, I'm going to divide this into two parts: methods that primarily use an ``encoder'' architecture and those that focus on the ``decoder''.  
+%
+But what are these models encoding to and from?  
+%
+Vectors.
+
+We've already talked about vectors earlier in the book: Chapter~\ref{ch:ir} used vectors to help find the right document to answer a question. 
+%
+But those vectors had dimensions that were mostly empty: there was a dimension for every word, and only the important words were non-zero.  
+%
+This so-called ``sparse'' encoding was easier for humans to understand, but didn't work as well as the ``dense'' vectors we'll talk about in this chapter.
+%
+Here, the dimensions are \emph{learned}: the dimensions are the ones that help to divide up the dataset to help the retrieval or other mechanisms find the right documents.
+
+The vectors build using the methods described in this chapter were the precursors of the world-changing models
+we discuss in the next chapter.
+% 
+Those methods were necessary because of the pressures outlined in this chapter: you needed vectors to not just show what document had the answer but rather to explain \emph{how} to answer question.
+
+% TODO(jbg): Outline the entire chapter
+
+\section{But What About Non-Text?}
+\label{sec:methods:multimodal}
+
+Thus far, all of the questions we've talked about in this chapter have been text.  But most of the methods naturally extend to other modalities.  As we discussed in Section~\ref{sec:formats:multimodal}, multimodal encoders can transform multiple languages, images, and audio into a consistent representation.  Those become the same kind of input to the models that predict the next word.  Those models can answer questions directly or be ``fine-tuned'' to mimic better answers or fine-tuned to produce chain of thought analysis before their final answer.
+
+

@@ -3,6 +3,7 @@ This chapter discusses how questions can be imperfect and how both humans and co
 
 
 
+<<<<<<< Updated upstream
 
 But instead, I want to focus on linguistic phenomena that \emph{causes} a question to \emph{become} unanswerable.  
 %
@@ -39,3 +40,16 @@ So for example, if the question comes in: \underline{What linguist invented the 
 “Hmm … I guess I meant who got the credit for it”
 
 “Then that would be Thomas Edison”
+=======
+\section{But That Assumes a Good Question}
+\label{sec:methods:presuppositions}
+
+Even a fluent generated answer can be unhelpful when the question is problematic.  For example, some questions that tripped up early \abr{qa} systems were ``When did Leonardo paint the Sistine Chapel'' or ``Is the king of France bald''.  These questions contain what are called ``false presuppositions'': Michelangelo painted the Sistine Chapel, and France no longer has a king.  A model can treat these as familiar-looking questions, accept their false presuppositions, and blithely answer.
+
+You might think that these questions are unrealistic, but questions with hidden assumptions are common in the medical domain.
+For example, \citet{srikanth-24-pregnant} examine the question ``Can I breastfeed my baby when I am ill?''  A model can go along with a question's assumptions---like an improv actor saying ``yes and''~\citep{cho-20-spolin}---but a helpful answer may need to challenge them.  In the paper's example, the fuller answer addresses the belief that all illnesses pass through breast milk and explains that antibodies in breast milk can help protect the baby.
+
+But how do you push back?  This requires coming up with a strategy.  Sometimes you're missing information.  If the question is ``what's the capital of Georgia'', you might need to ask which Georgia they mean.  You might need to ask for context: ``how old is the baby'', ``what were you sick with''.  These are called discourse moves, and they direct the conversation in different directions.  \citet{srikanth-26-discotrace} show how different communities favor different answering strategies, including clarifying a question or challenging its assumptions.
+
+Given this, how do you get to a good answer?
+>>>>>>> Stashed changes
