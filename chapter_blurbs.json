@@ -163,11 +163,11 @@
       },
       {
         "label": "datasets",
-        "summary": "The clich\\'e is that data are the new oil, powering \\abr{ai}.  Fortunately, because humans naturally ask questions, there are many datasets that we can find `for free'.  However, these datasets still come at a cost: many of these datasets have inherent problems (e.g., ambiguities and false presuppositions) or oddities (only talking about American men) that make them difficult to use for question answering.  These datasets form the foundation of much of modern \\abr{ai}. Of course, if you can't find the data you need, you can build it yourself.  But this is not always a perfect solution: sometimes you build a new dataset and create totally new problems.",
+        "summary": "The clich\\'e is that data are the new oil, powering \\abr{ai}.  Question answering seems especially lucky: people ask questions everywhere, so perhaps we can harvest useful datasets from search logs, documents, crowdworkers, and human trivia competitions.  But every source has a shape.  Some datasets are easy because the evidence is already supplied, some are hard because the prompt is underspecified, and some are valuable because expert writers deliberately craft discriminative questions.  This chapter maps those choices across \\trecqa{}, \\squad{}, \\abr{nq}, and \\quizbowl{}-derived datasets, then asks what their artifacts, ambiguities, and collection practices teach us about building and adopting data.",
           "sections": [
-              {"label": "crowdsourcing", "title": "Constructed Datasets from Crowdsourcing", "summary": "The SQuAD dataset helped create the first wave of question answering.  It also paved the way for other constructed datasets built from workers on the web."},      
-              {"label": "nq", "title": "Natural Questions Five Years Later", "summary": "Google's Natural Questions dataset represents the most realistic dataset to question answering, but is it a good way to train computers?"},
-              {"label": "experts", "title": "Turning to Experts", "summary": "Another option is to repurpose datasets created by experts designed to test humans."}
+              {"label": "first", "title": "Mapping Dataset Difficulty", "summary": "A running plot compares datasets by prompt difficulty, answer difficulty, and whether their questions come from search users, crowdworkers, or expert writers."},      
+              {"label": "nq", "title": "Search Questions and Ambiguity", "summary": "\\abr{ms} \\abr{marco} and \\abr{nq} bring real user questions into \\abr{qa}, but their realism also imports ambiguity and search-engine assumptions."},
+              {"label": "iid", "title": "Crowdworkers and Experts", "summary": "Crowdsourced data made \\squad{} possible, yet it creates artifacts; \\quizbowl{} and other Manchester-style datasets show what expert question writing can contribute."}
         ]        
       }, 
       {

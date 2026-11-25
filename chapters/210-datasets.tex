@@ -72,6 +72,7 @@ be able to answer questions about just about anything, not just a
 narrow set of topics.
 
 \section{The first \abr{qa} Datasets}
+\label{sec:datasets:first}
 
 Instead, we're going to talk about more open-ended question answering
 that’s often called ``machine reading'' question answering for reasons
@@ -109,30 +110,45 @@ a platform of that name to provide both the technical infrastructure
 and the marketplace to find people who could complete tasks that
     required human intelligence. } for the novices.
 
-Figure~\ref{fig:datasets-plot-empty} shows the axes before we start
-adding datasets.
+\newcommand{\datasetplotaxes}{%
+  \draw[->,very thick] (0,2) -- (9.8,2);
+  \node[font=\bfseries] at (6.7,1.6) {Difficulty of Prompt};
+  \draw[<->,very thick] (0.45,0) -- (0.45,5.25);
+  \node[anchor=west,font=\bfseries,align=left] at (0.75,5.0) {Difficulty\\of Answer};
+}
+\newcommand{\datasetcranfield}[2]{%
+  \node[draw,circle,inner sep=1.4pt,fill=white] at (#1,#2) {?};
+}
+\newcommand{\datasetpawn}[2]{%
+  \begin{scope}[shift={(#1,#2)},x=0.055cm,y=0.055cm,line width=0.35pt]
+    \draw[fill=white] (-3,-3) rectangle (3,-2);
+    \draw[fill=white] (-2.2,-2) -- (2.2,-2) -- (1.25,-0.9) -- (-1.25,-0.9) -- cycle;
+    \draw[fill=white] (-1.4,-0.9) .. controls (-0.9,-0.2) and (0.9,-0.2) .. (1.4,-0.9);
+    \draw[fill=white] (0,0.85) circle (1.05);
+  \end{scope}
+}
+\newcommand{\datasetbuzzer}[2]{%
+  \begin{scope}[shift={(#1,#2)},x=0.055cm,y=0.055cm,line width=0.35pt]
+    \draw[fill=white] (-3,-2.2) rectangle (3,-1);
+    \draw[fill=white] (-1.8,-1) -- (1.8,-1) -- (1.1,0.1) -- (-1.1,0.1) -- cycle;
+    \draw[fill=white] (-0.35,0.1) rectangle (0.35,1.4);
+    \draw[fill=white] (0,1.75) circle (0.85);
+  \end{scope}
+}
+\newcommand{\datasetplotkey}[2]{%
+  \begin{scope}[shift={(#1,#2)}]
+    \draw (0,0) rectangle (3.65,0.95);
+    \datasetcranfield{0.35}{0.68}
+    \node[anchor=west] at (0.62,0.68) {Cranfield};
+    \datasetbuzzer{2.05}{0.68}
+    \node[anchor=west] at (2.32,0.68) {Manchester};
+    \datasetpawn{0.35}{0.25}
+    \node[anchor=west] at (0.62,0.25) {crowdsourced};
+  \end{scope}
+}
+\newcommand{\nqtablequestion}[1]{\emph{``#1''}}
 
-\begin{figure}
-\centering
-\begin{tikzpicture}[x=0.72cm,y=0.55cm,every node/.style={font=\footnotesize}]
-  \draw[->,very thick,red!75!black] (0,2) -- (8.2,2);
-  \node[text=red!75!black,font=\bfseries] at (5.9,1.65) {Difficulty of Prompt};
-  \draw[<->,very thick,green!45!black] (0.45,0) -- (0.45,5.2)
-    node[above right,text=green!45!black,font=\bfseries] {Difficulty of Answer};
-  \node[draw,circle,inner sep=1.4pt] at (2.2,4.7) {?};
-  \node[right] at (2.45,4.7) {Cranfield};
-  \node[draw,circle,inner sep=1.4pt] at (4.2,4.7) {!};
-  \node[right] at (4.45,4.7) {Manchester};
-  \node[draw,circle,inner sep=1.4pt] at (6.2,4.7) {P};
-  \node[right] at (6.45,4.7) {novice};
-\end{tikzpicture}
-\caption{The dataset map starts with two rough axes: how much work the
-  prompt makes the system do, and how complex the final answer is.  The
-  symbol in each point marks the question-writing paradigm.}
-\label{fig:datasets-plot-empty}
-\end{figure}
-
-\section{TREC QA}
+\section{\trecqa{}}
 
 Let’s start with the most simple example of a question answering
 dataset: you get a question as input and you need to produce a short
@@ -142,7 +158,7 @@ This is often called factoid \abr{qa}.\footnote{Karl Moritz Hermann
   really dislikes this term, as in the \abr{uk}, a ``factoid'' is not
   necessarily true.}
 %
-The prototypical example of this is \abr{trec qa}; you'll remember
+The prototypical example of this is \trecqa{}; you'll remember
 \abr{trec} as the Text REtrieval Conference, a conference organized by
 the \abr{us} National Institute of Standards and Technology
 (\abr{nist}), the home of Ellen Voorhees, who coined the term
@@ -178,17 +194,16 @@ Thus, I'll mark it as a Cranfield dataset (Figure~\ref{fig:datasets-plot-trec}).
 
 \begin{figure}
 \centering
-\begin{tikzpicture}[x=0.72cm,y=0.55cm,every node/.style={font=\footnotesize}]
-  \draw[->,very thick,red!75!black] (0,2) -- (8.2,2);
-  \node[text=red!75!black,font=\bfseries] at (5.9,1.65) {Difficulty of Prompt};
-  \draw[<->,very thick,green!45!black] (0.45,0) -- (0.45,5.2)
-    node[above right,text=green!45!black,font=\bfseries] {Difficulty of Answer};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (2.6,3.5) {?};
-  \node[above=2pt] at (2.6,3.5) {\trecqa{}};
+\begin{tikzpicture}[x=0.67cm,y=0.55cm,every node/.style={font=\footnotesize}]
+  \datasetplotaxes
+  \datasetplotkey{5.75}{4.15}
+  \datasetcranfield{2.1}{3.5}
+  \node[above=2pt] at (2.1,3.5) {\trecqa{}};
 \end{tikzpicture}
-\caption{\trecqa{} begins the map: the prompts are short and relatively
-  direct, but producing the answer still requires finding and normalizing
-  information from documents.}
+\caption{\trecqa{} is the first point on the map.  Its prompts are short,
+  direct factoid questions, but its answers still require finding and
+  normalizing information from documents rather than merely copying a
+  highlighted span.}
 \label{fig:datasets-plot-trec}
 \end{figure}
 
@@ -380,21 +395,21 @@ entities, so answering SQuAD questions is a little more difficult.
 
 \begin{figure}
 \centering
-\begin{tikzpicture}[x=0.72cm,y=0.55cm,every node/.style={font=\footnotesize}]
-  \draw[->,very thick,red!75!black] (0,2) -- (8.2,2);
-  \node[text=red!75!black,font=\bfseries] at (5.9,1.65) {Difficulty of Prompt};
-  \draw[<->,very thick,green!45!black] (0.45,0) -- (0.45,5.2)
-    node[above right,text=green!45!black,font=\bfseries] {Difficulty of Answer};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (2.6,3.5) {?};
-  \node[above=2pt] at (2.6,3.5) {\trecqa{}};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (2.4,1.15) {P};
-  \node[below=2pt] at (2.4,1.15) {\abr{cnn} / Daily Mail};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (2.5,2.35) {P};
-  \node[above=2pt] at (2.5,2.35) {\squad{}};
+\begin{tikzpicture}[x=0.67cm,y=0.55cm,every node/.style={font=\footnotesize}]
+  \datasetplotaxes
+  \datasetplotkey{5.75}{4.15}
+  \datasetcranfield{2.1}{3.5}
+  \node[above=2pt] at (2.1,3.5) {\trecqa{}};
+  \datasetpawn{2.4}{1.15}
+  \node[below=3pt] at (2.4,1.15) {\abr{cnn} / Daily Mail};
+  \datasetpawn{3.3}{2.35}
+  \node[above=3pt] at (3.3,2.35) {\squad{}};
 \end{tikzpicture}
-\caption{Automatically generated and crowd-authored machine-reading
-  datasets shift toward prompts with more provided evidence, while their
-  answer spaces stay constrained by entities or spans.}
+\caption{\abr{cnn} / Daily Mail and \squad{} move the map toward
+  machine reading.  Both provide the evidence passage, so the prompt is
+  more constrained than open \trecqa{}, while the answer is usually an
+  entity or span; \squad{} lands higher because spans create a larger
+  answer space than anonymized entities.}
 \label{fig:datasets-plot-squad}
 \end{figure}
 
@@ -467,17 +482,19 @@ We'll talk more about how this might be problematic as we consider
 \begin{figure}
 \centering
 \small
-\begin{tabular}{p{0.30\linewidth}p{0.19\linewidth}p{0.39\linewidth}}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.30\linewidth}
+                >{\raggedright\arraybackslash}p{0.19\linewidth}
+                >{\raggedright\arraybackslash}p{0.39\linewidth}}
 \textbf{Natural Questions query} & \textbf{\abr{nq} answer} &
   \textbf{Another plausible interpretation} \\
 \hline
-\question{when was the last time Michigan won the championship} &
+\nqtablequestion{when was the last time Michigan won the championship} &
   1998 &
   Michigan State won Women’s Cross Country in 2014. \\
-\question{What year did the US hockey team won the Olympics} &
+\nqtablequestion{What year did the US hockey team won the Olympics} &
   1960; 1980 &
   US women: 1998 and 2018. \\
-\question{Which supreme court judge has served in international court of justice} &
+\nqtablequestion{Which supreme court judge has served in international court of justice} &
   Dalveer Bhandari &
   Kōtarō Tanaka (Chief Justice: 1950--1960, ICJ: 1961--1970). \\
 \end{tabular}
@@ -489,27 +506,27 @@ We'll talk more about how this might be problematic as we consider
 
 \begin{figure}
 \centering
-\begin{tikzpicture}[x=0.72cm,y=0.55cm,every node/.style={font=\footnotesize}]
-  \draw[->,very thick,red!75!black] (0,2) -- (8.2,2);
-  \node[text=red!75!black,font=\bfseries] at (5.9,1.65) {Difficulty of Prompt};
-  \draw[<->,very thick,green!45!black] (0.45,0) -- (0.45,5.2)
-    node[above right,text=green!45!black,font=\bfseries] {Difficulty of Answer};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (2.6,3.5) {?};
-  \node[above=2pt] at (2.6,3.5) {\trecqa{}};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (2.4,1.15) {P};
-  \node[below=2pt] at (2.4,1.15) {\abr{cnn} / Daily Mail};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (2.5,2.35) {P};
-  \node[above=2pt] at (2.5,2.35) {\squad{}};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (3.7,2.65) {?};
-  \node[above=2pt] at (3.7,2.65) {\abr{ms} \abr{marco}};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (4.45,2.85) {?};
-  \node[below=2pt] at (4.45,2.85) {\abr{nq}};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (4.95,3.65) {?};
-  \node[above=2pt] at (4.95,3.65) {\abr{nq}-Open};
+\begin{tikzpicture}[x=0.67cm,y=0.55cm,every node/.style={font=\footnotesize}]
+  \datasetplotaxes
+  \datasetplotkey{5.75}{4.15}
+  \datasetcranfield{2.1}{3.5}
+  \node[above=2pt] at (2.1,3.5) {\trecqa{}};
+  \datasetpawn{2.4}{1.15}
+  \node[below=3pt] at (2.4,1.15) {\abr{cnn} / Daily Mail};
+  \datasetpawn{3.3}{2.35}
+  \node[above=3pt] at (3.3,2.35) {\squad{}};
+  \datasetcranfield{4.8}{2.65}
+  \node[below=3pt] at (4.8,2.65) {\abr{ms} \abr{marco}};
+  \datasetcranfield{5.9}{2.95}
+  \node[below=3pt] at (5.9,2.95) {\abr{nq}};
+  \datasetcranfield{7.0}{3.7}
+  \node[above=3pt] at (7.0,3.7) {\abr{nq}-Open};
 \end{tikzpicture}
-\caption{Search-engine questions move rightward because systems must
-  handle underspecified prompts written by people seeking information,
-  not by annotators who already know the answer.}
+\caption{\abr{ms} \abr{marco} and \abr{nq} add genuine search-engine
+  questions.  They land farther right because the prompts are
+  underspecified questions from people seeking information; \abr{nq}-Open
+  moves higher and farther right because the system must also retrieve
+  the evidence instead of receiving a verified page.}
 \label{fig:datasets-plot-nq}
 \end{figure}
 
@@ -537,14 +554,14 @@ answers.
 I’m not going to dwell too much on these datasets because the
 copyright is a little murky.
 
-Instead, let's now turn to my hobby horse: quiz bowl, which I
+Instead, let's now turn to my hobby horse: \quizbowl{}, which I
 introduced in Chapter~\ref{ch:manchester}.
 %
 As mentioned before, it's played by thousands of trivia nerds every
 weekend, particularly at the high school and college level.
 %
 Unlike \searchqa{} and \triviaqa{}, there’s an explicit community consensus
-that old quiz bowl questions are public domain.
+that old \quizbowl{} questions are public domain.
 %
 So as a result we get a lot of free data from experts. These are not
 crowd workers: these are people who are passionate about human
@@ -588,33 +605,35 @@ falling out of favor.
 
 \begin{figure}
 \centering
-\begin{tikzpicture}[x=0.72cm,y=0.55cm,every node/.style={font=\footnotesize}]
-  \draw[->,very thick,red!75!black] (0,2) -- (8.2,2);
-  \node[text=red!75!black,font=\bfseries] at (5.9,1.65) {Difficulty of Prompt};
-  \draw[<->,very thick,green!45!black] (0.45,0) -- (0.45,5.2)
-    node[above right,text=green!45!black,font=\bfseries] {Difficulty of Answer};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (2.6,3.5) {?};
-  \node[above=2pt] at (2.6,3.5) {\trecqa{}};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (2.4,1.15) {P};
-  \node[below=2pt] at (2.4,1.15) {\abr{cnn} / Daily Mail};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (2.5,2.35) {P};
-  \node[above=2pt] at (2.5,2.35) {\squad{}};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (3.7,2.65) {?};
-  \node[above=2pt] at (3.7,2.65) {\abr{ms} \abr{marco}};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (4.45,2.85) {?};
-  \node[below=2pt] at (4.45,2.85) {\abr{nq}};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (4.95,3.65) {?};
-  \node[above=2pt] at (4.95,3.65) {\abr{nq}-Open};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (3.25,3.75) {!};
-  \node[above=2pt] at (3.25,3.75) {\searchqa{}};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (3.95,3.85) {!};
-  \node[above=2pt] at (3.95,3.85) {\triviaqa{}};
-  \node[draw,circle,inner sep=1.4pt,fill=white] at (7.15,3.25) {!};
-  \node[right=2pt] at (7.15,3.25) {\qanta{} / Quiz Bowl};
+\begin{tikzpicture}[x=0.67cm,y=0.55cm,every node/.style={font=\footnotesize}]
+  \datasetplotaxes
+  \datasetplotkey{6.0}{0.35}
+  \datasetcranfield{2.1}{3.5}
+  \node[above=3pt] at (2.1,3.5) {\trecqa{}};
+  \datasetpawn{2.4}{1.15}
+  \node[left=3pt] at (2.4,1.15) {\abr{cnn} / Daily Mail};
+  \datasetpawn{3.3}{2.35}
+  \node[below=3pt] at (3.3,2.35) {\squad{}};
+  \datasetcranfield{4.8}{2.65}
+  \node[below=3pt] at (4.8,2.65) {\abr{ms} \abr{marco}};
+  \datasetcranfield{5.9}{2.95}
+  \node[right=3pt] at (5.9,2.95) {\abr{nq}};
+  \datasetcranfield{7.0}{3.7}
+  \node[above=3pt] at (7.0,3.7) {\abr{nq}-Open};
+  \datasetbuzzer{4.0}{4.05}
+  \node[above=4pt] at (4.0,4.05) {\searchqa{}};
+  \datasetbuzzer{5.2}{4.25}
+  \node[above=4pt] at (5.2,4.25) {\triviaqa{}};
+  \datasetbuzzer{8.85}{3.25}
+  \node[right=3pt] at (8.85,3.25) {\qanta{} / \quizbowl{}};
 \end{tikzpicture}
-\caption{The completed map separates datasets by the work demanded by
-  the prompt, the complexity of the answer, and the paradigm behind the
-  questions.  The positions are schematic, not measured quantities.}
+\caption{\searchqa{}, \triviaqa{}, and \qanta{} add Manchester-style
+  datasets.  \searchqa{} and \triviaqa{} use expert trivia questions with
+  retrieved evidence, so they resemble \abr{nq} but with more deliberate
+  prompts; \qanta{} / \quizbowl{} lands farthest right because its
+  pyramidal clues are intentionally hard early and become easier as more
+  prompt text is revealed.  The positions are schematic, not measured
+  quantities.}
 \label{fig:datasets-plot-final}
 \end{figure}
 
@@ -651,7 +670,7 @@ because an absolute number is meaningless, relative numbers make more
 sense.  And specific datasets highlight skills in targeted domains.
 %
 We also saw this in the case of the Turing Test: Sterrett argues that
-we should compare computer deception to human deception.
+we should compare computer deception to human deception~\citep{Sterrett-00}.
 
 One of the biggest sources of \abr{nlp} data are crowdworkers, Sam
 Bowman's first claim to fame was creating the Stanford Natural
@@ -689,7 +708,7 @@ For fact checking: like with entailment, some logical operators like
 negations are more likely associated with refutation.  We talked about
 this in our adversarial fact checking paper, Fool Me Twice~\citep{Eisenschlos-21}.
 %
-And we already talked about how Weissenborn et al.\ showed that you
+And we already talked about how Weissenborn et al.~\citep{weissenborn-17} showed that you
 can look at the passage and find the first thing that could possibly
 fit the answer type: ``When'' finds the year, ``who'' finds a person,
 ``where'' finds a place, etc.
@@ -749,9 +768,9 @@ Now, Jordan, aren’t you just being a meanie by picking on Natural
 Questions?
 %
 Your favorite \abr{qa} dataset that you keep pushing down everybody’s
-throat—quiz bowl—ain’t \textit{iid} either.
+throat—\quizbowl{}—ain’t \textit{iid} either.
 
-And that’s absolutely right!  I like these crazy quiz bowl questions
+And that’s absolutely right!  I like these crazy \quizbowl{} questions
 where the distribution has been chosen by hand to reflect the
 undergraduate curriculum at American Universities.
 %
@@ -791,7 +810,7 @@ All datasets have their own pathologies, and you cannot readily
 compare \squad{} numbers to \abr{nq} numbers: there are fundamentally
 different underlying distributions and data collection practices.
 %
-The same thing is true for my beloved quiz bowl format.
+The same thing is true for my beloved \quizbowl{} format.
 
 And I think this is a healthy development.  
 %
@@ -842,7 +861,7 @@ And it has yet to be eclipsed … and perhaps it never will.
 
 Part of the reason that this will probably never happen again is that Natural Questions has two very unique characteristics: questions from real users expensively verified by expensive annotators.  
 %
-While it’s possible that we might get something like this again in part---\abr{uw} folks crawled Google $n$-grams to extract questions~\citep{lee-19}, we paid QuizBowlers to find passages to answer questions~\citep{Guha-15}---getting them both at once is probably not going to happen again.
+While it’s possible that we might get something like this again in part---\abr{uw} folks crawled Google $n$-grams to extract questions~\citep{lee-19}, we paid \quizbowl{} players to find passages to answer questions~\citep{Guha-15}---getting them both at once is probably not going to happen again.
 %
 But I’d love to be proved wrong! 
 
@@ -926,7 +945,7 @@ interesting clues that haven’t been used before (or at least for a
 while).
 %
 This is why we’ve always used the flagship national trivia tournaments
-as our test sets for quiz bowl.
+as our test sets for \quizbowl{}.
 
 I want to make it clear that \emph{Natural Questions remains a great
   resource}.  It hasn’t been matched.  I still use it.  I’m jealous of
